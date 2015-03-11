@@ -14,7 +14,7 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
-@Profile({"cloud"})
+@Profile({"production"})
 @PropertySource(value = "classpath:cloudpersistence.properties")
 public class CloudDatabaseConfiguration {
 
