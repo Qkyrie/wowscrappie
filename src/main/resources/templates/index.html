@@ -1,0 +1,172 @@
+﻿<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="decorator/wa-decorator">
+<div layout:fragment="main-content">
+    <div id="page-inner">
+        <div class="row">
+            <div class="col-md-12">
+
+                <div th:if="${param.thankyou != null and param.thankyou[0] != null}" id="alertThankYou" class="alert alert-success alert-dismissible collapse" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <strong>Thank You!</strong> Thank you for submitting your information. An admin will look into it soon!
+                </div>
+
+
+
+                <h2>Hai there =)</h2>
+                <h5>I'm Scrappie, your World of Warcraft Consultant!</h5>
+            </div>
+        </div>
+        <!-- /. ROW  -->
+        <div class="row">
+            <div class="col-md-6">
+                <h3>WeakAuras, TMW and Macros.</h3>
+
+                <p>As your personal assistant, I'll be providing you with all kinds of goodies to get you ready to raid.
+                    Using community websites, proven high-end raiders and crowdsourcing, I will <b>provide you</b> with
+                    information to get you going, whether it's about specific raids, classes or even specs.
+                </p>
+            </div>
+            <div class="col-md-6">
+                <h3>Auction House Consultant</h3>
+
+                <p>Formerly I, Scrappie, was better known as the <b>Auction House consultant</b>. I was used by some
+                    guilds to get a better
+                    insight into the auction house, providing real-time tips. This "know-how" might be interesting for
+                    some of you guys,
+                    so there's a a <b>big chance</b> that my website will include this information in a later stage.
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 col-sm-8 col-xs-8">
+                <div class="panel panel-back noti-box">
+                <span class="icon-box bg-color-red set-icon">
+                    <i class="fa fa-envelope-o"></i>
+                </span>
+
+                    <div class="text-box">
+                        <p class="main-text" th:text="${waCount}">120</p>
+
+                        <p class="text-muted">WeakAuras</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-6">
+                <div class="panel panel-back noti-box">
+                <span class="icon-box bg-color-green set-icon">
+                    <i class="fa fa-bars"></i>
+                </span>
+
+                    <div class="text-box">
+                        <p class="main-text" th:text="${tmwCount}">30</p>
+
+                        <p class="text-muted">TMW-Configs</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-6">
+                <div class="panel panel-back noti-box">
+                <span class="icon-box bg-color-blue set-icon">
+                    <i class="fa fa-bell-o"></i>
+                </span>
+
+                    <div class="text-box">
+                        <p class="main-text" th:text="${macroCount}">240</p>
+
+                        <p class="text-muted">Macros</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-6">
+                <div class="panel panel-back noti-box">
+                <span class="icon-box bg-color-brown set-icon">
+                    <i class="fa fa-rocket"></i>
+                </span>
+
+                    <div class="text-box">
+                        <p class="main-text" th:text="${userCount}">1</p>
+
+                        <p class="text-muted">Contributers</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /. ROW  -->
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+                <h3>Under Construction.</h3>
+
+                <p>Yes, this delightful place of awesomeness is indeed under contruction, and it will be for quite some
+                    time.
+                    The good part of continuous development, is that you'll all be able to first-handedly witness the
+                    prototypal creation of this place.
+                </p>
+
+                <h3>Help is appreciated.</h3>
+
+                <p> This site can only get better by the <b>help of you guys</b>. Scrappie has to <i>develop this site
+                    all on his own</i>, and therefore he will rely
+                    on the community to fill in the <b>content</b>. Recently, I've been getting real sad that there is
+                    no real collection of useful weakauras, tellmewhen-configuration and
+                    macro's. Well yeah, here and there we can find some tips, but I want to see them gathered in one
+                    place, and you can help!
+                </p>
+                <hr />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-offset-2 col-md-4 text-center">
+                <h4>Raids</h4>
+                <p>
+                    Weakauras, TellMeWhen configurations and macros for specific encounters can be found
+                </p>
+            </div>
+            <div class="col-md-4 text-center">
+                <h4>Classes and Specs</h4>
+                <p>
+                    Weakauras, TellMeWhen configurations and macros for specific classes and specs can be found
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-offset-2 col-md-4 text-center">
+                <p>
+                    <a class="btn btn-primary" th:href="@{/raids}">Coming Soon</a>
+                </p>
+            </div>
+            <div class="col-md-4 text-center">
+                <p>
+                    <a class="btn btn-primary" th:href="@{/classes/index}">here</a>
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-offset-1 col-md-10">
+                <div class="jumbotron">
+                    <h2>Contribute</h2>
+                    <p>
+                        Do you have any WeakAuras, TellMeWhens or macros you'd like to share with the community? Don't
+                        hesitate and put them up for approval.
+                        You can even include a screenshot of your UI if you like.
+                    </p>
+                    <a th:href="@{/contribute}" class="btn btn-primary btn-lg" role="button">Learn more</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /. PAGE INNER  -->
+</div>
+<!-- /. layout fragment -->
+
+<div layout:fragment="footer-content">
+    <script type="application/javascript">
+        $("#alertThankYou").show();
+    </script>
+</div>
+</html>

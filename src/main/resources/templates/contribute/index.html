@@ -1,0 +1,378 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="decorator/wa-decorator">
+<div layout:fragment="header"><link th:href="@{/assets/css/dropzone/dropzone.css}" rel="stylesheet"/>
+</div>
+<div layout:fragment="main-content">
+    <div id="page-inner">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Contribute your configuration!</h2>
+            </div>
+        </div>
+        <!-- /. ROW  -->
+        <hr/>
+        <div class="row">
+
+            <div class="col-md-4" id="initialChoice">
+                <h3>What Kind?</h3>
+
+                <p>
+                    First of all, there are 2 categories in which we can put our configurations.
+                    There's a category for <b>bossfights</b> and a category for <b>classes and spec specific
+                    configurations</b>.
+                </p>
+
+                <p>Click on one of the options to start your contribution.</p>
+
+                <hr/>
+                <span disabled="disabled" id="bossFightBtn" data-bind="click: chooseBossFight"
+                      class="btn btn-primary btn-lg">Bossfights</span>
+                <span data-toggle="popover" title="Choose an option" data-placement="right"
+                      data-content="Please choose a valid option here first"
+                      id="classSpecBtn" data-bind="click: chooseClassSpec" class="btn btn-primary btn-lg">Classes and Specs</span>
+            </div>
+
+            <div class="col-md-2">
+                <h3>Type</h3>
+
+                <div class="form-group">
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionWA" value="weakaura"
+                                   checked="">Weakaura</input>
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionTMW"
+                                   value="tellmewhen">TellMeWhen</input>
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionMacro" value="macro">Macro</input>
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-6">
+                <div id="details"></div>
+            </div>
+
+        </div>
+
+        <hr/>
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1" id="actualInformation">
+
+                <div id="alertThankYou" class="alert alert-success alert-dismissible collapse" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <strong>Thank You!</strong> Thank you for submitting your information. An admin will look into it soon!
+                </div>
+
+                <div id="alertChooseOption" class="alert alert-danger alert-dismissible collapse" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <strong>Warning!</strong> Please Choose an option (Bossfight or Class/Spec) before submitting the
+                    form.
+                </div>
+
+                <div id="alertAddCaption" class="alert alert-danger alert-dismissible collapse" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <strong>Warning!</strong> Please add a caption before submitting the form
+                </div>
+
+                <div id="alertAddString" class="alert alert-danger alert-dismissible collapse" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <strong>Warning!</strong> Please add the actual string before submitting the form.
+                </div>
+
+                <div id="alertAddComments" class="alert alert-warning alert-dismissible collapse" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <strong>Warning!</strong> We advise you to add some comments. It'll have greater success in getting
+                    added with some more information.
+                </div>
+
+                <div id="alertChooseCategory" class="alert alert-danger alert-dismissible collapse" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <strong>Warning!</strong> Please Choose a category (Weakaura, TMW, Macro) before submitting the
+                    form.
+                </div>
+
+
+                <div id="tmw_string" data-bind="visible: showTMW">
+                    <div class="form-group">
+                        <label>Caption</label>
+                        <input id="tmw_caption" class="form-control"/>
+
+                        <p class="help-block"><a class="label label-info">Tip!</a> <span data-toggle="tooltip"
+                                                                                         data-original-title="whatevz">A good caption</span>
+                            will help people to
+                            find back your TMW-String.</p>
+                    </div>
+                    <label>Paste the TMW-String</label>
+                    <textarea id="actual_tmw_string" class="form-control" rows="5"></textarea>
+
+                    <div class="form-group">
+                        <label>Comments</label>
+                        <textarea id="tmw_comments" class="form-control" rows="5"></textarea>
+                    </div>
+                    <hr/>
+                    <div class="form-group">
+                        <label>Add Screenshots</label>
+
+                        <form id="tmw-dropzone" th:action="@{/contribute/cachescreenshot}" class="dropzone"></form>
+                    </div>
+                    <span class="btn btn-primary" data-bind="click: submitContribution">Submit</span>
+                </div>
+
+                <div id="weakaura_string" data-bind="visible: showWA">
+                    <div class="form-group">
+                        <label>Caption</label>
+                        <input id="wa_caption" class="form-control"/>
+
+                        <p class="help-block"><a class="label label-info">Tip!</a> A good caption will help people to
+                            find back your WeakAura.</p>
+                    </div>
+                    <label>Paste the WeakAura-String</label>
+                    <textarea id="actual_weakaura_string" class="form-control" rows="5"></textarea>
+
+                    <div class="form-group">
+                        <label>Comments</label>
+                        <textarea id="wa_comments" class="form-control" rows="5"></textarea>
+                    </div>
+
+                    <hr/>
+                    <div class="form-group">
+                        <label>Add Screenshots</label>
+
+                        <form th:action="@{/contribute/cachescreenshot}"
+                              class="dropzone"
+                              id="wa-dropzone">
+                        </form>
+                    </div>
+                    <span class="btn btn-primary" data-bind="click: submitContribution">Submit</span>
+
+                </div>
+
+                <div id="macro_string" data-bind="visible: showMacro">
+                    <div class="form-group">
+                        <label>Caption</label>
+                        <input id="macro_caption" class="form-control"/>
+
+                        <p class="help-block"><a class="label label-info">Tip!</a> A good caption will help people to
+                            find back your Macro.</p>
+                    </div>
+                    <label>Paste the Macro</label>
+                    <textarea id="actual_macro_string" class="form-control" rows="3"></textarea>
+
+                    <div class="form-group">
+                        <label>Comments</label>
+                        <textarea id="macro_comments" class="form-control" rows="5"></textarea>
+                    </div>
+                    <span class="btn btn-primary" data-bind="click: submitContribution">Submit</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /. PAGE INNER  -->
+</div>
+<!-- /. layout fragment -->
+
+<div layout:fragment="footer-content">
+    <script th:src="@{/assets/js/dropzone/dropzone.js}"/>
+    <script type="application/javascript">
+        var SelectCategoryVM = function () {
+            var self = this;
+            self.activeCategory = ko.observable('select category');
+            self.chooseBossFight = function () {
+                self.activeCategory('Bossfight');
+                $.get('/contribute/details/Bossfight', function (data) {
+                    $("#details").html(data);
+                });
+            };
+            self.chooseClassSpec = function () {
+                self.activeCategory('Class and Spec');
+                $.get('/contribute/details/ClassSpec', function (data) {
+                    $("#details").html(data);
+                });
+            };
+        };
+
+        var model = new SelectCategoryVM();
+
+        var ActualInformationVM = function () {
+            var self = this;
+            self.uploadedTMWReferences = ko.observableArray([]);
+            self.uploadedWAReferences = ko.observableArray([]);
+            self.showTMW = ko.observable(false);
+            self.showWA = ko.observable(true);
+            self.showMacro = ko.observable(false);
+
+            self.submitContribution = function () {
+
+                $('#alertChooseOption').hide();
+                $('#alertAddCaption').hide();
+                $("#alertAddString").hide();
+                $("#alertAddComments").hide();
+                $("#alertChooseCategory").hide();
+
+                var doPost = true;
+                if ($("#selectWowClass")[0] === undefined) {
+                    $('#alertChooseOption').show();
+                    doPost = false;
+                }
+
+
+                var command = {};
+
+                command['chooseOption'] = 'classspec';
+
+                if (self.showTMW()) {
+                    if ($("#tmw_caption").val() === '') {
+                        $('#alertAddCaption').show();
+                        doPost = false;
+                    }
+
+                    if ($("#actual_tmw_string").val() === '') {
+                        $("#alertAddString").show();
+                        doPost = false;
+                    }
+
+                    if ($("#tmw_comments").val() === '') {
+                        $("#alertAddComments").show();
+                    }
+
+                    command['caption'] = $("#tmw_caption").val();
+                    command['category'] = 'TMW';
+                    command['actualValue'] = $('#actual_tmw_string').val();
+                    command['screenshots'] = self.uploadedTMWReferences();
+                    command['comments'] = $("#tmw_comments").val();
+                } else if (self.showWA()) {
+                    if ($("#wa_caption").val() === '') {
+                        $('#alertAddCaption').show();
+                        doPost = false;
+                    }
+                    if ($("#actual_weakaura_string").val() === '') {
+                        $("#alertAddString").show();
+                        doPost = false;
+                    }
+                    if ($("#wa_comments").val() === '') {
+                        $("#alertAddComments").show();
+                    }
+
+                    command['category'] = 'WA';
+                    command['actualValue'] = $('#actual_weakaura_string').val();
+                    command['screenshots'] = self.uploadedWAReferences();
+                    command['caption'] = $("#wa_caption").val();
+                    command['comments'] = $("#wa_comments").val();
+                } else if (self.showMacro()) {
+                    if ($("#macro_caption").val() === '') {
+                        $('#alertAddCaption').show();
+                        doPost = false;
+                    }
+
+                    if ($("#actual_macro_string").val() === '') {
+                        $("#alertAddString").show();
+                        doPost = false;
+                    }
+
+                    if ($("#macro_comments").val() === '') {
+                        $("#alertAddComments").show();
+                    }
+
+                    command['category'] = 'MACRO';
+                    command['actualValue'] = $('#actual_macro_string').val();
+                    command['caption'] = $("#macro_caption").val();
+                    command['comments'] = $("#macro_comments").val();
+                } else {
+                    $("#alertChooseCategory").show();
+                    doPost = false;
+                }
+
+                command['wowClass'] = $('#selectWowClass').val();
+                command['spec'] = $('#selectWowSpec').val();
+
+                if (doPost) {
+                    var stringyfiedCommand = JSON.stringify(command);
+                    $.ajax({
+                        url: '/contribute/do-contribution',
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        data: stringyfiedCommand, //Stringified Json Object
+                        cache: false,    //This will force requested pages not to be cached by the browser
+                        processData: false, //To avoid making query String instead of JSON
+                        success: function (resposeJsonObject) {
+                            window.location = "/?thankyou";
+                        }
+                    });
+                }
+            };
+        }
+
+        var actualInfoModel = new ActualInformationVM;
+
+        ko.applyBindings(model, $("#initialChoice")[0]);
+        ko.applyBindings(actualInfoModel, $("#actualInformation")[0]);
+
+        var setChosenType = function () {
+            actualInfoModel.showTMW($("#optionTMW").is(':checked'));
+            actualInfoModel.showWA($("#optionWA").is(':checked'));
+            actualInfoModel.showMacro($("#optionMacro").is(':checked'));
+        };
+
+        Dropzone.options.tmwDropzone = {
+            maxFilesize: 1,
+            addRemoveLinks: false,
+            clickable: true,
+            acceptedFiles: 'image/*',
+            init: function () {
+                this.on('success', function (file, response) {
+                    response.forEach(function (entry) {
+                        actualInfoModel.uploadedTMWReferences.push(entry);
+                    });
+                });
+            }
+        };
+
+        Dropzone.options.waDropzone = {
+            maxFilesize: 1,
+            addRemoveLinks: false,
+            clickable: true,
+            acceptedFiles: 'image/*',
+            init: function () {
+                this.on('success', function (file, response) {
+                    response.forEach(function (entry) {
+                        actualInfoModel.uploadedWAReferences.push(entry);
+                    });
+                });
+            }
+        };
+
+        $("#optionTMW").change(function () {
+            setChosenType();
+        });
+
+        $("#optionWA").change(function () {
+            setChosenType();
+        });
+
+        $("#optionMacro").change(function () {
+            setChosenType();
+        });
+
+    </script>
+
+
+</div>
+
+</html>

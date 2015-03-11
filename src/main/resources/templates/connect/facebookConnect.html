@@ -1,0 +1,121 @@
+﻿<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      layout:decorator="decorator/wa-decorator">
+
+
+<div layout:fragment="main-content">
+    <div id="page-inner">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5" sec:authorize="hasRole('ROLE_USER')">
+
+                    <h3>Hi <span sec:authentication="name"></span>, we've been expecting you.</h3>
+                    <span style="display: none;" type="hidden" id="generatedUsername" sec:authentication="principal.generatedUsername"></span>
+                    <p>
+                        We automatically chose this name based on your facebook profile.
+                        However, if you wish to change it, you can.
+                    </p>
+
+                    <div class="form-group" id="newUsernameFormGroup">
+                        <div id="generalfailure" style="display:none;" class="alert alert-danger">Something went wrong, please try again later!</div>
+                        <label>Username</label>
+                        <input id="newUsernameInput" placeholder="new username"
+                               data-bind="value: newUsername, valueUpdate: 'afterkeydown', event: {keyup:searchUsername}"
+                               class="form-control"/>
+
+                        <p class="help-block">Leave it blank if you don't want to change it.</p>
+                        <a th:href="@{/contribute}" id="usernameWasGood" class="btn btn-success" data-bind="visible: !goodUsername()">I don't
+                            want to change it</a>
+                        <a href="#" class="btn btn-primary" data-bind="visible: goodUsername, click: changeIt">save</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /. PAGE INNER  -->
+</div>
+<!-- /. layout fragment -->
+
+<div layout:fragment="footer-content">
+
+    <script type="application/javascript">
+        /*<![CDATA[*/
+        $("#generalfailure").hide();
+
+        var generated = $("#generatedUsername").html();
+        if(generated != "true") {
+
+            $.get('/registration/username/leaveit', function(data) {
+                window.location = "/contribute"
+            });
+        }
+
+
+        var ChangeUsernameModel = function () {
+            var self = this;
+            self.newUsername = ko.observable("");
+            self.goodUsername = ko.observable(false);
+            self.searchUsername = function () {
+                $('#newUsernameFormGroup').removeClass('has-warning');
+                $('#newUsernameFormGroup').removeClass('has-error');
+                if (self.newUsername().length < 3) {
+                    $('#newUsernameFormGroup').addClass('has-warning');
+                    self.goodUsername(false);
+                } else {
+
+                    handleAvailability(self.newUsername());
+                }
+                return true;
+            };
+            self.changeIt = function() {
+                $.postJSON('/registration/username/changeit', {newName: self.newUsername()},
+                 function(data) {
+                     console.log(data);
+                    if(data == true) {
+                        window.location = "/contribute"
+                    } else {
+                        $("#generalfailure").show();
+                    }
+                 });
+            };
+        }
+
+        var changeUsernameModel = new ChangeUsernameModel;
+        ko.applyBindings(changeUsernameModel);
+
+
+        $.postJSON = function (url, data, callback) {
+            return jQuery.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                'type': 'POST',
+                'url': url,
+                'data': JSON.stringify(data),
+                'dataType': 'json',
+                'success': callback
+            });
+        };
+
+        function handleAvailability(newUsername) {
+            $.postJSON('/registration/username/available', {newName: newUsername},
+                    function (data) {
+                        if (data == false) {
+                            $('#newUsernameFormGroup').addClass('has-error');
+                            changeUsernameModel.goodUsername(false);
+                        } else {
+                            $('#newUsernameFormGroup').addClass('has-success');
+                            changeUsernameModel.goodUsername(true);
+                        }
+                    });
+        }
+
+        /*]]>*/
+    </script>
+
+</div>
+
+</html>

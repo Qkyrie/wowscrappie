@@ -1,0 +1,138 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="decorator/wa-decorator">
+
+<div layout:fragment="header">
+    <link th:href="@{/assets/js/dataTables/dataTables.bootstrap.css}" rel="stylesheet" />
+
+</div>
+
+<div layout:fragment="main-content">
+    <div id="page-inner">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-12 text-center">
+                    <h2 th:text="${wowclass.name}"></h2>
+                    <img th:src="@{'/assets/img/classes/' + ${wowclass.slug} + '/' + ${wowclass.slug} + '.png'}"/>
+
+                    <span data-bind="click: wowClassChosen"  th:attr="data-wowclass_slug=${wowclass.slug}, data-string_type=macro" class="btn btn-default">Macros</span>
+                    <span data-bind="click: wowClassChosen"  th:attr="data-wowclass_slug=${wowclass.slug}, data-string_type=weakaura" class="btn btn-default">WeakAuras</span>
+                    <span data-bind="click: wowClassChosen"  th:attr="data-wowclass_slug=${wowclass.slug}, data-string_type=tellmewhen" class="btn btn-default">TellMeWhen</span>
+                </div>
+            </div>
+        </div>
+        <!-- /. ROW  -->
+
+        <hr/>
+        <div class="row">
+
+            <div th:switch="${specs.size()}">
+                <div th:case="'3'">
+                    <div th:each="spec : ${specs}">
+                        <div class="col-md-4 col-sm-6 col-xs-6">
+                            <div class="panel panel-back noti-box">
+                                <span class="icon-box set-icon">
+                                    <img th:src="@{'/assets/img/classes/' + ${wowclass.slug} + '/' + ${spec.slug} + '.jpg'}"/>
+                                </span>
+                                <div class="text-box">
+                                    <div class="row">
+                                        <p class="main-text" th:text="${spec.name}">Spec1</p>
+                                    </div>
+                                    <div class="row">
+                                        <p class="text-muted">
+                                            <span data-bind="click: specChosen" th:attr="data-spec_slug=${spec.name}, data-wowclass_slug=${wowclass.slug}, data-string_type=macro"  class="btn btn-default">Macros</span>
+                                            <span data-bind="click: specChosen"  th:attr="data-spec_slug=${spec.slug}, data-wowclass_slug=${wowclass.slug}, data-string_type=weakaura"  class="btn btn-default">WeakAuras</span>
+                                            <span data-bind="click: specChosen"  th:attr="data-spec_slug=${spec.slug}, data-wowclass_slug=${wowclass.slug}, data-string_type=tellmewhen"  class="btn btn-default">TellMeWhen</span>
+                                        </p>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div th:case="'4'">
+                    <div th:each="spec : ${specs}">
+                        <div class="col-md-3 col-sm-6 col-xs-6">
+                            <div class="panel panel-back noti-box">
+                                <span class="icon-box set-icon">
+                                    <img th:src="@{'/assets/img/classes/' + ${wowclass.slug} + '/' + ${spec.slug} + '.jpg'}"/>
+                                </span>
+                                <div class="text-box">
+                                    <div class="row">
+                                        <p class="main-text" th:text="${spec.name}">Spec1</p>
+                                    </div>
+                                    <div class="row">
+                                        <p class="text-muted">
+                                            <span data-bind="click: specChosen"   th:attr="data-spec_slug=${spec.slug}, data-wowclass_slug=${wowclass.slug}, data-string_type=macro" class="btn btn-default">Macros</span>
+                                            <span data-bind="click: specChosen"  th:attr="data-spec_slug=${spec.slug}, data-wowclass_slug=${wowclass.slug}, data-string_type=weakaura"  class="btn btn-default">WeakAuras</span>
+                                            <span data-bind="click: specChosen"  th:attr="data-spec_slug=${spec.slug}, data-wowclass_slug=${wowclass.slug}, data-string_type=tellmewhen"  class="btn btn-default">TellMeWhen</span>
+                                        </p>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+        <hr />
+
+        <div clas="row">
+            <div id="resultPane" class="col-md-offset-1 col-md-10">
+            </div>
+        </div>
+
+    </div>
+    <!-- /. PAGE INNER  -->
+</div>
+<!-- /. layout fragment -->
+<div layout:fragment="footer-content">
+    <script th:src="@{/assets/js/dataTables/jquery.dataTables.js}"></script>
+    <script th:src="@{/assets/js/dataTables/dataTables.bootstrap.js}"></script>
+    <script type="application/javascript">
+        var ViewModel = function () {
+
+            var self = this;
+
+            self.doGet = function(wowclass, wowspec, stringtype) {
+                $.get('/classes/' +wowclass+'/'+wowspec+'/'+stringtype, function(result) {
+                    $("#resultPane").html(result);
+                    $('#myTable').dataTable();
+                    ZeroClipboard.destroy();
+                });
+            };
+
+            self.wowClassChosen = function(data, event) {
+                var clickedElement = $(event.currentTarget);
+                var wowclass = clickedElement.data("wowclass_slug");
+                var stringType = clickedElement.data("string_type");
+                var spec = "class_specific";
+                self.doGet(wowclass, spec, stringType);
+            };
+
+            self.specChosen = function(data, event) {
+                var clickedElement = $(event.currentTarget);
+                var wowclass = clickedElement.data("wowclass_slug");
+                var spec = clickedElement.data("spec_slug");
+                var stringType = clickedElement.data("string_type");
+                self.doGet(wowclass, spec, stringType);
+            }
+        }
+        var viewModel = new ViewModel();
+        ko.applyBindings(viewModel);
+
+    </script>
+
+    <script type="text/javascript" th:src="@{/assets/fancybox/jquery.fancybox.pack.js?v=2.1.5}" />
+
+</div>
+
+</html>

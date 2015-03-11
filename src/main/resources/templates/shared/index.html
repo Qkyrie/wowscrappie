@@ -1,0 +1,163 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      layout:decorator="decorator/wa-decorator">
+<div layout:fragment="main-content">
+    <div id="page-inner">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 th:text="${config.name}">Name of the Configuration</h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 col-sm-8 col-xs-8">
+                <div class="panel panel-back noti-box">
+                <span class="icon-box bg-color-red set-icon">
+                    <i class="fa fa-user"></i>
+                </span>
+
+                    <div class="text-box">
+                        <p class="main-text">Uploaded by</p>
+
+                        <p class="text-muted" th:text="${config.uploader.username}">Pikachu</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-6">
+                <div class="panel panel-back noti-box">
+                <span class="icon-box bg-color-green set-icon">
+                    <i class="fa fa-laptop"></i>
+                </span>
+
+                    <div class="text-box">
+                        <p class="main-text">Type</p>
+
+                        <p class="text-muted" th:text="${configType}">TMW-Configs</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-6">
+                <div class="panel panel-back noti-box">
+                <span class="icon-box bg-color-blue set-icon">
+                    <i class="fa fa-thumbs-o-up"></i>
+                </span>
+
+                    <div class="text-box">
+                        <p class="main-text" th:text="${rating}">240</p>
+
+                        <p class="text-muted">ScrapScore</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="form-group">
+                    <label>Comments</label>
+                    <blockquote th:text="${config.comment}"></blockquote>
+                </div>
+                <label>Value</label>
+                <textarea th:text="${config.actualValue}" class="form-control" rows="3"></textarea>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="form-group">
+                    <label>Images</label>
+
+                    <div th:if="${screenshots.size() == 0}" class="alert alert-success">No images or screenshots were provided.</div>
+
+                    <div th:if="${screenshots.size() > 0}"  id="images">
+                        <a th:each="screenshot: ${screenshots}" class="fancybox" rel="group" th:href="'/shared/image/' + ${screenshot.reference}">
+                            <img th:src="'/shared/image/thumbnail-' + ${screenshot.reference}"  alt="" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <br/>
+
+        <div class="row" >
+            <div class="col-md-5 col-md-offset-1">
+                <button id="copy-button" th:attr="data-clipboard-text=${config.actualValue}" class="btn btn-primary">
+                    Copy to clipboard
+                </button>
+                <button class="btn btn-primary" sec:authorize="hasRole('ROLE_ADMIN')">
+                    <i class=" fa fa-thumbs-o-up " ></i> Upvote
+                </button>
+                <button class="btn btn-danger" sec:authorize="hasRole('ROLE_ADMIN')">
+                    <i class=" fa fa-thumbs-o-down " ></i> Downvote
+                </button>
+            </div>
+            <div class="col-md-5" sec:authorize="hasRole('ROLE_ADMIN')">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Administrative Functions
+                    </div>
+                    <div class="panel-body">
+                        <button th:if="${config.approved == false}" th:attr="data-config-id=${config.id}, data-config-type=${configType}" id="approveButton" class="btn btn-primary">
+                            <i class=" fa fa-thumbs-o-up "></i> <span id="approveText">Approve</span>
+                        </button>
+                        <button th:if="${config.approved == true}" class="btn btn-success">
+                            <i class=" fa fa-thumbs-o-up "></i> <span id="approveText">Approved</span>
+                        </button>
+                        <button class="btn btn-danger">
+                            <i class=" fa fa-thumbs-o-down "></i> Delete
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /. PAGE INNER  -->
+</div>
+<!-- /. layout fragment -->
+<div layout:fragment="footer-content">
+    <script type="application/javascript" th:src="@{/assets/zeroclipboard/ZeroClipboard.min.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/fancybox/jquery.fancybox.pack.js?v=2.1.5}" />
+
+    <script type="application/javascript">
+        function doClipboardBinding() {
+            new ZeroClipboard($("#copy-button"));
+        }
+        $(document).ready(function() {
+            $(".fancybox").fancybox();
+            ZeroClipboard.config({swfPath: "/assets/zeroclipboard/ZeroClipboard.swf"});
+            doClipboardBinding();
+        });
+
+        var getUrl = function(type, configId) {
+            var urlType = '';
+            if(type == 'MACRO') {
+                urlType = 'macro';
+            } else if (type == 'TMW'){
+                urlType = 'tellmewhen';
+            } else if (type == 'WA') {
+                urlType = 'weakaura';
+            }
+            return '/interface/' + urlType + '/' + configId + '/approve';
+        }
+        $("#approveButton").click(function () {
+            var self = $(this);
+            $.get(getUrl(self.data('config-type'), self.data('config-id')), function (data) {
+                if (data == true) {
+                    self.removeClass('btn-primary');
+                    self.addClass('btn-success');
+                    $("#approveText").html('Approved');
+                } else {
+                    self.removeClass('btn-primary');
+                    self.addClass('btn-danger');
+                    $("#approveText").html('Approve Failed');
+                }
+            });
+        });
+
+    </script>
+</div>
+
+</html>

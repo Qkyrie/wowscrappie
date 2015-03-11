@@ -1,0 +1,363 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="decorator/wa-decorator">
+
+
+<div layout:fragment="main-content">
+    <div id="page-inner">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>All Classes</h2>
+            </div>
+        </div>
+
+        <hr/>
+        <div class="row">
+            <div class="col-md-4 col-sm-6 col-xs-6">
+                <div class="panel panel-primary text-center no-boder">
+                    <div class="panel-body">
+                        <div class="row">
+                            <a th:href="@{/classes/death_knight}">
+                                <img th:src="@{/assets/img/classes/death_knight/death_knight.png}"/>
+                            </a>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <img class="img-bordered" data-toggle="tooltip" data-placement="left" title="Blood"
+                                     th:src="@{/assets/img/classes/death_knight/blood.jpg}"/>
+                            </div>
+                            <div class="col-md-4">
+                                <img class="img-bordered" data-toggle="tooltip" data-placement="top" title="Frost"
+                                     th:src="@{/assets/img/classes/death_knight/frost.jpg}"/>
+                            </div>
+                            <div class="col-md-4">
+                                <img class="img-bordered" data-toggle="tooltip" data-placement="right" title="Unholy"
+                                     th:src="@{/assets/img/classes/death_knight/unholy.jpg}"/>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="panel-footer">
+                        Death Knight
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-6">
+                <div class="panel panel-primary text-center no-boder">
+                    <div class="panel-body">
+                        <div class="row">
+                            <a th:href="@{/classes/druid}">
+                                <img th:src="@{/assets/img/classes/druid/druid.png}"/>
+                            </a>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <img class="img-bordered" data-toggle="tooltip" data-placement="left" title="Balance"
+                                     th:src="@{/assets/img/classes/druid/balance.jpg}"/>
+                            </div>
+                            <div class="col-md-3">
+                                <img class="img-bordered" data-toggle="tooltip" data-placement="top" title="Feral"
+                                     th:src="@{/assets/img/classes/druid/feral.jpg}"/>
+                            </div>
+                            <div class="col-md-3">
+                                <img class="img-bordered" data-toggle="tooltip" data-placement="top" title="Guardian"
+                                     th:src="@{/assets/img/classes/druid/guardian.jpg}"/>
+                            </div>
+                            <div class="col-md-3">
+                                <img class="img-bordered" data-toggle="tooltip" data-placement="right"
+                                     title="Restoration"
+                                     th:src="@{/assets/img/classes/druid/restoration.jpg}"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        Druid
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-6">
+                <div class="panel panel-primary text-center no-boder">
+                    <div class="panel-body">
+                        <div class="row">
+                            <a th:href="@{/classes/hunter}">
+                                <img th:src="@{/assets/img/classes/hunter/hunter.png}"/>
+                            </a>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <img class="img-bordered" data-toggle="tooltip" data-placement="left"
+                                     title="Beast Mastery"
+                                     th:src="@{/assets/img/classes/hunter/beast_mastery.jpg}"/>
+                            </div>
+                            <div class="col-md-4">
+                                <img class="img-bordered" data-toggle="tooltip" data-placement="top"
+                                     title="Marksmanship"
+                                     th:src="@{/assets/img/classes/hunter/marksmanship.jpg}"/>
+                            </div>
+                            <div class="col-md-4">
+                                <img class="img-bordered" data-toggle="tooltip" data-placement="right" title="Survival"
+                                     th:src="@{/assets/img/classes/hunter/survival.jpg}"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        Hunter
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-sm-6 col-xs-6">
+                <div class="panel panel-primary text-center no-boder">
+                    <div class="panel-body">
+                        <div class="row">
+                            <a th:href="@{/classes/mage}">
+                                <img th:src="@{/assets/img/classes/mage/mage.png}"/>
+                            </a>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <img class="img-bordered" data-toggle="tooltip" data-placement="left" title="Arcane"
+                                     th:src="@{/assets/img/classes/mage/arcane.jpg}"/>
+                            </div>
+                            <div class="col-md-4">
+                                <img class="img-bordered" data-toggle="tooltip" data-placement="top" title="Fire"
+                                     th:src="@{/assets/img/classes/mage/fire.jpg}"/>
+                            </div>
+                            <div class="col-md-4">
+                                <img class="img-bordered" data-toggle="tooltip" data-placement="right" title="Frost"
+                                     th:src="@{/assets/img/classes/mage/frost.jpg}"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        Mage
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-6">
+                <div class="panel panel-primary text-center no-boder">
+                    <div class="panel-body">
+                        <div class="row">
+                            <a th:href="@{/classes/monk}">
+                                <img th:src="@{/assets/img/classes/monk/monk.png}"/>
+                            </a>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <img class="img-bordered" data-toggle="tooltip" data-placement="left" title="Brewmaster"
+                                     th:src="@{/assets/img/classes/monk/brewmaster.jpg}"/>
+                            </div>
+                            <div class="col-md-4">
+                                <img class="img-bordered" data-toggle="tooltip" data-placement="top" title="Mistweaver"
+                                     th:src="@{/assets/img/classes/monk/mistweaver.jpg}"/>
+                            </div>
+                            <div class="col-md-4">
+                                <img class="img-bordered" data-toggle="tooltip" data-placement="right"
+                                     title="Windwalker"
+                                     th:src="@{/assets/img/classes/monk/windwalker.jpg}"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        Monk
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-6">
+                <div class="panel panel-primary text-center no-boder">
+                    <div class="panel-body">
+                        <div class="row">
+                            <a th:href="@{/classes/paladin}">
+                                <img th:src="@{/assets/img/classes/paladin/paladin.png}"/>
+                            </a>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <img class="img-bordered" data-toggle="tooltip" data-placement="left" title="Holy"
+                                     th:src="@{/assets/img/classes/paladin/holy.jpg}"/>
+                            </div>
+                            <div class="col-md-4">
+                                <img class="img-bordered" data-toggle="tooltip" data-placement="top" title="Protection"
+                                     th:src="@{/assets/img/classes/paladin/protection.jpg}"/>
+                            </div>
+                            <div class="col-md-4">
+                                <img class="img-bordered" data-toggle="tooltip" data-placement="right"
+                                     title="Retribution"
+                                     th:src="@{/assets/img/classes/paladin/retribution.jpg}"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        Paladin
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 col-sm-6 col-xs-6">
+                <div class="panel panel-primary text-center no-boder">
+                    <div class="panel-body">
+                        <div class="row">
+                            <a th:href="@{/classes/priest}">
+                                <img th:src="@{/assets/img/classes/priest/priest.png}"/>
+                            </a>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <img class="img-bordered" data-toggle="tooltip" data-placement="left" title="Discipline"
+                                     th:src="@{/assets/img/classes/priest/discipline.jpg}"/>
+                            </div>
+                            <div class="col-md-4">
+                                <img class="img-bordered" data-toggle="tooltip" data-placement="top" title="Holy"
+                                     th:src="@{/assets/img/classes/priest/holy.jpg}"/>
+                            </div>
+                            <div class="col-md-4">
+                                <img class="img-bordered" data-toggle="tooltip" data-placement="right" title="Shadow"
+                                     th:src="@{/assets/img/classes/priest/shadow.jpg}"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        priest
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-6">
+                <div class="panel panel-primary text-center no-boder">
+                    <div class="panel-body">
+                        <div class="row">
+                            <a th:href="@{/classes/rogue}">
+                                <img th:src="@{/assets/img/classes/rogue/rogue.png}"/>
+                            </a>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <img class="img-bordered" data-toggle="tooltip" data-placement="left"
+                                     title="Assassination"
+                                     th:src="@{/assets/img/classes/rogue/assassination.jpg}"/>
+                            </div>
+                            <div class="col-md-4">
+                                <img class="img-bordered" data-toggle="tooltip" data-placement="top" title="Combat"
+                                     th:src="@{/assets/img/classes/rogue/combat.jpg}"/>
+                            </div>
+                            <div class="col-md-4">
+                                <img class="img-bordered" data-toggle="tooltip" data-placement="right" title="Subtlety"
+                                     th:src="@{/assets/img/classes/rogue/subtlety.jpg}"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        Rogue
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-6">
+                <div class="panel panel-primary text-center no-boder">
+                    <div class="panel-body">
+                        <div class="row">
+                            <a th:href="@{/classes/shaman}">
+                                <img th:src="@{/assets/img/classes/shaman/shaman.png}"/>
+                            </a>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <img class="img-bordered" data-toggle="tooltip" data-placement="left" title="Elemental"
+                                     th:src="@{/assets/img/classes/shaman/elemental.jpg}"/>
+                            </div>
+                            <div class="col-md-4">
+                                <img class="img-bordered" data-toggle="tooltip" data-placement="top" title="Enhancement"
+                                     th:src="@{/assets/img/classes/shaman/enhancement.jpg}"/>
+                            </div>
+                            <div class="col-md-4">
+                                <img class="img-bordered" data-toggle="tooltip" data-placement="right"
+                                     title="Restoration"
+                                     th:src="@{/assets/img/classes/shaman/restoration.jpg}"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        Shaman
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-offset-3 col-md-4 col-sm-6 col-xs-6">
+                <div class="panel panel-primary text-center no-boder">
+                    <div class="panel-body">
+                        <div class="row">
+                            <a th:href="@{/classes/warlock}">
+                                <img th:src="@{/assets/img/classes/warlock/warlock.png}"/>
+                            </a>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <img class="img-bordered" data-toggle="tooltip" data-placement="left" title="Affliction"
+                                     th:src="@{/assets/img/classes/warlock/affliction.jpg}"/>
+                            </div>
+                            <div class="col-md-4">
+                                <img class="img-bordered" data-toggle="tooltip" data-placement="top" title="Demonology"
+                                     th:src="@{/assets/img/classes/warlock/demonology.jpg}"/>
+                            </div>
+                            <div class="col-md-4">
+                                <img class="img-bordered" data-toggle="tooltip" data-placement="right"
+                                     title="Destruction"
+                                     th:src="@{/assets/img/classes/warlock/destruction.jpg}"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        Warlock
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-6">
+                <div class="panel panel-primary text-center no-boder">
+                    <div class="panel-body">
+                        <div class="row">
+                            <a th:href="@{/classes/warrior}">
+                                <img th:src="@{/assets/img/classes/warrior/warrior.png}"/>
+                            </a>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <img class="img-bordered" data-toggle="tooltip" data-placement="left" title="Arms"
+                                     th:src="@{/assets/img/classes/warrior/arms.jpg}"/>
+                            </div>
+                            <div class="col-md-4">
+                                <img class="img-bordered" data-toggle="tooltip" data-placement="top" title="Fury"
+                                     th:src="@{/assets/img/classes/warrior/fury.jpg}"/>
+                            </div>
+                            <div class="col-md-4">
+                                <img class="img-bordered" data-toggle="tooltip" data-placement="right"
+                                     title="Protection"
+                                     th:src="@{/assets/img/classes/warrior/protection.jpg}"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        Warrior
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- /. ROW  -->
+
+    </div>
+    <!-- /. PAGE INNER  -->
+</div>
+<!-- /. layout fragment -->
+
+<div layout:fragment="footer-content">
+    <script type="application/javascript">
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        })
+    </script>
+</div>
+</html>

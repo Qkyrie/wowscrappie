@@ -1,0 +1,123 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="decorator/fullPage">
+
+
+    <div layout:fragment="main-content">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Scrappie - your auction house consultant!</h1>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-lg-4 col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-comments fa-5x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div class="huge" id="databaseItemsCount">0</div>
+                                <div>items in our database!</div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#">
+                        <div class="panel-footer">
+                            <span class="pull-left">View Details</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="panel panel-green">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-tasks fa-5x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div class="huge" id="databaseProfessionsCount">0</div>
+                                <div>in depth professions!</div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#">
+                        <div class="panel-footer">
+                            <span class="pull-left">View Details</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="panel panel-yellow">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-shopping-cart fa-5x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div class="huge">Crafting Advisor</div>
+                                <div>New!</div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#">
+                        <div class="panel-footer">
+                            <span class="pull-left">View Details</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-lg-12">
+                <h2>Scrappie says hi!</h2>
+                <p>Welcome to Scrappie, your personal auction house consultant.</p>
+                <p><span class="label label-success">Updated for Warlords of Draenor!</span>
+                    Scrappie will provide you with insight in the World of Warcraft auction house.
+                    It will teach you the basics of crafting, buying and selling on the auction house, to create an interesting revenue.
+                </p>
+                <div class="alert alert-success">Scrappie is still under heavy development. New features are pushed each day, including new tips, statistics or entirely new functions.</div>
+            </div>
+
+            <div class="col-md-6">
+                <h3>Teaches you basics per profession</h3>
+                <p>Covering each profession, we try to explain the <b>when and the why</b> of crafting, buying and selling.</p>
+                <p>Based on statistical data, using world of warcraft, wowuction and tuj, it will give you some easy-to-read tips and explanations.</p>
+            </div>
+            <div class="col-lg-6">
+                <h3>Coming up, soon&trade;!</h3>
+                <p>We're currently working very hard to provide you with live feedback on when to buy, craft or sell anything on your server.</p>
+                <p>Depending on results of our number crunching, we'll be using various sources to provide you with dynamic tips for each profession.</p>
+            </div>
+        </div>
+    </div>
+
+    <div layout:fragment="footer-content">
+        <script type="application/javascript">
+            $(document).ready(function(){
+                $.get('/rest/items/count', function(data){
+                    $("#databaseItemsCount").html(data);
+                });
+
+                $.get('/rest/professions/count', function(data){
+                    $("#databaseProfessionsCount").html(data);
+                });
+            });
+        </script>
+    </div>
+</html>

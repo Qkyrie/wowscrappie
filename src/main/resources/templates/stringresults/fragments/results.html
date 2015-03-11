@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+
+<head>
+
+</head>
+<body>
+<div th:fragment="tmw">
+    <div id="tmw-wrapper">
+        <div class="row">
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered table-hover" id="myTable">
+                    <thead>
+                    <tr>
+                        <th>Caption</th>
+                        <th>Uploader</th>
+                        <th>ScrapScore</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="uielement, iterStat : ${uielements}"
+                        th:class="${iterStat.odd}? 'gradeA' : 'gradeC'">
+                        <td th:text="${uielement.name}">Name</td>
+                        <td th:text="${uielement.uploader}">Pikachu</td>
+                        <td>
+                            <span><span class="badge" th:text="${uielement.rating}">0</span></span>
+                        </td>
+                        <td>
+                            <span data-bind="click: view" th:attr="data-tmw_id=${uielement.id}"
+                                  class="label label-success">view</span>
+                            <span th:attr="data-tmw_id=${uielement.id}, data-share-url=${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/shared/tmw/} + ${uielement.id}" class="shareButton label label-success">share link</span>
+                            <span th:attr="data-tmw_id=${uielement.id}" th:if="${uielement.approved == false}"
+                                  class="approveButton label label-info"
+                                  sec:authorize="hasRole('ROLE_ADMIN')">approve</span>
+                            <span th:if="${uielement.approved == true}" class="label label-success"
+                                  sec:authorize="hasRole('ROLE_ADMIN')">approved</span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row" data-bind="visible: showDetails">
+
+            <div class="form-group">
+                <label>Comments</label>
+                <blockquote data-bind="text: activeComment"></blockquote>
+            </div>
+
+            <label>TellMeWhen-String</label>
+            <textarea data-bind="value: activeString" class="form-control" rows="3"></textarea>
+
+            <br/>
+
+            <div id="images" data-bind="foreach: imageRefs">
+                <a class="fancybox" rel="group" data-bind="attr: { href: '/shared/image/' + $data }">
+                    <img data-bind="attr: { src: '/shared/image/thumbnail-' + $data }" alt=""/>
+                </a>
+            </div>
+        </div>
+
+        <br/>
+        <div class="row" data-bind="visible: showDetails">
+
+        </div>
+
+        <div class="row" data-bind="visible: showDetails" sec:authorize="hasRole('ROLE_ADMIN')">
+            <div class="col-md-12 ">
+                <button class="btn btn-primary" >
+                    <i class=" fa fa-thumbs-o-up "></i> Upvote
+                </button>
+                <button class="btn btn-danger">
+                    <i class=" fa fa-thumbs-o-down"></i> Downvote
+                </button>
+            </div>
+            <br/>
+
+        </div>
+        <div class="row" data-bind="visible: showDetails" sec:authorize="hasRole('ROLE_ADMIN')">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Administrative Functions
+                    </div>
+                    <div class="panel-body">
+                        <button class="btn btn-primary">
+                            <i class=" fa fa-thumbs-o-up "></i> Approve
+                        </button>
+                        <button class="btn btn-danger">
+                            <i class=" fa fa-thumbs-o-down "></i> Delete
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script type="application/javascript" th:src="@{/assets/zeroclipboard/ZeroClipboard.min.js}"></script>
+    <script type="application/javascript">
+
+        $('.shareButton').each(function() {
+            $(this).click(function() {
+                window.open($(this).data('share-url'), '_blank');
+            });
+        });
+
+        var tmwVM = function () {
+            var self = this;
+
+            self.activeTMW = ko.observable();
+            self.activeString = ko.observable();
+            self.activeComment = ko.observable();
+            self.showDetails = ko.observable(false);
+            self.imageRefs = ko.observableArray([]);
+
+            self.view = function (data, event) {
+                var clickedElement = $(event.currentTarget);
+                var tmw_id = clickedElement.data("tmw_id");
+                $.get("/interface/tellmewhen/" + tmw_id, function (resultValue) {
+                    if (resultValue !== null) {
+                        self.activeTMW(resultValue);
+                        self.activeString(resultValue.actualValue);
+                        self.activeComment(resultValue.comment);
+                        self.imageRefs(resultValue.imageRefs);
+                        self.showDetails(true);
+                        $(".fancybox").fancybox();
+                    }
+                });
+            };
+        };
+
+        var tmwModel = new tmwVM();
+        ko.applyBindings(tmwModel, $("#tmw-wrapper")[0]);
+
+        $(".approveButton").click(function () {
+            var self = $(this);
+            $.get('/interface/tellmewhen/' + self.data('tmw_id') + '/approve', function (data) {
+                if (data == true) {
+                    self.removeClass('label-info')
+                    self.addClass('label-success')
+                    self.html('approved');
+                } else {
+                    self.removeClass('label-info')
+                    self.addClass('label-danger')
+                    self.html('approve failed');
+                }
+            });
+        });
+    </script>
+</div>
+
+
+<div th:fragment="wa">
+    <div id="wa-wrapper">
+        <div class="row">
+            <table class="table table-striped table-bordered table-hover" id="myTable">
+                <thead>
+                <tr>
+                    <th>Caption</th>
+                    <th>Uploader</th>
+                    <th>ScrapScore</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="uielement, iterStat : ${uielements}"
+                    th:class="${iterStat.odd}? 'gradeA' : 'gradeC'">
+                    <td th:text="${uielement.name}">Name</td>
+                    <td th:text="${uielement.uploader}">Pikachu</td>
+                    <td>
+                        <span><span class="badge" th:text="${uielement.rating}">0</span></span>
+                    </td>
+                    <td>
+                    <span data-bind="click: view" th:attr="data-wa_id=${uielement.id}"
+                          class="label label-success">view</span>
+                        <span th:attr="data-wa_id=${uielement.id}, data-share-url=${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/shared/wa/} + ${uielement.id}" class="shareButton label label-success">share link</span>
+                        <span th:attr="data-wa_id=${uielement.id}" th:if="${uielement.approved == false}"
+                              class="approveButton label label-info"
+                              sec:authorize="hasRole('ROLE_ADMIN')">approve</span>
+                        <span th:if="${uielement.approved == true}" class="label label-success"
+                              sec:authorize="hasRole('ROLE_ADMIN')">approved</span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class="row" data-bind="visible: showDetails">
+
+            <div class="form-group">
+                <label>Comments</label>
+                <blockquote data-bind="text: activeComment"></blockquote>
+            </div>
+
+            <label>WeakAura-String</label>
+            <textarea data-bind="value: activeString" class="form-control" rows="3"></textarea>
+            <br/>
+
+            <div id="images" data-bind="foreach: imageRefs">
+                <a class="fancybox" rel="group" data-bind="attr: { href: '/shared/image/' + $data }">
+                    <img data-bind="attr: { src: '/shared/image/thumbnail-' + $data }" alt=""/>
+                </a>
+            </div>
+        </div>
+
+        <br/>
+
+        <div class="row" data-bind="visible: showDetails" >
+            <div class="col-md-12">
+                <button class="btn btn-primary" sec:authorize="hasRole('ROLE_ADMIN')">
+                    <i class=" fa fa-thumbs-o-up "></i> Upvote
+                </button>
+                <button class="btn btn-danger" sec:authorize="hasRole('ROLE_USER')">
+                    <i class=" fa fa-thumbs-o-down "></i> Downvote
+                </button>
+            </div>
+            <br/>
+
+        </div>
+        <div class="row" data-bind="visible: showDetails" sec:authorize="hasRole('ROLE_ADMIN')">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Administrative Functions
+                    </div>
+                    <div class="panel-body">
+                        <button class="btn btn-primary">
+                            <i class=" fa fa-thumbs-o-up "></i> Approve
+                        </button>
+                        <button class="btn btn-danger">
+                            <i class=" fa fa-thumbs-o-down "></i> Delete
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="application/javascript" th:src="@{/assets/zeroclipboard/ZeroClipboard.min.js}"></script>
+    <script type="application/javascript">
+        $('.shareButton').each(function() {
+            $(this).click(function() {
+                window.open($(this).data('share-url'), '_blank');
+            });
+        });
+
+        var WaModel = function () {
+            var self = this;
+
+            self.activeWA = ko.observable();
+            self.activeString = ko.observable();
+            self.activeComment = ko.observable();
+            self.showDetails = ko.observable(false);
+            self.imageRefs = ko.observableArray([]);
+
+            self.view = function (data, event) {
+                var clickedElement = $(event.currentTarget);
+                var tmw_id = clickedElement.data("wa_id");
+                $.get("/interface/weakaura/" + tmw_id, function (resultValue) {
+                    if (resultValue !== null) {
+                        self.activeWA(resultValue);
+                        self.activeString(resultValue.actualValue);
+                        self.activeComment(resultValue.comment);
+                        self.imageRefs(resultValue.imageRefs);
+                        self.showDetails(true);
+                        $(".fancybox").fancybox();
+                    }
+                });
+            };
+        };
+
+        var waModel = new WaModel();
+        ko.applyBindings(waModel, $("#wa-wrapper")[0]);
+
+        $(".approveButton").click(function () {
+            var self = $(this);
+            $.get('/interface/weakaura/' + self.data('wa_id') + '/approve', function (data) {
+                if (data == true) {
+                    self.removeClass('label-info')
+                    self.addClass('label-success')
+                    self.html('approved');
+                } else {
+                    self.removeClass('label-info')
+                    self.addClass('label-danger')
+                    self.html('approve failed');
+                }
+            });
+        });
+    </script>
+</div>
+<div th:fragment="macro">
+    <div id="macro-stuff">
+        <div class="row">
+            <table class="table table-striped table-bordered table-hover" id="myTable">
+                <thead>
+                <tr>
+                    <th>Caption</th>
+                    <th>Uploader</th>
+                    <th>ScrapScore</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="uielement, iterStat : ${uielements}"
+                    th:class="${iterStat.odd}? 'gradeA' : 'gradeC'">
+                    <td th:text="${uielement.name}">Name</td>
+                    <td th:text="${uielement.uploader}">Pikachu</td>
+                    <td>
+                        <span><span class="badge" th:text="${uielement.rating}">0</span></span>
+                    </td>
+                    <td>
+                    <span data-bind="click: view" th:attr="data-macro_id=${uielement.id}"
+                          class="label label-success">view</span>
+                        <span th:attr="data-macro_id=${uielement.id}, data-share-url=${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/shared/macro/} + ${uielement.id}" class="shareButton label label-success">share link</span>
+                        <span th:attr="data-macro_id=${uielement.id}" th:if="${uielement.approved == false}"
+                              class="approveButton label label-info"
+                              sec:authorize="hasRole('ROLE_ADMIN')">approve</span>
+                        <span th:if="${uielement.approved == true}" class="label label-success"
+                              sec:authorize="hasRole('ROLE_ADMIN')">approved</span>
+
+                    </td>
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row" data-bind="visible: showDetails">
+
+            <div class="form-group">
+                <label>Comments</label>
+                <blockquote data-bind="text: activeComment"></blockquote>
+            </div>
+
+            <label>TellMeWhen-String</label>
+            <textarea data-bind="value: activeString" class="form-control" rows="3"></textarea>
+        </div>
+        <br/>
+        <div class="row" data-bind="visible: showDetails"  sec:authorize="hasRole('ROLE_ADMIN')">
+            <div class="col-md-12">
+                <button class="btn btn-primary">
+                    <i class=" fa fa-thumbs-o-up "></i> Upvote
+                </button>
+                <button class="btn btn-danger">
+                    <i class=" fa fa-thumbs-o-down "></i> Downvote
+                </button>
+            </div>
+            <br/>
+
+        </div>
+        <div class="row" data-bind="visible: showDetails" sec:authorize="hasRole('ROLE_ADMIN')">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Administrative Functions
+                    </div>
+                    <div class="panel-body">
+                        <button class="btn btn-primary">
+                            <i class=" fa fa-thumbs-o-up "></i> Approve
+                        </button>
+                        <button class="btn btn-danger">
+                            <i class=" fa fa-thumbs-o-down "></i> Delete
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="application/javascript">
+
+        $('.shareButton').each(function() {
+            $(this).click(function() {
+                window.open($(this).data('share-url'), '_blank');
+            });
+        });
+
+        var MacroModel = function () {
+            var self = this;
+
+            self.activeMacro = ko.observable();
+            self.activeString = ko.observable();
+            self.activeComment = ko.observable();
+            self.showDetails = ko.observable(false);
+
+            self.view = function (data, event) {
+                var clickedElement = $(event.currentTarget);
+                var tmw_id = clickedElement.data("macro_id");
+                $.get("/interface/macro/" + tmw_id, function (resultValue) {
+                    if (resultValue !== null) {
+                        self.activeMacro(resultValue);
+                        self.activeString(resultValue.actualValue);
+                        self.activeComment(resultValue.comment);
+                        self.showDetails(true);
+                    }
+                });
+            };
+        };
+
+        var macroModel = new MacroModel();
+        ko.applyBindings(macroModel, $("#macro-stuff")[0]);
+
+        $(".approveButton").click(function () {
+            var self = $(this);
+            $.get('/interface/macro/' + self.data('macro_id') + '/approve', function (data) {
+                if (data == true) {
+                    self.removeClass('label-info')
+                    self.addClass('label-success')
+                    self.html('approved');
+                } else {
+                    self.removeClass('label-info')
+                    self.addClass('label-danger')
+                    self.html('approve failed');
+                }
+            });
+        });
+
+
+    </script>
+</div>
+<div th:fragments="error">
+    <h4>No Results found</h4>
+</div>
+</body>
+</html>
