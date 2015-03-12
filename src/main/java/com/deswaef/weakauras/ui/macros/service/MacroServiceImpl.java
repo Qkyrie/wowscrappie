@@ -6,6 +6,7 @@ import com.deswaef.weakauras.ui.macros.domain.Macro;
 import com.deswaef.weakauras.ui.macros.repository.MacroRepository;
 import com.deswaef.weakauras.ui.macros.repository.SpecMacroRepository;
 import com.deswaef.weakauras.ui.macros.repository.WowClassMacroRepository;
+import com.deswaef.weakauras.ui.rating.service.ConfigRatingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +23,8 @@ public class MacroServiceImpl implements MacroService {
     private SpecMacroRepository specMacroRepository;
     @Autowired
     private WowClassMacroRepository wowClassMacroRepository;
+    @Autowired
+    private ConfigRatingService configRatingService;
 
     @Override
     @Transactional
@@ -76,5 +79,12 @@ public class MacroServiceImpl implements MacroService {
         } else {
             throw new IllegalArgumentException("a macro with that id was not found");
         }
+    }
+
+    @Override
+    @Transactional
+    public void delete(Long macro) {
+        configRatingService.deleteMacroConfigRating(macro);
+        macroRepository.delete(macro);
     }
 }

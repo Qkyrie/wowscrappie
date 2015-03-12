@@ -3,6 +3,7 @@ package com.deswaef.weakauras.ui.weakauras.service;
 import com.deswaef.weakauras.classes.domain.Spec;
 import com.deswaef.weakauras.classes.domain.WowClass;
 import com.deswaef.weakauras.ui.image.domain.Screenshot;
+import com.deswaef.weakauras.ui.rating.service.ConfigRatingService;
 import com.deswaef.weakauras.ui.weakauras.domain.WeakAura;
 import com.deswaef.weakauras.ui.weakauras.domain.WeakauraScreenshot;
 import com.deswaef.weakauras.ui.weakauras.repository.SpecWeakAuraRepository;
@@ -29,6 +30,8 @@ public class WeakAuraServiceImpl implements WeakAuraService {
     private SpecWeakAuraRepository specWeakAuraRepository;
     @Autowired
     private WeakAuraScreenshotRepository weakAuraScreenshotRepository;
+    @Autowired
+    private ConfigRatingService configRatingService;
 
     @Override
     @Transactional
@@ -103,6 +106,13 @@ public class WeakAuraServiceImpl implements WeakAuraService {
         } else {
             throw new IllegalArgumentException("A weakaura with that id was not found");
         }
+    }
+
+    @Override
+    @Transactional
+    public void delete(Long id) {
+        configRatingService.deleteWeakAuraConfigRating(id);
+        weakAuraRepository.delete(id);
     }
 
 }

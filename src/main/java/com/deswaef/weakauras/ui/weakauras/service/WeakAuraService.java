@@ -28,4 +28,6 @@ public interface WeakAuraService extends OnRoleDependable {
     List<WeakAura> findAll();
 
     void approve(Long id);
+
+    void delete(Long id);
 }

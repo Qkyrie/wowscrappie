@@ -22,4 +22,6 @@ public interface MacroService extends OnRoleDependable {
     List<Macro> findAll();
 
     void approve(Long id);
+
+    void delete(Long macro);
 }

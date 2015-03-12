@@ -51,4 +51,15 @@ public class WeakAuraController {
             return false;
         }
     }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @RequestMapping("/{id}/delete")
+    public @ResponseBody boolean delete(@PathVariable("id") Long id) {
+        try {
+            weakAuraService.delete(id);
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
 }

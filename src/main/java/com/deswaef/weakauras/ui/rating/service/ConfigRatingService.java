@@ -28,4 +28,8 @@ public interface ConfigRatingService {
     void voteWA(Long wa, Rating rating, ScrappieUser user);
     void voteMacro(Long macro, Rating rating, ScrappieUser user);
 
+    void deleteWeakAuraConfigRating(Long weakAura);
+    void deleteTellMeWhenConfigRating(Long tellMeWhen);
+    void deleteMacroConfigRating(Long macro);
+
 }

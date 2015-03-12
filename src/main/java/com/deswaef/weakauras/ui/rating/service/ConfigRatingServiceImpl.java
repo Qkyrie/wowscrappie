@@ -212,4 +212,31 @@ public class ConfigRatingServiceImpl implements ConfigRatingService {
             macroConfigRatingRepository.save(macroConfigRating);
         }
     }
+
+    @Override
+    @Transactional
+    public void deleteWeakAuraConfigRating(Long weakAura) {
+        Optional<WeakAuraConfigRating> byWeakAura = findByWeakAura(weakAura);
+        if (byWeakAura.isPresent()) {
+            weakAuraConfigRatingRepository.delete(byWeakAura.get());
+        }
+    }
+
+    @Override
+    @Transactional
+    public void deleteTellMeWhenConfigRating(Long tellMeWhen) {
+        Optional<TellMeWhenConfigRating> byTMW = findByTellMeWhen(tellMeWhen);
+        if (byTMW.isPresent()) {
+            tellMeWhenConfigRatingRepository.delete(byTMW.get());
+        }
+    }
+
+    @Override
+    @Transactional
+    public void deleteMacroConfigRating(Long macro) {
+        Optional<MacroConfigRating> byMacro = findByMacro(macro);
+        if (byMacro.isPresent()) {
+            macroConfigRatingRepository.delete(byMacro.get());
+        }
+    }
 }

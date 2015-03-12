@@ -27,4 +27,6 @@ public interface TellMeWhenService extends OnRoleDependable {
     List<TellMeWhen> findAll();
 
     void approve(Long id);
+
+    void delete(Long tmw);
 }

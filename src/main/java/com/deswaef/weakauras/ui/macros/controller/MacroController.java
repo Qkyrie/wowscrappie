@@ -41,4 +41,15 @@ public class MacroController {
             return false;
         }
     }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @RequestMapping("/{id}/delete")
+    public @ResponseBody boolean delete(@PathVariable("id") Long id) {
+        try {
+            macroService.delete(id);
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
 }

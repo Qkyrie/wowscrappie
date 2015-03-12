@@ -3,6 +3,7 @@ package com.deswaef.weakauras.ui.tellmewhen.service;
 import com.deswaef.weakauras.classes.domain.Spec;
 import com.deswaef.weakauras.classes.domain.WowClass;
 import com.deswaef.weakauras.ui.image.domain.Screenshot;
+import com.deswaef.weakauras.ui.rating.service.ConfigRatingService;
 import com.deswaef.weakauras.ui.tellmewhen.domain.TellMeWhen;
 import com.deswaef.weakauras.ui.tellmewhen.domain.TellMeWhenScreenshot;
 import com.deswaef.weakauras.ui.tellmewhen.repository.SpecTellMeWhenRepository;
@@ -29,6 +30,9 @@ public class TellMeWhenServiceImpl implements TellMeWhenService {
     private SpecTellMeWhenRepository specTellMeWhenRepository;
     @Autowired
     private TellMeWhenScreenshotRepository tellMeWhenScreenshotRepository;
+    @Autowired
+    private ConfigRatingService configRatingService;
+
     @Override
     @Transactional
     public TellMeWhen createTMW(TellMeWhen tellMeWhen) {
@@ -97,5 +101,12 @@ public class TellMeWhenServiceImpl implements TellMeWhenService {
         } else {
             throw new IllegalArgumentException("a tmw-config with that id was not found");
         }
+    }
+
+    @Override
+    @Transactional
+    public void delete(Long tmw) {
+        configRatingService.deleteTellMeWhenConfigRating(tmw);
+        tellMeWhenRepository.delete(tmw);
     }
 }

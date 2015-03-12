@@ -37,6 +37,8 @@
                                   sec:authorize="hasRole('ROLE_ADMIN')">approve</span>
                             <span th:if="${uielement.approved == true}" class="label label-success"
                                   sec:authorize="hasRole('ROLE_ADMIN')">approved</span>
+                            <span th:attr="data-tmw_id=${uielement.id}" class="deleteButton label label-success"
+                                  sec:authorize="hasRole('ROLE_ADMIN')">delete</span>
                         </td>
                     </tr>
                     </tbody>
@@ -75,25 +77,6 @@
                 <button class="btn btn-danger">
                     <i class=" fa fa-thumbs-o-down"></i> Downvote
                 </button>
-            </div>
-            <br/>
-
-        </div>
-        <div class="row" data-bind="visible: showDetails" sec:authorize="hasRole('ROLE_ADMIN')">
-            <div class="col-md-4 col-md-offset-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        Administrative Functions
-                    </div>
-                    <div class="panel-body">
-                        <button class="btn btn-primary">
-                            <i class=" fa fa-thumbs-o-up "></i> Approve
-                        </button>
-                        <button class="btn btn-danger">
-                            <i class=" fa fa-thumbs-o-down "></i> Delete
-                        </button>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -135,6 +118,20 @@
 
         var tmwModel = new tmwVM();
         ko.applyBindings(tmwModel, $("#tmw-wrapper")[0]);
+
+        $(".deleteButton").click(function() {
+            var self = $(this);
+            $.get('/interface/tellmewhen/' + self.data('tmw_id') + '/delete', function (data) {
+                if (data == true) {
+                    self.removeClass('label-danger')
+                    self.addClass('label-success')
+                    self.html('deleted');
+                } else {
+                    self.addClass('label-danger')
+                    self.html('deletion failed');
+                }
+            });
+        });
 
         $(".approveButton").click(function () {
             var self = $(this);
@@ -183,6 +180,8 @@
                               sec:authorize="hasRole('ROLE_ADMIN')">approve</span>
                         <span th:if="${uielement.approved == true}" class="label label-success"
                               sec:authorize="hasRole('ROLE_ADMIN')">approved</span>
+                        <span th:attr="data-wa_id=${uielement.id}" class="deleteButton label label-danger"
+                              sec:authorize="hasRole('ROLE_ADMIN')">delete</span>
                     </td>
                 </tr>
                 </tbody>
@@ -218,25 +217,6 @@
                 <button class="btn btn-danger" sec:authorize="hasRole('ROLE_USER')">
                     <i class=" fa fa-thumbs-o-down "></i> Downvote
                 </button>
-            </div>
-            <br/>
-
-        </div>
-        <div class="row" data-bind="visible: showDetails" sec:authorize="hasRole('ROLE_ADMIN')">
-            <div class="col-md-4 col-md-offset-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        Administrative Functions
-                    </div>
-                    <div class="panel-body">
-                        <button class="btn btn-primary">
-                            <i class=" fa fa-thumbs-o-up "></i> Approve
-                        </button>
-                        <button class="btn btn-danger">
-                            <i class=" fa fa-thumbs-o-down "></i> Delete
-                        </button>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -275,6 +255,21 @@
 
         var waModel = new WaModel();
         ko.applyBindings(waModel, $("#wa-wrapper")[0]);
+
+
+        $(".deleteButton").click(function() {
+            var self = $(this);
+            $.get('/interface/weakaura/' + self.data('wa_id') + '/delete', function (data) {
+                if (data == true) {
+                    self.removeClass('label-danger')
+                    self.addClass('label-success')
+                    self.html('deleted');
+                } else {
+                    self.addClass('label-danger')
+                    self.html('deletion failed');
+                }
+            });
+        });
 
         $(".approveButton").click(function () {
             var self = $(this);
@@ -321,6 +316,8 @@
                               sec:authorize="hasRole('ROLE_ADMIN')">approve</span>
                         <span th:if="${uielement.approved == true}" class="label label-success"
                               sec:authorize="hasRole('ROLE_ADMIN')">approved</span>
+                         <span th:attr="data-macro_id=${uielement.id}" class="label label-danger"
+                               sec:authorize="hasRole('ROLE_ADMIN')">delete</span>
 
                     </td>
 
@@ -335,7 +332,7 @@
                 <blockquote data-bind="text: activeComment"></blockquote>
             </div>
 
-            <label>TellMeWhen-String</label>
+            <label>Macro-String</label>
             <textarea data-bind="value: activeString" class="form-control" rows="3"></textarea>
         </div>
         <br/>
@@ -347,25 +344,6 @@
                 <button class="btn btn-danger">
                     <i class=" fa fa-thumbs-o-down "></i> Downvote
                 </button>
-            </div>
-            <br/>
-
-        </div>
-        <div class="row" data-bind="visible: showDetails" sec:authorize="hasRole('ROLE_ADMIN')">
-            <div class="col-md-4 col-md-offset-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        Administrative Functions
-                    </div>
-                    <div class="panel-body">
-                        <button class="btn btn-primary">
-                            <i class=" fa fa-thumbs-o-up "></i> Approve
-                        </button>
-                        <button class="btn btn-danger">
-                            <i class=" fa fa-thumbs-o-down "></i> Delete
-                        </button>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -402,6 +380,20 @@
 
         var macroModel = new MacroModel();
         ko.applyBindings(macroModel, $("#macro-stuff")[0]);
+
+        $(".deleteButton").click(function() {
+            var self = $(this);
+            $.get('/interface/macro/' + self.data('macro_id') + '/delete', function (data) {
+                if (data == true) {
+                    self.removeClass('label-danger')
+                    self.addClass('label-success')
+                    self.html('deleted');
+                } else {
+                    self.addClass('label-danger')
+                    self.html('deletion failed');
+                }
+            });
+        });
 
         $(".approveButton").click(function () {
             var self = $(this);

@@ -100,7 +100,7 @@ public class ImageStore {
     }
 
     private String getOutputFilename(String reference) {
-        return String.format("%s\\%s", destinationLocation, reference);
+        return String.format("%s"+File.separator+"%s", destinationLocation, reference);
     }
 
     private String getReference(MultipartFile multipartFile) {

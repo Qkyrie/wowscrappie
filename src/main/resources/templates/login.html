@@ -22,8 +22,8 @@
                             <p th:if="${param.logout}" class="alert alert-success">You have been logged out</p>
                             <p th:if="${param.error}" class="alert alert-danger">There was an error, please try again</p>
                             <form role="form" th:action="@{/login-do}" action="/login" method="POST">
-                                <p>At this point, registration is <b>invitation only</b>. However, if you wish to use scrappie without
-                                    registering, you can always sign in with facebook.
+                                <p>At this point, registration is <b>invitation-only</b>.<!-- However, if you wish to use scrappie without
+                                    registering, you can always sign in with facebook.-->
                                 </p>
                                 <fieldset>
 
@@ -38,13 +38,13 @@
                                 </fieldset>
                             </form>
 
-                            <h4>Or Connect With Facebook</h4>
+                          <!--  <h4>Or Connect With Facebook</h4>
                             <form action="/connect/facebook" method="POST">
                                 <input type="hidden" name="scope" value="email" />
                                 <p><button class="btn btn-primary" type="submit">
                                     <i class="fa fa-facebook "> </i>
                                     Login with Facebook</button></p>
-                            </form>
+                            </form>-->
                         </div>
                     </div>
                 </div>
