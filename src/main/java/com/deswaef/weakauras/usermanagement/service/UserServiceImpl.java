@@ -58,7 +58,8 @@ public class UserServiceImpl implements UserService {
                 .setEnabled(true)
                 .setFacebookId(facebookUser.getFacebookId())
                 .setUsername(facebookUser.getUsername())
-                .setEmail(facebookUser.getEmail());
+                .setEmail(facebookUser.getEmail())
+                .setGeneratedUsername(true);
         return userRepository.save(user);
     }
 

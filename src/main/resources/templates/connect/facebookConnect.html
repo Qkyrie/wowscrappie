@@ -46,7 +46,6 @@
 
         var generated = $("#generatedUsername").html();
         if(generated != "true") {
-
             $.get('/registration/username/leaveit', function(data) {
                 window.location = "/contribute"
             });
