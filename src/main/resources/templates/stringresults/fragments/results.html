@@ -35,7 +35,9 @@
                             <span th:attr="data-tmw_id=${uielement.id}" th:if="${uielement.approved == false}"
                                   class="approveButton label label-info"
                                   sec:authorize="hasRole('ROLE_ADMIN')">approve</span>
-                            <span th:if="${uielement.approved == true}" class="disableButton label label-warning"
+                            <span th:attr="data-tmw_id=${uielement.id}"
+                                  th:if="${uielement.approved == true}"
+                                  class="disableButton label label-warning"
                                   sec:authorize="hasRole('ROLE_ADMIN')">disable</span>
                             <span th:attr="data-tmw_id=${uielement.id}" class="deleteButton label label-danger"
                                   sec:authorize="hasRole('ROLE_ADMIN')">delete</span>
@@ -193,10 +195,13 @@
                     <span data-bind="click: view" th:attr="data-wa_id=${uielement.id}"
                           class="label label-success">view</span>
                         <span th:attr="data-wa_id=${uielement.id}, data-share-url=${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/shared/wa/} + ${uielement.id}" class="shareButton label label-success">share link</span>
-                        <span th:attr="data-wa_id=${uielement.id}" th:if="${uielement.approved == false}"
+                        <span th:attr="data-wa_id=${uielement.id}"
+                              th:if="${uielement.approved == false}"
                               class="approveButton label label-info"
                               sec:authorize="hasRole('ROLE_ADMIN')">approve</span>
-                        <span th:if="${uielement.approved == true}" class="disableButton label label-warning"
+                        <span th:if="${uielement.approved == true}"
+                              th:attr="data-wa_id=${uielement.id}"
+                              class="disableButton label label-warning"
                               sec:authorize="hasRole('ROLE_ADMIN')">disable</span>
                         <span th:attr="data-wa_id=${uielement.id}" class="deleteButton label label-danger"
                               sec:authorize="hasRole('ROLE_ADMIN')">delete</span>
@@ -351,7 +356,9 @@
                         <span th:attr="data-macro_id=${uielement.id}" th:if="${uielement.approved == false}"
                               class="approveButton label label-info"
                               sec:authorize="hasRole('ROLE_ADMIN')">approve</span>
-                        <span th:if="${uielement.approved == true}" class="disableButton label label-warning"
+                        <span th:if="${uielement.approved == true}"
+                              class="disableButton label label-warning"
+                              th:attr="data-macro_id=${uielement.id}"
                               sec:authorize="hasRole('ROLE_ADMIN')">disable</span>
                          <span th:attr="data-macro_id=${uielement.id}" class="deleteButton label label-danger"
                                sec:authorize="hasRole('ROLE_ADMIN')">delete</span>
