@@ -79,7 +79,7 @@ public class WeakAuraServiceImpl implements WeakAuraService {
     public List<Screenshot> findScreenshots(WeakAura weakAura) {
         Optional<WeakAura> one = weakAuraRepository.findOne(weakAura.getId());
         if(one.isPresent()) {
-            return weakAuraScreenshotRepository.findByWeakAura(weakAura);
+            return weakAuraScreenshotRepository.findByWeakAura(one.get());
         } else {
             return Lists.newArrayList();
         }
@@ -112,7 +112,18 @@ public class WeakAuraServiceImpl implements WeakAuraService {
     @Transactional
     public void delete(Long id) {
         configRatingService.deleteWeakAuraConfigRating(id);
+        deleteScreenshotsFor(id);
         weakAuraRepository.delete(id);
+    }
+
+    private void deleteScreenshotsFor(Long id) {
+        Optional<WeakAura> one = weakAuraRepository.findOne(id);
+        if(one.isPresent()) {
+            List<Screenshot> byWeakAura = weakAuraScreenshotRepository.findByWeakAura(one.get());
+            if (!byWeakAura.isEmpty()) {
+                byWeakAura.forEach(ss -> weakAuraScreenshotRepository.delete(ss.getId()));
+            }
+        }
     }
 
 }

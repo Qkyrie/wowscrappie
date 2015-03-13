@@ -107,6 +107,17 @@ public class TellMeWhenServiceImpl implements TellMeWhenService {
     @Transactional
     public void delete(Long tmw) {
         configRatingService.deleteTellMeWhenConfigRating(tmw);
+        deleteScreenshotsFor(tmw);
         tellMeWhenRepository.delete(tmw);
+    }
+
+    private void deleteScreenshotsFor(Long id) {
+        Optional<TellMeWhen> one = tellMeWhenRepository.findOne(id);
+        if(one.isPresent()) {
+            List<Screenshot> byTellMeWhen = tellMeWhenScreenshotRepository.findByTellMeWhen(one.get());
+            if (!byTellMeWhen.isEmpty()) {
+                byTellMeWhen.forEach(ss -> tellMeWhenScreenshotRepository.delete(ss.getId()));
+            }
+        }
     }
 }

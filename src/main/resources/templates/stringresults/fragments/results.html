@@ -46,7 +46,8 @@
             </div>
         </div>
         <div class="row" data-bind="visible: showDetails">
-
+            <hr />
+            <h3 data-bind="text: activeName"></h3>
             <div class="form-group">
                 <label>Comments</label>
                 <pre data-bind="text: activeComment"></pre>
@@ -55,7 +56,7 @@
             <label>TellMeWhen-String</label>
             <textarea data-bind="value: activeString" class="form-control" rows="3"></textarea>
 
-            <br/>
+            <hr />
 
             <div id="images" data-bind="foreach: imageRefs">
                 <a class="fancybox" rel="group" data-bind="attr: { href: '/shared/image/' + $data }">
@@ -99,6 +100,7 @@
             self.activeComment = ko.observable();
             self.showDetails = ko.observable(false);
             self.imageRefs = ko.observableArray([]);
+            self.activeName = ko.observable();
 
             self.view = function (data, event) {
                 var clickedElement = $(event.currentTarget);
@@ -109,6 +111,7 @@
                         self.activeString(resultValue.actualValue);
                         self.activeComment(resultValue.comment);
                         self.imageRefs(resultValue.imageRefs);
+                        self.activeName(resultValue.name);
                         self.showDetails(true);
                         $(".fancybox").fancybox();
                     }
@@ -190,7 +193,8 @@
 
 
         <div class="row" data-bind="visible: showDetails">
-
+            <hr />
+            <h3 data-bind="text: activeName"></h3>
             <div class="form-group">
                 <label>Comments</label>
                 <pre data-bind="text: activeComment"></pre>
@@ -198,7 +202,7 @@
 
             <label>WeakAura-String</label>
             <textarea data-bind="value: activeString" class="form-control" rows="3"></textarea>
-            <br/>
+            <hr />
 
             <div id="images" data-bind="foreach: imageRefs">
                 <a class="fancybox" rel="group" data-bind="attr: { href: '/shared/image/' + $data }">
@@ -236,6 +240,7 @@
             self.activeComment = ko.observable();
             self.showDetails = ko.observable(false);
             self.imageRefs = ko.observableArray([]);
+            self.activeName = ko.observable();
 
             self.view = function (data, event) {
                 var clickedElement = $(event.currentTarget);
@@ -246,6 +251,7 @@
                         self.activeString(resultValue.actualValue);
                         self.activeComment(resultValue.comment);
                         self.imageRefs(resultValue.imageRefs);
+                        self.activeName(resultValue.name);
                         self.showDetails(true);
                         $(".fancybox").fancybox();
                     }
@@ -326,7 +332,8 @@
             </table>
         </div>
         <div class="row" data-bind="visible: showDetails">
-
+            <hr />
+            <h3 data-bind="text: activeName"></h3>
             <div class="form-group">
                 <label>Comments</label>
                 <pre data-bind="text: activeComment"></pre>
@@ -358,7 +365,7 @@
 
         var MacroModel = function () {
             var self = this;
-
+            self.activeName = ko.observable();
             self.activeMacro = ko.observable();
             self.activeString = ko.observable();
             self.activeComment = ko.observable();
@@ -371,6 +378,7 @@
                     if (resultValue !== null) {
                         self.activeMacro(resultValue);
                         self.activeString(resultValue.actualValue);
+                        self.activeName(resultValue.name);
                         self.activeComment(resultValue.comment);
                         self.showDetails(true);
                     }

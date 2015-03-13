@@ -39,6 +39,7 @@ body {
     background-color:#fff!important;
     padding:10px;
     min-height:1200px;
+    overflow:hidden;
 }
 
 .text-center {

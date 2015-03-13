@@ -41,6 +41,11 @@
         float: right;
         font-size: 16px;">  &nbsp; <a th:href="@{/logout}" class="btn btn-danger square-btn-adjust">Logout</a>
                 </div>
+        <div sec:authorize="!isAuthenticated()" style="color: white;
+        padding: 15px 50px 5px 50px;
+        float: right;
+        font-size: 16px;">  &nbsp; <a th:href="@{/login}" class="btn btn-danger square-btn-adjust">Login</a>
+        </div>
     </nav>
     <!-- /. NAV TOP  -->
     <nav class="navbar-default navbar-side" role="navigation">
@@ -87,264 +92,56 @@
                     <ul class="nav nav-second-level">
                         <li>
                             <a th:href="@{/classes/death_knight}"> <span class="sprite_menu_titles sprite_menu_titles_death_knight"></span> Death
-                                Knight<span class="fa arrow"></span></a>
-                            <ul class="nav nav-third-level">
-                                <li>
-                                    <a th:href="@{/classes/death_knight}"> <span class="sprite_14x14_icons sprite_14x14_icons_dk_blood"></span>
-                                        Blood</a>
-                                </li>
-                                <li>
-                                    <a th:href="@{/classes/death_knight}"> <span class="sprite_14x14_icons sprite_14x14_icons_dk_frost"></span>
-                                        Frost</a>
-                                </li>
-                                <li>
-                                    <a th:href="@{/classes/death_knight}"> <span class="sprite_14x14_icons sprite_14x14_icons_dk_unholy"></span>
-                                        Unholy</a>
-                                </li>
+                                Knight</a>
+                        </li>
 
-                            </ul>
+                        <li>
+                            <a th:href="@{/classes/druid}"> <span class="sprite_menu_titles sprite_menu_titles_druid"></span> Druid </a>
+                        </li>
+
+                        <li>
+                            <a th:href="@{/classes/hunter}"> <span class="sprite_menu_titles sprite_menu_titles_hunter"></span> Hunter </a>
 
                         </li>
 
                         <li>
-                            <a href="#"> <span class="sprite_menu_titles sprite_menu_titles_druid"></span> Druid<span
-                                    class="fa arrow"></span></a>
-                            <ul class="nav nav-third-level">
-                                <li>
-                                    <a th:href="@{/classes/druid}"> <span
-                                            class="sprite_14x14_icons sprite_14x14_icons_druid_balance"></span> Balance</a>
-                                </li>
-                                <li>
-                                    <a th:href="@{/classes/druid}"> <span class="sprite_14x14_icons sprite_14x14_icons_druid_feral"></span>
-                                        Feral</a>
-                                </li>
-                                <li>
-                                    <a th:href="@{/classes/druid}"> <span
-                                            class="sprite_14x14_icons sprite_14x14_icons_druid_guardian"></span>
-                                        Guardian</a>
-                                </li>
-                                <li>
-                                    <a th:href="@{/classes/druid}"> <span
-                                            class="sprite_14x14_icons sprite_14x14_icons_druid_restoration"></span>
-                                        Restoration</a>
-                                </li>
-
-                            </ul>
-
+                            <a th:href="@{/classes/mage}"> <span class="sprite_menu_titles sprite_menu_titles_mage"></span> Mage </a>
                         </li>
 
                         <li>
-                            <a href="#"> <span class="sprite_menu_titles sprite_menu_titles_hunter"></span> Hunter<span
-                                    class="fa arrow"></span></a>
-                            <ul class="nav nav-third-level">
-                                <li>
-                                    <a th:href="@{/classes/hunter}"> <span
-                                            class="sprite_14x14_icons sprite_14x14_icons_hunter_beast_mastery"></span>
-                                        Beast Mastery</a>
-                                </li>
-                                <li>
-                                    <a th:href="@{/classes/hunter}"> <span class="sprite_14x14_icons sprite_14x14_icons_hunter_mm"></span>
-                                        Marksmanship</a>
-                                </li>
-                                <li>
-                                    <a th:href="@{/classes/hunter}"> <span class="sprite_14x14_icons sprite_14x14_icons_hunter_sv"></span>
-                                        Survival</a>
-                                </li>
-
-                            </ul>
-
+                            <a th:href="@{/classes/monk}"> <span class="sprite_menu_titles sprite_menu_titles_monk"></span> Monk </a>
                         </li>
 
                         <li>
-                            <a href="#"> <span class="sprite_menu_titles sprite_menu_titles_mage"></span> Mage<span
-                                    class="fa arrow"></span></a>
-                            <ul class="nav nav-third-level">
-                                <li>
-                                    <a th:href="@{/classes/mage}"> <span class="sprite_14x14_icons sprite_14x14_icons_mage_arcane"></span>
-                                        Arcane</a>
-                                </li>
-                                <li>
-                                    <a th:href="@{/classes/monk}"> <span class="sprite_14x14_icons sprite_14x14_icons_mage_fire"></span>
-                                        Fire</a>
-                                </li>
-                                <li>
-                                    <a th:href="@{/classes/mage}"> <span class="sprite_14x14_icons sprite_14x14_icons_mage_frost"></span>
-                                        Frost</a>
-                                </li>
-
-                            </ul>
-
+                            <a th:href="@{/classes/paladin}"> <span class="sprite_menu_titles sprite_menu_titles_paladin"></span>
+                                Paladin </a>
                         </li>
 
                         <li>
-                            <a href="#"> <span class="sprite_menu_titles sprite_menu_titles_monk"></span> Monk<span
-                                    class="fa arrow"></span></a>
-                            <ul class="nav nav-third-level">
-                                <li>
-                                    <a th:href="@{/classes/monk}"> <span
-                                            class="sprite_14x14_icons sprite_14x14_icons_monk_brewmaster"></span>
-                                        Brewmaster</a>
-                                </li>
-                                <li>
-                                    <a th:href="@{/classes/monk}"> <span
-                                            class="sprite_14x14_icons sprite_14x14_icons_monk_mistweaver"></span>
-                                        Mistweaver</a>
-                                </li>
-                                <li>
-                                    <a th:href="@{/classes/monk}"> <span
-                                            class="sprite_14x14_icons sprite_14x14_icons_monk_windwalker"></span>
-                                        Windwalker</a>
-                                </li>
-
-                            </ul>
-
-                        </li>
-
-                        <li>
-                            <a href="#"> <span class="sprite_menu_titles sprite_menu_titles_paladin"></span>
-                                Paladin<span class="fa arrow"></span></a>
-                            <ul class="nav nav-third-level">
-                                <li>
-                                    <a th:href="@{/classes/paladin}"> <span
-                                            class="sprite_14x14_icons sprite_14x14_icons_paladin_holy"></span> Holy</a>
-                                </li>
-                                <li>
-                                    <a th:href="@{/classes/paladin}"> <span
-                                            class="sprite_14x14_icons sprite_14x14_icons_paladin_protection"></span>
-                                        Protection</a>
-                                </li>
-                                <li>
-                                    <a th:href="@{/classes/paladin}"> <span
-                                            class="sprite_14x14_icons sprite_14x14_icons_paladin_retribution"></span>
-                                        Retribution</a>
-                                </li>
-
-                            </ul>
-
-                        </li>
-
-                        <li>
-                            <a href="#"> <span class="sprite_menu_titles sprite_menu_titles_priest"></span> Priest<span
-                                    class="fa arrow"></span></a>
-                            <ul class="nav nav-third-level">
-                                <li>
-                                    <a th:href="@{/classes/priest}"> <span
-                                            class="sprite_14x14_icons sprite_14x14_icons_priest_discipline"></span>
-                                        Discipline</a>
-                                </li>
-                                <li>
-                                    <a th:href="@{/classes/priest}"> <span class="sprite_14x14_icons sprite_14x14_icons_priest_holy"></span>
-                                        Holy</a>
-                                </li>
-                                <li>
-                                    <a th:href="@{/classes/priest}"> <span
-                                            class="sprite_14x14_icons sprite_14x14_icons_priest_shadow"></span>
-                                        Shadow</a>
-                                </li>
-
-                            </ul>
+                            <a th:href="@{/classes/priest}"> <span class="sprite_menu_titles sprite_menu_titles_priest"></span> Priest </a>
 
                         </li>
 
 
                         <li>
-                            <a href="#"> <span class="sprite_menu_titles sprite_menu_titles_rogue"></span> Rogue<span
-                                    class="fa arrow"></span></a>
-                            <ul class="nav nav-third-level">
-                                <li>
-                                    <a th:href="@{/classes/rogue}"> <span
-                                            class="sprite_14x14_icons sprite_14x14_icons_rogue_assassination"></span>
-                                        Assassination</a>
-                                </li>
-                                <li>
-                                    <a th:href="@{/classes/rogue}"> <span
-                                            class="sprite_14x14_icons sprite_14x14_icons_rogue_combat"></span>
-                                        Combat</a>
-                                </li>
-                                <li>
-                                    <a th:href="@{/classes/rogue}"> <span
-                                            class="sprite_14x14_icons sprite_14x14_icons_rogue_subtlety"></span>
-                                        Subtlety</a>
-                                </li>
-
-                            </ul>
-
+                            <a th:href="@{/classes/rogue}"> <span class="sprite_menu_titles sprite_menu_titles_rogue"></span> Rogue </a>
                         </li>
 
                         <li>
-                            <a href="#"> <span class="sprite_menu_titles sprite_menu_titles_shaman"></span> Shaman<span
-                                    class="fa arrow"></span></a>
-                            <ul class="nav nav-third-level">
-                                <li>
-                                    <a th:href="@{/classes/shaman}"> <span
-                                            class="sprite_14x14_icons sprite_14x14_icons_shaman_elemental"></span>
-                                        Elemental</a>
-                                </li>
-                                <li>
-                                    <a th:href="@{/classes/shaman}"> <span
-                                            class="sprite_14x14_icons sprite_14x14_icons_shaman_enhancement"></span>
-                                        Enhancement</a>
-                                </li>
-                                <li>
-                                    <a th:href="@{/classes/shaman}"> <span
-                                            class="sprite_14x14_icons sprite_14x14_icons_shaman_restoration"></span>
-                                        Restoration</a>
-                                </li>
-
-                            </ul>
-
+                            <a th:href="@{/classes/shaman}"> <span class="sprite_menu_titles sprite_menu_titles_shaman"></span> Shaman </a>
                         </li>
 
                         <li>
-                            <a href="#"> <span class="sprite_menu_titles sprite_menu_titles_warlock"></span>
-                                Warlock<span class="fa arrow"></span></a>
-                            <ul class="nav nav-third-level">
-                                <li>
-                                    <a th:href="@{/classes/warlock}"> <span
-                                            class="sprite_14x14_icons sprite_14x14_icons_warlock_affliction"></span>
-                                        Affliction</a>
-                                </li>
-                                <li>
-                                    <a th:href="@{/classes/warlock}"> <span
-                                            class="sprite_14x14_icons sprite_14x14_icons_warlock_demonology"></span>
-                                        Demonology</a>
-                                </li>
-                                <li>
-                                    <a th:href="@{/classes/warlock}"> <span
-                                            class="sprite_14x14_icons sprite_14x14_icons_warlock_destruction"></span>
-                                        Destruction</a>
-                                </li>
-
-                            </ul>
-
+                            <a th:href="@{/classes/warlock}"> <span class="sprite_menu_titles sprite_menu_titles_warlock"></span>
+                                Warlock </a>
                         </li>
 
                         <li>
-                            <a href="#"> <span class="sprite_menu_titles sprite_menu_titles_warrior"></span>
-                                Warrior<span class="fa arrow"></span></a>
-                            <ul class="nav nav-third-level">
-                                <li>
-                                    <a th:href="@{/classes/warrior}"> <span
-                                            class="sprite_14x14_icons sprite_14x14_icons_warrior_arms"></span> Arms</a>
-                                </li>
-                                <li>
-                                    <a th:href="@{/classes/warrior}"> <span
-                                            class="sprite_14x14_icons sprite_14x14_icons_warrior_fury"></span> Fury</a>
-                                </li>
-                                <li>
-                                    <a th:href="@{/classes/warrior}"> <span
-                                            class="sprite_14x14_icons sprite_14x14_icons_warrior_protection"></span>
-                                        Protection</a>
-                                </li>
-
-                            </ul>
-
+                            <a th:href="@{/classes/warrior}"> <span class="sprite_menu_titles sprite_menu_titles_warrior"></span>
+                                Warrior </a>
                         </li>
-
-
                     </ul>
                 </li>
-
                 <li>
                     <a th:href="@{/contribute}"><i class="fa fa-laptop fa-3x"></i> Contribute!</a>
                 </li>
