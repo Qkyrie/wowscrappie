@@ -14,4 +14,10 @@ public interface SpecTellMeWhenRepository extends JpaRepository<SpecTellMeWhen, 
 
     @Query("select tmw from SpecTellMeWhen tmw where tmw.spec = :spec and approved = true")
     List<TellMeWhen> findBySpecAndApproved(@Param("spec") Spec spec);
+
+    @Query("select count(tmw) from SpecTellMeWhen tmw where tmw.spec = :spec")
+    Long countBySpec(@Param("spec") Spec spec);
+
+    @Query("select count(tmw) from SpecTellMeWhen tmw where tmw.spec = :spec and approved = true")
+    Long countBySpecAndApproved(@Param("spec") Spec spec);
 }

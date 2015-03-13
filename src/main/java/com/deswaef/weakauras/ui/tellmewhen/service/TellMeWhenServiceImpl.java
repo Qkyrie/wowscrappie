@@ -40,6 +40,7 @@ public class TellMeWhenServiceImpl implements TellMeWhenService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<TellMeWhen> findByWowclass(WowClass wowClass) {
         if(isAdmin()) {
             return wowclassTellMeWhenRepository.findByWowClass(wowClass);
@@ -49,15 +50,37 @@ public class TellMeWhenServiceImpl implements TellMeWhenService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<TellMeWhen> findBySpec(Spec spec) {
         if(isAdmin()) {
             return specTellMeWhenRepository.findBySpec(spec);
         } else {
-            return specTellMeWhenRepository.findBySpec(spec);
+            return specTellMeWhenRepository.findBySpecAndApproved(spec);
         }
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public Long countByWowclass(WowClass wowClass) {
+        if(isAdmin()) {
+            return wowclassTellMeWhenRepository.countByWowClass(wowClass);
+        } else {
+            return wowclassTellMeWhenRepository.countByWowClassAndApproved(wowClass);
+        }
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Long countBySpec(Spec spec) {
+        if(isAdmin()) {
+            return specTellMeWhenRepository.countBySpec(spec);
+        } else {
+            return specTellMeWhenRepository.countBySpecAndApproved(spec);
+        }
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public Optional<TellMeWhen> findById(Long id) {
         return tellMeWhenRepository.findOne(id);
     }
@@ -105,11 +128,26 @@ public class TellMeWhenServiceImpl implements TellMeWhenService {
 
     @Override
     @Transactional
+    public void disable(Long tmw) {
+        Optional<TellMeWhen> one = tellMeWhenRepository.findOne(tmw);
+        if (one.isPresent()) {
+            TellMeWhen tellMeWhen = one.get();
+            tellMeWhen.setApproved(false);
+            tellMeWhenRepository.save(tellMeWhen);
+        } else {
+            throw new IllegalArgumentException("a tmw-config with that id was not found");
+        }
+    }
+
+    @Override
+    @Transactional
     public void delete(Long tmw) {
         configRatingService.deleteTellMeWhenConfigRating(tmw);
         deleteScreenshotsFor(tmw);
         tellMeWhenRepository.delete(tmw);
     }
+
+
 
     private void deleteScreenshotsFor(Long id) {
         Optional<TellMeWhen> one = tellMeWhenRepository.findOne(id);

@@ -15,6 +15,10 @@ public interface MacroService extends OnRoleDependable {
 
     List<Macro> findBySpec(Spec spec);
 
+    Long countByWowClass(WowClass wowClass);
+
+    Long countBySpec(Spec spec);
+
     Optional<Macro> byId(Long id);
 
     long count();
@@ -24,4 +28,6 @@ public interface MacroService extends OnRoleDependable {
     void approve(Long id);
 
     void delete(Long macro);
+
+    void disable(Long macro);
 }

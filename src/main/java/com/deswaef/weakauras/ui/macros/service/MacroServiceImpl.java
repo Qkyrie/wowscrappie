@@ -51,6 +51,24 @@ public class MacroServiceImpl implements MacroService {
     }
 
     @Override
+    public Long countByWowClass(WowClass wowClass) {
+        if(isAdmin()) {
+            return wowClassMacroRepository.countByWowClass(wowClass);
+        } else {
+            return wowClassMacroRepository.countByWowClassAndApproved(wowClass);
+        }
+    }
+
+    @Override
+    public Long countBySpec(Spec spec) {
+        if(isAdmin()){
+            return specMacroRepository.countBySpec(spec);
+        } else {
+            return specMacroRepository.countBySpecAndApproved(spec);
+        }
+    }
+
+    @Override
     public Optional<Macro> byId(Long id) {
         return macroRepository.findOne(id);
     }
@@ -81,10 +99,25 @@ public class MacroServiceImpl implements MacroService {
         }
     }
 
+
+    @Override
+    @Transactional
+    public void disable(Long id) {
+        Optional<Macro> one = macroRepository.findOne(id);
+        if (one.isPresent()) {
+            Macro macro = one.get();
+            macro.setApproved(false);
+            macroRepository.save(macro);
+        } else {
+            throw new IllegalArgumentException("a macro with that id was not found");
+        }
+    }
+
     @Override
     @Transactional
     public void delete(Long macro) {
         configRatingService.deleteMacroConfigRating(macro);
         macroRepository.delete(macro);
     }
+
 }

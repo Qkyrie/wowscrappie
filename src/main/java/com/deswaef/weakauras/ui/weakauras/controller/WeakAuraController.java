@@ -62,4 +62,15 @@ public class WeakAuraController {
             return false;
         }
     }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @RequestMapping("/{id}/disable")
+    public @ResponseBody boolean disable(@PathVariable("id") Long id) {
+        try {
+            weakAuraService.disable(id);
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
 }

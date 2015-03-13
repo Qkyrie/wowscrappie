@@ -17,6 +17,10 @@ public interface WeakAuraService extends OnRoleDependable {
 
     List<WeakAura> findBySpec(Spec spec);
 
+    Long countByWowClass(WowClass wowClass);
+
+    Long countBySpec(Spec spec);
+
     Optional<WeakAura> byId(Long id);
 
     long count();
@@ -30,4 +34,6 @@ public interface WeakAuraService extends OnRoleDependable {
     void approve(Long id);
 
     void delete(Long id);
+
+    void disable(Long id);
 }

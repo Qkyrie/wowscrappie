@@ -57,17 +57,20 @@
             <div class="col-md-10 col-md-offset-1">
                 <div class="form-group">
                     <label>Comments</label>
-                    <blockquote th:text="${config.comment}"></blockquote>
+                    <pre th:text="${config.comment}"></pre>
                 </div>
-                <label>Value</label>
-                <textarea th:text="${config.actualValue}" class="form-control" rows="3"></textarea>
+                <div class="form-group">
+                    <label>Value</label>
+                    <textarea th:text="${config.actualValue}" class="form-control" rows="3"></textarea>
+                </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
+                <hr />
                 <div class="form-group">
                     <label>Images</label>
-
+                    <br />
                     <div th:if="${screenshots.size() == 0}" class="alert alert-success">No images or screenshots were provided.</div>
 
                     <div th:if="${screenshots.size() > 0}"  id="images">
@@ -94,24 +97,6 @@
                     <i class=" fa fa-thumbs-o-down " ></i> Downvote
                 </button>
             </div>
-            <div class="col-md-5" sec:authorize="hasRole('ROLE_ADMIN')">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        Administrative Functions
-                    </div>
-                    <div class="panel-body">
-                        <button th:if="${config.approved == false}" th:attr="data-config-id=${config.id}, data-config-type=${configType}" id="approveButton" class="btn btn-primary">
-                            <i class=" fa fa-thumbs-o-up "></i> <span id="approveText">Approve</span>
-                        </button>
-                        <button th:if="${config.approved == true}" class="btn btn-success">
-                            <i class=" fa fa-thumbs-o-up "></i> <span id="approveText">Approved</span>
-                        </button>
-                        <button class="btn btn-danger">
-                            <i class=" fa fa-thumbs-o-down "></i> Delete
-                        </button>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
     <!-- /. PAGE INNER  -->
@@ -130,33 +115,6 @@
             ZeroClipboard.config({swfPath: "/assets/zeroclipboard/ZeroClipboard.swf"});
             doClipboardBinding();
         });
-
-        var getUrl = function(type, configId) {
-            var urlType = '';
-            if(type == 'MACRO') {
-                urlType = 'macro';
-            } else if (type == 'TMW'){
-                urlType = 'tellmewhen';
-            } else if (type == 'WA') {
-                urlType = 'weakaura';
-            }
-            return '/interface/' + urlType + '/' + configId + '/approve';
-        }
-        $("#approveButton").click(function () {
-            var self = $(this);
-            $.get(getUrl(self.data('config-type'), self.data('config-id')), function (data) {
-                if (data == true) {
-                    self.removeClass('btn-primary');
-                    self.addClass('btn-success');
-                    $("#approveText").html('Approved');
-                } else {
-                    self.removeClass('btn-primary');
-                    self.addClass('btn-danger');
-                    $("#approveText").html('Approve Failed');
-                }
-            });
-        });
-
     </script>
 </div>
 

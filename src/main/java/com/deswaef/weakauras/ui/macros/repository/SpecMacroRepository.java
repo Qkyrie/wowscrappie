@@ -14,4 +14,10 @@ public interface SpecMacroRepository extends JpaRepository<SpecMacro, Long> {
 
     @Query("select sm from SpecMacro sm where spec = :spec and approved = true ")
     List<Macro> findBySpecAndApproved(@Param("spec") Spec spec);
+
+    @Query("select count(sm) from SpecMacro sm where spec = :spec and approved = true ")
+    Long countBySpecAndApproved(@Param("spec") Spec spec);
+
+    @Query("select count(sm) from SpecMacro sm where spec = :spec")
+    Long countBySpec(@Param("spec") Spec spec);
 }

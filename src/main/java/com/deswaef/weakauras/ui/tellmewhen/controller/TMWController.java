@@ -61,4 +61,15 @@ public class TMWController {
             return false;
         }
     }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @RequestMapping("/{id}/disable")
+    public @ResponseBody boolean disable(@PathVariable("id") Long id) {
+        try {
+            tellMeWhenService.disable(id);
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
 }

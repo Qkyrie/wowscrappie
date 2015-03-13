@@ -15,4 +15,10 @@ public interface WowClassMacroRepository extends JpaRepository<WowClassMacro, Lo
     @Query("select m from WowClassMacro m where m.wowClass = :wowClass and approved = true")
     List<Macro> findByWowClassAndApproved(@Param("wowClass") WowClass wowClass);
 
+    @Query("select count(m) from WowClassMacro m where m.wowClass = :wowClass and approved = true")
+    Long countByWowClassAndApproved(@Param("wowClass") WowClass wowClass);
+
+    @Query("select count(m) from WowClassMacro m where m.wowClass = :wowClass")
+    Long countByWowClass(@Param("wowClass") WowClass wowClass);
+
 }

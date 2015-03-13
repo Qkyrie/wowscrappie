@@ -58,6 +58,24 @@ public class WeakAuraServiceImpl implements WeakAuraService {
     }
 
     @Override
+    public Long countByWowClass(WowClass wowClass) {
+        if(isAdmin()) {
+            return wowclassWeakAuraRepository.countByWowClass(wowClass);
+        } else {
+            return wowclassWeakAuraRepository.countByWowClassAndApproved(wowClass);
+        }
+    }
+
+    @Override
+    public Long countBySpec(Spec spec) {
+        if(isAdmin()) {
+            return specWeakAuraRepository.countBySpec(spec);
+        } else {
+            return specWeakAuraRepository.countBySpecAndApproved(spec);
+        }
+    }
+
+    @Override
     public Optional<WeakAura> byId(Long id) {
         return weakAuraRepository.findOne(id);
     }
@@ -102,6 +120,19 @@ public class WeakAuraServiceImpl implements WeakAuraService {
         if (one.isPresent()) {
             WeakAura weakAura = one.get();
             weakAura.setApproved(true);
+            weakAuraRepository.save(weakAura);
+        } else {
+            throw new IllegalArgumentException("A weakaura with that id was not found");
+        }
+    }
+
+    @Override
+    @Transactional
+    public void disable(Long id) {
+        Optional<WeakAura> one = weakAuraRepository.findOne(id);
+        if (one.isPresent()) {
+            WeakAura weakAura = one.get();
+            weakAura.setApproved(false);
             weakAuraRepository.save(weakAura);
         } else {
             throw new IllegalArgumentException("A weakaura with that id was not found");

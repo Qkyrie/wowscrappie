@@ -35,8 +35,8 @@
                             <span th:attr="data-tmw_id=${uielement.id}" th:if="${uielement.approved == false}"
                                   class="approveButton label label-info"
                                   sec:authorize="hasRole('ROLE_ADMIN')">approve</span>
-                            <span th:if="${uielement.approved == true}" class="label label-success"
-                                  sec:authorize="hasRole('ROLE_ADMIN')">approved</span>
+                            <span th:if="${uielement.approved == true}" class="disableButton label label-warning"
+                                  sec:authorize="hasRole('ROLE_ADMIN')">disable</span>
                             <span th:attr="data-tmw_id=${uielement.id}" class="deleteButton label label-danger"
                                   sec:authorize="hasRole('ROLE_ADMIN')">delete</span>
                         </td>
@@ -150,6 +150,21 @@
                 }
             });
         });
+
+        $(".disableButton").click(function() {
+            var self = $(this);
+            $.get('/interface/tellmewhen/' + self.data('tmw_id') + '/disable', function (data) {
+                if (data == true) {
+                    self.removeClass('label-warning')
+                    self.addClass('label-success')
+                    self.html('disabled');
+                } else {
+                    self.removeClass('label-warning')
+                    self.addClass('label-danger')
+                    self.html('disable failed');
+                }
+            });
+        });
     </script>
 </div>
 
@@ -181,8 +196,8 @@
                         <span th:attr="data-wa_id=${uielement.id}" th:if="${uielement.approved == false}"
                               class="approveButton label label-info"
                               sec:authorize="hasRole('ROLE_ADMIN')">approve</span>
-                        <span th:if="${uielement.approved == true}" class="label label-success"
-                              sec:authorize="hasRole('ROLE_ADMIN')">approved</span>
+                        <span th:if="${uielement.approved == true}" class="disableButton label label-warning"
+                              sec:authorize="hasRole('ROLE_ADMIN')">disable</span>
                         <span th:attr="data-wa_id=${uielement.id}" class="deleteButton label label-danger"
                               sec:authorize="hasRole('ROLE_ADMIN')">delete</span>
                     </td>
@@ -291,6 +306,22 @@
                 }
             });
         });
+
+        $(".disableButton").click(function() {
+            var self = $(this);
+            $.get('/interface/weakaura/' + self.data('wa_id') + '/disable', function (data) {
+                if (data == true) {
+                    self.removeClass('label-warning')
+                    self.addClass('label-success')
+                    self.html('disabled');
+                } else {
+                    self.removeClass('label-warning')
+                    self.addClass('label-danger')
+                    self.html('disable failed');
+                }
+            });
+        });
+
     </script>
 </div>
 <div th:fragment="macro">
@@ -320,8 +351,8 @@
                         <span th:attr="data-macro_id=${uielement.id}" th:if="${uielement.approved == false}"
                               class="approveButton label label-info"
                               sec:authorize="hasRole('ROLE_ADMIN')">approve</span>
-                        <span th:if="${uielement.approved == true}" class="label label-success"
-                              sec:authorize="hasRole('ROLE_ADMIN')">approved</span>
+                        <span th:if="${uielement.approved == true}" class="disableButton label label-warning"
+                              sec:authorize="hasRole('ROLE_ADMIN')">disable</span>
                          <span th:attr="data-macro_id=${uielement.id}" class="deleteButton label label-danger"
                                sec:authorize="hasRole('ROLE_ADMIN')">delete</span>
 
@@ -414,6 +445,21 @@
                     self.removeClass('label-info')
                     self.addClass('label-danger')
                     self.html('approve failed');
+                }
+            });
+        });
+
+        $(".disableButton").click(function() {
+            var self = $(this);
+            $.get('/interface/macro/' + self.data('macro_id') + '/disable', function (data) {
+                if (data == true) {
+                    self.removeClass('label-warning')
+                    self.addClass('label-success')
+                    self.html('disabled');
+                } else {
+                    self.removeClass('label-warning')
+                    self.addClass('label-danger')
+                    self.html('disable failed');
                 }
             });
         });

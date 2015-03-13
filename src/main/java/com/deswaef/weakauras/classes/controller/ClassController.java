@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Controller
@@ -56,8 +57,19 @@ public class ClassController {
     public String byClassName(ModelMap modelmap, @PathVariable("classslug") String classslug) {
         Optional<WowClass> wowClass = classService.bySlug(classslug);
         if (wowClass.isPresent()) {
-            modelmap.put("wowclass", wowClass.get());
-            modelmap.put("specs", specService.byClass(wowClass.get()));
+            WowClass wc = wowClass.get();
+            modelmap.put("wowclass",
+                    WowClassDto.fromWowClass(wc)
+                            .setMacroAmount(macroService.countByWowClass(wc))
+                            .setTmwAmount(tellMeWhenService.countByWowclass(wc))
+                            .setWaAmount(weakAuraService.countByWowClass(wc))
+            );
+            modelmap.put("specs",  specService.byClass(wc).stream()
+                    .map(spec -> SpecDto.fromSpec(spec)
+                        .setMacroAmount(macroService.countBySpec(spec))
+                        .setTmwAmount(tellMeWhenService.countBySpec(spec))
+                        .setWaAmount(weakAuraService.countBySpec(spec)))
+                    .collect(Collectors.toSet()));
             return "classes/specs";
         } else {
             return "classes/index";

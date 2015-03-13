@@ -16,6 +16,10 @@ public interface TellMeWhenService extends OnRoleDependable {
 
     List<TellMeWhen> findBySpec(Spec spec);
 
+    Long countByWowclass(WowClass wowClass);
+
+    Long countBySpec(Spec spec);
+
     Optional<TellMeWhen> findById(Long id);
 
     long count();
@@ -29,4 +33,6 @@ public interface TellMeWhenService extends OnRoleDependable {
     void approve(Long id);
 
     void delete(Long tmw);
+
+    void disable(Long tmw);
 }

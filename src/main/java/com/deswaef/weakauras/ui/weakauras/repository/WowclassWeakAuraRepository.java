@@ -14,4 +14,10 @@ public interface WowclassWeakAuraRepository extends JpaRepository<WowClassWeakAu
 
     @Query("select wa from WowClassWeakAura wa where wa.wowClass = :wowClass and approved = true")
     List<WeakAura> findByWowClassAndApproved(@Param("wowClass") WowClass wowClass);
+
+    @Query("select count(wa) from WowClassWeakAura wa where wa.wowClass = :wowClass and approved = true")
+    Long countByWowClassAndApproved(@Param("wowClass") WowClass wowClass);
+
+    @Query("select count(wa) from WowClassWeakAura wa where wa.wowClass = :wowClass")
+    Long countByWowClass(@Param("wowClass") WowClass wowClass);
 }
