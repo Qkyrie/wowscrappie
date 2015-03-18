@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Optional;
 
@@ -36,6 +37,32 @@ public class UserManagementController {
             return "admin/users/index :: detail";
         } else {
             return "admin/users/index :: notfound";
+        }
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @RequestMapping(value = "/{id}/disable", method = GET)
+    public
+    @ResponseBody
+    boolean disableUser(@PathVariable("id") Long id) {
+        try {
+            userService.setEnabled(id, false);
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @RequestMapping(value = "/{id}/enable", method = GET)
+    public
+    @ResponseBody
+    boolean enableUser(@PathVariable("id") Long id) {
+        try {
+            userService.setEnabled(id, true);
+            return true;
+        } catch (Exception ex) {
+            return false;
         }
     }
 

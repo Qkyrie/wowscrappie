@@ -145,6 +145,17 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    @Transactional
+    public void setEnabled(Long id, boolean enabled) {
+        Optional<ScrappieUser> byId = findById(id);
+        if (byId.isPresent()) {
+            userRepository.save(byId.get().setEnabled(enabled));
+        } else {
+            throw new IllegalArgumentException("User with that id was not found");
+        }
+    }
+
     private Set<Role> getDefaultAuthorities() {
         Set<Role> defaultRoles = new HashSet<>();
         defaultRoles.add(roleRepository.findOne(RoleEnum.USER_ROLE.getId()).get());

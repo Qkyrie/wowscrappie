@@ -73,6 +73,16 @@
                     </ul>
                 </li>
 
+                <li sec:authorize="hasRole('ROLE_USER')">
+                    <a href="#"><i class="fa fa-user fa-3x"></i> Personal<span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a th:href="@{/personal/uploads}">  Your uploads </a>
+                        </li>
+                    </ul>
+                </li>
+
                 <li>
                     <a href="#"><i class="fa fa-fighter-jet fa-3x"></i> Raids<span
                             class="fa arrow"></span></a>
@@ -90,6 +100,11 @@
                     <a href="#"><i class="fa fa-wrench fa-3x"></i> Classes<span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
+
+                        <li>
+                            <a th:href="@{/classes/general}"> <span class="sprite_menu_titles sprite_menu_titles_gameplay"></span> General </a>
+                        </li>
+
                         <li>
                             <a th:href="@{/classes/death_knight}"> <span class="sprite_menu_titles sprite_menu_titles_death_knight"></span> Death
                                 Knight</a>

@@ -62,7 +62,9 @@ public class ContributionController {
                     .stream()
                     .map(SelectSpecDto::fromSpec)
                     .collect(Collectors.toList());
-            collect.add(0, new SelectSpecDto().setId(0L).setName("Class Specific").setSlug("class_specific"));
+            if(!wowClass.get().getSlug().equals("general")) {
+                collect.add(0, new SelectSpecDto().setId(0L).setName("Class Specific").setSlug("class_specific"));
+            }
             return collect;
         } else {
             return new ArrayList<>();

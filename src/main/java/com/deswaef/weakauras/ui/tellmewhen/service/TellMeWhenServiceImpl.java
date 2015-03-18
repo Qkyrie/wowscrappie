@@ -11,6 +11,7 @@ import com.deswaef.weakauras.ui.tellmewhen.repository.TellMeWhenRepository;
 import com.deswaef.weakauras.ui.tellmewhen.repository.TellMeWhenScreenshotRepository;
 import com.deswaef.weakauras.ui.tellmewhen.repository.WowclassTellMeWhenRepository;
 import com.deswaef.weakauras.ui.weakauras.domain.WeakAura;
+import com.deswaef.weakauras.usermanagement.domain.ScrappieUser;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -137,6 +138,18 @@ public class TellMeWhenServiceImpl implements TellMeWhenService {
         } else {
             throw new IllegalArgumentException("a tmw-config with that id was not found");
         }
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<TellMeWhen> findAllFromUser(ScrappieUser scrappieUser) {
+        return tellMeWhenRepository.findByUploader(scrappieUser);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public long countAllFromUser(ScrappieUser scrappieUser) {
+        return tellMeWhenRepository.countByUploader(scrappieUser);
     }
 
     @Override

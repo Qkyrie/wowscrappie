@@ -4,6 +4,7 @@ import com.deswaef.weakauras.classes.domain.Spec;
 import com.deswaef.weakauras.classes.domain.WowClass;
 import com.deswaef.weakauras.infrastructure.service.OnRoleDependable;
 import com.deswaef.weakauras.ui.macros.domain.Macro;
+import com.deswaef.weakauras.usermanagement.domain.ScrappieUser;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,4 +31,9 @@ public interface MacroService extends OnRoleDependable {
     void delete(Long macro);
 
     void disable(Long macro);
+
+    List<Macro> findAllFromUser(ScrappieUser scrappieUser);
+
+    long countAllFromUser(ScrappieUser scrappieUser);
+
 }

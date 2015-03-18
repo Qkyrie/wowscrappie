@@ -15,31 +15,30 @@
                     <thead>
                     <tr>
                         <th>Caption</th>
-                        <th>Uploader</th>
-                        <th>ScrapScore</th>
                         <th>Actions</th>
+                        <th>Type</th>
+                        <th>What For?</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:each="uielement, iterStat : ${uielements}"
                         th:class="${iterStat.odd}? 'gradeA' : 'gradeC'">
                         <td th:text="${uielement.name}">Name</td>
-                        <td th:text="${uielement.uploader}">Pikachu</td>
-                        <td>
-                            <span><span class="badge" th:text="${uielement.rating}">0</span></span>
-                        </td>
+                        <td th:text="${uielement.type}">Type</td>
+                        <td th:text="${uielement.whatFor}">whatFor</td>
                         <td>
                             <span data-bind="click: view" th:attr="data-tmw_id=${uielement.id}"
-                                  class="label label-success">view</span>
-                            <span th:attr="data-tmw_id=${uielement.id}, data-share-url=${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/shared/tmw/} + ${uielement.id}" class="shareButton label label-success">share link</span>
+                                  class="btn btn-success">view</span>
+                            <span th:attr="data-tmw_id=${uielement.id}, data-share-url=${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/shared/tmw/} + ${uielement.id}"
+                                  class="shareButton btn btn-success">share link</span>
                             <span th:attr="data-tmw_id=${uielement.id}" th:if="${uielement.approved == false}"
-                                  class="approveButton label label-info"
+                                  class="approveButton btn btn-info"
                                   sec:authorize="hasRole('ROLE_ADMIN')">approve</span>
                             <span th:attr="data-tmw_id=${uielement.id}"
                                   th:if="${uielement.approved == true}"
-                                  class="disableButton label label-warning"
+                                  class="disableButton btn btn-warning"
                                   sec:authorize="hasRole('ROLE_ADMIN')">disable</span>
-                            <span th:attr="data-tmw_id=${uielement.id}" class="deleteButton label label-danger"
+                            <span th:attr="data-tmw_id=${uielement.id}" class="deleteButton btn btn-danger"
                                   sec:authorize="hasRole('ROLE_ADMIN')">delete</span>
                         </td>
                     </tr>
@@ -72,19 +71,7 @@
 
         </div>
 
-        <div class="row" data-bind="visible: showDetails" sec:authorize="hasRole('ROLE_ADMIN')">
-            <div class="col-md-12 ">
-                <button class="btn btn-primary" >
-                    <i class=" fa fa-thumbs-o-up "></i> Upvote
-                </button>
-                <button class="btn btn-danger">
-                    <i class=" fa fa-thumbs-o-down"></i> Downvote
-                </button>
-            </div>
-        </div>
     </div>
-
-
     <script type="application/javascript">
 
         $('.shareButton').each(function() {
@@ -127,11 +114,11 @@
             var self = $(this);
             $.get('/interface/tellmewhen/' + self.data('tmw_id') + '/delete', function (data) {
                 if (data == true) {
-                    self.removeClass('label-danger')
-                    self.addClass('label-success')
+                    self.removeClass('btn-danger')
+                    self.addClass('btn-success')
                     self.html('deleted');
                 } else {
-                    self.addClass('label-danger')
+                    self.addClass('btn-danger')
                     self.html('deletion failed');
                 }
             });
@@ -141,12 +128,12 @@
             var self = $(this);
             $.get('/interface/tellmewhen/' + self.data('tmw_id') + '/approve', function (data) {
                 if (data == true) {
-                    self.removeClass('label-info')
-                    self.addClass('label-success')
+                    self.removeClass('btn-info')
+                    self.addClass('btn-success')
                     self.html('approved');
                 } else {
-                    self.removeClass('label-info')
-                    self.addClass('label-danger')
+                    self.removeClass('btn-info')
+                    self.addClass('btn-danger')
                     self.html('approve failed');
                 }
             });
@@ -156,12 +143,12 @@
             var self = $(this);
             $.get('/interface/tellmewhen/' + self.data('tmw_id') + '/disable', function (data) {
                 if (data == true) {
-                    self.removeClass('label-warning')
-                    self.addClass('label-success')
+                    self.removeClass('btn-warning')
+                    self.addClass('btn-success')
                     self.html('disabled');
                 } else {
-                    self.removeClass('label-warning')
-                    self.addClass('label-danger')
+                    self.removeClass('btn-warning')
+                    self.addClass('btn-danger')
                     self.html('disable failed');
                 }
             });
@@ -177,32 +164,31 @@
                 <thead>
                 <tr>
                     <th>Caption</th>
-                    <th>Uploader</th>
-                    <th>ScrapScore</th>
                     <th>Actions</th>
+                    <th>Type</th>
+                    <th>What For?</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="uielement, iterStat : ${uielements}"
                     th:class="${iterStat.odd}? 'gradeA' : 'gradeC'">
                     <td th:text="${uielement.name}">Name</td>
-                    <td th:text="${uielement.uploader}">Pikachu</td>
-                    <td>
-                        <span><span class="badge" th:text="${uielement.rating}">0</span></span>
-                    </td>
+                    <td th:text="${uielement.type}">Type</td>
+                    <td th:text="${uielement.whatFor}">whatFor</td>
                     <td>
                     <span data-bind="click: view" th:attr="data-wa_id=${uielement.id}"
-                          class="label label-success">view</span>
-                        <span th:attr="data-wa_id=${uielement.id}, data-share-url=${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/shared/wa/} + ${uielement.id}" class="shareButton label label-success">share link</span>
+                          class="btn btn-success">view</span>
+                        <span th:attr="data-wa_id=${uielement.id}, data-share-url=${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/shared/wa/} + ${uielement.id}"
+                              class="shareButton btn btn-success">share link</span>
                         <span th:attr="data-wa_id=${uielement.id}"
                               th:if="${uielement.approved == false}"
-                              class="approveButton label label-info"
+                              class="approveButton btn btn-info"
                               sec:authorize="hasRole('ROLE_ADMIN')">approve</span>
                         <span th:if="${uielement.approved == true}"
                               th:attr="data-wa_id=${uielement.id}"
-                              class="disableButton label label-warning"
+                              class="disableButton btn btn-warning"
                               sec:authorize="hasRole('ROLE_ADMIN')">disable</span>
-                        <span th:attr="data-wa_id=${uielement.id}" class="deleteButton label label-danger"
+                        <span th:attr="data-wa_id=${uielement.id}" class="deleteButton btn btn-danger"
                               sec:authorize="hasRole('ROLE_ADMIN')">delete</span>
                     </td>
                 </tr>
@@ -229,21 +215,7 @@
                 </a>
             </div>
         </div>
-
-        <br/>
-
-        <div class="row" data-bind="visible: showDetails" >
-            <div class="col-md-12">
-                <button class="btn btn-primary" sec:authorize="hasRole('ROLE_ADMIN')">
-                    <i class=" fa fa-thumbs-o-up "></i> Upvote
-                </button>
-                <button class="btn btn-danger" sec:authorize="hasRole('ROLE_USER')">
-                    <i class=" fa fa-thumbs-o-down "></i> Downvote
-                </button>
-            </div>
-        </div>
     </div>
-    <script type="application/javascript" th:src="@{/assets/zeroclipboard/ZeroClipboard.min.js}"></script>
     <script type="application/javascript">
         $('.shareButton').each(function() {
             $(this).click(function() {
@@ -286,11 +258,11 @@
             var self = $(this);
             $.get('/interface/weakaura/' + self.data('wa_id') + '/delete', function (data) {
                 if (data == true) {
-                    self.removeClass('label-danger')
-                    self.addClass('label-success')
+                    self.removeClass('btn-danger')
+                    self.addClass('btn-success')
                     self.html('deleted');
                 } else {
-                    self.addClass('label-danger')
+                    self.addClass('btn-danger')
                     self.html('deletion failed');
                 }
             });
@@ -300,12 +272,12 @@
             var self = $(this);
             $.get('/interface/weakaura/' + self.data('wa_id') + '/approve', function (data) {
                 if (data == true) {
-                    self.removeClass('label-info')
-                    self.addClass('label-success')
+                    self.removeClass('btn-info')
+                    self.addClass('btn-success')
                     self.html('approved');
                 } else {
-                    self.removeClass('label-info')
-                    self.addClass('label-danger')
+                    self.removeClass('btn-info')
+                    self.addClass('btn-danger')
                     self.html('approve failed');
                 }
             });
@@ -315,12 +287,12 @@
             var self = $(this);
             $.get('/interface/weakaura/' + self.data('wa_id') + '/disable', function (data) {
                 if (data == true) {
-                    self.removeClass('label-warning')
-                    self.addClass('label-success')
+                    self.removeClass('btn-warning')
+                    self.addClass('btn-success')
                     self.html('disabled');
                 } else {
-                    self.removeClass('label-warning')
-                    self.addClass('label-danger')
+                    self.removeClass('btn-warning')
+                    self.addClass('btn-danger')
                     self.html('disable failed');
                 }
             });
@@ -335,31 +307,30 @@
                 <thead>
                 <tr>
                     <th>Caption</th>
-                    <th>Uploader</th>
-                    <th>ScrapScore</th>
                     <th>Actions</th>
+                    <th>Type</th>
+                    <th>What For?</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="uielement, iterStat : ${uielements}"
                     th:class="${iterStat.odd}? 'gradeA' : 'gradeC'">
                     <td th:text="${uielement.name}">Name</td>
-                    <td th:text="${uielement.uploader}">Pikachu</td>
-                    <td>
-                        <span><span class="badge" th:text="${uielement.rating}">0</span></span>
-                    </td>
+                    <td th:text="${uielement.type}">Type</td>
+                    <td th:text="${uielement.whatFor}">whatFor</td>
                     <td>
                     <span data-bind="click: view" th:attr="data-macro_id=${uielement.id}"
-                          class="label label-success">view</span>
-                        <span th:attr="data-macro_id=${uielement.id}, data-share-url=${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/shared/macro/} + ${uielement.id}" class="shareButton label label-success">share link</span>
+                          class="btn btn-success">view</span>
+                        <span th:attr="data-macro_id=${uielement.id}, data-share-url=${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/shared/macro/} + ${uielement.id}"
+                              class="shareButton btn btn-success">share link</span>
                         <span th:attr="data-macro_id=${uielement.id}" th:if="${uielement.approved == false}"
-                              class="approveButton label label-info"
+                              class="approveButton btn btn-info"
                               sec:authorize="hasRole('ROLE_ADMIN')">approve</span>
                         <span th:if="${uielement.approved == true}"
-                              class="disableButton label label-warning"
+                              class="disableButton btn btn-warning"
                               th:attr="data-macro_id=${uielement.id}"
                               sec:authorize="hasRole('ROLE_ADMIN')">disable</span>
-                         <span th:attr="data-macro_id=${uielement.id}" class="deleteButton label label-danger"
+                         <span th:attr="data-macro_id=${uielement.id}" class="deleteButton btn btn-danger"
                                sec:authorize="hasRole('ROLE_ADMIN')">delete</span>
 
                     </td>
@@ -378,17 +349,6 @@
 
             <label>Macro-String</label>
             <textarea data-bind="value: activeString" class="form-control" rows="3"></textarea>
-        </div>
-        <br/>
-        <div class="row" data-bind="visible: showDetails"  sec:authorize="hasRole('ROLE_ADMIN')">
-            <div class="col-md-12">
-                <button class="btn btn-primary">
-                    <i class=" fa fa-thumbs-o-up "></i> Upvote
-                </button>
-                <button class="btn btn-danger">
-                    <i class=" fa fa-thumbs-o-down "></i> Downvote
-                </button>
-            </div>
         </div>
     </div>
 
@@ -430,11 +390,11 @@
             var self = $(this);
             $.get('/interface/macro/' + self.data('macro_id') + '/delete', function (data) {
                 if (data == true) {
-                    self.removeClass('label-danger')
-                    self.addClass('label-success')
+                    self.removeClass('btn-danger')
+                    self.addClass('btn-success')
                     self.html('deleted');
                 } else {
-                    self.addClass('label-danger')
+                    self.addClass('btn-danger')
                     self.html('deletion failed');
                 }
             });
@@ -444,12 +404,12 @@
             var self = $(this);
             $.get('/interface/macro/' + self.data('macro_id') + '/approve', function (data) {
                 if (data == true) {
-                    self.removeClass('label-info')
-                    self.addClass('label-success')
+                    self.removeClass('btn-info')
+                    self.addClass('btn-success')
                     self.html('approved');
                 } else {
-                    self.removeClass('label-info')
-                    self.addClass('label-danger')
+                    self.removeClass('btn-info')
+                    self.addClass('btn-danger')
                     self.html('approve failed');
                 }
             });
@@ -459,12 +419,12 @@
             var self = $(this);
             $.get('/interface/macro/' + self.data('macro_id') + '/disable', function (data) {
                 if (data == true) {
-                    self.removeClass('label-warning')
-                    self.addClass('label-success')
+                    self.removeClass('btn-warning')
+                    self.addClass('btn-success')
                     self.html('disabled');
                 } else {
-                    self.removeClass('label-warning')
-                    self.addClass('label-danger')
+                    self.removeClass('btn-warning')
+                    self.addClass('btn-danger')
                     self.html('disable failed');
                 }
             });

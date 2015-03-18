@@ -4,6 +4,7 @@ import com.deswaef.weakauras.configuration.social.FacebookLogoutHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
@@ -13,6 +14,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebMvcSecurity
+@EnableGlobalMethodSecurity(prePostEnabled=true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -25,6 +27,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/contribute", "contribute/**").fullyAuthenticated()
+                .antMatchers("/personal", "personal/**").fullyAuthenticated()
                 .antMatchers("/admin", "/admin/**").hasRole("ADMIN")
                 .antMatchers("/**").permitAll()
                 .and()
@@ -37,7 +40,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).addLogoutHandler(facebookLogoutHandler).and()
                 .exceptionHandling().accessDeniedPage("/access?error")
                 .and()
-                .csrf().disable();
+                .csrf().disable()
+                ;
     }
 
     @Autowired

@@ -4,7 +4,9 @@ import com.deswaef.weakauras.classes.domain.Spec;
 import com.deswaef.weakauras.classes.domain.WowClass;
 import com.deswaef.weakauras.infrastructure.service.OnRoleDependable;
 import com.deswaef.weakauras.ui.image.domain.Screenshot;
+import com.deswaef.weakauras.ui.macros.domain.Macro;
 import com.deswaef.weakauras.ui.tellmewhen.domain.TellMeWhen;
+import com.deswaef.weakauras.usermanagement.domain.ScrappieUser;
 
 import java.util.List;
 import java.util.Optional;
@@ -35,4 +37,9 @@ public interface TellMeWhenService extends OnRoleDependable {
     void delete(Long tmw);
 
     void disable(Long tmw);
+
+    List<TellMeWhen> findAllFromUser(ScrappieUser scrappieUser);
+
+    long countAllFromUser(ScrappieUser scrappieUser);
+
 }

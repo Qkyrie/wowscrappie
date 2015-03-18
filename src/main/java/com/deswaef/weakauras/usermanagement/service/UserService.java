@@ -22,4 +22,6 @@ public interface UserService {
     ScrappieUser acceptInvitation(RegistrationByInvitationDto registrationByInvitationDto);
 
     void changeUsername(ScrappieUser principal, String newName);
+
+    void setEnabled(Long id, boolean b);
 }

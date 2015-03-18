@@ -7,6 +7,7 @@ import com.deswaef.weakauras.ui.macros.repository.MacroRepository;
 import com.deswaef.weakauras.ui.macros.repository.SpecMacroRepository;
 import com.deswaef.weakauras.ui.macros.repository.WowClassMacroRepository;
 import com.deswaef.weakauras.ui.rating.service.ConfigRatingService;
+import com.deswaef.weakauras.usermanagement.domain.ScrappieUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -111,6 +112,18 @@ public class MacroServiceImpl implements MacroService {
         } else {
             throw new IllegalArgumentException("a macro with that id was not found");
         }
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Macro> findAllFromUser(ScrappieUser scrappieUser) {
+        return macroRepository.findByUploader(scrappieUser);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public long countAllFromUser(ScrappieUser scrappieUser) {
+        return macroRepository.countByUploader(scrappieUser);
     }
 
     @Override

@@ -1,0 +1,109 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="decorator/wa-decorator">
+
+<div layout:fragment="header">
+    <link th:href="@{/assets/js/dataTables/dataTables.bootstrap.css}" rel="stylesheet"/>
+</div>
+
+<div layout:fragment="main-content">
+    <div id="page-inner">
+
+        <div class="row">
+            <div class="col-md-offset-1 col-md-10 alert alert-info">
+                Your personal uploads are displayed here.
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 col-sm-8 col-xs-8">
+                <div id="waBox" class="panel panel-back noti-box">
+                <span class="icon-box bg-color-red set-icon">
+                    <i class="fa fa-envelope-o"></i>
+                </span>
+
+                    <div class="text-box">
+                        <p class="main-text" th:text="${waCount}">120</p>
+
+                        <p class="text-muted">WeakAuras</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-6">
+                <div id="tmwBox" class="panel panel-back noti-box">
+                <span class="icon-box bg-color-green set-icon">
+                    <i class="fa fa-bars"></i>
+                </span>
+
+                    <div class="text-box">
+                        <p class="main-text" th:text="${tmwCount}">30</p>
+
+                        <p class="text-muted">TMW-Configs</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-6">
+                <div id="macroBox" class="panel panel-back noti-box">
+                <span class="icon-box bg-color-blue set-icon">
+                    <i class="fa fa-bell-o"></i>
+                </span>
+
+                    <div class="text-box">
+                        <p class="main-text" th:text="${macroCount}">240</p>
+
+                        <p class="text-muted">Macros</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr/>
+
+        <div clas="row">
+            <div id="resultPane" class="col-md-offset-1 col-md-10">
+            </div>
+        </div>
+
+    </div>
+    <!-- /. PAGE INNER  -->
+</div>
+<!-- /. layout fragment -->
+<div layout:fragment="footer-content">
+    <script th:src="@{/assets/js/dataTables/jquery.dataTables.js}"></script>
+    <script th:src="@{/assets/js/dataTables/dataTables.bootstrap.js}"></script>
+    <script type="application/javascript">
+        var ViewModel = function () {
+            var self = this;
+        }
+        var viewModel = new ViewModel();
+        ko.applyBindings(viewModel);
+
+        $("#tmwBox").click(function () {
+                    $.get('/personal/uploads/tmw', function (result) {
+                        $("#resultPane").html(result);
+                        $('#myTable').dataTable();
+                    });
+                }
+        );
+
+        $("#waBox").click(function () {
+            $.get('/personal/uploads/weakaura', function(result) {
+                $("#resultPane").html(result);
+                $('#myTable').dataTable();
+            });
+        });
+
+        $("#macroBox").click(function () {
+            $.get('/personal/uploads/macro', function(result) {
+                $("#resultPane").html(result);
+                $('#myTable').dataTable();
+            });
+        });
+    </script>
+
+    <script type="text/javascript" th:src="@{/assets/fancybox/jquery.fancybox.pack.js?v=2.1.5}"/>
+
+</div>
+
+</html>

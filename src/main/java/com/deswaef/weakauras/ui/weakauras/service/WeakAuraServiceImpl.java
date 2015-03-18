@@ -4,12 +4,14 @@ import com.deswaef.weakauras.classes.domain.Spec;
 import com.deswaef.weakauras.classes.domain.WowClass;
 import com.deswaef.weakauras.ui.image.domain.Screenshot;
 import com.deswaef.weakauras.ui.rating.service.ConfigRatingService;
+import com.deswaef.weakauras.ui.tellmewhen.domain.TellMeWhen;
 import com.deswaef.weakauras.ui.weakauras.domain.WeakAura;
 import com.deswaef.weakauras.ui.weakauras.domain.WeakauraScreenshot;
 import com.deswaef.weakauras.ui.weakauras.repository.SpecWeakAuraRepository;
 import com.deswaef.weakauras.ui.weakauras.repository.WeakAuraRepository;
 import com.deswaef.weakauras.ui.weakauras.repository.WeakAuraScreenshotRepository;
 import com.deswaef.weakauras.ui.weakauras.repository.WowclassWeakAuraRepository;
+import com.deswaef.weakauras.usermanagement.domain.ScrappieUser;
 import com.google.common.collect.Lists;
 import javafx.stage.Screen;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -137,6 +139,18 @@ public class WeakAuraServiceImpl implements WeakAuraService {
         } else {
             throw new IllegalArgumentException("A weakaura with that id was not found");
         }
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<WeakAura> findAllFromUser(ScrappieUser scrappieUser) {
+        return weakAuraRepository.findByUploader(scrappieUser);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public long countAllFromUser(ScrappieUser scrappieUser) {
+        return weakAuraRepository.countByUploader(scrappieUser);
     }
 
     @Override
