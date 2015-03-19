@@ -38,19 +38,19 @@
                 <h3>Type</h3>
 
                 <div class="form-group">
-                    <div class="radio">
+                    <div class="radio radio-primary">
                         <label>
                             <input type="radio" name="optionsRadios" id="optionWA" value="weakaura"
                                    checked="">Weakaura</input>
                         </label>
                     </div>
-                    <div class="radio">
+                    <div class="radio radio-primary">
                         <label>
                             <input type="radio" name="optionsRadios" id="optionTMW"
                                    value="tellmewhen">TellMeWhen</input>
                         </label>
                     </div>
-                    <div class="radio">
+                    <div class="radio radio-primary">
                         <label>
                             <input type="radio" name="optionsRadios" id="optionMacro" value="macro">Macro</input>
                         </label>
@@ -111,20 +111,15 @@
 
                 <div id="tmw_string" data-bind="visible: showTMW">
                     <div class="form-group">
-                        <label>Caption</label>
-                        <input id="tmw_caption" class="form-control"/>
+                        <input id="tmw_caption" class="form-control floating-label"
+                               placeholder="Caption"
+                               data-hint="A good caption will help people to find back your TMW-String"/>
 
-                        <p class="help-block"><a class="label label-info">Tip!</a> <span data-toggle="tooltip"
-                                                                                         data-original-title="whatevz">A good caption</span>
-                            will help people to
-                            find back your TMW-String.</p>
                     </div>
-                    <label>Paste the TMW-String</label>
-                    <textarea id="actual_tmw_string" class="form-control" rows="5"></textarea>
+                    <textarea id="actual_tmw_string" class="form-control floating-label" placeholder="Paste your tmw-string" rows="5"></textarea>
 
                     <div class="form-group">
-                        <label>Comments</label>
-                        <textarea id="tmw_comments" class="form-control" rows="5"></textarea>
+                        <textarea id="tmw_comments" class="form-control floating-label" placeholder="Comments" rows="5"></textarea>
                     </div>
                     <hr/>
                     <div class="form-group">
@@ -132,23 +127,21 @@
 
                         <form id="tmw-dropzone" th:action="@{/contribute/cachescreenshot}" class="dropzone"></form>
                     </div>
-                    <span class="btn btn-primary" data-bind="click: submitContribution">Submit</span>
+                    <span class="btn btn-primary" data-bind="click: submitContribution"> <i class="mdi-navigation-check"></i> Submit</span>
                 </div>
 
                 <div id="weakaura_string" data-bind="visible: showWA">
                     <div class="form-group">
-                        <label>Caption</label>
-                        <input id="wa_caption" class="form-control"/>
-
-                        <p class="help-block"><a class="label label-info">Tip!</a> A good caption will help people to
-                            find back your WeakAura.</p>
+                        <input id="wa_caption" class="form-control floating-label"
+                                placeholder="Caption"
+                                data-hint="A good caption will help people to find back your WeakAura"/>
                     </div>
-                    <label>Paste the WeakAura-String</label>
-                    <textarea id="actual_weakaura_string" class="form-control" rows="5"></textarea>
+                    <textarea id="actual_weakaura_string" class="form-control floating-label"
+                              placeholder="Paste the WeakAura-String" rows="5"></textarea>
 
                     <div class="form-group">
-                        <label>Comments</label>
-                        <textarea id="wa_comments" class="form-control" rows="5"></textarea>
+                        <textarea id="wa_comments" class="form-control floating-label"
+                                  placeholder="Comments" rows="5"></textarea>
                     </div>
 
                     <hr/>
@@ -160,26 +153,23 @@
                               id="wa-dropzone">
                         </form>
                     </div>
-                    <span class="btn btn-primary" data-bind="click: submitContribution">Submit</span>
+                    <span class="btn btn-primary btn-raised" data-bind="click: submitContribution"> <i class="mdi-navigation-check"></i> Submit</span>
 
                 </div>
 
                 <div id="macro_string" data-bind="visible: showMacro">
                     <div class="form-group">
-                        <label>Caption</label>
-                        <input id="macro_caption" class="form-control"/>
-
-                        <p class="help-block"><a class="label label-info">Tip!</a> A good caption will help people to
-                            find back your Macro.</p>
+                        <input id="macro_caption" class="form-control floating-label"
+                               placeholder="Caption"
+                               data-hint="A good caption will help people to find back your Macro" />
                     </div>
-                    <label>Paste the Macro</label>
-                    <textarea id="actual_macro_string" class="form-control" rows="3"></textarea>
+
+                    <textarea id="actual_macro_string" class="form-control floating-label" placeholder="Paste the Macro" rows="3"></textarea>
 
                     <div class="form-group">
-                        <label>Comments</label>
-                        <textarea id="macro_comments" class="form-control" rows="5"></textarea>
+                        <textarea id="macro_comments" class="form-control floating-label" placeholder="Comments" rows="5"></textarea>
                     </div>
-                    <span class="btn btn-primary" data-bind="click: submitContribution">Submit</span>
+                    <span class="btn btn-primary" data-bind="click: submitContribution"> <i class="mdi-navigation-check"></i> Submit</span>
                 </div>
             </div>
         </div>

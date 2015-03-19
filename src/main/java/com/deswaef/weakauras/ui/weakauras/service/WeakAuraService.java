@@ -43,6 +43,10 @@ public interface WeakAuraService extends OnRoleDependable {
 
     List<WeakAura> findAllFromUser(ScrappieUser scrappieUser);
 
+    List<WeakAura> findAllNonApproved();
+
     long countAllFromUser(ScrappieUser scrappieUser);
+
+    long countUnapproved();
 
 }

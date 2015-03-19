@@ -21,6 +21,11 @@
     <link th:href="@{http://fonts.googleapis.com/css?family=Open+Sans}" rel='stylesheet' type='text/css'/>
 
     <link rel="stylesheet" th:href="@{/assets/fancybox/jquery.fancybox.css?v=2.1.5}" type="text/css" media="screen" />
+
+    <link th:href="@{/assets/material_design/css/roboto.min.css}" rel="stylesheet" />
+    <link th:href="@{/assets/material_design/css/material.min.css}" rel="stylesheet" />
+    <link th:href="@{/assets/material_design/css/ripples.min.css}" rel="stylesheet" />
+
     <div layout:fragment="header"></div>
 </head>
 
@@ -48,7 +53,7 @@
         </div>
     </nav>
     <!-- /. NAV TOP  -->
-    <nav class="navbar-default navbar-side" role="navigation">
+    <div class="navbar-default navbar-side" role="navigation">
         <div class="sidebar-collapse">
             <ul class="nav" id="main-menu">
                 <li class="text-center">
@@ -69,6 +74,9 @@
                         </li>
                         <li>
                             <a th:href="@{/admin/users}">  User Management</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/admin/pending-uploads}">  Pending Uploads</a>
                         </li>
                     </ul>
                 </li>
@@ -164,7 +172,7 @@
 
         </div>
 
-    </nav>
+    </div>
     <!-- /. NAV SIDE  -->
     <div id="page-wrapper">
         <div layout:fragment="main-content"></div>
@@ -184,6 +192,17 @@
 <!-- CUSTOM SCRIPTS -->
 <script th:src="@{/assets/js/custom.js}"></script>
 <script th:src="@{/assets/js/knockout.js}"></script>
+<script th:src="@{/assets/js/analytics.js}"/>
+
+
+<script th:src="@{/assets/material_design/js/ripples.min.js}"></script>
+<script th:src="@{/assets/material_design/js/material.min.js}"></script>
+<script>
+    $(document).ready(function() {
+        // This command is used to initialize some elements and make them work properly
+        $.material.init();
+    });
+</script>
 
 <div layout:fragment="footer-content"></div>
 

@@ -1,10 +1,10 @@
-package com.deswaef.weakauras.personalspace.controller.dto;
+package com.deswaef.weakauras.administration.controller.dto;
 
 import com.deswaef.weakauras.ui.weakauras.domain.SpecWeakAura;
 import com.deswaef.weakauras.ui.weakauras.domain.WeakAura;
 import com.deswaef.weakauras.ui.weakauras.domain.WowClassWeakAura;
 
-public class PersonallyUploadedWeakAuraDto {
+public class PendingWeakAuraDto {
     private Long id;
     private String name;
     private String comment;
@@ -13,8 +13,8 @@ public class PersonallyUploadedWeakAuraDto {
     private String type;
     private String whatFor;
 
-    public static PersonallyUploadedWeakAuraDto create(WeakAura weakAura) {
-        return new PersonallyUploadedWeakAuraDto()
+    public static PendingWeakAuraDto create(WeakAura weakAura) {
+        return new PendingWeakAuraDto()
                 .setId(weakAura.getId())
                 .setActualValue(weakAura.getActualValue())
                 .setApproved(weakAura.isApproved())
@@ -48,7 +48,7 @@ public class PersonallyUploadedWeakAuraDto {
         return id;
     }
 
-    public PersonallyUploadedWeakAuraDto setId(Long id) {
+    public PendingWeakAuraDto setId(Long id) {
         this.id = id;
         return this;
     }
@@ -57,7 +57,7 @@ public class PersonallyUploadedWeakAuraDto {
         return name;
     }
 
-    public PersonallyUploadedWeakAuraDto setName(String name) {
+    public PendingWeakAuraDto setName(String name) {
         this.name = name;
         return this;
     }
@@ -66,7 +66,7 @@ public class PersonallyUploadedWeakAuraDto {
         return comment;
     }
 
-    public PersonallyUploadedWeakAuraDto setComment(String comment) {
+    public PendingWeakAuraDto setComment(String comment) {
         this.comment = comment;
         return this;
     }
@@ -75,7 +75,7 @@ public class PersonallyUploadedWeakAuraDto {
         return actualValue;
     }
 
-    public PersonallyUploadedWeakAuraDto setActualValue(String actualValue) {
+    public PendingWeakAuraDto setActualValue(String actualValue) {
         this.actualValue = actualValue;
         return this;
     }
@@ -84,7 +84,7 @@ public class PersonallyUploadedWeakAuraDto {
         return approved;
     }
 
-    public PersonallyUploadedWeakAuraDto setApproved(boolean approved) {
+    public PendingWeakAuraDto setApproved(boolean approved) {
         this.approved = approved;
         return this;
     }
@@ -93,7 +93,7 @@ public class PersonallyUploadedWeakAuraDto {
         return type;
     }
 
-    public PersonallyUploadedWeakAuraDto setType(String type) {
+    public PendingWeakAuraDto setType(String type) {
         this.type = type;
         return this;
     }
@@ -102,7 +102,7 @@ public class PersonallyUploadedWeakAuraDto {
         return whatFor;
     }
 
-    public PersonallyUploadedWeakAuraDto setWhatFor(String whatFor) {
+    public PendingWeakAuraDto setWhatFor(String whatFor) {
         this.whatFor = whatFor;
         return this;
     }

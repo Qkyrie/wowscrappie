@@ -88,7 +88,7 @@ public class TellMeWhenServiceImpl implements TellMeWhenService {
 
     @Override
     public long count() {
-        return tellMeWhenRepository.countApproved();
+        return tellMeWhenRepository.countApproved(true);
     }
 
     @Override
@@ -148,8 +148,20 @@ public class TellMeWhenServiceImpl implements TellMeWhenService {
 
     @Override
     @Transactional(readOnly = true)
+    public List<TellMeWhen> findAllNonApproved() {
+        return tellMeWhenRepository.findAllApproved(false);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public long countAllFromUser(ScrappieUser scrappieUser) {
         return tellMeWhenRepository.countByUploader(scrappieUser);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public long countUnapproved() {
+        return tellMeWhenRepository.countApproved(false);
     }
 
     @Override

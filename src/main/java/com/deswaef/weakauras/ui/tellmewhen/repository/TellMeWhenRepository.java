@@ -11,11 +11,11 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface TellMeWhenRepository extends JpaRepository<TellMeWhen, Long>{
-    @Query("select count(tmw) from TellMeWhen tmw where approved = true")
-    long countApproved();
+    @Query("select count(tmw) from TellMeWhen tmw where approved = :approved")
+    long countApproved(@Param("approved") boolean approved);
 
-    @Query("select tmw from TellMeWhen tmw where approved = true")
-    List<TellMeWhen> findAllApproved();
+    @Query("select tmw from TellMeWhen tmw where approved = :approved")
+    List<TellMeWhen> findAllApproved(@Param("approved") boolean approved);
 
     List<TellMeWhen> findByUploader(@Param("uploader") ScrappieUser scrappieUser);
 

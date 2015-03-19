@@ -219,14 +219,19 @@ max-width:170px;
 }
 
 .navbar-cls-top .navbar-brand {
-	color: #fff;
-background: #C90000;
-width: 260px;
-text-align: center;
-height: 60px;
-font-size: 30px;
-font-weight: 700;
+    color: #fff;
+    background: #C90000;
+    width: 260px;
+    text-align: center;
+    height: 80px;
+    font-size: 30px;
+    font-weight: 700;
 }
+
+.navbar-brand {
+    height: 80px !important;
+}
+
 .active-menu {
     background-color:#C90000!important;
 }

@@ -76,7 +76,7 @@ public class MacroServiceImpl implements MacroService {
 
     @Override
     public long count() {
-        return macroRepository.countApproved();
+        return macroRepository.countApproved(true);
     }
 
     @Override
@@ -84,7 +84,7 @@ public class MacroServiceImpl implements MacroService {
         if(isAdmin()){
             return macroRepository.findAll();
         } else {
-            return macroRepository.findAllApproved();
+            return macroRepository.findAllApproved(true);
         }
     }
 
@@ -122,8 +122,19 @@ public class MacroServiceImpl implements MacroService {
 
     @Override
     @Transactional(readOnly = true)
+    public List<Macro> findAllUnapproved() {
+        return macroRepository.findAllApproved(false);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public long countAllFromUser(ScrappieUser scrappieUser) {
         return macroRepository.countByUploader(scrappieUser);
+    }
+
+    @Override
+    public long countUnapproved() {
+        return macroRepository.countApproved(false);
     }
 
     @Override

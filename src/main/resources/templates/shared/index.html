@@ -88,6 +88,7 @@
         <div class="row" >
             <div class="col-md-5 col-md-offset-1">
                 <button id="copy-button" th:attr="data-clipboard-text=${config.actualValue}" class="btn btn-primary">
+                    <i class="mdi-action-assignment"></i>
                     Copy to clipboard
                 </button>
                 <button class="btn btn-primary" sec:authorize="hasRole('ROLE_ADMIN')">

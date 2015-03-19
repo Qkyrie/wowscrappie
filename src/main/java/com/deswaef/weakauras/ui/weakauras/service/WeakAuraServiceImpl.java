@@ -84,7 +84,7 @@ public class WeakAuraServiceImpl implements WeakAuraService {
 
     @Override
     public long count() {
-        return weakAuraRepository.countApproved();
+        return weakAuraRepository.countApproved(true);
     }
 
     @Override
@@ -110,7 +110,7 @@ public class WeakAuraServiceImpl implements WeakAuraService {
         if(isAdmin()) {
             return weakAuraRepository.findAll();
         } else {
-            return weakAuraRepository.findAllApproved();
+            return weakAuraRepository.findAllApproved(true);
         }
 
     }
@@ -149,8 +149,20 @@ public class WeakAuraServiceImpl implements WeakAuraService {
 
     @Override
     @Transactional(readOnly = true)
+    public List<WeakAura> findAllNonApproved() {
+        return weakAuraRepository.findAllApproved(false);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public long countAllFromUser(ScrappieUser scrappieUser) {
         return weakAuraRepository.countByUploader(scrappieUser);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public long countUnapproved() {
+        return weakAuraRepository.countApproved(false);
     }
 
     @Override

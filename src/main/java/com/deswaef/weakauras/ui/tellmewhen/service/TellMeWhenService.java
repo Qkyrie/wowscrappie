@@ -40,6 +40,10 @@ public interface TellMeWhenService extends OnRoleDependable {
 
     List<TellMeWhen> findAllFromUser(ScrappieUser scrappieUser);
 
+    List<TellMeWhen> findAllNonApproved();
+
     long countAllFromUser(ScrappieUser scrappieUser);
+
+    long countUnapproved();
 
 }

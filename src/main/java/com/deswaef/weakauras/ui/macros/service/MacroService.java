@@ -34,6 +34,10 @@ public interface MacroService extends OnRoleDependable {
 
     List<Macro> findAllFromUser(ScrappieUser scrappieUser);
 
+    List<Macro> findAllUnapproved();
+
     long countAllFromUser(ScrappieUser scrappieUser);
+
+    long countUnapproved();
 
 }

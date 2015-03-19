@@ -15,8 +15,8 @@
                     <thead>
                     <tr>
                         <th>Caption</th>
-                        <th>Uploader</th>
-                        <th>ScrapScore</th>
+                        <th>Type</th>
+                        <th>What For?</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
@@ -24,26 +24,22 @@
                     <tr th:each="uielement, iterStat : ${uielements}"
                         th:class="${iterStat.odd}? 'gradeA' : 'gradeC'">
                         <td th:text="${uielement.name}">Name</td>
-                        <td th:text="${uielement.uploader}">Pikachu</td>
-                        <td>
-                            <span><span class="badge" th:text="${uielement.rating}">0</span></span>
-                        </td>
+                        <td th:text="${uielement.type}">Type</td>
+                        <td th:text="${uielement.whatFor}">whatFor</td>
                         <td>
                             <span data-bind="click: view" th:attr="data-tmw_id=${uielement.id}"
                                   class="btn btn-success btn-sm"> <i class="mdi-maps-local-library"></i> view</span>
-
-                            <span th:attr="data-tmw_id=${uielement.id},
-                            data-share-url=${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/shared/tmw/} + ${uielement.id}"
-                                  class="shareButton btn btn-success btn-sm"> <i class="mdi-social-share"></i>  share link</span>
+                            <span th:attr="data-tmw_id=${uielement.id}, data-share-url=${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/shared/tmw/} + ${uielement.id}"
+                                  class="shareButton btn btn-success btn-sm"> <i class="mdi-social-share"></i> share link</span>
                             <span th:attr="data-tmw_id=${uielement.id}" th:if="${uielement.approved == false}"
                                   class="approveButton btn btn-info btn-sm"
-                                  sec:authorize="hasRole('ROLE_ADMIN')"><i class="mdi-action-done"></i> approve</span>
+                                  sec:authorize="hasRole('ROLE_ADMIN')"> <i class="mdi-action-done"></i> approve</span>
                             <span th:attr="data-tmw_id=${uielement.id}"
                                   th:if="${uielement.approved == true}"
                                   class="disableButton btn btn-warning btn-sm"
-                                  sec:authorize="hasRole('ROLE_ADMIN')"><i class="mdi-action-lock"></i> disable</span>
+                                  sec:authorize="hasRole('ROLE_ADMIN')"> <i class="mdi-action-lock"></i> disable</span>
                             <span th:attr="data-tmw_id=${uielement.id}" class="deleteButton btn btn-danger btn-sm"
-                                  sec:authorize="hasRole('ROLE_ADMIN')"><i class="mdi-av-not-interested"></i> delete</span>
+                                  sec:authorize="hasRole('ROLE_ADMIN')"> <i class="mdi-av-not-interested"></i> delete</span>
                         </td>
                     </tr>
                     </tbody>
@@ -76,8 +72,6 @@
         </div>
 
     </div>
-
-
     <script type="application/javascript">
 
         $('.shareButton').each(function() {
@@ -170,8 +164,8 @@
                 <thead>
                 <tr>
                     <th>Caption</th>
-                    <th>Uploader</th>
-                    <th>ScrapScore</th>
+                    <th>Type</th>
+                    <th>What For?</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
@@ -179,27 +173,23 @@
                 <tr th:each="uielement, iterStat : ${uielements}"
                     th:class="${iterStat.odd}? 'gradeA' : 'gradeC'">
                     <td th:text="${uielement.name}">Name</td>
-                    <td th:text="${uielement.uploader}">Pikachu</td>
-                    <td>
-                        <span><span class="badge" th:text="${uielement.rating}">0</span></span>
-                    </td>
+                    <td th:text="${uielement.type}">Type</td>
+                    <td th:text="${uielement.whatFor}">whatFor</td>
                     <td>
                     <span data-bind="click: view" th:attr="data-wa_id=${uielement.id}"
-                          class="btn btn-success btn-sm"> <i class="mdi-maps-local-library"></i> view</span>
-
+                          class="btn btn-success btn-sm"><i class="mdi-maps-local-library"></i> view</span>
                         <span th:attr="data-wa_id=${uielement.id}, data-share-url=${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/shared/wa/} + ${uielement.id}"
-                              class="shareButton btn btn-success btn-sm"> <i class="mdi-social-share"></i> share link</span>
-
+                              class="shareButton btn btn-success btn-sm"> <i class="mdi-social-share"></i>share link</span>
                         <span th:attr="data-wa_id=${uielement.id}"
                               th:if="${uielement.approved == false}"
                               class="approveButton btn btn-info btn-sm"
-                              sec:authorize="hasRole('ROLE_ADMIN')"><i class="mdi-action-done"></i> approve</span>
+                              sec:authorize="hasRole('ROLE_ADMIN')"> <i class="mdi-action-done"></i> approve</span>
                         <span th:if="${uielement.approved == true}"
                               th:attr="data-wa_id=${uielement.id}"
                               class="disableButton btn btn-warning btn-sm"
-                              sec:authorize="hasRole('ROLE_ADMIN')"><i class="mdi-action-lock"></i> disable</span>
+                              sec:authorize="hasRole('ROLE_ADMIN')"> <i class="mdi-action-lock"></i> disable</span>
                         <span th:attr="data-wa_id=${uielement.id}" class="deleteButton btn btn-danger btn-sm"
-                              sec:authorize="hasRole('ROLE_ADMIN')"><i class="mdi-av-not-interested"></i> delete</span>
+                              sec:authorize="hasRole('ROLE_ADMIN')"> <i class="mdi-av-not-interested"></i> delete</span>
                     </td>
                 </tr>
                 </tbody>
@@ -225,7 +215,6 @@
                 </a>
             </div>
         </div>
-
     </div>
     <script type="application/javascript">
         $('.shareButton').each(function() {
@@ -318,8 +307,8 @@
                 <thead>
                 <tr>
                     <th>Caption</th>
-                    <th>Uploader</th>
-                    <th>ScrapScore</th>
+                    <th>Type</th>
+                    <th>What For?</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
@@ -327,13 +316,11 @@
                 <tr th:each="uielement, iterStat : ${uielements}"
                     th:class="${iterStat.odd}? 'gradeA' : 'gradeC'">
                     <td th:text="${uielement.name}">Name</td>
-                    <td th:text="${uielement.uploader}">Pikachu</td>
-                    <td>
-                        <span><span class="badge" th:text="${uielement.rating}">0</span></span>
-                    </td>
+                    <td th:text="${uielement.type}">Type</td>
+                    <td th:text="${uielement.whatFor}">whatFor</td>
                     <td>
                     <span data-bind="click: view" th:attr="data-macro_id=${uielement.id}"
-                          class="btn btn-success btn-sm"><i class="mdi-maps-local-library"></i> view</span>
+                          class="btn btn-success btn-sm"> <i class="mdi-maps-local-library"></i> view</span>
                         <span th:attr="data-macro_id=${uielement.id}, data-share-url=${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/shared/macro/} + ${uielement.id}"
                               class="shareButton btn btn-success btn-sm"> <i class="mdi-social-share"></i> share link</span>
                         <span th:attr="data-macro_id=${uielement.id}" th:if="${uielement.approved == false}"
@@ -362,17 +349,6 @@
 
             <label>Macro-String</label>
             <textarea data-bind="value: activeString" class="form-control" rows="3"></textarea>
-        </div>
-        <br/>
-        <div class="row" data-bind="visible: showDetails"  sec:authorize="hasRole('ROLE_ADMIN')">
-            <div class="col-md-12">
-                <button class="btn btn-primary">
-                    <i class=" fa fa-thumbs-o-up "></i> Upvote
-                </button>
-                <button class="btn btn-danger">
-                    <i class=" fa fa-thumbs-o-down "></i> Downvote
-                </button>
-            </div>
         </div>
     </div>
 

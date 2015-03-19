@@ -10,11 +10,11 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface MacroRepository extends JpaRepository<Macro, Long>{
-    @Query("select count(m) from Macro m where m.approved = true")
-    long countApproved();
+    @Query("select count(m) from Macro m where m.approved = :approved")
+    long countApproved(@Param("approved") boolean approved);
 
-    @Query("select m from Macro m where m.approved = true")
-    List<Macro> findAllApproved();
+    @Query("select m from Macro m where m.approved = :approved")
+    List<Macro> findAllApproved(@Param("approved") boolean approved);
 
     List<Macro> findByUploader(@Param("uploader") ScrappieUser scrappieUser);
 
