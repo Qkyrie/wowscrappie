@@ -3,6 +3,8 @@ package com.deswaef.weakauras.ui.weakauras.service;
 import com.deswaef.weakauras.classes.domain.Spec;
 import com.deswaef.weakauras.classes.domain.WowClass;
 import com.deswaef.weakauras.ui.image.domain.Screenshot;
+import com.deswaef.weakauras.ui.macros.domain.Macro;
+import com.deswaef.weakauras.ui.mvc.dto.EditConfigurationDto;
 import com.deswaef.weakauras.ui.rating.service.ConfigRatingService;
 import com.deswaef.weakauras.ui.tellmewhen.domain.TellMeWhen;
 import com.deswaef.weakauras.ui.weakauras.domain.WeakAura;
@@ -12,6 +14,7 @@ import com.deswaef.weakauras.ui.weakauras.repository.WeakAuraRepository;
 import com.deswaef.weakauras.ui.weakauras.repository.WeakAuraScreenshotRepository;
 import com.deswaef.weakauras.ui.weakauras.repository.WowclassWeakAuraRepository;
 import com.deswaef.weakauras.usermanagement.domain.ScrappieUser;
+import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import javafx.stage.Screen;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -163,6 +166,32 @@ public class WeakAuraServiceImpl implements WeakAuraService {
     @Transactional(readOnly = true)
     public long countUnapproved() {
         return weakAuraRepository.countApproved(false);
+    }
+
+    @Override
+    @Transactional
+    public void edit(EditConfigurationDto dto) {
+        if (Strings.isNullOrEmpty(dto.getActualValue())) {
+            throw new IllegalArgumentException("actual value cannot be empty");
+        } else if (Strings.isNullOrEmpty(dto.getCaption())) {
+            throw new IllegalArgumentException("Caption cannot be empty");
+        } else {
+            try {
+                Optional<WeakAura> one = weakAuraRepository.findOne(dto.getId());
+                if (one.isPresent()) {
+                    weakAuraRepository.save(
+                            one.get()
+                                    .setActualValue(dto.getActualValue())
+                                    .setName(dto.getCaption())
+                                    .setComment(dto.getComments())
+                    );
+                } else {
+                    throw new IllegalArgumentException("A weakaura with that id could not be found");
+                }
+            } catch (Exception ex) {
+                throw new IllegalArgumentException("Couldn't edit the macro");
+            }
+        }
     }
 
     @Override

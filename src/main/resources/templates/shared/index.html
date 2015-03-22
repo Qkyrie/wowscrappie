@@ -57,11 +57,13 @@
             <div class="col-md-10 col-md-offset-1">
                 <div class="form-group">
                     <label>Comments</label>
-                    <div class="commentBox" th:text="${config.comment}"></div>
+                    <blockquote class="commentBox" th:text="${config.comment}"></blockquote>
                 </div>
+                <hr />
+                <br />
                 <div class="form-group">
                     <label>Value</label>
-                    <textarea th:text="${config.actualValue}" class="form-control" rows="3"></textarea>
+                    <textarea th:text="${config.actualValue}" class="form-control" rows="8"></textarea>
                 </div>
             </div>
         </div>
@@ -87,15 +89,9 @@
 
         <div class="row" >
             <div class="col-md-5 col-md-offset-1">
-                <button id="copy-button" th:attr="data-clipboard-text=${config.actualValue}" class="btn btn-primary">
+                <button id="copy-button" th:attr="data-clipboard-text=${config.actualValue}" class="btn btn-primary btn-sm">
                     <i class="mdi-action-assignment"></i>
                     Copy to clipboard
-                </button>
-                <button class="btn btn-primary" sec:authorize="hasRole('ROLE_ADMIN')">
-                    <i class=" fa fa-thumbs-o-up " ></i> Upvote
-                </button>
-                <button class="btn btn-danger" sec:authorize="hasRole('ROLE_ADMIN')">
-                    <i class=" fa fa-thumbs-o-down " ></i> Downvote
                 </button>
             </div>
         </div>

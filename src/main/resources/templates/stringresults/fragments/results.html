@@ -38,6 +38,9 @@
                             <span th:attr="data-tmw_id=${uielement.id}" th:if="${uielement.approved == false}"
                                   class="approveButton btn btn-info btn-sm"
                                   sec:authorize="hasRole('ROLE_ADMIN')"><i class="mdi-action-done"></i> approve</span>
+                            <span th:attr="data-edit-url=${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/admin/edit/tmw/} + ${uielement.id}"
+                                  class="editButton btn btn-default btn-raised btn-sm"
+                                  sec:authorize="hasRole('ROLE_ADMIN')"><i class="mdi-image-edit"></i> Edit</span>
                             <span th:attr="data-tmw_id=${uielement.id}"
                                   th:if="${uielement.approved == true}"
                                   class="disableButton btn btn-warning btn-sm"
@@ -55,11 +58,12 @@
             <h3 data-bind="text: activeName"></h3>
             <div class="form-group">
                 <label>Comments</label>
-                <div class="commentBox" data-bind="text: activeComment"></div>
+                <blockquote class="commentBox" data-bind="text: activeComment"></blockquote>
             </div>
-
+            <hr />
+            <br />
             <label>TellMeWhen-String</label>
-            <textarea data-bind="value: activeString" class="form-control" rows="3"></textarea>
+            <textarea data-bind="value: activeString" class="form-control" rows="8"></textarea>
 
             <hr />
 
@@ -83,6 +87,12 @@
         $('.shareButton').each(function() {
             $(this).click(function() {
                 window.open($(this).data('share-url'), '_blank');
+            });
+        });
+
+        $(".editButton").each(function() {
+            $(this).click(function() {
+                window.open($(this).data('edit-url'), '_blank');
             });
         });
 
@@ -145,6 +155,8 @@
             });
         });
 
+
+
         $(".disableButton").click(function() {
             var self = $(this);
             $.get('/interface/tellmewhen/' + self.data('tmw_id') + '/disable', function (data) {
@@ -194,6 +206,9 @@
                               th:if="${uielement.approved == false}"
                               class="approveButton btn btn-info btn-sm"
                               sec:authorize="hasRole('ROLE_ADMIN')"><i class="mdi-action-done"></i> approve</span>
+                         <span th:attr="data-edit-url=${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/admin/edit/wa/} + ${uielement.id}"
+                               class="editButton btn btn-default btn-raised btn-sm"
+                               sec:authorize="hasRole('ROLE_ADMIN')"><i class="mdi-image-edit"></i> Edit</span>
                         <span th:if="${uielement.approved == true}"
                               th:attr="data-wa_id=${uielement.id}"
                               class="disableButton btn btn-warning btn-sm"
@@ -212,11 +227,12 @@
             <h3 data-bind="text: activeName"></h3>
             <div class="form-group">
                 <label>Comments</label>
-                <div class="commentBox" data-bind="text: activeComment"></div>
+                <blockquote class="commentBox" data-bind="text: activeComment"></blockquote>
             </div>
-
+            <hr />
+            <br />
             <label>WeakAura-String</label>
-            <textarea data-bind="value: activeString" class="form-control" rows="3"></textarea>
+            <textarea data-bind="value: activeString" class="form-control" rows="8"></textarea>
             <hr />
 
             <div id="images" data-bind="foreach: imageRefs">
@@ -231,6 +247,12 @@
         $('.shareButton').each(function() {
             $(this).click(function() {
                 window.open($(this).data('share-url'), '_blank');
+            });
+        });
+
+        $(".editButton").each(function() {
+            $(this).click(function() {
+                window.open($(this).data('edit-url'), '_blank');
             });
         });
 
@@ -339,6 +361,9 @@
                         <span th:attr="data-macro_id=${uielement.id}" th:if="${uielement.approved == false}"
                               class="approveButton btn btn-info btn-sm"
                               sec:authorize="hasRole('ROLE_ADMIN')"> <i class="mdi-action-done"></i> approve</span>
+                           <span th:attr="data-edit-url=${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/admin/edit/macro/} + ${uielement.id}"
+                                 class="editButton btn btn-default btn-raised btn-sm"
+                                 sec:authorize="hasRole('ROLE_ADMIN')"><i class="mdi-image-edit"></i> Edit</span>
                         <span th:if="${uielement.approved == true}"
                               class="disableButton btn btn-warning btn-sm"
                               th:attr="data-macro_id=${uielement.id}"
@@ -357,22 +382,12 @@
             <h3 data-bind="text: activeName"></h3>
             <div class="form-group">
                 <label>Comments</label>
-                <div class="commentBox" data-bind="text: activeComment"></div>
+                <blockquote class="commentBox" data-bind="text: activeComment"></blockquote>
             </div>
-
+            <hr />
+            <br />
             <label>Macro-String</label>
-            <textarea data-bind="value: activeString" class="form-control" rows="3"></textarea>
-        </div>
-        <br/>
-        <div class="row" data-bind="visible: showDetails"  sec:authorize="hasRole('ROLE_ADMIN')">
-            <div class="col-md-12">
-                <button class="btn btn-primary">
-                    <i class=" fa fa-thumbs-o-up "></i> Upvote
-                </button>
-                <button class="btn btn-danger">
-                    <i class=" fa fa-thumbs-o-down "></i> Downvote
-                </button>
-            </div>
+            <textarea data-bind="value: activeString" class="form-control" rows="5"></textarea>
         </div>
     </div>
 
@@ -381,6 +396,13 @@
         $('.shareButton').each(function() {
             $(this).click(function() {
                 window.open($(this).data('share-url'), '_blank');
+            });
+        });
+
+
+        $(".editButton").each(function() {
+            $(this).click(function() {
+                window.open($(this).data('edit-url'), '_blank');
             });
         });
 

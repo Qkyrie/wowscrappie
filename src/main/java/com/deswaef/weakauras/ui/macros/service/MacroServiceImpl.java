@@ -6,8 +6,10 @@ import com.deswaef.weakauras.ui.macros.domain.Macro;
 import com.deswaef.weakauras.ui.macros.repository.MacroRepository;
 import com.deswaef.weakauras.ui.macros.repository.SpecMacroRepository;
 import com.deswaef.weakauras.ui.macros.repository.WowClassMacroRepository;
+import com.deswaef.weakauras.ui.mvc.dto.EditConfigurationDto;
 import com.deswaef.weakauras.ui.rating.service.ConfigRatingService;
 import com.deswaef.weakauras.usermanagement.domain.ScrappieUser;
+import com.google.common.base.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -135,6 +137,32 @@ public class MacroServiceImpl implements MacroService {
     @Override
     public long countUnapproved() {
         return macroRepository.countApproved(false);
+    }
+
+    @Override
+    @Transactional
+    public void edit(EditConfigurationDto dto) {
+        if (Strings.isNullOrEmpty(dto.getActualValue())) {
+            throw new IllegalArgumentException("actual value cannot be empty");
+        } else if (Strings.isNullOrEmpty(dto.getCaption())) {
+            throw new IllegalArgumentException("Caption cannot be empty");
+        } else {
+            try {
+                Optional<Macro> one = macroRepository.findOne(dto.getId());
+                if (one.isPresent()) {
+                    macroRepository.save(
+                            one.get()
+                                    .setActualValue(dto.getActualValue())
+                                    .setName(dto.getCaption())
+                                    .setDescription(dto.getComments())
+                    );
+                } else {
+                    throw new IllegalArgumentException("A macro with that id could not be found");
+                }
+            } catch (Exception ex) {
+                throw new IllegalArgumentException("Couldn't edit the macro");
+            }
+        }
     }
 
     @Override

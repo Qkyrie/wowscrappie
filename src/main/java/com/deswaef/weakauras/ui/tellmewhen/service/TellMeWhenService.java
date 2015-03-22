@@ -5,6 +5,7 @@ import com.deswaef.weakauras.classes.domain.WowClass;
 import com.deswaef.weakauras.infrastructure.service.OnRoleDependable;
 import com.deswaef.weakauras.ui.image.domain.Screenshot;
 import com.deswaef.weakauras.ui.macros.domain.Macro;
+import com.deswaef.weakauras.ui.mvc.dto.EditConfigurationDto;
 import com.deswaef.weakauras.ui.tellmewhen.domain.TellMeWhen;
 import com.deswaef.weakauras.usermanagement.domain.ScrappieUser;
 
@@ -46,4 +47,5 @@ public interface TellMeWhenService extends OnRoleDependable {
 
     long countUnapproved();
 
+    void edit(EditConfigurationDto dto);
 }
