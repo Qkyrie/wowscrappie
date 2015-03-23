@@ -220,7 +220,7 @@ max-width:170px;
 
 .navbar-cls-top .navbar-brand {
     color: #fff;
-    background: #C90000;
+    background: #009688;
     width: 260px;
     text-align: center;
     height: 80px;
@@ -233,7 +233,7 @@ max-width:170px;
 }
 
 .active-menu {
-    background-color:#C90000!important;
+    background-color:#009688!important;
 }
 
 .arrow {
@@ -294,7 +294,7 @@ max-width:170px;
 	left:20px;
 	width:15px;
 	height:1px;
-	background:#ff0000;
+	background:#009688;
 	top:20px;
 }
 .nav-second-level > li > a:after,
@@ -305,7 +305,7 @@ max-width:170px;
 	left:20px;
 	width:1px;
 	height:100%;
-	background:#ff0000;
+	background:#009688;
 	top:0px;
 	z-index:10;
 }
@@ -329,7 +329,7 @@ max-width:170px;
 }
 .navbar-cls-top .navbar-brand:hover {
 
-background: #C90000;
+background: #009688;
 color:#fff;
 
 }
@@ -339,10 +339,10 @@ border:0px solid black;
      
 }
 .navbar-header {
-    background: #A70303;
+    background: #009688;
 }
 .navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
-background-color: #B40101;
+background-color: #009688;
 }
 .navbar-default .navbar-toggle {
 border-color: #fff;

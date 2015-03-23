@@ -7,8 +7,11 @@ import com.deswaef.weakauras.ui.tellmewhen.domain.TellMeWhen;
 import com.deswaef.weakauras.ui.tellmewhen.service.TellMeWhenService;
 import com.deswaef.weakauras.ui.weakauras.domain.WeakAura;
 import com.deswaef.weakauras.ui.weakauras.service.WeakAuraService;
+import com.deswaef.weakauras.usermanagement.domain.RoleEnum;
+import com.deswaef.weakauras.usermanagement.domain.ScrappieUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,7 +27,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Controller
-@RequestMapping("/admin/edit/{config}")
+@RequestMapping("/personal/edit/{config}")
 public class EditConfigurationController {
 
     @Autowired
@@ -38,19 +41,19 @@ public class EditConfigurationController {
     public static final String WA = "wa";
     public static final String MACRO = "macro";
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     @RequestMapping(value = "/{id}", method = GET)
     public String index(ModelMap modelMap, @PathVariable("config") String config, @PathVariable("id") Long id) {
         Optional<EditConfigurationDto> returnValue = getConfig(config, id);
         if (returnValue.isPresent()) {
             modelMap.put("config", returnValue.get());
-            return "admin/edit/index";
+            return "personal/edit/index";
         } else {
-            return "admin/edit/not_found";
+            return "personal/edit/not_found";
         }
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     @RequestMapping(value = "/{id}", method = POST)
     public @ResponseBody EditConfigurationDto edit(@RequestBody EditConfigurationDto dto, @PathVariable("config") String config, @PathVariable("id") Long id) {
         if(!id.equals(dto.getId())) {
@@ -59,8 +62,12 @@ public class EditConfigurationController {
                     .setErrorMessage("Something unexpected went wrong, hacking stuff? o.o");
         }
         try {
-            saveEdit(config, dto);
-            return dto;
+            if(getConfig(config, id).isPresent()) {
+                saveEdit(config, dto);
+                return dto;
+            } else {
+                throw new IllegalArgumentException("You are not the original creator of the configuration");
+            }
         } catch (Exception ex) {
             return dto
                     .setHasErrors(true)
@@ -83,21 +90,21 @@ public class EditConfigurationController {
     private Optional<EditConfigurationDto> getConfig(String config, Long id) {
         if (config.equals(TMW)) {
             Optional<TellMeWhen> byId = tellMeWhenService.findById(id);
-            if (byId.isPresent()) {
+            if (byId.isPresent() && isCreatorOrAdmin(byId.get())) {
                 return convert(byId.get());
             } else {
                 return Optional.empty();
             }
         } else if (config.equals(WA)) {
             Optional<WeakAura> weakAura = weakAuraService.byId(id);
-            if (weakAura.isPresent()) {
+            if (weakAura.isPresent() && isCreatorOrAdmin(weakAura.get())) {
                 return convert(weakAura.get());
             } else {
                 return Optional.empty();
             }
         } else if (config.equals(MACRO)) {
             Optional<Macro> macro = macroService.byId(id);
-            if (macro.isPresent()) {
+            if (macro.isPresent() && isCreatorOrAdmin(macro.get())) {
                 return convert(macro.get());
             } else {
                 return Optional.empty();
@@ -105,6 +112,21 @@ public class EditConfigurationController {
         } else {
             return Optional.empty();
         }
+    }
+
+    private boolean isCreatorOrAdmin(TellMeWhen tellMeWhen) {
+        Object pr = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return ((pr instanceof ScrappieUser && pr.equals(tellMeWhen.getUploader())) || ((ScrappieUser) pr).getAuthorities().stream().anyMatch(x -> x.getAuthority().equals(RoleEnum.ADMIN_ROLE.getUserRole())));
+    }
+
+    private boolean isCreatorOrAdmin(Macro macro) {
+        Object pr = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return ((pr instanceof ScrappieUser && pr.equals(macro.getUploader())) || ((ScrappieUser) pr).getAuthorities().stream().anyMatch(x -> x.getAuthority().equals(RoleEnum.ADMIN_ROLE.getUserRole())));
+    }
+
+    private boolean isCreatorOrAdmin(WeakAura weakAura) {
+        Object pr = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return ((pr instanceof ScrappieUser && pr.equals(weakAura.getUploader())) || ((ScrappieUser) pr).getAuthorities().stream().anyMatch(x -> x.getAuthority().equals(RoleEnum.ADMIN_ROLE.getUserRole())));
     }
 
     private Optional<EditConfigurationDto> convert(Macro macro) {

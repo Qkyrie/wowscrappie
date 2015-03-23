@@ -38,7 +38,7 @@
                             <span th:attr="data-tmw_id=${uielement.id}" th:if="${uielement.approved == false}"
                                   class="approveButton btn btn-info btn-sm"
                                   sec:authorize="hasRole('ROLE_ADMIN')"><i class="mdi-action-done"></i> approve</span>
-                            <span th:attr="data-edit-url=${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/admin/edit/tmw/} + ${uielement.id}"
+                            <span th:attr="data-edit-url=${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/personal/edit/tmw/} + ${uielement.id}"
                                   class="editButton btn btn-default btn-raised btn-sm"
                                   sec:authorize="hasRole('ROLE_ADMIN')"><i class="mdi-image-edit"></i> Edit</span>
                             <span th:attr="data-tmw_id=${uielement.id}"
@@ -206,7 +206,7 @@
                               th:if="${uielement.approved == false}"
                               class="approveButton btn btn-info btn-sm"
                               sec:authorize="hasRole('ROLE_ADMIN')"><i class="mdi-action-done"></i> approve</span>
-                         <span th:attr="data-edit-url=${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/admin/edit/wa/} + ${uielement.id}"
+                         <span th:attr="data-edit-url=${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/personal/edit/wa/} + ${uielement.id}"
                                class="editButton btn btn-default btn-raised btn-sm"
                                sec:authorize="hasRole('ROLE_ADMIN')"><i class="mdi-image-edit"></i> Edit</span>
                         <span th:if="${uielement.approved == true}"
@@ -361,7 +361,7 @@
                         <span th:attr="data-macro_id=${uielement.id}" th:if="${uielement.approved == false}"
                               class="approveButton btn btn-info btn-sm"
                               sec:authorize="hasRole('ROLE_ADMIN')"> <i class="mdi-action-done"></i> approve</span>
-                           <span th:attr="data-edit-url=${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/admin/edit/macro/} + ${uielement.id}"
+                           <span th:attr="data-edit-url=${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/personal/edit/macro/} + ${uielement.id}"
                                  class="editButton btn btn-default btn-raised btn-sm"
                                  sec:authorize="hasRole('ROLE_ADMIN')"><i class="mdi-image-edit"></i> Edit</span>
                         <span th:if="${uielement.approved == true}"

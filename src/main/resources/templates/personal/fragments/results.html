@@ -31,9 +31,12 @@
                                   class="btn btn-success btn-sm"> <i class="mdi-maps-local-library"></i> view</span>
                             <span th:attr="data-tmw_id=${uielement.id}, data-share-url=${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/shared/tmw/} + ${uielement.id}"
                                   class="shareButton btn btn-success btn-sm"><i class="mdi-social-share"></i> share link</span>
+                             <span th:attr="data-edit-url=${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/personal/edit/tmw/} + ${uielement.id}"
+                                   class="editButton btn btn-default btn-raised btn-sm"
+                                   sec:authorize="hasRole('ROLE_USER')"><i class="mdi-image-edit"></i> Edit</span>
                             <span th:attr="data-tmw_id=${uielement.id}" th:if="${uielement.approved == false}"
                                   class="approveButton btn btn-info btn-sm"
-                                  sec:authorize="hasRole('ROLE_ADMIN')"> <i class="mdi-action-done"></i> approve</span>
+                            sec:authorize="hasRole('ROLE_ADMIN')"> <i class="mdi-action-done"></i> approve</span>
                             <span th:attr="data-tmw_id=${uielement.id}"
                                   th:if="${uielement.approved == true}"
                                   class="disableButton btn btn-warning btn-sm"
@@ -77,6 +80,12 @@
         $('.shareButton').each(function() {
             $(this).click(function() {
                 window.open($(this).data('share-url'), '_blank');
+            });
+        });
+
+        $(".editButton").each(function() {
+            $(this).click(function() {
+                window.open($(this).data('edit-url'), '_blank');
             });
         });
 
@@ -180,6 +189,9 @@
                           class="btn btn-success btn-sm"><i class="mdi-maps-local-library"></i> view</span>
                         <span th:attr="data-wa_id=${uielement.id}, data-share-url=${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/shared/wa/} + ${uielement.id}"
                               class="shareButton btn btn-success btn-sm"> <i class="mdi-social-share"></i>share link</span>
+                         <span th:attr="data-edit-url=${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/personal/edit/wa/} + ${uielement.id}"
+                               class="editButton btn btn-default btn-raised btn-sm"
+                               sec:authorize="hasRole('ROLE_USER')"><i class="mdi-image-edit"></i> Edit</span>
                         <span th:attr="data-wa_id=${uielement.id}"
                               th:if="${uielement.approved == false}"
                               class="approveButton btn btn-info btn-sm"
@@ -220,6 +232,12 @@
         $('.shareButton').each(function() {
             $(this).click(function() {
                 window.open($(this).data('share-url'), '_blank');
+            });
+        });
+
+        $(".editButton").each(function() {
+            $(this).click(function() {
+                window.open($(this).data('edit-url'), '_blank');
             });
         });
 
@@ -323,6 +341,9 @@
                           class="btn btn-success btn-sm"><i class="mdi-maps-local-library"></i>view</span>
                         <span th:attr="data-macro_id=${uielement.id}, data-share-url=${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/shared/macro/} + ${uielement.id}"
                               class="shareButton btn btn-success btn-sm"><i class="mdi-social-share"></i>share link</span>
+                         <span th:attr="data-edit-url=${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/personal/edit/macro/} + ${uielement.id}"
+                               class="editButton btn btn-default btn-raised btn-sm"
+                               sec:authorize="hasRole('ROLE_USER')"><i class="mdi-image-edit"></i> Edit</span>
                         <span th:attr="data-macro_id=${uielement.id}" th:if="${uielement.approved == false}"
                               class="approveButton btn btn-info btn-sm"
                               sec:authorize="hasRole('ROLE_ADMIN')"> <i class="mdi-action-done"></i> approve</span>
@@ -357,6 +378,12 @@
         $('.shareButton').each(function() {
             $(this).click(function() {
                 window.open($(this).data('share-url'), '_blank');
+            });
+        });
+
+        $(".editButton").each(function() {
+            $(this).click(function() {
+                window.open($(this).data('edit-url'), '_blank');
             });
         });
 

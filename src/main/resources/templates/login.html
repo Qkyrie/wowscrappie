@@ -22,9 +22,9 @@
                             <p th:if="${param.logout}" class="alert alert-success">You have been logged out</p>
                             <p th:if="${param.error}" class="alert alert-danger">There was an error, please try again</p>
                             <form role="form" th:action="@{/login-do}" action="/login" method="POST">
-                                <p>At this point, registration is <b>invitation-only</b>.<!-- However, if you wish to use scrappie without
-                                    registering, you can always sign in with facebook.-->
+                                <p>At this point, registration is <b>invitation-only</b>. However, you can request an invitation. We send out invitations frequently.
                                 </p>
+                                <a th:href="@{/registration/request-invitation}" class="btn btn-success btn-raised">Request Invitation!</a>
                                 <fieldset>
 
                                     <div class="form-group">

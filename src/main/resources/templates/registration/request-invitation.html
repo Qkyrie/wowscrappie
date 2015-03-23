@@ -1,0 +1,94 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      layout:decorator="decorator/wa-decorator">
+
+
+<div layout:fragment="main-content">
+    <div id="page-inner">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5">
+                    <h3>Request an invitation</h3>
+                    <p>
+                        Oh, so you're showing interest in Scrappie? Invitation waves go out frequently, until the testing phase has finished and we're
+                        comfortable about releasing. Request your invitation here and we'll get back to you soon!
+                    </p>
+
+                    <div class="form-group">
+                        <div id="generalfailure" style="display:none;" class="alert alert-danger">Something went wrong,
+                            please try again later!
+                        </div>
+                        <label>email</label>
+                        <input id="newUsernameInput" placeholder="enter email address"
+                               data-bind="value: email"
+                               class="form-control"/>
+                        <br />
+                        <br />
+                        <textarea id="reason" data-bind="text: reason, value:reason" class="form-control floating-label" placeholder="Enter a reason" rows="8"></textarea>
+                    </div>
+                    <a href="#" class="btn btn-primary" data-bind="click: save">Request Invitation!</a>
+                    <br />
+                    <div class="form-group">
+                        <div id="generalsuccess" style="display:none;" class="alert alert-success">
+                            Request successful, we'll get back to you soon.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /. PAGE INNER  -->
+</div>
+<!-- /. layout fragment -->
+
+<div layout:fragment="footer-content">
+
+    <script type="application/javascript">
+        /*<![CDATA[*/
+
+        var InvitationModel = function () {
+            var self = this;
+
+            this.email = ko.observable("");
+            this.reason = ko.observable("");
+
+            this.save = function () {
+                $.postJSON("/registration/request-invitation", {email: self.email(), reason: self.reason()}, function(data) {
+                    if(data.hasErrors === false) {
+                        $("#generalsuccess").show();
+                        $("#generalfailure").hide();
+                        this.email('');
+                        this.reason('');
+                    } else {
+                        $("#generalfailure").html(data.errorMessage);
+                        $("#generalfailure").show();
+                    }
+                });
+            };
+        };
+
+        var invitationModel = new InvitationModel;
+        ko.applyBindings(invitationModel);
+
+
+        $.postJSON = function (url, data, callback) {
+            return jQuery.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                'type': 'POST',
+                'url': url,
+                'data': JSON.stringify(data),
+                'dataType': 'json',
+                'success': callback
+            });
+        };
+        /*]]>*/
+    </script>
+
+</div>
+
+</html>

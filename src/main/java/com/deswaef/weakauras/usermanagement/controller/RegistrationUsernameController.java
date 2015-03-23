@@ -25,7 +25,6 @@ public class RegistrationUsernameController {
     private UserService userService;
 
     @RequestMapping(value = "/available", method = POST)
-    @PreAuthorize("hasRole('ROLE_USER')")
     public @ResponseBody boolean usernameAvaible(@RequestBody NameChangeDto requestedUsername) {
         try {
             String decoded = URLDecoder.decode(requestedUsername.getNewName(), "UTF-8");

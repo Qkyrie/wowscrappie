@@ -11,7 +11,7 @@
     <div id="page-inner">
 
         <div class="row">
-            <div class="col-md-offset-1 col-md-10 alert alert-info">
+            <div class="col-md-offset-1 col-md-10 alert alert-success">
                 In this section, you'll find unapproved uploads, which needs revision.
             </div>
         </div>
@@ -100,6 +100,13 @@
                 $('#myTable').dataTable();
             });
         });
+
+
+        $.get('/admin/pending-uploads/count', function(data) {
+            if(data > 0) {
+                $.snackbar({content: "Hey Admin! You still need to approve " + data + " configurations!"});
+            }
+        })
     </script>
 
     <script type="text/javascript" th:src="@{/assets/fancybox/jquery.fancybox.pack.js?v=2.1.5}"/>

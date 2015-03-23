@@ -46,6 +46,8 @@ public class PersonalSpaceController {
         }
     }
 
+
+
     @RequestMapping("/uploads/macro")
     @PreAuthorize("hasRole('ROLE_USER')")
     public String macrosFromUser(ModelMap model) {

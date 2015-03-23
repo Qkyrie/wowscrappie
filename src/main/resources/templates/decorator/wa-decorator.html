@@ -25,6 +25,9 @@
     <link th:href="@{/assets/material_design/css/roboto.min.css}" rel="stylesheet" />
     <link th:href="@{/assets/material_design/css/material.min.css}" rel="stylesheet" />
     <link th:href="@{/assets/material_design/css/ripples.min.css}" rel="stylesheet" />
+    <link th:href="@{/assets/snackbar/snackbar.min.css}" rel="stylesheet" />
+    <link th:href="@{/assets/snackbar/snackbar-material.min.css}" rel="stylesheet" />
+
 
     <div layout:fragment="header"></div>
 </head>
@@ -39,17 +42,17 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" th:href="@{/}">Scrappie</a>
+            <a class="navbar-brand" th:href="@{/}">WoWScrappie</a>
         </div>
         <div sec:authorize="isAuthenticated()" style="color: white;
         padding: 15px 50px 5px 50px;
         float: right;
-        font-size: 16px;">  &nbsp; <a th:href="@{/logout}" class="btn btn-danger square-btn-adjust">Logout</a>
+        font-size: 16px;">  &nbsp; <a th:href="@{/logout}" class="btn btn-success square-btn-adjust">Logout</a>
                 </div>
         <div sec:authorize="!isAuthenticated()" style="color: white;
         padding: 15px 50px 5px 50px;
         float: right;
-        font-size: 16px;">  &nbsp; <a th:href="@{/login}" class="btn btn-danger square-btn-adjust">Login</a>
+        font-size: 16px;">  &nbsp; <a th:href="@{/login}" class="btn btn-success square-btn-adjust">Login</a>
         </div>
     </nav>
     <!-- /. NAV TOP  -->
@@ -197,6 +200,7 @@
 
 <script th:src="@{/assets/material_design/js/ripples.min.js}"></script>
 <script th:src="@{/assets/material_design/js/material.min.js}"></script>
+<script th:src="@{/assets/snackbar/snackbar.min.js}"></script>
 <script>
     $(document).ready(function() {
         // This command is used to initialize some elements and make them work properly
