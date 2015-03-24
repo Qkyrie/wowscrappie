@@ -5,6 +5,7 @@ import com.deswaef.weakauras.usermanagement.domain.InvitationRequest;
 import com.deswaef.weakauras.usermanagement.repository.InvitationRequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -41,6 +42,21 @@ public class InvitationRequestServiceImpl implements InvitationRequestService {
                         .setHasErrors(true)
                         .setErrorMessage("Unable to create request, please try again later");
             }
+        }
+    }
+
+    @Override
+    @Transactional
+    public void delete(Long id) {
+        Optional<InvitationRequest> one = invitationRequestRepository.findOne(id);
+        if (one.isPresent()) {
+            try {
+                invitationRequestRepository.delete(id);
+            } catch (Exception ex) {
+                throw new IllegalArgumentException("Couldn't delete it");
+            }
+        } else {
+            throw new IllegalArgumentException("That id wasnt found");
         }
     }
 }

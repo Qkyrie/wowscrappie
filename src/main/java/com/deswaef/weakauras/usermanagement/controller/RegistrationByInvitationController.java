@@ -39,7 +39,7 @@ public class RegistrationByInvitationController {
         Optional<ScrappieUser> byInvitationCode = userService.findByInvitationCode(registrationByInvitationDto.getInvitationcode());
         if(byInvitationCode.isPresent()) {
             ScrappieUser scrappieUser = byInvitationCode.get();
-            if(!scrappieUser.getEmail().equals(registrationByInvitationDto.getEmail())) {
+            if(!scrappieUser.getEmail().equalsIgnoreCase(registrationByInvitationDto.getEmail())) {
                 return registrationByInvitationDto.setHasErrors(true).setErrorMessage("That was not the email address associated with the invitation code");
             } else if (Strings.isNullOrEmpty(registrationByInvitationDto.getPassword()) || Strings.isNullOrEmpty(registrationByInvitationDto.getPassword_repeat())) {
                 return registrationByInvitationDto.setHasErrors(true).setErrorMessage("Please provide a valid password");

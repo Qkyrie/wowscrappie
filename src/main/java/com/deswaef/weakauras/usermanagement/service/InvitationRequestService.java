@@ -9,4 +9,6 @@ public interface InvitationRequestService {
     List<InvitationRequest> findAll();
 
     RequestInvitationDto create(RequestInvitationDto requestInvitationDto);
+
+    void delete(Long id);
 }
