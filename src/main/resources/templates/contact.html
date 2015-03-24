@@ -1,0 +1,41 @@
+﻿<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="decorator/wa-decorator">
+<div layout:fragment="main-content">
+    <div id="page-inner">
+
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="login-panel panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Contact Scrappie!</h3>
+                    </div>
+                    <div class="panel-body">
+                        <h3>Contact Us!</h3>
+                        <p>There might be times where you'd like to contact Scrappie himself. Be it for a bug report,
+                            a general question or a possible infraction (yikes, let's hope not!).</p>
+                        <p>During these desperate times of communication, Scrappie would prefer to be tweeted. The little bird
+                            will wake him up and respond to you as if he were seated on the most epic of mounts.</p>
+                        <a class="btn btn-primary btn-raised"
+                           href="https://twitter.com/intent/tweet?screen_name=scrappiewow">
+                            Tweet to @ScrappieWoW
+                        </a>
+                        <script>
+                            window.twttr=(function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return;js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);t._e=[];t.ready=function(f){t._e.push(f);};return t;}(document,"script","twitter-wjs"));
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /. PAGE INNER  -->
+</div>
+<!-- /. layout fragment -->
+
+<div layout:fragment="footer-content">
+    <script type="application/javascript">
+        $("#alertThankYou").show();
+    </script>
+</div>
+</html>
