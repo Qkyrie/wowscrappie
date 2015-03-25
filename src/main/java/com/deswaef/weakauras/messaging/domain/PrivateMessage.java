@@ -102,4 +102,30 @@ public class PrivateMessage {
         this.responseTo = responseTo;
         return this;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        PrivateMessage that = (PrivateMessage) o;
+
+        if (!content.equals(that.content)) return false;
+        if (!dateOfPosting.equals(that.dateOfPosting)) return false;
+        if (!id.equals(that.id)) return false;
+        if (responseTo != null ? !responseTo.equals(that.responseTo) : that.responseTo != null) return false;
+        if (!title.equals(that.title)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + title.hashCode();
+        result = 31 * result + content.hashCode();
+        result = 31 * result + dateOfPosting.hashCode();
+        result = 31 * result + (responseTo != null ? responseTo.hashCode() : 0);
+        return result;
+    }
 }

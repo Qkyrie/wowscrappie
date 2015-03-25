@@ -1,8 +1,12 @@
 package com.deswaef.weakauras.messaging.controller.dto;
 
 import com.deswaef.weakauras.messaging.domain.PrivateMessage;
+import org.ocpsoft.prettytime.PrettyTime;
 
 public class PrivateMessageListDto {
+
+    private static final PrettyTime prettyTime = new PrettyTime();
+
     private Long id;
     private String when;
     private String from;
@@ -15,7 +19,7 @@ public class PrivateMessageListDto {
                 .setId(privateMessage.getId())
                 .setFromId(privateMessage.getFromUser().getId())
                 .setTitle(privateMessage.getTitle())
-                .setWhen(privateMessage.getDateOfPosting().toString());
+                .setWhen(prettyTime.format(privateMessage.getDateOfPosting()));
     }
 
     public Long getId() {

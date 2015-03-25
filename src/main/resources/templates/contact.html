@@ -1,7 +1,8 @@
 ﻿<html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorator="decorator/wa-decorator">
+      layout:decorator="decorator/wa-decorator"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <div layout:fragment="main-content">
     <div id="page-inner">
 
@@ -28,14 +29,86 @@
                 </div>
             </div>
         </div>
+
+        <div class="row" sec:authorize="hasRole('ROLE_USER')">
+            <div class="col-md-10 col-md-offset-1">
+                <h3>Contact an admin directly!</h3>
+
+                <div id="genericAlert" class="alert alert-warning alert-dismissible collapse" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <strong>error!</strong> <span id="genericAlertText"></span>
+                </div>
+
+                <div id="genericWinAlert" class="alert alert-success alert-dismissible collapse" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <strong>success!</strong> An admin has been contacted. We'll get back to you as soon as possible.
+                </div>
+
+                <div class="form-group">
+                    <input data-bind="value: title" id="txtTitle" class="form-control floating-label"
+                           placeholder="What is this about?"/>
+
+                </div>
+                <br />
+                <br />
+                <textarea data-bind="value: content, text: content" id="txtContact" class="form-control floating-label" placeholder="What's on your mind?" rows="8"></textarea>
+                <br />
+                <button data-bind="click: sendIt" class="btn btn-raised btn-success">Send your message</button>
+
+            </div>
+        </div>
     </div>
     <!-- /. PAGE INNER  -->
 </div>
 <!-- /. layout fragment -->
 
 <div layout:fragment="footer-content">
-    <script type="application/javascript">
-        $("#alertThankYou").show();
-    </script>
+
+    <div sec:authorize="hasRole('ROLE_USER')">
+        <script type="application/javascript">
+            var ContactVM = function () {
+                var self = this;
+                self.content = ko.observable("");
+                self.title = ko.observable("");
+                self.sendIt = function() {
+
+                    var command = {};
+                    command['title'] = self.title();
+                    command['content'] = self.content();
+
+                    var stringyfiedCommand = JSON.stringify(command);
+
+                    $.ajax({
+                                url: '/contact',
+                                type: "POST",
+                                contentType: "application/json; charset=utf-8",
+                                data: stringyfiedCommand, //Stringified Json Object
+                                cache: false,    //This will force requested pages not to be cached by the browser
+                                processData: false, //To avoid making query String instead of JSON
+                                success: function (resposeJsonObject) {
+                                    console.log(resposeJsonObject);
+                                    if(resposeJsonObject.hasErrors) {
+                                        $("#genericAlertText").html(resposeJsonObject.errorMessage);
+                                        $("#genericAlert").show();
+                                    } else {
+                                        $("#hide").show();
+                                        $("#genericWinAlert").show();
+                                        self.content("");
+                                        self.title("");
+                                    }
+                                }
+                            });
+                };
+            }
+
+            var contactModel = new ContactVM();
+            ko.applyBindings(contactModel);
+        </script>
+
+    </div>
+
+
 </div>
 </html>

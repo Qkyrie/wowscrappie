@@ -9,4 +9,6 @@ import java.util.List;
 
 public interface PrivateMessageRepository extends JpaRepository<PrivateMessage, Long>{
     List<PrivateMessage> findByToUser(@Param("toUser") ScrappieUser toUser);
+
+    List<PrivateMessage> findByResponseTo(@Param("responseTo") PrivateMessage responseTo);
 }
