@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+
+</head>
+<body>
+
+</body>
+
+<div th:fragment="showComments">
+    <br />
+    <br />
+    <div class="alert alert-warning" th:if="${post_failure != null}" th:text="${post_failure}"></div>
+
+    <div class="chat-panel panel panel-default chat-boder chat-panel-head">
+        <div class="panel-heading">
+            <i class="fa fa-comments fa-fw"></i>
+            <span>Comments</span>
+            <input id="interfaceType" type="hidden" th:value="${interfaceType}" />
+            <input id="interfaceId" type="hidden" th:value="${interfaceId}" />
+        </div>
+
+        <div class="panel-body">
+            <ul class="chat-box">
+                <li th:each="comment : ${comments}" class="left clearfix">
+                     <span class="pull-left chat-img">
+
+                     </span>
+                    <div class="chat-body">
+
+                        <small class="pull-right text-muted">
+                            <i class="fa fa-clock-o fa-fw"></i><span th:text="${comment.when}"></span>
+                        </small>
+                        <strong th:text="${comment.commenter}"></strong>
+                        <p th:text="${comment.content}">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
+                        </p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+
+        <div class="panel-footer" sec:authorize="hasRole('ROLE_USER')">
+            <div class="input-group">
+                <input id="btn-input" type="text" class="form-control input-sm" placeholder="reply to the message" />
+                                <span class="input-group-btn">
+                                    <button id="btnSend" class="btn btn-warning btn-sm">
+                                        Send
+                                    </button>
+                                </span>
+            </div>
+        </div>
+
+    </div>
+
+    <script type="application/javascript">
+        $("#btnSend").click(function() {
+            var command = {};
+            command['comment'] = $('#btn-input').val();
+            command['type'] = $('#interfaceType').val();
+            command['interfaceId'] = $('#interfaceId').val();
+
+            var stringyfiedCommand = JSON.stringify(command);
+            $.ajax({
+                url: '/interface/comments',
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: stringyfiedCommand, //Stringified Json Object
+                cache: false,    //This will force requested pages not to be cached by the browser
+                processData: false, //To avoid making query String instead of JSON
+                success: function (data) {
+                    $('#commentPane').html(data);
+                }
+            });
+        });
+    </script>
+</div>
+
+</html>

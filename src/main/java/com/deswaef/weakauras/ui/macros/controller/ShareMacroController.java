@@ -33,6 +33,7 @@ public class ShareMacroController implements ShareController {
             if(isAdmin() || macro.get().isApproved()) {
                 modelMap.put("screenshots", new ArrayList<>());
                 modelMap.put("configType", CONFIG_TYPE);
+                modelMap.put("configId", id);
                 modelMap.put("config", macro.get());
                 modelMap.put("rating", getRating(configRatingService.findByMacro(macro.get().getId())));
                 /*

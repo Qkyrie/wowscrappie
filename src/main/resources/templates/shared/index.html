@@ -35,6 +35,8 @@
                         <p class="main-text">Type</p>
 
                         <p class="text-muted" th:text="${configType}">TMW-Configs</p>
+                        <input id="configTypeHolder" type="hidden" th:value="${configType}" />
+                        <input id="configIdHolder" type="hidden" th:value="${configId}" />
                     </div>
                 </div>
             </div>
@@ -53,48 +55,71 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <div class="form-group">
-                    <label>Comments</label>
-                    <blockquote class="commentBox" th:text="${config.comment}"></blockquote>
-                </div>
-                <hr />
-                <br />
-                <div class="form-group">
-                    <label>Value</label>
-                    <textarea th:text="${config.actualValue}" class="form-control" rows="8"></textarea>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <hr />
-                <div class="form-group">
-                    <label>Images</label>
-                    <br />
-                    <div th:if="${screenshots.size() == 0}" class="alert alert-success">No images or screenshots were provided.</div>
+        <ul class="nav nav-pills">
+            <li class="active"><a href="#details" data-toggle="tab">Details</a>
+            </li>
+            <li class=""><a href="#comments" data-toggle="tab">Comments</a>
+            </li>
+        </ul>
 
-                    <div th:if="${screenshots.size() > 0}"  id="images">
-                        <a th:each="screenshot: ${screenshots}" class="fancybox" rel="group" th:href="'/shared/image/' + ${screenshot.reference}">
-                            <img th:src="'/shared/image/thumbnail-' + ${screenshot.reference}"  alt="" />
-                        </a>
+        <div class="tab-content">
+            <div class="tab-pane fade active in" id="details">
+                <br /><br />
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1">
+                        <div class="form-group">
+                            <label>Comments</label>
+                            <blockquote class="commentBox" th:text="${config.comment}"></blockquote>
+                        </div>
+                        <hr />
+                        <br />
+                        <div class="form-group">
+                            <label>Value</label>
+                            <textarea th:text="${config.actualValue}" class="form-control" rows="8"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1">
+                        <hr />
+                        <div class="form-group">
+                            <label>Images</label>
+                            <br />
+                            <div th:if="${screenshots.size() == 0}" class="alert alert-success">No images or screenshots were provided.</div>
+
+                            <div th:if="${screenshots.size() > 0}"  id="images">
+                                <a th:each="screenshot: ${screenshots}" class="fancybox" rel="group" th:href="'/shared/image/' + ${screenshot.reference}">
+                                    <img th:src="'/shared/image/thumbnail-' + ${screenshot.reference}"  alt="" />
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <div class="row" >
+                    <div class="col-md-5 col-md-offset-1">
+                        <button id="copy-button" th:attr="data-clipboard-text=${config.actualValue}" class="btn btn-primary btn-sm">
+                            <i class="mdi-action-assignment"></i>
+                            Copy to clipboard
+                        </button>
                     </div>
                 </div>
             </div>
-        </div>
 
+            <div class="tab-pane fade" id="comments">
 
-        <br/>
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1">
+                        <div id="commentPane">
 
-        <div class="row" >
-            <div class="col-md-5 col-md-offset-1">
-                <button id="copy-button" th:attr="data-clipboard-text=${config.actualValue}" class="btn btn-primary btn-sm">
-                    <i class="mdi-action-assignment"></i>
-                    Copy to clipboard
-                </button>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
+
+
     </div>
     <!-- /. PAGE INNER  -->
 </div>
@@ -111,6 +136,13 @@
             $(".fancybox").fancybox();
             ZeroClipboard.config({swfPath: "/assets/zeroclipboard/ZeroClipboard.swf"});
             doClipboardBinding();
+
+            function loadComments() {
+                $.get('/interface/comments/' + $('#configTypeHolder').val() +'/' + $('#configIdHolder').val(), function(data) {
+                    $('#commentPane').html(data);
+                });
+            }
+            loadComments();
         });
     </script>
 </div>

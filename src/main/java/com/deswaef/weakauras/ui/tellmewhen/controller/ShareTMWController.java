@@ -31,6 +31,7 @@ public class ShareTMWController implements ShareController {
             if(isAdmin() || byId.get().isApproved()) {
                 modelMap.put("screenshots", tellMeWhenService.findScreenshots(byId.get()));
                 modelMap.put("configType", CONFIG_TYPE);
+                modelMap.put("configId", id);
                 modelMap.put("screenshots", tellMeWhenService.findScreenshots(byId.get()));
                 modelMap.put("rating", getRating(configRatingService.findByTellMeWhen(byId.get().getId())));
                 modelMap.put("config", byId.get());

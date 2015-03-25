@@ -34,6 +34,7 @@ public class ShareWeakAuraController implements ShareController {
             if (isAdmin() || weakAura.get().isApproved()) {
                 modelMap.put("screenshots", weakAuraService.findScreenshots(weakAura.get()));
                 modelMap.put("configType", CONFIG_TYPE);
+                modelMap.put("configId", id);
                 modelMap.put("screenshots", weakAuraService.findScreenshots(weakAura.get()));
                 modelMap.put("rating", getRating(configRatingService.findByMacro(weakAura.get().getId())));
                 modelMap.put("config", weakAura.get());
