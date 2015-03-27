@@ -1,9 +1,12 @@
 package com.deswaef.weakauras.ui.macros.domain;
 
+import com.deswaef.weakauras.ui.comments.domain.MacroComment;
+import com.deswaef.weakauras.ui.reports.domain.MacroReport;
 import com.deswaef.weakauras.usermanagement.domain.ScrappieUser;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.Set;
 
 @Entity
 @Table(name = "macro")
@@ -31,6 +34,12 @@ public class Macro {
     @ManyToOne
     @JoinColumn(name = "uploader_id")
     private ScrappieUser uploader;
+
+    @OneToMany(mappedBy = "macro", orphanRemoval = true, cascade = {CascadeType.REMOVE})
+    private Set<MacroComment> comments;
+
+    @OneToMany(mappedBy = "macro", orphanRemoval = true, cascade = {CascadeType.REMOVE})
+    private Set<MacroReport> reports;
 
     public Long getId() {
         return id;
@@ -86,6 +95,24 @@ public class Macro {
 
     public Macro setUploader(ScrappieUser uploader) {
         this.uploader = uploader;
+        return this;
+    }
+
+    public Set<MacroComment> getComments() {
+        return comments;
+    }
+
+    public Macro setComments(Set<MacroComment> comments) {
+        this.comments = comments;
+        return this;
+    }
+
+    public Set<MacroReport> getReports() {
+        return reports;
+    }
+
+    public Macro setReports(Set<MacroReport> reports) {
+        this.reports = reports;
         return this;
     }
 }

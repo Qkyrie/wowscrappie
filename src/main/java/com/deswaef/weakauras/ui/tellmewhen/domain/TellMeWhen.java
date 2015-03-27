@@ -1,9 +1,13 @@
 package com.deswaef.weakauras.ui.tellmewhen.domain;
 
+import com.deswaef.weakauras.ui.comments.domain.TellMeWhenComment;
+import com.deswaef.weakauras.ui.comments.domain.WeakAuraComment;
+import com.deswaef.weakauras.ui.reports.domain.TellMeWhenReport;
 import com.deswaef.weakauras.usermanagement.domain.ScrappieUser;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.Set;
 
 @Entity
 @Table(name = "tell_me_when")
@@ -32,6 +36,12 @@ public class TellMeWhen {
     @ManyToOne
     @JoinColumn(name = "uploader_id")
     private ScrappieUser uploader;
+
+    @OneToMany(mappedBy = "tellMeWhen", orphanRemoval = true, cascade = {CascadeType.REMOVE})
+    private Set<TellMeWhenComment> comments;
+
+    @OneToMany(mappedBy = "tellMeWhen", orphanRemoval = true, cascade = {CascadeType.REMOVE})
+    private Set<TellMeWhenReport> reports;
 
     public Long getId() {
         return id;
@@ -87,4 +97,21 @@ public class TellMeWhen {
         return this;
     }
 
+    public Set<TellMeWhenComment> getComments() {
+        return comments;
+    }
+
+    public TellMeWhen setComments(Set<TellMeWhenComment> comments) {
+        this.comments = comments;
+        return this;
+    }
+
+    public Set<TellMeWhenReport> getReports() {
+        return reports;
+    }
+
+    public TellMeWhen setReports(Set<TellMeWhenReport> reports) {
+        this.reports = reports;
+        return this;
+    }
 }

@@ -1,9 +1,13 @@
 package com.deswaef.weakauras.ui.weakauras.domain;
 
+import com.deswaef.weakauras.ui.comments.domain.MacroComment;
+import com.deswaef.weakauras.ui.comments.domain.WeakAuraComment;
+import com.deswaef.weakauras.ui.reports.domain.WeakAuraReport;
 import com.deswaef.weakauras.usermanagement.domain.ScrappieUser;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.Set;
 
 @Entity
 @Table(name = "weak_aura")
@@ -32,6 +36,12 @@ public class WeakAura {
     @ManyToOne
     @JoinColumn(name = "uploader_id")
     private ScrappieUser uploader;
+
+    @OneToMany(mappedBy = "weakAura", orphanRemoval = true, cascade = {CascadeType.REMOVE})
+    private Set<WeakAuraComment> comments;
+
+    @OneToMany(mappedBy = "weakAura", orphanRemoval = true, cascade = {CascadeType.REMOVE})
+    private Set<WeakAuraReport> reports;
 
     public Long getId() {
         return id;
@@ -83,6 +93,24 @@ public class WeakAura {
 
     public WeakAura setUploader(ScrappieUser uploader) {
         this.uploader = uploader;
+        return this;
+    }
+
+    public Set<WeakAuraComment> getComments() {
+        return comments;
+    }
+
+    public WeakAura setComments(Set<WeakAuraComment> comments) {
+        this.comments = comments;
+        return this;
+    }
+
+    public Set<WeakAuraReport> getReports() {
+        return reports;
+    }
+
+    public WeakAura setReports(Set<WeakAuraReport> reports) {
+        this.reports = reports;
         return this;
     }
 }
