@@ -12,6 +12,7 @@ public class PendingMacroDto {
     private boolean approved;
     private String type;
     private String whatFor;
+    private String uploader;
 
 
     public static PendingMacroDto create(Macro macro) {
@@ -22,7 +23,8 @@ public class PendingMacroDto {
                 .setActualValue(macro.getActualValue())
                 .setId(macro.getId())
                 .setType(extractType(macro))
-                .setWhatFor(extractFor(macro));
+                .setWhatFor(extractFor(macro))
+                .setUploader(macro.getUploader().getUsername());
     }
 
     private static String extractFor(Macro macro) {
@@ -105,6 +107,15 @@ public class PendingMacroDto {
 
     public PendingMacroDto setWhatFor(String whatFor) {
         this.whatFor = whatFor;
+        return this;
+    }
+
+    public String getUploader() {
+        return uploader;
+    }
+
+    public PendingMacroDto setUploader(String uploader) {
+        this.uploader = uploader;
         return this;
     }
 }

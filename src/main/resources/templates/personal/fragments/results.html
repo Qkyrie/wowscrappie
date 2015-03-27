@@ -36,13 +36,14 @@
                                    sec:authorize="hasRole('ROLE_USER')"><i class="mdi-image-edit"></i> Edit</span>
                             <span th:attr="data-tmw_id=${uielement.id}" th:if="${uielement.approved == false}"
                                   class="approveButton btn btn-info btn-sm"
-                            sec:authorize="hasRole('ROLE_ADMIN')"> <i class="mdi-action-done"></i> approve</span>
+                                  sec:authorize="hasRole('ROLE_ADMIN')"> <i class="mdi-action-done"></i> approve</span>
                             <span th:attr="data-tmw_id=${uielement.id}"
                                   th:if="${uielement.approved == true}"
                                   class="disableButton btn btn-warning btn-sm"
                                   sec:authorize="hasRole('ROLE_ADMIN')"> <i class="mdi-action-lock"></i> disable</span>
                             <span th:attr="data-tmw_id=${uielement.id}" class="deleteButton btn btn-danger btn-sm"
-                                  sec:authorize="hasRole('ROLE_ADMIN')"> <i class="mdi-av-not-interested"></i> delete</span>
+                                  sec:authorize="hasRole('ROLE_ADMIN')"> <i
+                                    class="mdi-av-not-interested"></i> delete</span>
                         </td>
                     </tr>
                     </tbody>
@@ -50,44 +51,64 @@
             </div>
         </div>
         <div class="row" data-bind="visible: showDetails">
-            <hr />
-            <h3 data-bind="text: activeName"></h3>
-            <div class="form-group">
-                <label>Comments</label>
-                <div class="commentBox" data-bind="text: activeComment"></div>
+            <ul class="nav nav-pills">
+                <li class="active"><a href="#details" data-toggle="tab">Details</a>
+                </li>
+                <li class=""><a href="#comments" data-toggle="tab">Comments</a>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+                <div class="tab-pane fade active in" id="details">
+                    <h3 data-bind="text: activeName"></h3>
+
+                    <div class="form-group">
+                        <label>Comments</label>
+
+                        <div class="commentBox" data-bind="text: activeComment"></div>
+                    </div>
+
+                    <label>TellMeWhen-String</label>
+                    <textarea data-bind="value: activeString" class="form-control" rows="5"></textarea>
+
+                    <hr/>
+
+                    <div id="images" data-bind="foreach: imageRefs">
+                        <a class="fancybox" rel="group" data-bind="attr: { href: '/shared/image/' + $data }">
+                            <img data-bind="attr: { src: '/shared/image/thumbnail-' + $data }" alt=""/>
+                        </a>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="comments">
+                    <div id="commentPane">
+
+                    </div>
+                </div>
             </div>
-
-            <label>TellMeWhen-String</label>
-            <textarea data-bind="value: activeString" class="form-control" rows="3"></textarea>
-
-            <hr />
-
-            <div id="images" data-bind="foreach: imageRefs">
-                <a class="fancybox" rel="group" data-bind="attr: { href: '/shared/image/' + $data }">
-                    <img data-bind="attr: { src: '/shared/image/thumbnail-' + $data }" alt=""/>
-                </a>
-            </div>
-        </div>
-
-        <br/>
-        <div class="row" data-bind="visible: showDetails">
 
         </div>
 
     </div>
     <script type="application/javascript">
 
-        $('.shareButton').each(function() {
-            $(this).click(function() {
+        $('.shareButton').each(function () {
+            $(this).click(function () {
                 window.open($(this).data('share-url'), '_blank');
             });
         });
 
-        $(".editButton").each(function() {
-            $(this).click(function() {
+        $(".editButton").each(function () {
+            $(this).click(function () {
                 window.open($(this).data('edit-url'), '_blank');
             });
         });
+
+
+        function loadComments(id) {
+            $.get('/interface/comments/tmw/' + id, function (data) {
+                $('#commentPane').html(data);
+            });
+        }
 
         var tmwVM = function () {
             var self = this;
@@ -110,6 +131,7 @@
                         self.imageRefs(resultValue.imageRefs);
                         self.activeName(resultValue.name);
                         self.showDetails(true);
+                        loadComments(tmw_id);
                         $(".fancybox").fancybox();
                     }
                 });
@@ -119,7 +141,7 @@
         var tmwModel = new tmwVM();
         ko.applyBindings(tmwModel, $("#tmw-wrapper")[0]);
 
-        $(".deleteButton").click(function() {
+        $(".deleteButton").click(function () {
             var self = $(this);
             $.get('/interface/tellmewhen/' + self.data('tmw_id') + '/delete', function (data) {
                 if (data == true) {
@@ -148,7 +170,7 @@
             });
         });
 
-        $(".disableButton").click(function() {
+        $(".disableButton").click(function () {
             var self = $(this);
             $.get('/interface/tellmewhen/' + self.data('tmw_id') + '/disable', function (data) {
                 if (data == true) {
@@ -188,7 +210,8 @@
                     <span data-bind="click: view" th:attr="data-wa_id=${uielement.id}"
                           class="btn btn-success btn-sm"><i class="mdi-maps-local-library"></i> view</span>
                         <span th:attr="data-wa_id=${uielement.id}, data-share-url=${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/shared/wa/} + ${uielement.id}"
-                              class="shareButton btn btn-success btn-sm"> <i class="mdi-social-share"></i>share link</span>
+                              class="shareButton btn btn-success btn-sm"> <i
+                                class="mdi-social-share"></i>share link</span>
                          <span th:attr="data-edit-url=${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/personal/edit/wa/} + ${uielement.id}"
                                class="editButton btn btn-default btn-raised btn-sm"
                                sec:authorize="hasRole('ROLE_USER')"><i class="mdi-image-edit"></i> Edit</span>
@@ -210,36 +233,61 @@
 
 
         <div class="row" data-bind="visible: showDetails">
-            <hr />
-            <h3 data-bind="text: activeName"></h3>
-            <div class="form-group">
-                <label>Comments</label>
-                <div class="commentBox" data-bind="text: activeComment"></div>
+            <ul class="nav nav-pills">
+                <li class="active"><a href="#details" data-toggle="tab">Details</a>
+                </li>
+                <li class=""><a href="#comments" data-toggle="tab">Comments</a>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+                <div class="tab-pane fade active in" id="details">
+                    <h3 data-bind="text: activeName"></h3>
+
+                    <div class="form-group">
+                        <label>Comments</label>
+
+                        <div class="commentBox" data-bind="text: activeComment"></div>
+                    </div>
+
+                    <label>WeakAura-String</label>
+                    <textarea data-bind="value: activeString" class="form-control" rows="5"></textarea>
+                    <hr/>
+
+                    <div id="images" data-bind="foreach: imageRefs">
+                        <a class="fancybox" rel="group" data-bind="attr: { href: '/shared/image/' + $data }">
+                            <img data-bind="attr: { src: '/shared/image/thumbnail-' + $data }" alt=""/>
+                        </a>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="comments">
+                    <div id="commentPane">
+
+                    </div>
+                </div>
             </div>
 
-            <label>WeakAura-String</label>
-            <textarea data-bind="value: activeString" class="form-control" rows="3"></textarea>
-            <hr />
-
-            <div id="images" data-bind="foreach: imageRefs">
-                <a class="fancybox" rel="group" data-bind="attr: { href: '/shared/image/' + $data }">
-                    <img data-bind="attr: { src: '/shared/image/thumbnail-' + $data }" alt=""/>
-                </a>
-            </div>
         </div>
     </div>
     <script type="application/javascript">
-        $('.shareButton').each(function() {
-            $(this).click(function() {
+        $('.shareButton').each(function () {
+            $(this).click(function () {
                 window.open($(this).data('share-url'), '_blank');
             });
         });
 
-        $(".editButton").each(function() {
-            $(this).click(function() {
+        $(".editButton").each(function () {
+            $(this).click(function () {
                 window.open($(this).data('edit-url'), '_blank');
             });
         });
+
+
+        function loadComments(id) {
+            $.get('/interface/comments/wa/' + id, function (data) {
+                $('#commentPane').html(data);
+            });
+        }
 
         var WaModel = function () {
             var self = this;
@@ -262,6 +310,7 @@
                         self.imageRefs(resultValue.imageRefs);
                         self.activeName(resultValue.name);
                         self.showDetails(true);
+                        loadComments(tmw_id);
                         $(".fancybox").fancybox();
                     }
                 });
@@ -272,7 +321,7 @@
         ko.applyBindings(waModel, $("#wa-wrapper")[0]);
 
 
-        $(".deleteButton").click(function() {
+        $(".deleteButton").click(function () {
             var self = $(this);
             $.get('/interface/weakaura/' + self.data('wa_id') + '/delete', function (data) {
                 if (data == true) {
@@ -301,7 +350,7 @@
             });
         });
 
-        $(".disableButton").click(function() {
+        $(".disableButton").click(function () {
             var self = $(this);
             $.get('/interface/weakaura/' + self.data('wa_id') + '/disable', function (data) {
                 if (data == true) {
@@ -340,7 +389,8 @@
                     <span data-bind="click: view" th:attr="data-macro_id=${uielement.id}"
                           class="btn btn-success btn-sm"><i class="mdi-maps-local-library"></i>view</span>
                         <span th:attr="data-macro_id=${uielement.id}, data-share-url=${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/shared/macro/} + ${uielement.id}"
-                              class="shareButton btn btn-success btn-sm"><i class="mdi-social-share"></i>share link</span>
+                              class="shareButton btn btn-success btn-sm"><i
+                                class="mdi-social-share"></i>share link</span>
                          <span th:attr="data-edit-url=${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/personal/edit/macro/} + ${uielement.id}"
                                class="editButton btn btn-default btn-raised btn-sm"
                                sec:authorize="hasRole('ROLE_USER')"><i class="mdi-image-edit"></i> Edit</span>
@@ -352,7 +402,8 @@
                               th:attr="data-macro_id=${uielement.id}"
                               sec:authorize="hasRole('ROLE_ADMIN')"> <i class="mdi-action-lock"></i> disable</span>
                          <span th:attr="data-macro_id=${uielement.id}" class="deleteButton btn btn-danger btn-sm"
-                               sec:authorize="hasRole('ROLE_ADMIN')"> <i class="mdi-av-not-interested"></i> delete</span>
+                               sec:authorize="hasRole('ROLE_ADMIN')"> <i
+                                 class="mdi-av-not-interested"></i> delete</span>
 
                     </td>
 
@@ -361,31 +412,56 @@
             </table>
         </div>
         <div class="row" data-bind="visible: showDetails">
-            <hr />
-            <h3 data-bind="text: activeName"></h3>
-            <div class="form-group">
-                <label>Comments</label>
-                <div class="commentBox" data-bind="text: activeComment"></div>
-            </div>
+            <ul class="nav nav-pills">
+                <li class="active"><a href="#details" data-toggle="tab">Details</a>
+                </li>
+                <li class=""><a href="#comments" data-toggle="tab">Comments</a>
+                </li>
+            </ul>
 
-            <label>Macro-String</label>
-            <textarea data-bind="value: activeString" class="form-control" rows="3"></textarea>
+            <div class="tab-content">
+                <div class="tab-pane fade active in" id="details">
+                    <h3 data-bind="text: activeName"></h3>
+
+                    <div class="form-group">
+                        <label>Comments</label>
+
+                        <div class="commentBox" data-bind="text: activeComment"></div>
+                    </div>
+
+                    <label>Macro-String</label>
+                    <textarea data-bind="value: activeString" class="form-control" rows="3"></textarea>
+                </div>
+                <div class="tab-pane fade" id="comments">
+                    <div class="col-md-10 col-md-offset-1">
+                        <div id="commentPane">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
     <script type="application/javascript">
 
-        $('.shareButton').each(function() {
-            $(this).click(function() {
+        $('.shareButton').each(function () {
+            $(this).click(function () {
                 window.open($(this).data('share-url'), '_blank');
             });
         });
 
-        $(".editButton").each(function() {
-            $(this).click(function() {
+        $(".editButton").each(function () {
+            $(this).click(function () {
                 window.open($(this).data('edit-url'), '_blank');
             });
         });
+
+        function loadComments(id) {
+            $.get('/interface/comments/macro/' + id, function (data) {
+                $('#commentPane').html(data);
+            });
+        }
 
         var MacroModel = function () {
             var self = this;
@@ -405,6 +481,7 @@
                         self.activeName(resultValue.name);
                         self.activeComment(resultValue.comment);
                         self.showDetails(true);
+                        loadComments(tmw_id);
                     }
                 });
             };
@@ -413,7 +490,7 @@
         var macroModel = new MacroModel();
         ko.applyBindings(macroModel, $("#macro-stuff")[0]);
 
-        $(".deleteButton").click(function() {
+        $(".deleteButton").click(function () {
             var self = $(this);
             $.get('/interface/macro/' + self.data('macro_id') + '/delete', function (data) {
                 if (data == true) {
@@ -442,7 +519,7 @@
             });
         });
 
-        $(".disableButton").click(function() {
+        $(".disableButton").click(function () {
             var self = $(this);
             $.get('/interface/macro/' + self.data('macro_id') + '/disable', function (data) {
                 if (data == true) {

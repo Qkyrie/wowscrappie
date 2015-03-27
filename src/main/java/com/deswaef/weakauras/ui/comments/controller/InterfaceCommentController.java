@@ -11,6 +11,7 @@ import com.deswaef.weakauras.ui.tellmewhen.domain.TellMeWhen;
 import com.deswaef.weakauras.ui.tellmewhen.service.TellMeWhenService;
 import com.deswaef.weakauras.ui.weakauras.domain.WeakAura;
 import com.deswaef.weakauras.ui.weakauras.service.WeakAuraService;
+import com.google.common.base.Strings;
 import org.ocpsoft.prettytime.PrettyTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -50,63 +51,67 @@ public class InterfaceCommentController {
 
     @RequestMapping(method = POST)
     public String doComment(ModelMap map, @RequestBody PostCommentDto postCommentDto) {
-        if (TMW.equalsIgnoreCase(postCommentDto.getType())) {
-            Optional<TellMeWhen> tmw = getTMW(postCommentDto.getInterfaceId());
-            if (tmw.isPresent()) {
-                try {
-                    interfaceCommentService.postComment(postCommentDto, tmw.get());
-                } catch (Exception ex) {
-                    map.put("post_failure", ex.getMessage());
+        if(!Strings.isNullOrEmpty(postCommentDto.getComment())) {
+            if (TMW.equalsIgnoreCase(postCommentDto.getType())) {
+                Optional<TellMeWhen> tmw = getTMW(postCommentDto.getInterfaceId());
+                if (tmw.isPresent()) {
+                    try {
+                        interfaceCommentService.postComment(postCommentDto, tmw.get());
+                    } catch (Exception ex) {
+                        map.put("post_failure", ex.getMessage());
+                    }
+                    map.put("comments", interfaceCommentService.findComments(tmw.get())
+                            .stream()
+                            .sorted(byDate)
+                            .map(comment -> new CommentListDto()
+                                    .setWhen(prettyTime.format(comment.getPostDate()))
+                                    .setCommenter(comment.getCommenter().getUsername())
+                                    .setId(comment.getId())
+                                    .setContent(comment.getComment())).collect(Collectors.toList()));
+                } else {
+                    map.put("comments", new ArrayList<>());
                 }
-                map.put("comments", interfaceCommentService.findComments(tmw.get())
-                        .stream()
-                        .sorted(byDate)
-                        .map(comment -> new CommentListDto()
-                                .setWhen(prettyTime.format(comment.getPostDate()))
-                                .setCommenter(comment.getCommenter().getUsername())
-                                .setId(comment.getId())
-                                .setContent(comment.getComment())).collect(Collectors.toList()));
-            } else {
-                map.put("comments", new ArrayList<>());
-            }
-        } else if (WA.equalsIgnoreCase(postCommentDto.getType())) {
-            Optional<WeakAura> wa = getWA(postCommentDto.getInterfaceId());
-            if (wa.isPresent()) {
-                try {
-                    interfaceCommentService.postComment(postCommentDto, wa.get());
-                } catch (Exception ex) {
-                    map.put("post_failure", ex.getMessage());
+            } else if (WA.equalsIgnoreCase(postCommentDto.getType())) {
+                Optional<WeakAura> wa = getWA(postCommentDto.getInterfaceId());
+                if (wa.isPresent()) {
+                    try {
+                        interfaceCommentService.postComment(postCommentDto, wa.get());
+                    } catch (Exception ex) {
+                        map.put("post_failure", ex.getMessage());
+                    }
+                    map.put("comments", interfaceCommentService.findComments(wa.get()).stream()
+                            .sorted(byDate)
+                            .map(comment -> new CommentListDto()
+                                    .setWhen(prettyTime.format(comment.getPostDate()))
+                                    .setCommenter(comment.getCommenter().getUsername())
+                                    .setId(comment.getId())
+                                    .setContent(comment.getComment())).collect(Collectors.toList()));
+                } else {
+                    map.put("comments", new ArrayList<>());
                 }
-                map.put("comments", interfaceCommentService.findComments(wa.get()).stream()
-                        .sorted(byDate)
-                        .map(comment -> new CommentListDto()
-                                .setWhen(prettyTime.format(comment.getPostDate()))
-                                .setCommenter(comment.getCommenter().getUsername())
-                                .setId(comment.getId())
-                                .setContent(comment.getComment())).collect(Collectors.toList()));
-            } else {
-                map.put("comments", new ArrayList<>());
-            }
-        } else if (MACRO.equalsIgnoreCase(postCommentDto.getType())) {
-            Optional<Macro> macro = getMacro(postCommentDto.getInterfaceId());
-            if (macro.isPresent()) {
-                try {
-                    interfaceCommentService.postComment(postCommentDto, macro.get());
-                } catch (Exception ex) {
-                    map.put("post_failure", ex.getMessage());
+            } else if (MACRO.equalsIgnoreCase(postCommentDto.getType())) {
+                Optional<Macro> macro = getMacro(postCommentDto.getInterfaceId());
+                if (macro.isPresent()) {
+                    try {
+                        interfaceCommentService.postComment(postCommentDto, macro.get());
+                    } catch (Exception ex) {
+                        map.put("post_failure", ex.getMessage());
+                    }
+                    map.put("comments", interfaceCommentService.findComments(macro.get()).stream()
+                            .sorted(byDate)
+                            .map(comment -> new CommentListDto()
+                                    .setWhen(prettyTime.format(comment.getPostDate()))
+                                    .setCommenter(comment.getCommenter().getUsername())
+                                    .setId(comment.getId())
+                                    .setContent(comment.getComment())).collect(Collectors.toList()));
+                } else {
+                    map.put("comments", new ArrayList<>());
                 }
-                map.put("comments", interfaceCommentService.findComments(macro.get()).stream()
-                        .sorted(byDate)
-                        .map(comment -> new CommentListDto()
-                                .setWhen(prettyTime.format(comment.getPostDate()))
-                                .setCommenter(comment.getCommenter().getUsername())
-                                .setId(comment.getId())
-                                .setContent(comment.getComment())).collect(Collectors.toList()));
             } else {
                 map.put("comments", new ArrayList<>());
             }
         } else {
-            map.put("comments", new ArrayList<>());
+            map.put("post_failure", "Please fill in an actual comment before posting");
         }
 
         map.put("interfaceType", postCommentDto.getType());

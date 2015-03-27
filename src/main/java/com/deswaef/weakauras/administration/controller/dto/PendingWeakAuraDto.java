@@ -12,6 +12,7 @@ public class PendingWeakAuraDto {
     private boolean approved;
     private String type;
     private String whatFor;
+    private String uploader;
 
     public static PendingWeakAuraDto create(WeakAura weakAura) {
         return new PendingWeakAuraDto()
@@ -21,7 +22,8 @@ public class PendingWeakAuraDto {
                 .setComment(weakAura.getComment())
                 .setName(weakAura.getName())
                 .setType(extractType(weakAura))
-                .setWhatFor(extractWhatFor(weakAura));
+                .setWhatFor(extractWhatFor(weakAura))
+                .setUploader(weakAura.getUploader().getUsername());
     }
 
     private static String extractWhatFor(WeakAura weakAura) {
@@ -104,6 +106,15 @@ public class PendingWeakAuraDto {
 
     public PendingWeakAuraDto setWhatFor(String whatFor) {
         this.whatFor = whatFor;
+        return this;
+    }
+
+    public String getUploader() {
+        return uploader;
+    }
+
+    public PendingWeakAuraDto setUploader(String uploader) {
+        this.uploader = uploader;
         return this;
     }
 }

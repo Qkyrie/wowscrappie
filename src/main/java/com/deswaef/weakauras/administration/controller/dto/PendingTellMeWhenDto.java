@@ -13,6 +13,7 @@ public class PendingTellMeWhenDto {
     private boolean approved;
     private String type;
     private String whatFor;
+    private String uploader;
 
     public static PendingTellMeWhenDto create(TellMeWhen tellMeWhen) {
         return new PendingTellMeWhenDto()
@@ -22,7 +23,8 @@ public class PendingTellMeWhenDto {
                 .setComment(tellMeWhen.getComment())
                 .setName(tellMeWhen.getName())
                 .setWhatFor(extractWhatFor(tellMeWhen))
-                .setType(extractType(tellMeWhen));
+                .setType(extractType(tellMeWhen))
+                .setUploader(tellMeWhen.getUploader().getUsername());
     }
 
     private static String extractType(TellMeWhen tellMeWhen) {
@@ -105,6 +107,15 @@ public class PendingTellMeWhenDto {
 
     public PendingTellMeWhenDto setWhatFor(String whatFor) {
         this.whatFor = whatFor;
+        return this;
+    }
+
+    public String getUploader() {
+        return uploader;
+    }
+
+    public PendingTellMeWhenDto setUploader(String uploader) {
+        this.uploader = uploader;
         return this;
     }
 }
