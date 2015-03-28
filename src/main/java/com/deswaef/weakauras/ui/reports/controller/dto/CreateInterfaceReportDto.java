@@ -1,6 +1,6 @@
 package com.deswaef.weakauras.ui.reports.controller.dto;
 
-public class InterfaceReportDto {
+public class CreateInterfaceReportDto {
     private String comment;
     private Long interfaceId;
     private String interfaceType;
@@ -9,7 +9,7 @@ public class InterfaceReportDto {
         return comment;
     }
 
-    public InterfaceReportDto setComment(String comment) {
+    public CreateInterfaceReportDto setComment(String comment) {
         this.comment = comment;
         return this;
     }
@@ -18,7 +18,7 @@ public class InterfaceReportDto {
         return interfaceId;
     }
 
-    public InterfaceReportDto setInterfaceId(Long interfaceId) {
+    public CreateInterfaceReportDto setInterfaceId(Long interfaceId) {
         this.interfaceId = interfaceId;
         return this;
     }
@@ -27,7 +27,7 @@ public class InterfaceReportDto {
         return interfaceType;
     }
 
-    public InterfaceReportDto setInterfaceType(String interfaceType) {
+    public CreateInterfaceReportDto setInterfaceType(String interfaceType) {
         this.interfaceType = interfaceType;
         return this;
     }

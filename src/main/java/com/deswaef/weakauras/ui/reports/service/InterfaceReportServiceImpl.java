@@ -2,7 +2,8 @@ package com.deswaef.weakauras.ui.reports.service;
 
 import com.deswaef.weakauras.ui.macros.domain.Macro;
 import com.deswaef.weakauras.ui.macros.repository.MacroRepository;
-import com.deswaef.weakauras.ui.reports.controller.dto.InterfaceReportDto;
+import com.deswaef.weakauras.ui.reports.controller.dto.CreateInterfaceReportDto;
+import com.deswaef.weakauras.ui.reports.domain.InterfaceReport;
 import com.deswaef.weakauras.ui.reports.domain.MacroReport;
 import com.deswaef.weakauras.ui.reports.domain.TellMeWhenReport;
 import com.deswaef.weakauras.ui.reports.domain.WeakAuraReport;
@@ -17,12 +18,12 @@ import com.deswaef.weakauras.ui.weakauras.repository.WeakAuraRepository;
 import com.deswaef.weakauras.usermanagement.domain.ScrappieUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -49,10 +50,10 @@ public class InterfaceReportServiceImpl implements InterfaceReportService {
 
     @Override
     @Transactional
-    public void createReport(InterfaceReportDto interfaceReportDto) {
-        String interfaceType = interfaceReportDto.getInterfaceType();
-        Long interfaceId = interfaceReportDto.getInterfaceId();
-        String comment = interfaceReportDto.getComment();
+    public void createReport(CreateInterfaceReportDto createInterfaceReportDto) {
+        String interfaceType = createInterfaceReportDto.getInterfaceType();
+        Long interfaceId = createInterfaceReportDto.getInterfaceId();
+        String comment = createInterfaceReportDto.getComment();
 
         if (interfaceId == null) {
             createGeneralReport(comment);
@@ -105,6 +106,40 @@ public class InterfaceReportServiceImpl implements InterfaceReportService {
         }
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public List<InterfaceReport> findAll() {
+        return interfaceReportRepository.findAll();
+    }
+
+    @Override
+    @Transactional
+    public void delete(Long id) {
+        interfaceReportRepository.findOne(id).ifPresent(interfaceReportRepository::delete);
+    }
+
+    @Override
+    @Transactional
+    public void setHandled(Long id) {
+        interfaceReportRepository.findOne(id)
+                .ifPresent(
+                        one -> interfaceReportRepository.save(
+                                one.setHandled(true)
+                        )
+                );
+    }
+
+    @Override
+    @Transactional
+    public InterfaceReport findOne(Long id) {
+        Optional<InterfaceReport> one = interfaceReportRepository.findOne(id);
+        if (one.isPresent()) {
+            return one.get();
+        } else {
+            throw new IllegalArgumentException("a report with that id was not found");
+        }
+    }
+
     private ScrappieUser getReporter() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.getPrincipal() instanceof ScrappieUser) {
@@ -119,6 +154,11 @@ public class InterfaceReportServiceImpl implements InterfaceReportService {
     }
 
     private void createGeneralReport(String report) {
-
+        interfaceReportRepository.save(
+            new InterfaceReport()
+                .setPostDate(now())
+                .setComment(report)
+                .setHandled(false)
+        );
     }
 }
