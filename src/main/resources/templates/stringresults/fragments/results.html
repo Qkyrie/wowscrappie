@@ -56,7 +56,11 @@
                     <tr th:each="uielement, iterStat : ${uielements}"
                         th:class="${iterStat.odd}? 'gradeA' : 'gradeC'">
                         <td th:text="${uielement.name}">Name</td>
-                        <td th:text="${uielement.uploader}">Pikachu</td>
+                        <td>
+                            <a th:href="@{'/users/' + ${uielement.uploaderId}}">
+                                <span th:text="${uielement.uploader}">Pikachu</span>
+                            </a>
+                        </td>
                         <td>
                             <span data-bind="click: view" th:attr="data-tmw_id=${uielement.id}"
                                   class="btn btn-success btn-sm"> <i class="mdi-maps-local-library"></i> view</span>
@@ -315,7 +319,11 @@
                 <tr th:each="uielement, iterStat : ${uielements}"
                     th:class="${iterStat.odd}? 'gradeA' : 'gradeC'">
                     <td th:text="${uielement.name}">Name</td>
-                    <td th:text="${uielement.uploader}">Pikachu</td>
+                    <td>
+                        <a th:href="@{'/users/' + ${uielement.uploaderId}}">
+                            <span th:text="${uielement.uploader}">Pikachu</span>
+                        </a>
+                    </td>
                     <td>
                     <span data-bind="click: view" th:attr="data-wa_id=${uielement.id}"
                           class="btn btn-success btn-sm"> <i class="mdi-maps-local-library"></i> view</span>
@@ -565,7 +573,11 @@
                 <tr th:each="uielement, iterStat : ${uielements}"
                     th:class="${iterStat.odd}? 'gradeA' : 'gradeC'">
                     <td th:text="${uielement.name}">Name</td>
-                    <td th:text="${uielement.uploader}">Pikachu</td>
+                    <td>
+                        <a th:href="@{'/users/' + ${uielement.uploaderId}}">
+                            <span th:text="${uielement.uploader}">Pikachu</span>
+                        </a>
+                    </td>
                     <td>
                     <span data-bind="click: view" th:attr="data-macro_id=${uielement.id}"
                           class="btn btn-success btn-sm"><i class="mdi-maps-local-library"></i> view</span>

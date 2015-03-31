@@ -16,6 +16,7 @@
                     <tr>
                         <th>Caption</th>
                         <th>Type</th>
+                        <th>uploader</th>
                         <th>What For?</th>
                         <th>Actions</th>
                     </tr>
@@ -25,6 +26,11 @@
                         th:class="${iterStat.odd}? 'gradeA' : 'gradeC'">
                         <td th:text="${uielement.name}">Name</td>
                         <td th:text="${uielement.type}">Type</td>
+                        <td>
+                            <a th:href="@{'/users/' + ${uielement.uploaderId}}">
+                                <span th:text="${uielement.uploader}">Pikachu</span>
+                            </a>
+                        </td>
                         <td th:text="${uielement.whatFor}">whatFor</td>
                         <td>
                             <span data-bind="click: view" th:attr="data-tmw_id=${uielement.id}"
@@ -165,6 +171,7 @@
                 <tr>
                     <th>Caption</th>
                     <th>Type</th>
+                    <th>Uploader</th>
                     <th>What For?</th>
                     <th>Actions</th>
                 </tr>
@@ -174,6 +181,11 @@
                     th:class="${iterStat.odd}? 'gradeA' : 'gradeC'">
                     <td th:text="${uielement.name}">Name</td>
                     <td th:text="${uielement.type}">Type</td>
+                    <td>
+                        <a th:href="@{'/users/' + ${uielement.uploaderId}}">
+                            <span th:text="${uielement.uploader}">Pikachu</span>
+                        </a>
+                    </td>
                     <td th:text="${uielement.whatFor}">whatFor</td>
                     <td>
                     <span data-bind="click: view" th:attr="data-wa_id=${uielement.id}"
@@ -308,6 +320,7 @@
                 <tr>
                     <th>Caption</th>
                     <th>Type</th>
+                    <th>Uploader</th>
                     <th>What For?</th>
                     <th>Actions</th>
                 </tr>
@@ -317,6 +330,11 @@
                     th:class="${iterStat.odd}? 'gradeA' : 'gradeC'">
                     <td th:text="${uielement.name}">Name</td>
                     <td th:text="${uielement.type}">Type</td>
+                    <td>
+                        <a th:href="@{'/users/' + ${uielement.uploaderId}}">
+                            <span th:text="${uielement.uploader}">Pikachu</span>
+                        </a>
+                    </td>
                     <td th:text="${uielement.whatFor}">whatFor</td>
                     <td>
                     <span data-bind="click: view" th:attr="data-macro_id=${uielement.id}"

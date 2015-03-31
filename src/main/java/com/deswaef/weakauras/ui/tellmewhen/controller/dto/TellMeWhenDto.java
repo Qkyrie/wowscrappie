@@ -11,6 +11,7 @@ public class TellMeWhenDto {
     private String uploader;
     private String rating = "0%";
     private boolean approved;
+    private long uploaderId;
 
     public static TellMeWhenDto fromTellMeWhen(TellMeWhen tmw) {
         return new TellMeWhenDto()
@@ -19,7 +20,8 @@ public class TellMeWhenDto {
                 .setId(tmw.getId())
                 .setActualValue(tmw.getActualValue())
                 .setUploader(tmw.getUploader().getUsername())
-                .setApproved(tmw.isApproved());
+                .setApproved(tmw.isApproved())
+                .setUploaderId(tmw.getUploader().getId());
     }
 
     public Long getId() {
@@ -91,6 +93,15 @@ public class TellMeWhenDto {
 
     public TellMeWhenDto setApproved(boolean approved) {
         this.approved = approved;
+        return this;
+    }
+
+    public long getUploaderId() {
+        return uploaderId;
+    }
+
+    public TellMeWhenDto setUploaderId(long uploaderId) {
+        this.uploaderId = uploaderId;
         return this;
     }
 }

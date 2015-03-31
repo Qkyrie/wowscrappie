@@ -30,6 +30,23 @@
             </div>
         </div>
 
+        <div class="row" sec:authorize="!isAuthenticated()">
+            <div class="col-md-4 col-md-offset-4">
+                <a class="twitter-timeline" href="https://twitter.com/ScrappieWoW"
+                   data-screen-name="ScrappieWoW" data-widget-id="582534150621687808">Tweets by
+                    @ScrappieWoW</a>
+                <script>!function (d, s, id) {
+                    var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
+                    if (!d.getElementById(id)) {
+                        js = d.createElement(s);
+                        js.id = id;
+                        js.src = p + "://platform.twitter.com/widgets.js";
+                        fjs.parentNode.insertBefore(js, fjs);
+                    }
+                }(document, "script", "twitter-wjs");</script>
+            </div>
+        </div>
+
         <div class="row" sec:authorize="hasRole('ROLE_USER')">
             <div class="col-md-10 col-md-offset-1">
                 <h3>Contact an admin directly!</h3>

@@ -12,6 +12,7 @@ public class WeakAuraDto {
     private String uploader;
     private String rating = "0%";
     private boolean approved;
+    private long uploaderId;
 
     public static WeakAuraDto fromWeakAura(WeakAura weakAura) {
         return new WeakAuraDto()
@@ -20,7 +21,8 @@ public class WeakAuraDto {
                 .setComment(weakAura.getComment())
                 .setActualValue(weakAura.getActualValue())
                 .setUploader(weakAura.getUploader().getUsername())
-                .setApproved(weakAura.isApproved());
+                .setApproved(weakAura.isApproved())
+                .setUploaderId(weakAura.getUploader().getId());
     }
 
     public Long getId() {
@@ -92,6 +94,15 @@ public class WeakAuraDto {
 
     public WeakAuraDto setApproved(boolean approved) {
         this.approved = approved;
+        return this;
+    }
+
+    public long getUploaderId() {
+        return uploaderId;
+    }
+
+    public WeakAuraDto setUploaderId(long uploaderId) {
+        this.uploaderId = uploaderId;
         return this;
     }
 }

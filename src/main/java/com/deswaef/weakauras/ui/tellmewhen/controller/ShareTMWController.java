@@ -32,13 +32,9 @@ public class ShareTMWController implements ShareController {
                 modelMap.put("screenshots", tellMeWhenService.findScreenshots(byId.get()));
                 modelMap.put("configType", CONFIG_TYPE);
                 modelMap.put("configId", id);
-                modelMap.put("screenshots", tellMeWhenService.findScreenshots(byId.get()));
                 modelMap.put("rating", getRating(configRatingService.findByTellMeWhen(byId.get().getId())));
                 modelMap.put("config", byId.get());
-/*
-                if(SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof ScrappieUser) {
-                    modelMap.put("personalVote", configRatingService.getPersonalRatingTMW(id, (ScrappieUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal()));
-                }*/
+
             } else {
                 return PENDING_APPROVAL_URL;
             }

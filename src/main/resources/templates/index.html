@@ -1,7 +1,8 @@
 ﻿<html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorator="decorator/wa-decorator">
+      layout:decorator="decorator/wa-decorator"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <div layout:fragment="main-content">
     <div id="page-inner">
         <div class="row">
@@ -166,6 +167,17 @@
 <!-- /. layout fragment -->
 
 <div layout:fragment="footer-content">
+
+    <div sec:authorize="hasRole('ROLE_ADMIN')">
+        <script type="application/javascript">
+            $.get('/admin/pending-uploads/count', function(data) {
+                if(data > 0) {
+                    $.snackbar({content: "Hey Admin! You still need to approve " + data + " configuration(s)!"});
+                }
+            })
+        </script>
+    </div>
+
     <script type="application/javascript">
         $("#alertThankYou").show();
     </script>

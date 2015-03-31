@@ -1,0 +1,186 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="decorator/wa-decorator">
+
+<div layout:fragment="header">
+    <link th:href="@{/assets/js/dataTables/dataTables.bootstrap.css}" rel="stylesheet"/>
+</div>
+
+<div layout:fragment="main-content">
+    <div id="page-inner">
+        <div class="row">
+            <div class="col-md-10">
+                <h2 th:if="${canEdit}">Your Profile</h2>
+                <h2 th:if="${canEdit == false}" th:text="${profile.userName + '''s Profile'}"></h2>
+            </div>
+            <div class="col-md-2">
+                <a th:if="${canEdit}" class="btn btn-default btn-raised pull-right" th:href="@{/profiles/edit}">Edit Profile</a>
+            </div>
+        </div>
+        <br/><br/>
+
+        <div class="row">
+            <input id="waCount" type="hidden" th:value="${profile.was}"/>
+            <input id="macroCount" type="hidden" th:value="${profile.macros}"/>
+            <input id="tmwCount" type="hidden" th:value="${profile.tmws}"/>
+
+            <div class="col-md-4 col-sm-8 col-xs-8">
+                <div id="waBox" class="panel panel-back noti-box">
+                <span class="icon-box bg-color-red set-icon">
+                    <i class="fa fa-envelope-o"></i>
+                </span>
+
+                    <div class="text-box">
+                        <p class="main-text" th:text="${profile.was}">120</p>
+
+                        <p class="text-muted">WeakAuras</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-6">
+                <div id="tmwBox" class="panel panel-back noti-box">
+                <span class="icon-box bg-color-green set-icon">
+                    <i class="fa fa-bars"></i>
+                </span>
+
+                    <div class="text-box">
+                        <p class="main-text" th:text="${profile.tmws}">30</p>
+
+                        <p class="text-muted">TMW-Configs</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-6">
+                <div id="macroBox" class="panel panel-back noti-box">
+                <span class="icon-box bg-color-blue set-icon">
+                    <i class="fa fa-bell-o"></i>
+                </span>
+
+                    <div class="text-box">
+                        <p class="main-text" th:text="${profile.macros}">240</p>
+
+                        <p class="text-muted">Macros</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr/>
+
+        <div class="row">
+            <div class="col-md-6" th:if="${profile.twitterName == null || profile.twitterName == ''}">
+                <p class="alert alert-info"><span th:text="${profile.userName}"></span> hasn't provided his personal
+                    twitter yet.</p>
+            </div>
+            <div class="col-md-6" th:if="${profile.twitchStream == null || profile.twitchStream == ''}">
+                <p class="alert alert-info"><span th:text="${profile.userName}"></span> does not have a Twitch stream.
+                </p>
+            </div>
+            <div class="col-md-6" th:if="${profile.twitchStream != null AND profile.twitchStream != ''}">
+                <a class="embedly-card" th:href="${ 'http://twitch.tv/' + profile.twitchStream}"
+                   th:text="${profile.twitchStream + ' - Twitch'}">StreamingForAnimals - Twitch</a>
+                <script async="async" src="//cdn.embedly.com/widgets/platform.js" charset="UTF-8"></script>
+            </div>
+            <div class="col-md-6" th:if="${profile.twitterName != null AND profile.twitterName != ''}">
+                <h3>Twitter</h3>
+                <a class="twitter-timeline" href="https://twitter.com/ScrappieWoW"
+                   th:attr="data-screen-name=${profile.twitterName}" data-widget-id="582534150621687808">Tweets by
+                    @ScrappieWoW</a>
+                <script>!function (d, s, id) {
+                    var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
+                    if (!d.getElementById(id)) {
+                        js = d.createElement(s);
+                        js.id = id;
+                        js.src = p + "://platform.twitter.com/widgets.js";
+                        fjs.parentNode.insertBefore(js, fjs);
+                    }
+                }(document, "script", "twitter-wjs");</script>
+            </div>
+
+        </div>
+        <br/>
+        <hr/>
+        <br/>
+
+        <div class="row">
+            <div class="col-md-6" th:if="${profile.was != 0 || profile.tmws != 0 || profile.macros != 0}">
+                <h3>Contributions by <span th:text="${profile.userName}"></span></h3>
+
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div id="morris-donut-chart"></div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h3>About Me!</h3>
+                <blockquote>
+                    <span th:if="${profile.aboutMe != null AND profile.aboutMe != ''}" th:text="${profile.aboutMe}">
+
+                    </span>
+                    <span th:if="${profile.aboutMe == null || profile.aboutMe == ''}">
+                        I don't have anything in particular to mention yet.
+                    </span>
+                    <small th:text="${profile.userName + ' on wowscrappie.com'}"></small>
+                </blockquote>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+
+            </div>
+        </div>
+
+    </div>
+    <!-- /. PAGE INNER  -->
+</div>
+<!-- /. layout fragment -->
+<div layout:fragment="footer-content">
+    <script th:src="@{/assets/js/dataTables/jquery.dataTables.js}"></script>
+    <script th:src="@{/assets/js/dataTables/dataTables.bootstrap.js}"></script>
+    <script type="application/javascript">
+        var ViewModel = function () {
+            var self = this;
+        }
+        var viewModel = new ViewModel();
+        ko.applyBindings(viewModel);
+
+        $("#tmwBox").click(function () {
+            //do things
+            //
+        });
+
+        $("#waBox").click(function () {
+            //do things
+        });
+
+        $("#macroBox").click(function () {
+            //do things
+        });
+    </script>
+
+    <script th:src="@{/assets/js/morris/raphael-2.1.0.min.js}"></script>
+    <script th:src="@{/assets/js/morris/morris.js}"></script>
+    <script type="application/javascript" th:if="${profile.was != 0 || profile.tmws != 0 || profile.macros != 0}">
+        Morris.Donut({
+            element: 'morris-donut-chart',
+            data: [{
+                label: "Macros",
+                value: $("#macroCount").val()
+            }, {
+                label: "WeakAuras",
+                value: $("#waCount").val()
+            }, {
+                label: "TellMeWhens",
+                value: $("#tmwCount").val()
+            }],
+            resize: true
+        });
+    </script>
+
+</div>
+
+</html>

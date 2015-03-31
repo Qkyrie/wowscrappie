@@ -21,7 +21,11 @@
                     <div class="text-box">
                         <p class="main-text">Uploaded by</p>
 
-                        <p class="text-muted" th:text="${config.uploader.username}">Pikachu</p>
+                        <p class="text-muted">
+                            <a th:href="@{'/users/' + ${config.uploader.id}}">
+                                <span  th:text="${config.uploader.username}"></span>
+                            </a>
+                        </p>
                     </div>
                 </div>
             </div>

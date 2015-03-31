@@ -10,6 +10,7 @@ public class MacroDto {
     private String uploader;
     private String rating = "0%";
     private boolean approved;
+    private long uploaderId;
 
     public static MacroDto fromMacro(Macro macro) {
         return new MacroDto()
@@ -18,7 +19,8 @@ public class MacroDto {
                 .setName(macro.getName())
                 .setActualValue(macro.getActualValue())
                 .setUploader(macro.getUploader().getUsername())
-                .setApproved(macro.isApproved());
+                .setApproved(macro.isApproved())
+                .setUploaderId(macro.getUploader().getId());
     }
 
     public Long getId() {
@@ -81,6 +83,15 @@ public class MacroDto {
 
     public MacroDto setApproved(boolean approved) {
         this.approved = approved;
+        return this;
+    }
+
+    public long getUploaderId() {
+        return uploaderId;
+    }
+
+    public MacroDto setUploaderId(long uploaderId) {
+        this.uploaderId = uploaderId;
         return this;
     }
 }
