@@ -1,7 +1,8 @@
 package com.deswaef.weakauras.raids.service;
 
 import com.deswaef.weakauras.raids.domain.Raid;
-import com.deswaef.weakauras.raids.repository.RaidRepository;
+import com.deswaef.weakauras.raids.domain.RaidBoss;
+import com.deswaef.weakauras.raids.repository.RaidBossRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,21 +11,22 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class RaidServiceImpl implements RaidService {
+public class BossServiceImpl implements BossService {
 
     @Autowired
-    private RaidRepository raidRepository;
+    private RaidBossRepository raidBossRepository;
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<Raid> findById(Long id) {
-        return raidRepository.findOne(id);
+    public List<RaidBoss> findByRaid(Raid raid) {
+        return raidBossRepository.findByRaid(raid);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<Raid> findAll() {
-        return raidRepository.findAll();
+    public Optional<RaidBoss> findById(long id) {
+        return raidBossRepository.findOne(id);
     }
+
 
 }

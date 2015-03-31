@@ -12,6 +12,9 @@ public class ContributionCommand {
     private String wowClass;
     private String spec;
 
+    private long raidId;
+    private long bossId;
+
     private String caption;
     private String comments;
     private String category;
@@ -81,5 +84,23 @@ public class ContributionCommand {
 
     public void setChooseOption(String chooseOption) {
         this.chooseOption = chooseOption;
+    }
+
+    public long getRaidId() {
+        return raidId;
+    }
+
+    public ContributionCommand setRaidId(long raidId) {
+        this.raidId = raidId;
+        return this;
+    }
+
+    public long getBossId() {
+        return bossId;
+    }
+
+    public ContributionCommand setBossId(long bossId) {
+        this.bossId = bossId;
+        return this;
     }
 }

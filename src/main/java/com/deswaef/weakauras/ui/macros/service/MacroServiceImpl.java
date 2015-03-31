@@ -2,7 +2,9 @@ package com.deswaef.weakauras.ui.macros.service;
 
 import com.deswaef.weakauras.classes.domain.Spec;
 import com.deswaef.weakauras.classes.domain.WowClass;
+import com.deswaef.weakauras.raids.domain.Boss;
 import com.deswaef.weakauras.ui.macros.domain.Macro;
+import com.deswaef.weakauras.ui.macros.repository.BossMacroRepository;
 import com.deswaef.weakauras.ui.macros.repository.MacroRepository;
 import com.deswaef.weakauras.ui.macros.repository.SpecMacroRepository;
 import com.deswaef.weakauras.ui.macros.repository.WowClassMacroRepository;
@@ -28,6 +30,8 @@ public class MacroServiceImpl implements MacroService {
     private WowClassMacroRepository wowClassMacroRepository;
     @Autowired
     private ConfigRatingService configRatingService;
+    @Autowired
+    private BossMacroRepository bossMacroRepository;
 
     @Override
     @Transactional
@@ -54,6 +58,15 @@ public class MacroServiceImpl implements MacroService {
     }
 
     @Override
+    public List<Macro> findByBoss(Boss boss) {
+        if(isAdmin()){
+            return bossMacroRepository.findByBoss(boss);
+        } else {
+            return bossMacroRepository.findByBossAndApproved(boss);
+        }
+    }
+
+    @Override
     public Long countByWowClass(WowClass wowClass) {
         if(isAdmin()) {
             return wowClassMacroRepository.countByWowClass(wowClass);
@@ -68,6 +81,15 @@ public class MacroServiceImpl implements MacroService {
             return specMacroRepository.countBySpec(spec);
         } else {
             return specMacroRepository.countBySpecAndApproved(spec);
+        }
+    }
+
+    @Override
+    public Long countByBoss(Boss boss) {
+        if(isAdmin()){
+            return bossMacroRepository.countByBoss(boss);
+        } else {
+            return bossMacroRepository.countByBossAndApproved(boss);
         }
     }
 

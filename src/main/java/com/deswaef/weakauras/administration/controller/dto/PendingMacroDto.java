@@ -1,5 +1,6 @@
 package com.deswaef.weakauras.administration.controller.dto;
 
+import com.deswaef.weakauras.ui.macros.domain.BossFightMacro;
 import com.deswaef.weakauras.ui.macros.domain.Macro;
 import com.deswaef.weakauras.ui.macros.domain.SpecMacro;
 import com.deswaef.weakauras.ui.macros.domain.WowClassMacro;
@@ -33,6 +34,8 @@ public class PendingMacroDto {
             return String.format("%s %s", ((SpecMacro) macro).getSpec().getName(), ((SpecMacro) macro).getSpec().getWowClass().getName());
         } else if (macro instanceof WowClassMacro) {
             return ((WowClassMacro) macro).getWowClass().getName();
+        } else if (macro instanceof BossFightMacro) {
+            return ((BossFightMacro) macro).getBoss().getName();
         } else {
             return "unknown";
         }
@@ -43,6 +46,8 @@ public class PendingMacroDto {
             return "spec";
         } else if (macro instanceof WowClassMacro) {
             return "class";
+        } else if(macro instanceof BossFightMacro) {
+            return "bossfight";
         } else {
             return "unknown";
         }

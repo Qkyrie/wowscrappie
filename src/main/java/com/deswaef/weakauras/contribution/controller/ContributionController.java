@@ -5,6 +5,8 @@ import com.deswaef.weakauras.classes.service.ClassService;
 import com.deswaef.weakauras.contribution.controller.dto.ContributionCommand;
 import com.deswaef.weakauras.contribution.controller.dto.SelectSpecDto;
 import com.deswaef.weakauras.contribution.service.ContributionService;
+import com.deswaef.weakauras.raids.controller.dto.RaidDto;
+import com.deswaef.weakauras.raids.service.RaidService;
 import com.deswaef.weakauras.ui.image.ImageStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,6 +34,8 @@ public class ContributionController {
     private ImageStore imageStore;
     @Autowired
     private ContributionService contributionService;
+    @Autowired
+    private RaidService raidService;
 
     @RequestMapping
     public String index() {
@@ -41,6 +45,11 @@ public class ContributionController {
     @RequestMapping("/details/{category}")
     public String getDetails(ModelMap modelMap, @PathVariable("category") String category) {
         if (category.equals("Bossfight")) {
+            modelMap.put("raids", raidService
+                    .findAll()
+                    .stream()
+                    .map(RaidDto::create)
+                    .collect(Collectors.toList()));
             return "contribute/fragments/details :: bossfight";
         }
         else if(category.equals("ClassSpec")) {

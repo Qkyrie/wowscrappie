@@ -3,6 +3,7 @@ package com.deswaef.weakauras.ui.tellmewhen.service;
 import com.deswaef.weakauras.classes.domain.Spec;
 import com.deswaef.weakauras.classes.domain.WowClass;
 import com.deswaef.weakauras.infrastructure.service.OnRoleDependable;
+import com.deswaef.weakauras.raids.domain.Boss;
 import com.deswaef.weakauras.ui.image.domain.Screenshot;
 import com.deswaef.weakauras.ui.macros.domain.Macro;
 import com.deswaef.weakauras.ui.mvc.dto.EditConfigurationDto;
@@ -19,9 +20,13 @@ public interface TellMeWhenService extends OnRoleDependable {
 
     List<TellMeWhen> findBySpec(Spec spec);
 
+    List<TellMeWhen> findByBoss(Boss boss);
+
     Long countByWowclass(WowClass wowClass);
 
     Long countBySpec(Spec spec);
+
+    Long countByBoss(Boss boss);
 
     Optional<TellMeWhen> findById(Long id);
 

@@ -1,5 +1,6 @@
 package com.deswaef.weakauras.administration.controller.dto;
 
+import com.deswaef.weakauras.ui.tellmewhen.domain.BossFightTellMeWhen;
 import com.deswaef.weakauras.ui.tellmewhen.domain.SpecTellMeWhen;
 import com.deswaef.weakauras.ui.tellmewhen.domain.TellMeWhen;
 import com.deswaef.weakauras.ui.tellmewhen.domain.WowClassTellMeWhen;
@@ -34,6 +35,8 @@ public class PendingTellMeWhenDto {
             return "spec";
         } else if (tellMeWhen instanceof WowClassTellMeWhen) {
             return "class";
+        } else if (tellMeWhen instanceof BossFightTellMeWhen) {
+            return "bossfight";
         } else {
             return "unknown";
         }
@@ -44,6 +47,8 @@ public class PendingTellMeWhenDto {
             return String.format("%s %s", ((SpecTellMeWhen) tellMeWhen).getSpec().getName(),((SpecTellMeWhen) tellMeWhen).getSpec().getWowClass().getName());
         } else if (tellMeWhen instanceof WowClassTellMeWhen) {
             return ((WowClassTellMeWhen) tellMeWhen).getWowClass().getName();
+        } else if (tellMeWhen instanceof BossFightTellMeWhen) {
+            return ((BossFightTellMeWhen) tellMeWhen).getBoss().getName();
         } else {
             return "unknown";
         }

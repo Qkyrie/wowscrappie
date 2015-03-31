@@ -19,7 +19,8 @@ public class BossFightWeakAura extends WeakAura {
         return boss;
     }
 
-    public void setBoss(Boss boss) {
+    public BossFightWeakAura setBoss(Boss boss) {
         this.boss = boss;
+        return this;
     }
 }

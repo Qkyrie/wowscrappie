@@ -26,9 +26,12 @@
                         <p class="main-text"> Kargath Bladefist</p>
 
                         <p class="text-muted">
-                            <span class="label label-default">Macros</span>
-                            <span class="label label-default">WeakAuras</span>
-                            <span class="label label-default">TellMeWhen</span>
+                                <span data-boss-id="1"
+                                      class="btn btn-macro btn-primary btn-sm">Macros <span class="badge" th:text="${overview.get(1L).macroCount}">0</span></span>
+                                <span data-boss-id="1"
+                                      class="btn btn-wa btn-primary btn-sm">WeakAuras <span class="badge" th:text="${overview.get(1L).waCount}">0</span></span>
+                                <span  data-boss-id="1"
+                                      class="btn btn-tmw btn-primary btn-sm">TMW <span class="badge" th:text="${overview.get(1L).tmwCount}">0</span></span>
                         </p>
                     </div>
                 </div>
@@ -44,9 +47,12 @@
                         <p class="main-text"> The Butcher</p>
 
                         <p class="text-muted">
-                            <span class="label label-default">Macros</span>
-                            <span class="label label-default">WeakAuras</span>
-                            <span class="label label-default">TellMeWhen</span>
+                                <span data-boss-id="2"
+                                      class="btn btn-macro btn-primary btn-sm">Macros <span class="badge" th:text="${overview.get(2L).macroCount}">0</span></span>
+                                <span data-boss-id="2"
+                                      class="btn btn-wa btn-primary btn-sm">WeakAuras <span class="badge" th:text="${overview.get(2L).waCount}">0</span></span>
+                                <span data-boss-id="2"
+                                      class="btn btn-tmw btn-primary btn-sm">TMW <span class="badge" th:text="${overview.get(2L).tmwCount}">0</span></span>
                         </p>
                     </div>
                 </div>
@@ -62,9 +68,12 @@
                         <p class="main-text"> Brackenspore</p>
 
                         <p class="text-muted">
-                            <span class="label label-default">Macros</span>
-                            <span class="label label-default">WeakAuras</span>
-                            <span class="label label-default">TellMeWhen</span>
+                            <span data-boss-id="3"
+                                  class="btn btn-macro btn-primary btn-sm">Macros <span class="badge" th:text="${overview.get(3L).macroCount}">0</span></span>
+                                <span data-boss-id="3"
+                                      class="btn btn-wa btn-primary btn-sm">WeakAuras <span class="badge" th:text="${overview.get(3L).waCount}">0</span></span>
+                                <span data-boss-id="3"
+                                      class="btn btn-tmw btn-primary btn-sm">TMW <span class="badge" th:text="${overview.get(3L).tmwCount}">0</span></span>
                         </p>
                     </div>
                 </div>
@@ -80,9 +89,12 @@
                         <p class="main-text"> Tectus</p>
 
                         <p class="text-muted">
-                            <span class="label label-default">Macros</span>
-                            <span class="label label-default">WeakAuras</span>
-                            <span class="label label-default">TellMeWhen</span>
+                             <span data-boss-id="4"
+                                   class="btn btn-macro btn-primary btn-sm">Macros <span class="badge" th:text="${overview.get(4L).macroCount}">0</span></span>
+                                <span data-boss-id="4"
+                                      class="btn btn-wa btn-primary btn-sm">WeakAuras <span class="badge" th:text="${overview.get(4L).waCount}">0</span></span>
+                                <span data-boss-id="4"
+                                      class="btn btn-tmw btn-primary btn-sm">TMW <span class="badge" th:text="${overview.get(4L).tmwCount}">0</span></span>
                         </p>
                     </div>
                 </div>
@@ -98,9 +110,12 @@
                         <p class="main-text"> Twin Ogron</p>
 
                         <p class="text-muted">
-                            <span class="label label-default">Macros</span>
-                            <span class="label label-default">WeakAuras</span>
-                            <span class="label label-default">TellMeWhen</span>
+                           <span data-boss-id="5"
+                                 class="btn btn-macro btn-primary btn-sm">Macros <span class="badge" th:text="${overview.get(5L).macroCount}">0</span></span>
+                                <span data-boss-id="5"
+                                      class="btn btn-wa btn-primary btn-sm">WeakAuras <span class="badge" th:text="${overview.get(5L).waCount}">0</span></span>
+                                <span data-boss-id="5"
+                                      class="btn btn-tmw btn-primary btn-sm">TMW <span class="badge" th:text="${overview.get(5L).tmwCount}">0</span></span>
                         </p>
                     </div>
                 </div>
@@ -116,9 +131,12 @@
                         <p class="main-text"> Ko'ragh</p>
 
                         <p class="text-muted">
-                            <span class="label label-default">Macros</span>
-                            <span class="label label-default">WeakAuras</span>
-                            <span class="label label-default">TellMeWhen</span>
+                         <span data-boss-id="6"
+                               class="btn btn-macro btn-primary btn-sm">Macros  <span class="badge" th:text="${overview.get(6L).macroCount}">0</span></span>
+                                <span data-boss-id="6"
+                                      class="btn btn-wa btn-primary btn-sm">WeakAuras <span class="badge" th:text="${overview.get(6L).waCount}">0</span></span>
+                                <span data-boss-id="6"
+                                      class="btn btn-tmw btn-primary btn-sm">TMW <span class="badge" th:text="${overview.get(6L).tmwCount}">0</span></span>
                         </p>
                     </div>
                 </div>
@@ -127,19 +145,29 @@
             <div class="col-md-offset-4 col-md-4 col-sm-6 col-xs-6">
                 <div class="panel panel-back noti-box">
                 <span class="icon-box set-icon">
-                    <img th:src="@{/assets/img/T17/highmaul/portraits/imperator_margok.jpg}" />
+                    <img th:src="@{/assets/img/T17/highmaul/portraits/imperator_margok.jpg}"/>
                 </span>
 
                     <div class="text-box">
                         <p class="main-text">Imperator Mar'gok</p>
 
                         <p class="text-muted">
-                            <span class="label label-default">Macros</span>
-                            <span class="label label-default">WeakAuras</span>
-                            <span class="label label-default">TellMeWhen</span>
+                          <span data-boss-id="7"
+                                class="btn btn-macro btn-primary btn-sm">Macros <span class="badge" th:text="${overview.get(7L).macroCount}">0</span></span>
+                                <span data-boss-id="7"
+                                      class="btn btn-wa btn-primary btn-sm">WeakAuras <span class="badge" th:text="${overview.get(7L).waCount}">0</span></span>
+                                <span data-boss-id="7"
+                                      class="btn btn-macro btn-primary btn-sm">TMW <span class="badge" th:text="${overview.get(7L).tmwCount}">0</span></span>
                         </p>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <hr />
+                <div id="resultPane"></div>
             </div>
         </div>
         <!-- /. ROW  -->
@@ -147,5 +175,34 @@
     <!-- /. PAGE INNER  -->
 </div>
 <!-- /. layout fragment -->
+
+<div layout:fragment="footer-content">
+    <script th:src="@{/assets/js/dataTables/jquery.dataTables.js}"></script>
+    <script th:src="@{/assets/js/dataTables/dataTables.bootstrap.js}"></script>
+    <script type="application/javascript">
+        $(".btn-macro").click(function() {
+            $.get("/raids/1/bosses/" + $(this).data('boss-id') + "/macro", function(data) {
+                $("#resultPane").html(data);
+                $('#myTable').dataTable();
+            });
+        });
+
+        $(".btn-wa").click(function() {
+            $.get("/raids/1/bosses/" + $(this).data('boss-id') + "/weakaura", function(data) {
+                $("#resultPane").html(data);
+                $('#myTable').dataTable();
+            });
+        });
+
+        $(".btn-tmw").click(function() {
+            $.get("/raids/1/bosses/" + $(this).data('boss-id') + "/tellmewhen", function(data) {
+                $("#resultPane").html(data);
+                $('#myTable').dataTable();
+            });
+        });
+    </script>
+    <script type="text/javascript" th:src="@{/assets/fancybox/jquery.fancybox.pack.js?v=2.1.5}"/>
+
+</div>
 
 </html>

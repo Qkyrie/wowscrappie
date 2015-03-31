@@ -1,5 +1,6 @@
 package com.deswaef.weakauras.administration.controller.dto;
 
+import com.deswaef.weakauras.ui.weakauras.domain.BossFightWeakAura;
 import com.deswaef.weakauras.ui.weakauras.domain.SpecWeakAura;
 import com.deswaef.weakauras.ui.weakauras.domain.WeakAura;
 import com.deswaef.weakauras.ui.weakauras.domain.WowClassWeakAura;
@@ -33,6 +34,8 @@ public class PendingWeakAuraDto {
             return String.format("%s %s", ((SpecWeakAura) weakAura).getSpec().getName(),((SpecWeakAura) weakAura).getSpec().getWowClass().getName());
         } else if (weakAura instanceof WowClassWeakAura) {
             return ((WowClassWeakAura) weakAura).getWowClass().getName();
+        } else if (weakAura instanceof BossFightWeakAura) {
+            return ((BossFightWeakAura) weakAura).getBoss().getName();
         } else {
             return "unknown";
         }
@@ -43,6 +46,8 @@ public class PendingWeakAuraDto {
             return "spec";
         } else if (weakAura instanceof WowClassWeakAura) {
             return "class";
+        } else if (weakAura instanceof BossFightWeakAura) {
+            return "bossfight";
         } else {
             return "unknown";
         }

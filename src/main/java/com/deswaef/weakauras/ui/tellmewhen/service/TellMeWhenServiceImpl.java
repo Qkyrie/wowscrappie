@@ -2,12 +2,14 @@ package com.deswaef.weakauras.ui.tellmewhen.service;
 
 import com.deswaef.weakauras.classes.domain.Spec;
 import com.deswaef.weakauras.classes.domain.WowClass;
+import com.deswaef.weakauras.raids.domain.Boss;
 import com.deswaef.weakauras.ui.image.domain.Screenshot;
 import com.deswaef.weakauras.ui.macros.domain.Macro;
 import com.deswaef.weakauras.ui.mvc.dto.EditConfigurationDto;
 import com.deswaef.weakauras.ui.rating.service.ConfigRatingService;
 import com.deswaef.weakauras.ui.tellmewhen.domain.TellMeWhen;
 import com.deswaef.weakauras.ui.tellmewhen.domain.TellMeWhenScreenshot;
+import com.deswaef.weakauras.ui.tellmewhen.repository.BossFightTellMeWhenRepository;
 import com.deswaef.weakauras.ui.tellmewhen.repository.SpecTellMeWhenRepository;
 import com.deswaef.weakauras.ui.tellmewhen.repository.TellMeWhenRepository;
 import com.deswaef.weakauras.ui.tellmewhen.repository.TellMeWhenScreenshotRepository;
@@ -36,6 +38,8 @@ public class TellMeWhenServiceImpl implements TellMeWhenService {
     private TellMeWhenScreenshotRepository tellMeWhenScreenshotRepository;
     @Autowired
     private ConfigRatingService configRatingService;
+    @Autowired
+    private BossFightTellMeWhenRepository bossFightTellMeWhenRepository;
 
     @Override
     @Transactional
@@ -65,6 +69,16 @@ public class TellMeWhenServiceImpl implements TellMeWhenService {
 
     @Override
     @Transactional(readOnly = true)
+    public List<TellMeWhen> findByBoss(Boss boss) {
+        if(isAdmin()) {
+            return bossFightTellMeWhenRepository.findByBoss(boss);
+        } else {
+            return bossFightTellMeWhenRepository.findByBossAndApproved(boss);
+        }
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public Long countByWowclass(WowClass wowClass) {
         if(isAdmin()) {
             return wowclassTellMeWhenRepository.countByWowClass(wowClass);
@@ -80,6 +94,16 @@ public class TellMeWhenServiceImpl implements TellMeWhenService {
             return specTellMeWhenRepository.countBySpec(spec);
         } else {
             return specTellMeWhenRepository.countBySpecAndApproved(spec);
+        }
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Long countByBoss(Boss boss) {
+        if(isAdmin()) {
+            return bossFightTellMeWhenRepository.countByBoss(boss);
+        } else {
+            return bossFightTellMeWhenRepository.countByBossAndApproved(boss);
         }
     }
 

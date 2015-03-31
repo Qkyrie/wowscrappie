@@ -3,6 +3,7 @@ package com.deswaef.weakauras.ui.weakauras.service;
 import com.deswaef.weakauras.classes.domain.Spec;
 import com.deswaef.weakauras.classes.domain.WowClass;
 import com.deswaef.weakauras.infrastructure.service.OnRoleDependable;
+import com.deswaef.weakauras.raids.domain.Boss;
 import com.deswaef.weakauras.ui.image.domain.Screenshot;
 import com.deswaef.weakauras.ui.macros.domain.Macro;
 import com.deswaef.weakauras.ui.mvc.dto.EditConfigurationDto;
@@ -22,9 +23,13 @@ public interface WeakAuraService extends OnRoleDependable {
 
     List<WeakAura> findBySpec(Spec spec);
 
+    List<WeakAura> findByBoss(Boss boss);
+
     Long countByWowClass(WowClass wowClass);
 
     Long countBySpec(Spec spec);
+
+    Long countByBoss(Boss boss);
 
     Optional<WeakAura> byId(Long id);
 

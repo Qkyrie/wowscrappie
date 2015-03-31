@@ -3,6 +3,7 @@ package com.deswaef.weakauras.ui.macros.service;
 import com.deswaef.weakauras.classes.domain.Spec;
 import com.deswaef.weakauras.classes.domain.WowClass;
 import com.deswaef.weakauras.infrastructure.service.OnRoleDependable;
+import com.deswaef.weakauras.raids.domain.Boss;
 import com.deswaef.weakauras.ui.macros.domain.Macro;
 import com.deswaef.weakauras.ui.mvc.dto.EditConfigurationDto;
 import com.deswaef.weakauras.usermanagement.domain.ScrappieUser;
@@ -17,9 +18,13 @@ public interface MacroService extends OnRoleDependable {
 
     List<Macro> findBySpec(Spec spec);
 
+    List<Macro> findByBoss(Boss boss);
+
     Long countByWowClass(WowClass wowClass);
 
     Long countBySpec(Spec spec);
+
+    Long countByBoss(Boss boss);
 
     Optional<Macro> byId(Long id);
 

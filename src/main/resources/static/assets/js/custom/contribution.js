@@ -34,15 +34,13 @@ var ActualInformationVM = function () {
         $("#alertChooseCategory").hide();
 
         var doPost = true;
-        if ($("#selectWowClass")[0] === undefined) {
+        if ($("#selectWowClass")[0] === undefined && $("#selectRaid")[0] === undefined) {
             $('#alertChooseOption').show();
             doPost = false;
         }
 
 
         var command = {};
-
-        command['chooseOption'] = 'classspec';
 
         if (self.showTMW()) {
             if ($("#tmw_caption").val() === '') {
@@ -106,8 +104,16 @@ var ActualInformationVM = function () {
             doPost = false;
         }
 
-        command['wowClass'] = $('#selectWowClass').val();
-        command['spec'] = $('#selectWowSpec').val();
+        if ($("#selectWowClass")[0] !== undefined) {
+            command['wowClass'] = $('#selectWowClass').val();
+            command['spec'] = $('#selectWowSpec').val();
+            command['chooseOption'] = 'classspec';
+        } else if($("#selectRaid")[0] !== undefined) {
+            command['raidId'] = $("#selectRaid").val();
+            command['bossId'] = $("#selectRaidBoss").val();
+            command['chooseOption'] = 'bossfight';
+        }
+
 
         if (doPost) {
             var stringyfiedCommand = JSON.stringify(command);
