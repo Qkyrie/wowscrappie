@@ -11,146 +11,156 @@
 <div layout:fragment="main-content">
     <div id="page-inner">
 
-        <div class="row" th:if="${wowclass.slug.equals('general')}">
-            <div class="col-md-offset-1 col-md-10 alert alert-success">
-                This is a section for some more general configurations, not specifically related to any class, categorized into PvP, PvE and Miscellaneous.
+        <div id="top-wrapper">
+            <div class="row" th:if="${wowclass.slug.equals('general')}">
+                <div class="col-md-offset-1 col-md-10 alert alert-success">
+                    This is a section for some more general configurations, not specifically related to any class,
+                    categorized into PvP, PvE and Miscellaneous.
+                </div>
             </div>
-        </div>
 
-        <div class="row" th:if="${!wowclass.slug.equals('general')}">
-            <div class="col-md-12">
-                <div class="col-md-12 text-center">
-                    <h2 th:text="${wowclass.name}"></h2>
-                    <img th:src="@{'/assets/img/classes/' + ${wowclass.slug} + '/' + ${wowclass.slug} + '.png'}"/>
+            <div class="row" th:if="${!wowclass.slug.equals('general')}">
+                <div class="col-md-12">
+                    <div class="col-md-12 text-center">
+                        <h2 th:text="${wowclass.name}"></h2>
+                        <img th:src="@{'/assets/img/classes/' + ${wowclass.slug} + '/' + ${wowclass.slug} + '.png'}"/>
 
                     <span data-bind="click: wowClassChosen"
-                          th:attr="data-wowclass_slug=${wowclass.slug}, data-string_type=macro" class="btn btn-primary btn-sm">Macros <span
+                          th:attr="data-wowclass_slug=${wowclass.slug}, data-string_type=macro"
+                          class="btn btn-primary btn-sm">Macros <span
                             class="badge" th:text="${wowclass.macroAmount}"></span></span>
                     <span data-bind="click: wowClassChosen"
                           th:attr="data-wowclass_slug=${wowclass.slug}, data-string_type=weakaura"
                           class="btn btn-primary btn-sm">WeakAuras <span class="badge"
-                                                                  th:text="${wowclass.waAmount}"></span></span>
+                                                                                   th:text="${wowclass.waAmount}"></span></span>
                     <span data-bind="click: wowClassChosen"
                           th:attr="data-wowclass_slug=${wowclass.slug}, data-string_type=tellmewhen"
-                          class="btn btn-primary btn-sm">TellMeWhen <span class="badge" th:text="${wowclass.tmwAmount}"></span></span>
+                          class="btn btn-primary btn-sm">TellMeWhen <span class="badge"
+                                                                                    th:text="${wowclass.tmwAmount}"></span></span>
+                    </div>
                 </div>
             </div>
-        </div>
-        <!-- /. ROW  -->
+            <!-- /. ROW  -->
 
-        <hr/>
-        <div class="row" th:if="${!wowclass.slug.equals('general')}">
-            <div th:switch="${specs.size()}">
-                <div th:case="'3'">
-                    <div th:each="spec : ${specs}">
-                        <div class="col-md-4 col-sm-6 col-xs-6">
-                            <div class="panel panel-back noti-box">
+            <hr/>
+            <div class="row" th:if="${!wowclass.slug.equals('general')}">
+                <div th:switch="${specs.size()}">
+                    <div th:case="'3'">
+                        <div th:each="spec : ${specs}">
+                            <div class="col-md-4 col-sm-6 col-xs-6">
+                                <div class="panel panel-back noti-box">
                                 <span class="icon-box set-icon">
                                     <img th:src="@{'/assets/img/classes/' + ${wowclass.slug} + '/' + ${spec.slug} + '.jpg'}"/>
                                 </span>
 
-                                <div class="text-box">
-                                    <div class="row">
-                                        <p class="main-text" th:text="${spec.name}">Spec1</p>
-                                    </div>
-                                    <div class="row">
-                                        <p class="text-muted">
+                                    <div class="text-box">
+                                        <div class="row">
+                                            <p class="main-text" th:text="${spec.name}">Spec1</p>
+                                        </div>
+                                        <div class="row">
+                                            <p class="text-muted">
                                             <span data-bind="click: specChosen"
                                                   th:attr="data-spec_slug=${spec.slug}, data-wowclass_slug=${wowclass.slug}, data-string_type=macro"
                                                   class="btn btn-primary btn-sm">Macros <span class="badge"
-                                                                                       th:text="${spec.macroAmount}"></span></span>
+                                                                                              th:text="${spec.macroAmount}"></span></span>
                                             <span data-bind="click: specChosen"
                                                   th:attr="data-spec_slug=${spec.slug}, data-wowclass_slug=${wowclass.slug}, data-string_type=weakaura"
                                                   class="btn btn-primary btn-sm">WeakAuras <span class="badge"
-                                                                                          th:text="${spec.waAmount}"></span></span>
+                                                                                                 th:text="${spec.waAmount}"></span></span>
                                             <span data-bind="click: specChosen"
                                                   th:attr="data-spec_slug=${spec.slug}, data-wowclass_slug=${wowclass.slug}, data-string_type=tellmewhen"
                                                   class="btn btn-primary btn-sm">TellMeWhen <span class="badge"
-                                                                                           th:text="${spec.tmwAmount}"></span></span>
-                                        </p>
-                                    </div>
+                                                                                                  th:text="${spec.tmwAmount}"></span></span>
+                                            </p>
+                                        </div>
 
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div th:case="'4'">
-                    <div th:each="spec : ${specs}">
-                        <div class="col-md-3 col-sm-6 col-xs-6">
-                            <div class="panel panel-back noti-box">
+                    <div th:case="'4'">
+                        <div th:each="spec : ${specs}">
+                            <div class="col-md-3 col-sm-6 col-xs-6">
+                                <div class="panel panel-back noti-box">
                                 <span class="icon-box set-icon">
                                     <img th:src="@{'/assets/img/classes/' + ${wowclass.slug} + '/' + ${spec.slug} + '.jpg'}"/>
                                 </span>
 
-                                <div class="text-box">
-                                    <div class="row">
-                                        <p class="main-text" th:text="${spec.name}">Spec1</p>
-                                    </div>
-                                    <div class="row">
-                                        <p class="text-muted">
+                                    <div class="text-box">
+                                        <div class="row">
+                                            <p class="main-text" th:text="${spec.name}">Spec1</p>
+                                        </div>
+                                        <div class="row">
+                                            <p class="text-muted">
                                             <span data-bind="click: specChosen"
                                                   th:attr="data-spec_slug=${spec.slug}, data-wowclass_slug=${wowclass.slug}, data-string_type=macro"
                                                   class="btn btn-primary btn-sm">Macros <span class="badge"
-                                                                                       th:text="${spec.macroAmount}"></span></span>
+                                                                                              th:text="${spec.macroAmount}"></span></span>
                                             <span data-bind="click: specChosen"
                                                   th:attr="data-spec_slug=${spec.slug}, data-wowclass_slug=${wowclass.slug}, data-string_type=weakaura"
                                                   class="btn btn-primary btn-sm">WeakAuras <span class="badge"
-                                                                                          th:text="${spec.waAmount}"></span></span>
+                                                                                                 th:text="${spec.waAmount}"></span></span>
                                             <span data-bind="click: specChosen"
                                                   th:attr="data-spec_slug=${spec.slug}, data-wowclass_slug=${wowclass.slug}, data-string_type=tellmewhen"
                                                   class="btn btn-primary btn-sm">TellMeWhen <span class="badge"
-                                                                                           th:text="${spec.tmwAmount}"></span></span>
-                                        </p>
+                                                                                                  th:text="${spec.tmwAmount}"></span></span>
+                                            </p>
+                                        </div>
+
                                     </div>
-
                                 </div>
-                            </div>
 
+                            </div>
                         </div>
                     </div>
+
                 </div>
+
 
             </div>
 
-
-        </div>
-
-        <div class="row" th:if="${wowclass.slug.equals('general')}">
-            <div th:each="spec : ${specs}">
-                <div class="col-md-4 col-sm-6 col-xs-6">
-                    <div class="panel panel-back noti-box">
-                        <div class="text-box">
-                            <div class="row">
-                                <p class="main-text" th:text="${spec.name}">Spec1</p>
-                            </div>
-                            <div class="row">
-                                <p class="text-muted">
+            <div class="row" th:if="${wowclass.slug.equals('general')}">
+                <div th:each="spec : ${specs}">
+                    <div class="col-md-4 col-sm-6 col-xs-6">
+                        <div class="panel panel-back noti-box">
+                            <div class="text-box">
+                                <div class="row">
+                                    <p class="main-text" th:text="${spec.name}">Spec1</p>
+                                </div>
+                                <div class="row">
+                                    <p class="text-muted">
                                     <span data-bind="click: specChosen"
                                           th:attr="data-spec_slug=${spec.slug}, data-wowclass_slug=${wowclass.slug}, data-string_type=macro"
                                           class="btn btn-primary btn-sm">Macros <span class="badge"
-                                                                               th:text="${spec.macroAmount}"></span></span>
+                                                                                      th:text="${spec.macroAmount}"></span></span>
                                     <span data-bind="click: specChosen"
                                           th:attr="data-spec_slug=${spec.slug}, data-wowclass_slug=${wowclass.slug}, data-string_type=weakaura"
                                           class="btn btn-primary btn-sm">WeakAuras <span class="badge"
-                                                                                  th:text="${spec.waAmount}"></span></span>
+                                                                                         th:text="${spec.waAmount}"></span></span>
                                     <span data-bind="click: specChosen"
                                           th:attr="data-spec_slug=${spec.slug}, data-wowclass_slug=${wowclass.slug}, data-string_type=tellmewhen"
                                           class="btn btn-primary btn-sm">TellMeWhen <span class="badge"
-                                                                                   th:text="${spec.tmwAmount}"></span></span>
-                                </p>
+                                                                                          th:text="${spec.tmwAmount}"></span></span>
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
+
+            </div>
 
         </div>
 
+        <div id="expand-button" class="row">
+            <img id="arrowUpBtn" th:src="@{/assets/img/button_up.png}"/>
+            <img id="arrowDownBtn" th:src="@{/assets/img/button_down.png}" style="display: none" />
+        </div>
         <hr/>
 
-        <div clas="row">
+        <div class="row" style="margin-top: 5%;">
             <div id="resultPane" class="col-md-offset-1 col-md-10">
             </div>
         </div>
@@ -162,6 +172,8 @@
 <div layout:fragment="footer-content">
     <script th:src="@{/assets/js/dataTables/jquery.dataTables.js}"></script>
     <script th:src="@{/assets/js/dataTables/dataTables.bootstrap.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/js/sliding.js}"/>
+
     <script type="application/javascript">
         var ViewModel = function () {
 
@@ -170,7 +182,13 @@
             self.doGet = function (wowclass, wowspec, stringtype) {
                 $.get('/classes/' + wowclass + '/' + wowspec + '/' + stringtype, function (result) {
                     $("#resultPane").html(result);
-                    $('#myTable').dataTable();
+                    $('#myTable')
+                            .on( 'init.dt', function () {
+                                if(slidingHeader.manualPreference !== true) {
+                                    slidingHeader.hideHeader();
+                                }
+                            } )
+                            .dataTable();
                 });
             };
 
