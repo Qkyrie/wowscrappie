@@ -1,5 +1,7 @@
 package com.deswaef.weakauras.ui.comments.service;
 
+import com.deswaef.weakauras.notifications.controller.dto.PersistentNotificationDto;
+import com.deswaef.weakauras.notifications.service.PersistentNotificationService;
 import com.deswaef.weakauras.ui.comments.controller.dto.PostCommentDto;
 import com.deswaef.weakauras.ui.comments.domain.MacroComment;
 import com.deswaef.weakauras.ui.comments.domain.TellMeWhenComment;
@@ -33,6 +35,8 @@ public class InterfaceCommentServiceImpl implements InterfaceCommentService {
     private TellMeWhenCommentRepository tellMeWhenCommentRepository;
     @Autowired
     private InterfaceCommentRepository interfaceCommentRepository;
+    @Autowired
+    private PersistentNotificationService persistentNotificationService;
 
     @Override
     @Transactional(readOnly = true)
@@ -65,6 +69,16 @@ public class InterfaceCommentServiceImpl implements InterfaceCommentService {
                                 .setPostDate(now())
                                 .setCommenter(currentUser.get())
                 );
+
+                if (!currentUser.equals(weakAura.getUploader())) {
+                    persistentNotificationService.createPersistentNotification(
+                            weakAura.getUploader(),
+                            PersistentNotificationDto.create()
+                                    .setTitle(String.format("%s commented on %s", currentUser.get().getUsername(), weakAura.getName()))
+                                    .setContent(commentDto.getComment())
+                                    .setUrl(String.format("/shared/wa/%s", weakAura.getId())
+                                    ));
+                }
             } else {
                 throw new IllegalArgumentException("Unable to post the comment, please try again later!");
             }
@@ -86,6 +100,16 @@ public class InterfaceCommentServiceImpl implements InterfaceCommentService {
                                 .setPostDate(now())
                                 .setCommenter(currentUser.get())
                 );
+
+                if (!currentUser.equals(tellMeWhen.getUploader())) {
+                    persistentNotificationService.createPersistentNotification(
+                            tellMeWhen.getUploader(),
+                            PersistentNotificationDto.create()
+                                    .setTitle(String.format("%s commented on %s", currentUser.get().getUsername(), tellMeWhen.getName()))
+                                    .setContent(commentDto.getComment())
+                                    .setUrl(String.format("/shared/tmw/%s", tellMeWhen.getId()))
+                    );
+                }
             } else {
                 throw new IllegalArgumentException("Unable to post the comment, please try again later!");
             }
@@ -108,6 +132,15 @@ public class InterfaceCommentServiceImpl implements InterfaceCommentService {
                                 .setCommenter(currentUser.get())
                 );
 
+                if (!currentUser.equals(macro.getUploader())) {
+                    persistentNotificationService.createPersistentNotification(
+                            macro.getUploader(),
+                            PersistentNotificationDto.create()
+                                    .setTitle(String.format("%s commented on %s", currentUser.get().getUsername(), macro.getName()))
+                                    .setContent(commentDto.getComment())
+                                    .setUrl(String.format("/shared/macro/%s", macro.getId()))
+                    );
+                }
             } else {
                 throw new IllegalArgumentException("Unable to post the comment, please try again later!");
             }
