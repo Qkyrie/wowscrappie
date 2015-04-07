@@ -1,5 +1,6 @@
 package com.deswaef.weakauras.usermanagement.controller;
 
+import com.deswaef.weakauras.notifications.service.NotificationService;
 import com.deswaef.weakauras.usermanagement.controller.dto.RequestInvitationDto;
 import com.deswaef.weakauras.usermanagement.service.InvitationRequestService;
 import com.google.common.base.Strings;
@@ -19,7 +20,6 @@ public class RequestInvitationController {
 
     @Autowired
     private InvitationRequestService invitationRequestService;
-
 
     @RequestMapping(method = GET)
     public String index() {

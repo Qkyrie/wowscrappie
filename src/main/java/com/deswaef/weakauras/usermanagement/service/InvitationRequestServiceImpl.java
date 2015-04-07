@@ -1,5 +1,7 @@
 package com.deswaef.weakauras.usermanagement.service;
 
+import com.deswaef.weakauras.notifications.domain.Notification;
+import com.deswaef.weakauras.notifications.service.NotificationService;
 import com.deswaef.weakauras.usermanagement.controller.dto.RequestInvitationDto;
 import com.deswaef.weakauras.usermanagement.domain.InvitationRequest;
 import com.deswaef.weakauras.usermanagement.repository.InvitationRequestRepository;
@@ -15,11 +17,12 @@ public class InvitationRequestServiceImpl implements InvitationRequestService {
 
     @Autowired
     private InvitationRequestRepository invitationRequestRepository;
-
     @Override
     public List<InvitationRequest> findAll() {
         return invitationRequestRepository.findAll();
     }
+    @Autowired
+    private NotificationService notificationService;
 
     @Override
     public RequestInvitationDto create(RequestInvitationDto requestInvitationDto) {
@@ -36,6 +39,8 @@ public class InvitationRequestServiceImpl implements InvitationRequestService {
                                 .setEmail(requestInvitationDto.getEmail())
                                 .setReason(requestInvitationDto.getReason())
                 );
+
+                notificationService.putOnAdminQueue(Notification.create(String.format("%s has requested an invitation!", requestInvitationDto.getEmail())));
                 return requestInvitationDto;
             } catch (Exception ex) {
                 return requestInvitationDto

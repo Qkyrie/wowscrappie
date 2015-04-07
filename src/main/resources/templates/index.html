@@ -8,12 +8,13 @@
         <div class="row">
             <div class="col-md-12">
 
-                <div th:if="${param.thankyou != null and param.thankyou[0] != null}" id="alertThankYou" class="alert alert-success alert-dismissible collapse" role="alert">
+                <div th:if="${param.thankyou != null and param.thankyou[0] != null}" id="alertThankYou"
+                     class="alert alert-success alert-dismissible collapse" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
-                    <strong>Thank You!</strong> Thank you for submitting your information. An admin will look into it soon!
+                    <strong>Thank You!</strong> Thank you for submitting your information. An admin will look into it
+                    soon!
                 </div>
-
 
 
                 <h2>Hai there =)</h2>
@@ -84,13 +85,13 @@
             <div class="col-md-3 col-sm-6 col-xs-6">
                 <div class="panel panel-back noti-box">
                 <span class="icon-box bg-color-brown set-icon">
-                    <i class="fa fa-rocket"></i>
+                    <i class="fa fa-user"></i>
                 </span>
 
                     <div class="text-box">
                         <p class="main-text" th:text="${userCount}">1</p>
 
-                        <p class="text-muted">Contributers</p>
+                        <p class="text-muted">Users</p>
                     </div>
                 </div>
             </div>
@@ -115,19 +116,21 @@
                     macros. Well yeah, here and there we can find some tips, but I want to see them gathered in one
                     place, and you can help!
                 </p>
-                <hr />
+                <hr/>
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-offset-2 col-md-4 text-center">
                 <h4>Raids</h4>
+
                 <p>
                     Weakauras, TellMeWhen configurations and macros for specific encounters can be found
                 </p>
             </div>
             <div class="col-md-4 text-center">
                 <h4>Classes and Specs</h4>
+
                 <p>
                     Weakauras, TellMeWhen configurations and macros for specific classes and specs can be found
                 </p>
@@ -137,12 +140,12 @@
         <div class="row">
             <div class="col-md-offset-2 col-md-4 text-center">
                 <p>
-                    <a class="btn btn-primary" th:href="@{/raids}">Coming Soon</a>
+                    <a class="btn btn-primary" th:href="@{/raids}">Here</a>
                 </p>
             </div>
             <div class="col-md-4 text-center">
                 <p>
-                    <a class="btn btn-primary" th:href="@{/classes/index}">here</a>
+                    <a class="btn btn-primary" th:href="@{/classes/index}">Here</a>
                 </p>
             </div>
         </div>
@@ -151,6 +154,7 @@
             <div class="col-md-offset-1 col-md-10">
                 <div class="jumbotron">
                     <h2>Contribute</h2>
+
                     <p>
                         Do you have any WeakAuras, TellMeWhens or macros you'd like to share with the community? Don't
                         hesitate and put them up for approval.
@@ -170,8 +174,8 @@
 
     <div sec:authorize="hasRole('ROLE_ADMIN')">
         <script type="application/javascript">
-            $.get('/admin/pending-uploads/count', function(data) {
-                if(data > 0) {
+            $.get('/admin/pending-uploads/count', function (data) {
+                if (data > 0) {
                     $.snackbar({content: "Hey Admin! You still need to approve " + data + " configuration(s)!"});
                 }
             })

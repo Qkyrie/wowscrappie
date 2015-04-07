@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.thymeleaf.dialect.IDialect;
+import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
@@ -33,6 +34,7 @@ public class ThymeleafConfiguration {
         SpringTemplateEngine engine = new SpringTemplateEngine();
         this.templateResolvers.forEach(engine::addTemplateResolver);
         this.dialects.forEach(engine::addDialect);
+        engine.addDialect(new SpringSecurityDialect());
         /*
             EDIT: added the additional spring security dialect to the template resolver
          */

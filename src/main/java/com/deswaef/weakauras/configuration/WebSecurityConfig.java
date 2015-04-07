@@ -1,11 +1,13 @@
 package com.deswaef.weakauras.configuration;
 
 import com.deswaef.weakauras.configuration.social.FacebookLogoutHandler;
+import com.deswaef.weakauras.usermanagement.hook.LoginSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,7 +15,7 @@ import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
-@EnableWebMvcSecurity
+@EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled=true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -21,6 +23,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private UserDetailsService userDetailsService;
     @Autowired
     private FacebookLogoutHandler facebookLogoutHandler;
+    @Autowired
+    private LoginSuccessHandler loginSuccessHandler;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -32,6 +36,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/**").permitAll()
                 .and()
                 .formLogin()
+                .successHandler(loginSuccessHandler)
                 .loginPage("/login")
                 .loginProcessingUrl("/login-do")
                 .usernameParameter("j_username")
@@ -40,8 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).addLogoutHandler(facebookLogoutHandler).and()
                 .exceptionHandling().accessDeniedPage("/access?error")
                 .and()
-                .csrf().disable()
-                ;
+                .csrf().disable();
     }
 
     @Autowired
@@ -49,4 +53,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth
                 .userDetailsService(userDetailsService).passwordEncoder(new StandardPasswordEncoder());
     }
+
 }

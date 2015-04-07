@@ -5,10 +5,17 @@ import com.deswaef.weakauras.classes.service.ClassService;
 import com.deswaef.weakauras.contribution.controller.dto.ContributionCommand;
 import com.deswaef.weakauras.contribution.controller.dto.SelectSpecDto;
 import com.deswaef.weakauras.contribution.service.ContributionService;
+import com.deswaef.weakauras.notifications.controller.dto.PersistentNotificationDto;
+import com.deswaef.weakauras.notifications.domain.Notification;
+import com.deswaef.weakauras.notifications.service.NotificationService;
+import com.deswaef.weakauras.notifications.service.PersistentNotificationService;
 import com.deswaef.weakauras.raids.controller.dto.RaidDto;
 import com.deswaef.weakauras.raids.service.RaidService;
+import com.deswaef.weakauras.security.CurrentUser;
 import com.deswaef.weakauras.ui.image.ImageStore;
+import com.deswaef.weakauras.usermanagement.domain.ScrappieUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +43,11 @@ public class ContributionController {
     private ContributionService contributionService;
     @Autowired
     private RaidService raidService;
+    @Autowired
+    private NotificationService notificationService;
+    @Autowired
+    private PersistentNotificationService persistentNotificationService;
+
 
     @RequestMapping
     public String index() {
@@ -94,8 +106,13 @@ public class ContributionController {
     @RequestMapping(value = "/do-contribution", method = POST)
     public
     @ResponseBody
-    String doUpload(@RequestBody ContributionCommand command) {
+    String doUpload(@RequestBody ContributionCommand command, @CurrentUser ScrappieUser scrappieUser) {
         contributionService.contribute(command);
+        persistentNotificationService.notifyAdmins(PersistentNotificationDto.create()
+                .setContent(String.format("%s just did a contribution", scrappieUser.getUsername()))
+                .setTitle("New Contribution!")
+                .setUrl("/admin/pending-uploads"))
+        ;
         return "success";
     }
 }

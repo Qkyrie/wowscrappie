@@ -2,10 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <!--    <meta name="_csrf" th:content="${_csrf.token}"/>
+        &lt;!&ndash; default header name is X-CSRF-TOKEN &ndash;&gt;
+        <meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
+    <!-- ... -->
     <title>Scrappie - Your World of Warcraft Consultant</title>
     <!-- BOOTSTRAP STYLES-->
     <link th:href="@{/assets/css/bootstrap.css}" rel="stylesheet"/>
@@ -20,13 +24,13 @@
     <!-- GOOGLE FONTS-->
     <link th:href="@{http://fonts.googleapis.com/css?family=Open+Sans}" rel='stylesheet' type='text/css'/>
 
-    <link rel="stylesheet" th:href="@{/assets/fancybox/jquery.fancybox.css?v=2.1.5}" type="text/css" media="screen" />
+    <link rel="stylesheet" th:href="@{/assets/fancybox/jquery.fancybox.css?v=2.1.5}" type="text/css" media="screen"/>
 
-    <link th:href="@{/assets/material_design/css/roboto.min.css}" rel="stylesheet" />
-    <link th:href="@{/assets/material_design/css/material.min.css}" rel="stylesheet" />
-    <link th:href="@{/assets/material_design/css/ripples.min.css}" rel="stylesheet" />
-    <link th:href="@{/assets/snackbar/snackbar.min.css}" rel="stylesheet" />
-    <link th:href="@{/assets/snackbar/snackbar-material.min.css}" rel="stylesheet" />
+    <link th:href="@{/assets/material_design/css/roboto.min.css}" rel="stylesheet"/>
+    <link th:href="@{/assets/material_design/css/material.min.css}" rel="stylesheet"/>
+    <link th:href="@{/assets/material_design/css/ripples.min.css}" rel="stylesheet"/>
+    <link th:href="@{/assets/snackbar/snackbar.min.css}" rel="stylesheet"/>
+    <link th:href="@{/assets/snackbar/snackbar-material.min.css}" rel="stylesheet"/>
 
 
     <div layout:fragment="header"></div>
@@ -47,12 +51,15 @@
         <div sec:authorize="isAuthenticated()" style="color: white;
         padding: 15px 50px 5px 50px;
         float: right;
-        font-size: 16px;">  &nbsp; <a th:href="@{/logout}" class="btn btn-success square-btn-adjust">Logout</a>
-                </div>
-        <div sec:authorize="!isAuthenticated()" style="color: white;
+        font-size: 16px;">  &nbsp;
+            <a th:href="@{/personal/notifications}" class="btn btn-success square-btn-adjust">Notifications <span id="notificationCount" style="display: none;" class="badge">0</span></a>
+            <a th:href="@{/logout}" class="btn btn-success square-btn-adjust">Logout</a>
+        </div>
+        <div id="logoutBinder" sec:authorize="!isAuthenticated()" style="color: white;
         padding: 15px 50px 5px 50px;
         float: right;
-        font-size: 16px;">  &nbsp; <a th:href="@{/login}" class="btn btn-success square-btn-adjust">Login</a>
+        font-size: 16px;">  &nbsp;
+            <a th:href="@{/login}" class="btn btn-success square-btn-adjust">Login</a>
         </div>
     </nav>
     <!-- /. NAV TOP  -->
@@ -74,16 +81,16 @@
                     <ul class="nav nav-second-level">
 
                         <li>
-                            <a th:href="@{/admin/users}">  User Management</a>
+                            <a th:href="@{/admin/users}"> User Management</a>
                         </li>
                         <li>
-                            <a th:href="@{/interface/reports}">  Reports</a>
+                            <a th:href="@{/interface/reports}"> Reports</a>
                         </li>
                         <li>
-                            <a th:href="@{/admin/pending-uploads}">  Pending Uploads</a>
+                            <a th:href="@{/admin/pending-uploads}"> Pending Uploads</a>
                         </li>
                         <li>
-                            <a th:href="@{/admin/registration/invitation}">  Create Invitation </a>
+                            <a th:href="@{/admin/registration/invitation}"> Create Invitation </a>
                         </li>
                         <li>
                             <a th:href="@{/admin/requested-invitations}"> Requested Invitations</a>
@@ -96,13 +103,13 @@
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a th:href="@{/personal/uploads}">  Your uploads </a>
+                            <a th:href="@{/personal/uploads}"> Your uploads </a>
                         </li>
                         <li>
-                            <a th:href="@{/personal/inbox}">  Your inbox </a>
+                            <a th:href="@{/personal/inbox}"> Your inbox </a>
                         </li>
                         <li>
-                            <a th:href="@{/profiles/edit}">  Edit your profile </a>
+                            <a th:href="@{/profiles/edit}"> Edit your profile </a>
                         </li>
                     </ul>
                 </li>
@@ -115,7 +122,8 @@
                             <a th:href="@{/raids/1}"> <span class="label label-success">[new]</span> Highmaul </a>
                         </li>
                         <li>
-                            <a th:href="@{/raids/2}"> <span class="label label-success">[new]</span> Blackrock Foundry </a>
+                            <a th:href="@{/raids/2}"> <span class="label label-success">[new]</span> Blackrock Foundry
+                            </a>
                         </li>
                     </ul>
                 </li>
@@ -126,57 +134,69 @@
                     <ul class="nav nav-second-level">
 
                         <li>
-                            <a th:href="@{/classes/general}"> <span class="sprite_menu_titles sprite_menu_titles_gameplay"></span> General </a>
+                            <a th:href="@{/classes/general}"> <span
+                                    class="sprite_menu_titles sprite_menu_titles_gameplay"></span> General </a>
                         </li>
 
                         <li>
-                            <a th:href="@{/classes/death_knight}"> <span class="sprite_menu_titles sprite_menu_titles_death_knight"></span> Death
+                            <a th:href="@{/classes/death_knight}"> <span
+                                    class="sprite_menu_titles sprite_menu_titles_death_knight"></span> Death
                                 Knight</a>
                         </li>
 
                         <li>
-                            <a th:href="@{/classes/druid}"> <span class="sprite_menu_titles sprite_menu_titles_druid"></span> Druid </a>
+                            <a th:href="@{/classes/druid}"> <span
+                                    class="sprite_menu_titles sprite_menu_titles_druid"></span> Druid </a>
                         </li>
 
                         <li>
-                            <a th:href="@{/classes/hunter}"> <span class="sprite_menu_titles sprite_menu_titles_hunter"></span> Hunter </a>
+                            <a th:href="@{/classes/hunter}"> <span
+                                    class="sprite_menu_titles sprite_menu_titles_hunter"></span> Hunter </a>
 
                         </li>
 
                         <li>
-                            <a th:href="@{/classes/mage}"> <span class="sprite_menu_titles sprite_menu_titles_mage"></span> Mage </a>
+                            <a th:href="@{/classes/mage}"> <span
+                                    class="sprite_menu_titles sprite_menu_titles_mage"></span> Mage </a>
                         </li>
 
                         <li>
-                            <a th:href="@{/classes/monk}"> <span class="sprite_menu_titles sprite_menu_titles_monk"></span> Monk </a>
+                            <a th:href="@{/classes/monk}"> <span
+                                    class="sprite_menu_titles sprite_menu_titles_monk"></span> Monk </a>
                         </li>
 
                         <li>
-                            <a th:href="@{/classes/paladin}"> <span class="sprite_menu_titles sprite_menu_titles_paladin"></span>
+                            <a th:href="@{/classes/paladin}"> <span
+                                    class="sprite_menu_titles sprite_menu_titles_paladin"></span>
                                 Paladin </a>
                         </li>
 
                         <li>
-                            <a th:href="@{/classes/priest}"> <span class="sprite_menu_titles sprite_menu_titles_priest"></span> Priest </a>
+                            <a th:href="@{/classes/priest}"> <span
+                                    class="sprite_menu_titles sprite_menu_titles_priest"></span> Priest </a>
 
                         </li>
 
 
                         <li>
-                            <a th:href="@{/classes/rogue}"> <span class="sprite_menu_titles sprite_menu_titles_rogue"></span> Rogue </a>
+                            <a th:href="@{/classes/rogue}"> <span
+                                    class="sprite_menu_titles sprite_menu_titles_rogue"></span> Rogue </a>
                         </li>
 
                         <li>
-                            <a th:href="@{/classes/shaman}"> <span class="sprite_menu_titles sprite_menu_titles_shaman"></span> Shaman </a>
+                            <a th:href="@{/classes/shaman}"> <span
+                                    class="sprite_menu_titles sprite_menu_titles_shaman"></span> Shaman </a>
                         </li>
 
                         <li>
-                            <a th:href="@{/classes/warlock}"> <span class="sprite_menu_titles sprite_menu_titles_warlock"></span>
+                            <a th:href="@{/classes/warlock}"> <span
+                                    class="sprite_menu_titles sprite_menu_titles_warlock"></span>
                                 Warlock </a>
                         </li>
 
                         <li>
-                            <a th:href="@{/classes/warrior}"> <span class="sprite_menu_titles sprite_menu_titles_warrior"></span>
+                            <a th:href="@{/classes/warrior}"> <span
+                                    class="sprite_menu_titles sprite_menu_titles_warrior"></span>
                                 Warrior </a>
                         </li>
                     </ul>
@@ -215,11 +235,27 @@
 <script th:src="@{/assets/material_design/js/material.min.js}"></script>
 <script th:src="@{/assets/snackbar/snackbar.min.js}"></script>
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         // This command is used to initialize some elements and make them work properly
         $.material.init();
     });
 </script>
+
+<script th:src="@{/assets/js/sockjs/sockjs.js}"></script>
+<script th:src="@{/assets/js/stomp/lib/stomp.js}"></script>
+<script th:src="@{/assets/js/websockets.js}"></script>
+
+<div sec:authorize="isAuthenticated()">
+    <script type="application/javascript">
+        (function () {
+            var socket = new SockJS('/messages');
+            var stompClient = Stomp.over(socket);
+            var appModel = new ApplicationModel(stompClient);
+            appModel.connect();
+        })();
+    </script>
+</div>
+
 
 <div layout:fragment="footer-content"></div>
 

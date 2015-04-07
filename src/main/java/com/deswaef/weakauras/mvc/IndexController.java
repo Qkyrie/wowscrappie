@@ -1,8 +1,10 @@
 package com.deswaef.weakauras.mvc;
 
+import com.deswaef.weakauras.security.CurrentUser;
 import com.deswaef.weakauras.ui.macros.service.MacroService;
 import com.deswaef.weakauras.ui.tellmewhen.service.TellMeWhenService;
 import com.deswaef.weakauras.ui.weakauras.service.WeakAuraService;
+import com.deswaef.weakauras.usermanagement.domain.ScrappieUser;
 import com.deswaef.weakauras.usermanagement.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,7 +29,7 @@ public class IndexController {
     private UserService userService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public String index(HttpServletRequest request, ModelMap map) {
+    public String index(HttpServletRequest request, ModelMap map, @CurrentUser ScrappieUser scrappieUser) {
 
         map.put("redirectFrom", getRedirectFrom(request));
 

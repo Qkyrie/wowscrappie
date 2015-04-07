@@ -1,12 +1,13 @@
 buildscript {
     ext {
-        springBootVersion = '1.2.1.RELEASE'
+        springBootVersion = '1.2.3.RELEASE'
     }
     repositories {
         mavenLocal()
         mavenCentral()
         jcenter()
         maven { url "http://repo.spring.io/release" }
+        maven { url "http://clojars.org/repo" }
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
@@ -45,6 +46,7 @@ run {
 repositories {
     mavenLocal()
     mavenCentral()
+    maven { url "http://clojars.org/repo" }
     maven { url "http://repo.spring.io/release" }
 }
 
@@ -56,9 +58,18 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-cloud-connectors")
     compile("org.springframework.boot:spring-boot-starter-batch")
     compile("org.springframework.boot:spring-boot-starter-security")
+    compile("org.springframework.security:spring-security-web:4.0.0.RELEASE")
+    compile("org.springframework.security:spring-security-config:4.0.0.RELEASE")
+    compile("org.springframework.security:spring-security-messaging:4.0.0.RELEASE")
+    compile("org.springframework.security:spring-security-data:4.0.0.RELEASE")
+    compile("org.springframework.boot:spring-boot-starter-websocket")
+    compile("org.springframework:spring-messaging")
+    compile("org.springframework.boot:spring-boot-starter-redis")
     compile("org.springframework.social:spring-social-facebook")
     compile("org.springframework.social:spring-social-twitter")
-    compile("org.thymeleaf.extras:thymeleaf-extras-springsecurity3")
+    compile("redis.embedded:embedded-redis:0.5")
+    compile("org.springframework.session:spring-session:1.0.0.RELEASE")
+    compile 'org.thymeleaf.extras:thymeleaf-extras-springsecurity4:2.1.2.RELEASE'
     compile("org.flywaydb:flyway-core")
     compile("org.apache.commons:commons-lang3:3.0")
     compile('commons-validator:commons-validator:1.4.0')

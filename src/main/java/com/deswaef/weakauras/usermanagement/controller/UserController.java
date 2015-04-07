@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Objects;
 import java.util.Optional;
 
 import static com.deswaef.weakauras.usermanagement.controller.dto.UserProfileDto.create;
@@ -57,7 +58,7 @@ public class UserController {
     private boolean canEdit(ScrappieUser scrappieUser) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.getPrincipal() != null && authentication.getPrincipal() instanceof ScrappieUser) {
-            return ((ScrappieUser) authentication.getPrincipal()).getId() == scrappieUser.getId();
+            return Objects.equals(((ScrappieUser) authentication.getPrincipal()).getId(), scrappieUser.getId());
         } else {
             return false;
         }
