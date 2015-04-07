@@ -31,6 +31,7 @@
     <link th:href="@{/assets/material_design/css/ripples.min.css}" rel="stylesheet"/>
     <link th:href="@{/assets/snackbar/snackbar.min.css}" rel="stylesheet"/>
     <link th:href="@{/assets/snackbar/snackbar-material.min.css}" rel="stylesheet"/>
+    <link th:href="@{/assets/css/notifications.css}" rel="stylesheet"/>
 
 
     <div layout:fragment="header"></div>
@@ -48,18 +49,98 @@
             </button>
             <a class="navbar-brand" th:href="@{/}">WoWScrappie</a>
         </div>
-        <div sec:authorize="isAuthenticated()" style="color: white;
+
+        <div class="pull-right">
+            <div class="nav notify-row" id="top_menu">
+                <!--  notification start -->
+                <ul class="nav top-menu">
+                    <li>
+                        <div id="logoutBinder" sec:authorize="!isAuthenticated()" style="color: white;
         padding: 15px 50px 5px 50px;
-        float: right;
-        font-size: 16px;">  &nbsp;
-            <a th:href="@{/personal/notifications}" class="btn btn-success square-btn-adjust">Notifications <span id="notificationCount" style="display: none;" class="badge">0</span></a>
-            <a th:href="@{/logout}" class="btn btn-success square-btn-adjust">Logout</a>
-        </div>
-        <div id="logoutBinder" sec:authorize="!isAuthenticated()" style="color: white;
-        padding: 15px 50px 5px 50px;
-        float: right;
-        font-size: 16px;">  &nbsp;
-            <a th:href="@{/login}" class="btn btn-success square-btn-adjust">Login</a>
+        font-size: 16px;" class="pull-right">  &nbsp;
+                            <a th:href="@{/login}" class="btn btn-success square-btn-adjust">Login</a>
+                        </div>
+                    </li>
+                    <!-- settings start -->
+                    <li class="dropdown" sec:authorize="isAuthenticated()">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
+                            <i class="fa fa-tasks"></i>
+                            <span class="badge bg-theme" id="notificationCount"></span>
+                        </a>
+                        <ul id="dropdown-menu-frag" class="dropdown-menu extended tasks-bar">
+
+                        </ul>
+                    </li>
+                    <!-- settings end -->
+                    <!-- inbox dropdown start-->
+                    <!--<li id="header_inbox_bar" class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
+                            <i class="fa fa-envelope-o"></i>
+                            <span class="badge bg-theme">5</span>
+                        </a>
+                        <ul class="dropdown-menu extended inbox">
+                            <div class="notify-arrow notify-arrow-green"></div>
+                            <li>
+                                <p class="green">You have 5 new messages</p>
+                            </li>
+                            <li>
+                                <a href="index.html#">
+                                    <span class="photo"></span>
+                                        <span class="subject">
+                                        <span class="from">Zac Snider</span>
+                                        <span class="time">Just now</span>
+                                        </span>
+                                        <span class="message">
+                                            Hi mate, how is everything?
+                                        </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="index.html#">
+                                    <span class="photo"></span>
+                                        <span class="subject">
+                                        <span class="from">Divya Manian</span>
+                                        <span class="time">40 mins.</span>
+                                        </span>
+                                        <span class="message">
+                                         Hi, I need your help with this.
+                                        </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="index.html#">
+                                    <span class="photo"></span>
+                                        <span class="subject">
+                                        <span class="from">Dan Rogers</span>
+                                        <span class="time">2 hrs.</span>
+                                        </span>
+                                        <span class="message">
+                                            Love your new Dashboard.
+                                        </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="index.html#">
+                                    <span class="photo"></span>
+                                        <span class="subject">
+                                        <span class="from">Dj Sherman</span>
+                                        <span class="time">4 hrs.</span>
+                                        </span>
+                                        <span class="message">
+                                            Please, answer asap.
+                                        </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="index.html#">See all messages</a>
+                            </li>
+                        </ul>
+                    </li>-->
+                    <!-- inbox dropdown end -->
+                </ul>
+                <!--  notification end -->
+            </div>
+
         </div>
     </nav>
     <!-- /. NAV TOP  -->
@@ -203,6 +284,9 @@
                 </li>
                 <li>
                     <a th:href="@{/contribute}"><i class="fa fa-laptop fa-3x"></i> Contribute!</a>
+                </li>
+                <li sec:authorize="isAuthenticated()">
+                    <a th:href="@{/logout}"><i class="fa fa-laptop fa-3x"></i> Logout!</a>
                 </li>
             </ul>
 

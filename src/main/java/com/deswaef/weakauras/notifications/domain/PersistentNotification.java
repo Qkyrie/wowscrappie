@@ -3,6 +3,7 @@ package com.deswaef.weakauras.notifications.domain;
 import com.deswaef.weakauras.usermanagement.domain.ScrappieUser;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "persistent_notification")
@@ -23,6 +24,10 @@ public class PersistentNotification {
     private ScrappieUser forUser;
     @Column(name = "readStatus")
     private boolean readStatus = false;
+
+    @Column(name = "dateOfPosting")
+    private Date dateOfPosting;
+
     public Long getId() {
         return id;
     }
@@ -74,6 +79,15 @@ public class PersistentNotification {
 
     public PersistentNotification setReadStatus(boolean read) {
         this.readStatus = read;
+        return this;
+    }
+
+    public Date getDateOfPosting() {
+        return dateOfPosting;
+    }
+
+    public PersistentNotification setDateOfPosting(Date dateOfPosting) {
+        this.dateOfPosting = dateOfPosting;
         return this;
     }
 }

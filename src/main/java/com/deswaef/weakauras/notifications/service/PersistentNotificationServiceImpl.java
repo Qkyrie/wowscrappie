@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PersistentNotificationServiceImpl implements PersistentNotificationService {
@@ -40,6 +42,7 @@ public class PersistentNotificationServiceImpl implements PersistentNotification
                         .setForUser(scrappieUser)
                         .setUrl(persistentNotificationDto.getUrl())
                         .setReadStatus(false)
+                        .setDateOfPosting(now())
         );
         notificationService.broadcastTo(scrappieUser, Notification.create(persistentNotificationDto.getTitle()));
     }
@@ -47,7 +50,7 @@ public class PersistentNotificationServiceImpl implements PersistentNotification
     @Override
     @Transactional(readOnly = true)
     public List<PersistentNotification> findAll(ScrappieUser scrappieUser) {
-        return persistentNotificationRepository.findAllByForUser(scrappieUser);
+        return persistentNotificationRepository.findAllByForUserOrderByDateOfPostingDesc(scrappieUser);
     }
 
     @Transactional(readOnly = true)
@@ -56,4 +59,24 @@ public class PersistentNotificationServiceImpl implements PersistentNotification
         return persistentNotificationRepository.countUnreadForUser(scrappieUser);
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<PersistentNotification> findById(long id) {
+        return persistentNotificationRepository.findOne(id);
+    }
+
+    @Override
+    @Transactional
+    public void setRead(long id) {
+        Optional<PersistentNotification> one = persistentNotificationRepository.findOne(id);
+        if (one.isPresent()) {
+            persistentNotificationRepository.save(
+                    one.get().setReadStatus(true)
+            );
+        }
+    }
+
+    private Date now() {
+        return new Date();
+    }
 }

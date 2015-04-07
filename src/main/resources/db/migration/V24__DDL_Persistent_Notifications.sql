@@ -4,6 +4,7 @@ create table persistent_notification (
   title varchar(255) DEFAULT NULL,
   url varchar(100) DEFAULT NULL,
   for_user bigint(20) NOT NULL,
+  dateOfPosting datetime NOT NULL,
   readStatus bool DEFAULT false,
   primary key(id)
 );

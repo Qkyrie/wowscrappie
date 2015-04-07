@@ -2,24 +2,27 @@ function ApplicationModel(stompClient) {
     var self = this;
 
     self.notificationCount = $("#notificationCount");
+    self.notificationMenu = $("#dropdown-menu-frag");
 
     self.setNotificationCount = function(amount) {
+        $.get('/notifications/unread', function(response) {
+            self.notificationMenu.html(response);
+        });
         if(amount == 0) {
             self.notificationCount.html("");
             self.notificationCount.hide();
         } else {
             self.notificationCount.html(amount);
             self.notificationCount.show();
-            $.snackbar({content: 'You have new notifications!'});
         }
     };
 
     function addOneToNotificationCount() {
         var html = self.notificationCount.html();
-        if(html == undefined) {
-            self.notificationCount.html(1);
+        if(html == undefined || html.trim() == "") {
+            self.setNotificationCount(1);
         } else {
-            self.notificationCount.html(parseInt(html) + 1);
+            self.setNotificationCount(parseInt(html) + 1);
         }
     }
 
