@@ -475,3 +475,9 @@ line-height: 1.428571429;
     max-height:100%; /* images bigger than 175 px  */
     max-width:100%;  /* will be shrinked to size */
 }
+
+img.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}

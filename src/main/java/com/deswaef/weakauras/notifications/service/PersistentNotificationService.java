@@ -14,4 +14,5 @@ public interface PersistentNotificationService {
     long countAllUnread(ScrappieUser scrappieUser);
     Optional<PersistentNotification> findById(long id);
     void setRead(long id);
+    void delete(long id);
 }

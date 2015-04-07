@@ -7,6 +7,8 @@ import com.deswaef.weakauras.notifications.repository.PersistentNotificationRepo
 import com.deswaef.weakauras.usermanagement.domain.ScrappieUser;
 import com.deswaef.weakauras.usermanagement.util.AdministratorsCache;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -73,6 +75,25 @@ public class PersistentNotificationServiceImpl implements PersistentNotification
             persistentNotificationRepository.save(
                     one.get().setReadStatus(true)
             );
+        }
+    }
+
+    @Override
+    @Transactional
+    public void delete(long id) {
+        Optional<PersistentNotification> one = persistentNotificationRepository.findOne(id);
+        ScrappieUser currentUser = getCurrentUser();
+        if (one.isPresent() && currentUser.equals(one.get().getForUser())) {
+            persistentNotificationRepository.delete(one.get());
+        }
+    }
+
+    private ScrappieUser getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || authentication.isAuthenticated() == false || authentication.getName().equals("anonymousUser")) {
+            throw new IllegalArgumentException("User is not logged in");
+        } else {
+            return (ScrappieUser)authentication.getPrincipal();
         }
     }
 

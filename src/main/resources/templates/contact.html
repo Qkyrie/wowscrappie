@@ -3,6 +3,11 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="decorator/wa-decorator"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<div layout:fragment="header">
+    <link th:href="@{/assets/js/dataTables/dataTables.bootstrap.css}" rel="stylesheet"/>
+    <title>Contact Us! - Scrappie</title>
+</div>
 <div layout:fragment="main-content">
     <div id="page-inner">
 

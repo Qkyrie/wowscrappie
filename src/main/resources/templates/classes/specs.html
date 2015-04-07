@@ -5,7 +5,7 @@
 
 <div layout:fragment="header">
     <link th:href="@{/assets/js/dataTables/dataTables.bootstrap.css}" rel="stylesheet"/>
-
+    <title th:text="${wowclass.name} + ' - Scrappie'">Generate Invitation - Scrappie</title>
 </div>
 
 <div layout:fragment="main-content">
@@ -32,11 +32,11 @@
                     <span data-bind="click: wowClassChosen"
                           th:attr="data-wowclass_slug=${wowclass.slug}, data-string_type=weakaura"
                           class="btn btn-primary btn-sm">WeakAuras <span class="badge"
-                                                                                   th:text="${wowclass.waAmount}"></span></span>
+                                                                         th:text="${wowclass.waAmount}"></span></span>
                     <span data-bind="click: wowClassChosen"
                           th:attr="data-wowclass_slug=${wowclass.slug}, data-string_type=tellmewhen"
                           class="btn btn-primary btn-sm">TellMeWhen <span class="badge"
-                                                                                    th:text="${wowclass.tmwAmount}"></span></span>
+                                                                          th:text="${wowclass.tmwAmount}"></span></span>
                     </div>
                 </div>
             </div>
@@ -156,7 +156,7 @@
 
         <div id="expand-button" class="row">
             <img id="arrowUpBtn" th:src="@{/assets/img/button_up.png}"/>
-            <img id="arrowDownBtn" th:src="@{/assets/img/button_down.png}" style="display: none" />
+            <img id="arrowDownBtn" th:src="@{/assets/img/button_down.png}" style="display: none"/>
         </div>
         <hr/>
 
@@ -183,11 +183,11 @@
                 $.get('/classes/' + wowclass + '/' + wowspec + '/' + stringtype, function (result) {
                     $("#resultPane").html(result);
                     $('#myTable')
-                            .on( 'init.dt', function () {
-                                if(slidingHeader.manualPreference !== true) {
+                            .on('init.dt', function () {
+                                if (slidingHeader.manualPreference !== true) {
                                     slidingHeader.hideHeader();
                                 }
-                            } )
+                            })
                             .dataTable();
                 });
             };
