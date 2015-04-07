@@ -10,7 +10,6 @@
         &lt;!&ndash; default header name is X-CSRF-TOKEN &ndash;&gt;
         <meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
     <!-- ... -->
-    <title>Scrappie - Your World of Warcraft Consultant</title>
     <!-- BOOTSTRAP STYLES-->
     <link th:href="@{/assets/css/bootstrap.css}" rel="stylesheet"/>
     <!-- FONTAWESOME STYLES-->
@@ -286,7 +285,7 @@
                     <a th:href="@{/contribute}"><i class="fa fa-laptop fa-3x"></i> Contribute!</a>
                 </li>
                 <li sec:authorize="isAuthenticated()">
-                    <a th:href="@{/logout}"><i class="fa fa-laptop fa-3x"></i> Logout!</a>
+                    <a th:href="@{/logout}"><i class="fa fa-sign-out fa-3x"></i> Logout!</a>
                 </li>
             </ul>
 
