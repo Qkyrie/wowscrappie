@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -37,7 +38,7 @@ public class InterfaceCommentController {
     public static final String MACRO = "macro";
 
     private static final Comparator<InterfaceComment> byDate = (pm1, pm2) -> pm1.getPostDate().compareTo(pm2.getPostDate());
-    private static final PrettyTime prettyTime = new PrettyTime();
+    private static final PrettyTime prettyTime = new PrettyTime(Locale.ENGLISH);
 
 
     @Autowired

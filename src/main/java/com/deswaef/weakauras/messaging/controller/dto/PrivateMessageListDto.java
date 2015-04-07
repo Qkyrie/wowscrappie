@@ -3,9 +3,11 @@ package com.deswaef.weakauras.messaging.controller.dto;
 import com.deswaef.weakauras.messaging.domain.PrivateMessage;
 import org.ocpsoft.prettytime.PrettyTime;
 
+import java.util.Locale;
+
 public class PrivateMessageListDto {
 
-    private static final PrettyTime prettyTime = new PrettyTime();
+    private static final PrettyTime prettyTime = new PrettyTime(Locale.ENGLISH);
 
     private Long id;
     private String when;

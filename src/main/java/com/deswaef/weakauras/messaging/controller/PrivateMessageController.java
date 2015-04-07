@@ -26,7 +26,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 @RequestMapping("/personal/inbox")
 public class PrivateMessageController {
 
-    private static final PrettyTime prettyTime = new PrettyTime();
+    private static final PrettyTime prettyTime = new PrettyTime(Locale.ENGLISH);
     private static final Comparator<PrivateMessage> byDate = (pm1, pm2) -> pm1.getDateOfPosting().compareTo(pm2.getDateOfPosting());
 
     @Autowired
