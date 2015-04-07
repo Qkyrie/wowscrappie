@@ -10,12 +10,14 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import redis.clients.jedis.Protocol;
 import redis.embedded.RedisServer;
 
 import javax.persistence.Embedded;
 
 @Configuration
+@Profile("development")
 public class EmbeddedRedisConfiguration {
 
     private Log logger = LogFactory.getLog(EmbeddedRedisConfiguration.class);
