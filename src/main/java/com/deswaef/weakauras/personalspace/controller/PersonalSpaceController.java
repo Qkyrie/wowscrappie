@@ -3,6 +3,7 @@ package com.deswaef.weakauras.personalspace.controller;
 import com.deswaef.weakauras.personalspace.controller.dto.PersonallyUploadedMacroDto;
 import com.deswaef.weakauras.personalspace.controller.dto.PersonallyUploadedTellMeWhenDto;
 import com.deswaef.weakauras.personalspace.controller.dto.PersonallyUploadedWeakAuraDto;
+import com.deswaef.weakauras.security.SecurityUtility;
 import com.deswaef.weakauras.ui.macros.service.MacroService;
 import com.deswaef.weakauras.ui.tellmewhen.service.TellMeWhenService;
 import com.deswaef.weakauras.ui.weakauras.service.WeakAuraService;
@@ -31,11 +32,13 @@ public class PersonalSpaceController {
     private TellMeWhenService tellMeWhenService;
     @Autowired
     private WeakAuraService weakAuraService;
+    @Autowired
+    private SecurityUtility securityUtility;
 
     @RequestMapping("/uploads")
     @PreAuthorize("hasRole('ROLE_USER')")
     public String uploads(ModelMap modelMap) {
-        Optional<ScrappieUser> currentUser = getCurrentUser();
+        Optional<ScrappieUser> currentUser = securityUtility.currentUser();
         if (currentUser.isPresent()) {
             modelMap.put("macroCount", getMacroCount(currentUser.get()));
             modelMap.put("tmwCount", getTmwCount(currentUser.get()));
@@ -83,17 +86,8 @@ public class PersonalSpaceController {
         return weakAuraService.countAllFromUser(scrappieUser);
     }
 
-    private Optional<ScrappieUser> getCurrentUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.getPrincipal() instanceof ScrappieUser) {
-            return Optional.of((ScrappieUser) authentication.getPrincipal());
-        } else {
-            return Optional.empty();
-        }
-    }
-
     private List<PersonallyUploadedMacroDto> getMacros() {
-        Optional<ScrappieUser> currentUser = getCurrentUser();
+        Optional<ScrappieUser> currentUser = securityUtility.currentUser();
         if (currentUser.isPresent()) {
             return macroService.findAllFromUser(currentUser.get())
                     .stream()
@@ -105,7 +99,7 @@ public class PersonalSpaceController {
     }
 
     private List<PersonallyUploadedTellMeWhenDto> getTMWs() {
-        Optional<ScrappieUser> currentUser = getCurrentUser();
+        Optional<ScrappieUser> currentUser = securityUtility.currentUser();
         if (currentUser.isPresent()) {
             return tellMeWhenService.findAllFromUser(currentUser.get())
                     .stream()
@@ -117,7 +111,7 @@ public class PersonalSpaceController {
     }
 
     private List<PersonallyUploadedWeakAuraDto> getWeakAuras() {
-        Optional<ScrappieUser> currentUser = getCurrentUser();
+        Optional<ScrappieUser> currentUser = securityUtility.currentUser();
         if (currentUser.isPresent()) {
             return weakAuraService.findAllFromUser(currentUser.get())
                     .stream()

@@ -4,6 +4,7 @@ import com.deswaef.weakauras.notifications.controller.dto.PersistentNotification
 import com.deswaef.weakauras.notifications.domain.Notification;
 import com.deswaef.weakauras.notifications.domain.PersistentNotification;
 import com.deswaef.weakauras.notifications.repository.PersistentNotificationRepository;
+import com.deswaef.weakauras.security.SecurityUtility;
 import com.deswaef.weakauras.usermanagement.domain.ScrappieUser;
 import com.deswaef.weakauras.usermanagement.util.AdministratorsCache;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,8 @@ public class PersistentNotificationServiceImpl implements PersistentNotification
     private PersistentNotificationRepository persistentNotificationRepository;
     @Autowired
     private AdministratorsCache administratorsCache;
+    @Autowired
+    private SecurityUtility securityUtility;
 
     @Transactional
     @Override
@@ -82,18 +85,9 @@ public class PersistentNotificationServiceImpl implements PersistentNotification
     @Transactional
     public void delete(long id) {
         Optional<PersistentNotification> one = persistentNotificationRepository.findOne(id);
-        ScrappieUser currentUser = getCurrentUser();
-        if (one.isPresent() && currentUser.equals(one.get().getForUser())) {
+        Optional<ScrappieUser> currentUser = securityUtility.currentUser();
+        if (one.isPresent() && currentUser.isPresent() && currentUser.get().equals(one.get().getForUser())) {
             persistentNotificationRepository.delete(one.get());
-        }
-    }
-
-    private ScrappieUser getCurrentUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null || authentication.isAuthenticated() == false || authentication.getName().equals("anonymousUser")) {
-            throw new IllegalArgumentException("User is not logged in");
-        } else {
-            return (ScrappieUser)authentication.getPrincipal();
         }
     }
 

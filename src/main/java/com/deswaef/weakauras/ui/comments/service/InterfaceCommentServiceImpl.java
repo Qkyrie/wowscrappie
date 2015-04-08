@@ -2,6 +2,7 @@ package com.deswaef.weakauras.ui.comments.service;
 
 import com.deswaef.weakauras.notifications.controller.dto.PersistentNotificationDto;
 import com.deswaef.weakauras.notifications.service.PersistentNotificationService;
+import com.deswaef.weakauras.security.SecurityUtility;
 import com.deswaef.weakauras.ui.comments.controller.dto.PostCommentDto;
 import com.deswaef.weakauras.ui.comments.domain.MacroComment;
 import com.deswaef.weakauras.ui.comments.domain.TellMeWhenComment;
@@ -15,8 +16,6 @@ import com.deswaef.weakauras.ui.tellmewhen.domain.TellMeWhen;
 import com.deswaef.weakauras.ui.weakauras.domain.WeakAura;
 import com.deswaef.weakauras.usermanagement.domain.ScrappieUser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,6 +36,8 @@ public class InterfaceCommentServiceImpl implements InterfaceCommentService {
     private InterfaceCommentRepository interfaceCommentRepository;
     @Autowired
     private PersistentNotificationService persistentNotificationService;
+    @Autowired
+    private SecurityUtility securityUtility;
 
     @Override
     @Transactional(readOnly = true)
@@ -60,7 +61,7 @@ public class InterfaceCommentServiceImpl implements InterfaceCommentService {
     @Transactional
     public void postComment(PostCommentDto commentDto, WeakAura weakAura) {
         try {
-            Optional<ScrappieUser> currentUser = getCurrentUser();
+            Optional<ScrappieUser> currentUser = securityUtility.currentUser();
             if (currentUser.isPresent()) {
                 interfaceCommentRepository.save(
                         new WeakAuraComment()
@@ -91,7 +92,7 @@ public class InterfaceCommentServiceImpl implements InterfaceCommentService {
     @Transactional
     public void postComment(PostCommentDto commentDto, TellMeWhen tellMeWhen) {
         try {
-            Optional<ScrappieUser> currentUser = getCurrentUser();
+            Optional<ScrappieUser> currentUser = securityUtility.currentUser();
             if (currentUser.isPresent()) {
                 interfaceCommentRepository.save(
                         new TellMeWhenComment()
@@ -122,7 +123,7 @@ public class InterfaceCommentServiceImpl implements InterfaceCommentService {
     @Transactional
     public void postComment(PostCommentDto commentDto, Macro macro) {
         try {
-            Optional<ScrappieUser> currentUser = getCurrentUser();
+            Optional<ScrappieUser> currentUser = securityUtility.currentUser();
             if (currentUser.isPresent()) {
                 interfaceCommentRepository.save(
                         new MacroComment()
@@ -151,14 +152,5 @@ public class InterfaceCommentServiceImpl implements InterfaceCommentService {
 
     private Date now() {
         return new Date();
-    }
-
-    private Optional<ScrappieUser> getCurrentUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.getPrincipal() instanceof ScrappieUser) {
-            return Optional.of((ScrappieUser) authentication.getPrincipal());
-        } else {
-            return Optional.empty();
-        }
     }
 }

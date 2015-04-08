@@ -1,5 +1,6 @@
 package com.deswaef.weakauras.usermanagement.controller;
 
+import com.deswaef.weakauras.security.SecurityUtility;
 import com.deswaef.weakauras.usermanagement.controller.dto.UserProfileDto;
 import com.deswaef.weakauras.usermanagement.domain.ScrappieUser;
 import com.deswaef.weakauras.usermanagement.domain.UserProfile;
@@ -13,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Optional;
@@ -31,11 +31,13 @@ public class EditProfileController {
     private UserService userService;
     @Autowired
     private UserProfileService userProfileService;
+    @Autowired
+    private SecurityUtility securityUtility;
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @RequestMapping(method = GET)
     public String editProfile(ModelMap modelMap) {
-        Optional<ScrappieUser> currentUser = getCurrentUser();
+        Optional<ScrappieUser> currentUser = securityUtility.currentUser();
         if (currentUser.isPresent()) {
             Optional<ScrappieUser> scrappieUser = userService.findById(currentUser.get().getId());
             if (scrappieUser.isPresent()) {
@@ -55,7 +57,7 @@ public class EditProfileController {
     public
     @ResponseBody
     String doEdit(@RequestBody UserProfileDto userProfileDto) {
-        Optional<ScrappieUser> currentUser = getCurrentUser();
+        Optional<ScrappieUser> currentUser = securityUtility.currentUser();
         if (currentUser.isPresent()) {
             userProfileService.update(userProfileDto, currentUser.get());
             return "/users/" + currentUser.get().getId();
@@ -65,14 +67,5 @@ public class EditProfileController {
 
     private UserProfileDto createProfileDto(Optional<ScrappieUser> scrappieUser, UserProfile userProfile) {
         return create(scrappieUser.get(), userProfile);
-    }
-
-    private Optional<ScrappieUser> getCurrentUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.getPrincipal() != null && authentication.getPrincipal() instanceof ScrappieUser) {
-            return Optional.of((ScrappieUser) authentication.getPrincipal());
-        } else {
-            return Optional.empty();
-        }
     }
 }

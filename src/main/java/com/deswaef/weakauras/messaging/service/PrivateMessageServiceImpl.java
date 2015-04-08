@@ -4,17 +4,14 @@ import com.deswaef.weakauras.messaging.controller.dto.PrivateMessageReplyDto;
 import com.deswaef.weakauras.messaging.domain.PrivateMessage;
 import com.deswaef.weakauras.messaging.repository.PrivateMessageRepository;
 import com.deswaef.weakauras.mvc.dto.ContactRequestDto;
+import com.deswaef.weakauras.security.SecurityUtility;
 import com.deswaef.weakauras.usermanagement.domain.ScrappieUser;
 import com.deswaef.weakauras.usermanagement.repository.UserRepository;
-import com.deswaef.weakauras.usermanagement.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class PrivateMessageServiceImpl implements PrivateMessageService {
@@ -24,6 +21,8 @@ public class PrivateMessageServiceImpl implements PrivateMessageService {
     private PrivateMessageRepository privateMessageRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private SecurityUtility securityUtility;
 
 
     @Override
@@ -47,7 +46,7 @@ public class PrivateMessageServiceImpl implements PrivateMessageService {
     @Transactional
     public void sendToPika(ContactRequestDto contactRequestDto) {
         Optional<ScrappieUser> pikachu = userRepository.findOne(PIKA_ID);
-        Optional<ScrappieUser> currentUser = getCurrentUser();
+        Optional<ScrappieUser> currentUser = securityUtility.currentUser();
         if (pikachu.isPresent() && currentUser.isPresent()) {
             try {
             privateMessageRepository.save(new PrivateMessage()
@@ -92,7 +91,7 @@ public class PrivateMessageServiceImpl implements PrivateMessageService {
     @Transactional
     public void replyTo(PrivateMessageReplyDto privateMessageReplyDto) {
         Optional<PrivateMessage> originalMessage = privateMessageRepository.findOne(privateMessageReplyDto.getOriginalMessageId());
-        Optional<ScrappieUser> currentUser = getCurrentUser();
+        Optional<ScrappieUser> currentUser = securityUtility.currentUser();
         if (originalMessage.isPresent() && currentUser.isPresent() && isOneOfBoth(currentUser.get(), originalMessage.get())) {
             privateMessageRepository.save(new PrivateMessage()
                             .setTitle(originalMessage.get().getTitle())
@@ -123,14 +122,5 @@ public class PrivateMessageServiceImpl implements PrivateMessageService {
 
     private Date now() {
         return new Date();
-    }
-
-    private Optional<ScrappieUser> getCurrentUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.getPrincipal() instanceof ScrappieUser) {
-            return Optional.of((ScrappieUser) authentication.getPrincipal());
-        } else {
-            return Optional.empty();
-        }
     }
 }

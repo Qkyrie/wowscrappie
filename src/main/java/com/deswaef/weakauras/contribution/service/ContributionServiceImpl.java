@@ -6,6 +6,7 @@ import com.deswaef.weakauras.classes.service.SpecService;
 import com.deswaef.weakauras.contribution.controller.dto.ContributionCommand;
 import com.deswaef.weakauras.raids.domain.RaidBoss;
 import com.deswaef.weakauras.raids.service.BossService;
+import com.deswaef.weakauras.security.SecurityUtility;
 import com.deswaef.weakauras.ui.macros.domain.BossFightMacro;
 import com.deswaef.weakauras.ui.macros.domain.Macro;
 import com.deswaef.weakauras.ui.macros.domain.SpecMacro;
@@ -22,11 +23,7 @@ import com.deswaef.weakauras.ui.weakauras.domain.SpecWeakAura;
 import com.deswaef.weakauras.ui.weakauras.domain.WeakAura;
 import com.deswaef.weakauras.ui.weakauras.domain.WowClassWeakAura;
 import com.deswaef.weakauras.ui.weakauras.service.WeakAuraService;
-import com.deswaef.weakauras.usermanagement.domain.ScrappieUser;
-import com.deswaef.weakauras.usermanagement.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,6 +48,8 @@ public class ContributionServiceImpl implements ContributionService {
     private ConfigRatingService configRatingService;
     @Autowired
     private BossService bossService;
+    @Autowired
+    private SecurityUtility securityUtility;
 
     @Override
     @Transactional
@@ -87,7 +86,7 @@ public class ContributionServiceImpl implements ContributionService {
                             .setActualValue(command.getActualValue())
                             .setName(command.getCaption())
                             .setComment(command.getComments())
-                            .setUploader(getCurrentUser())
+                            .setUploader(securityUtility.currentUser().get())
             );
             configRatingService.createTMWRating(tmw);
             if (command.getScreenshots() != null && command.getScreenshots().length > 0) {
@@ -120,7 +119,7 @@ public class ContributionServiceImpl implements ContributionService {
                             .setActualValue(command.getActualValue())
                             .setName(command.getCaption())
                             .setComment(command.getComments())
-                            .setUploader(getCurrentUser())
+                            .setUploader(securityUtility.currentUser().get())
             );
             configRatingService.createWARating(wa);
             if (command.getScreenshots() != null && command.getScreenshots().length > 0) {
@@ -153,18 +152,9 @@ public class ContributionServiceImpl implements ContributionService {
                             .setActualValue(command.getActualValue())
                             .setName(command.getCaption())
                             .setDescription(command.getComments())
-                            .setUploader(getCurrentUser())
+                            .setUploader(securityUtility.currentUser().get())
             );
             configRatingService.createMacroRating(macro);
-        }
-    }
-
-    private ScrappieUser getCurrentUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null || authentication.isAuthenticated() == false || authentication.getName().equals("anonymousUser")) {
-            throw new IllegalArgumentException("User is not logged in");
-        } else {
-            return (ScrappieUser)authentication.getPrincipal();
         }
     }
 }
