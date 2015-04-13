@@ -18,16 +18,21 @@
                         unwillingly stolen and placed here? Tell us about it and we'll see what we can do!
                     </p>
 
-                    <br /><br />
+                    <br/><br/>
                     <input type="hidden" id="reported_tmw"/>
+
                     <div class="form-group">
-                        <textarea id="tmw_report" class="form-control floating-label" placeholder="please be as specific as possible" rows="5"></textarea>
+                        <textarea id="tmw_report" class="form-control floating-label"
+                                  placeholder="please be as specific as possible" rows="5"></textarea>
                     </div>
 
                 </div>
                 <div class="modal-footer">
-                    <button id="doReport" class="btn btn-primary btn-flat"><i class="mdi-navigation-check"></i> Ok</button>
-                    <button data-dismiss="modal" class="btn btn-default btn-flat"><i class="mdi-navigation-close"></i> Cancel</button>
+                    <button id="doReport" class="btn btn-primary btn-flat"><i class="mdi-navigation-check"></i> Ok
+                    </button>
+                    <button data-dismiss="modal" class="btn btn-default btn-flat"><i class="mdi-navigation-close"></i>
+                        Cancel
+                    </button>
                 </div>
             </div>
         </div>
@@ -89,54 +94,33 @@
                     </tbody>
                 </table>
             </div>
-            <hr />
+            <hr/>
         </div>
         <div class="row" data-bind="visible: showDetails">
+            <div id="details">
+                <h3 data-bind="text: activeName"></h3>
 
-            <div class="tab-content">
-                <ul class="nav nav-pills">
-                    <li class="active"><a href="#details" data-toggle="tab">Details</a>
-                    </li>
-                    <li class=""><a href="#comments" data-toggle="tab">Comments</a>
-                    </li>
-                </ul>
-                <hr />
-
-                <div class="tab-pane fade active in" id="details">
-                    <h3 data-bind="text: activeName"></h3>
-
-                    <div class="form-group">
-                        <label>Comments</label>
-                        <blockquote class="commentBox" data-bind="text: activeComment"></blockquote>
-                    </div>
-                    <hr/>
-                    <br/>
-                    <label>TellMeWhen-String</label>
-                    <textarea data-bind="value: activeString" class="form-control" rows="8"></textarea>
-
-                    <hr/>
-
-                    <div id="images" data-bind="foreach: imageRefs">
-                        <a class="fancybox" rel="group" data-bind="attr: { href: '/shared/image/' + $data }">
-                            <img data-bind="attr: { src: '/shared/image/thumbnail-' + $data }" alt=""/>
-                        </a>
-                    </div>
+                <div class="form-group">
+                    <label>Comments</label>
+                    <blockquote class="commentBox" data-bind="text: activeComment"></blockquote>
                 </div>
-                <div class="tab-pane fade" id="comments">
-                    <div id="commentPane">
-                    </div>
+                <hr/>
+                <br/>
+                <label>TellMeWhen-String</label>
+                <textarea data-bind="value: activeString" class="form-control" rows="8"></textarea>
+
+                <hr/>
+
+                <div id="images" data-bind="foreach: imageRefs">
+                    <a class="fancybox" rel="group" data-bind="attr: { href: '/shared/image/' + $data }">
+                        <img data-bind="attr: { src: '/shared/image/thumbnail-' + $data }" alt=""/>
+                    </a>
                 </div>
             </div>
-
-
         </div>
-
-        <br/>
-
         <div class="row" data-bind="visible: showDetails">
-
+            <button data-bind="click: redirectShare" class="btn btn-info">Leave a comment!</button>
         </div>
-
     </div>
 
 
@@ -154,11 +138,6 @@
             });
         });
 
-        function loadComments(id) {
-            $.get('/interface/comments/TMW/' + id + '/disqus', function (data) {
-                $('#commentPane').html(data);
-            });
-        }
 
         var tmwVM = function () {
             var self = this;
@@ -169,6 +148,7 @@
             self.showDetails = ko.observable(false);
             self.imageRefs = ko.observableArray([]);
             self.activeName = ko.observable();
+            self.activeTMWId = ko.observable();
 
             self.view = function (data, event) {
                 var clickedElement = $(event.currentTarget);
@@ -176,22 +156,26 @@
                 $.get("/interface/tellmewhen/" + tmw_id, function (resultValue) {
                     if (resultValue !== null) {
                         self.activeTMW(resultValue);
+                        self.activeTMWId(tmw_id);
                         self.activeString(resultValue.actualValue);
                         self.activeComment(resultValue.comment);
                         self.imageRefs(resultValue.imageRefs);
                         self.activeName(resultValue.name);
                         self.showDetails(true);
-                        loadComments(tmw_id);
                         $(".fancybox").fancybox();
                     }
                 });
             };
 
-            self.report = function(data, event) {
+            self.report = function (data, event) {
                 var clickedElement = $(event.currentTarget);
                 var wa_id = clickedElement.data("tmw_id");
                 $("#reported_tmw").val(wa_id);
                 $('#report-dialog').modal('show');
+            };
+
+            self.redirectShare = function () {
+                window.open('/shared/tmw/' + self.activeTMWId(), '_blank');
             };
         };
 
@@ -243,12 +227,12 @@
             });
         });
 
-        $("#doReport").click(function() {
+        $("#doReport").click(function () {
             var message = $("#tmw_report").val();
-            if(message !== ''){
+            if (message !== '') {
                 var command = {};
                 command['comment'] = message;
-                command['interfaceId'] =  $("#reported_tmw").val();
+                command['interfaceId'] = $("#reported_tmw").val();
                 command['interfaceType'] = 'tmw';
                 var stringyfiedCommand = JSON.stringify(command);
                 $.ajax({
@@ -282,16 +266,21 @@
                         unwillingly stolen and placed here? Tell us about it and we'll see what we can do!
                     </p>
 
-                    <br /><br />
+                    <br/><br/>
                     <input type="hidden" id="reported_wa"/>
+
                     <div class="form-group">
-                        <textarea id="weakaura_report" class="form-control floating-label" placeholder="please be as specific as possible" rows="5"></textarea>
+                        <textarea id="weakaura_report" class="form-control floating-label"
+                                  placeholder="please be as specific as possible" rows="5"></textarea>
                     </div>
 
                 </div>
                 <div class="modal-footer">
-                    <button id="doReport" class="btn btn-primary btn-flat"><i class="mdi-navigation-check"></i> Ok</button>
-                    <button data-dismiss="modal" class="btn btn-default btn-flat"><i class="mdi-navigation-close"></i> Cancel</button>
+                    <button id="doReport" class="btn btn-primary btn-flat"><i class="mdi-navigation-check"></i> Ok
+                    </button>
+                    <button data-dismiss="modal" class="btn btn-default btn-flat"><i class="mdi-navigation-close"></i>
+                        Cancel
+                    </button>
                 </div>
             </div>
         </div>
@@ -333,7 +322,7 @@
                               class="shareButton btn btn-success btn-sm"> <i
                                 class="mdi-social-share"></i> share link</span>
                         <span data-bind="click: report" th:attr="data-wa_id=${uielement.id}"
-                                 class="btn btn-material-blue-grey"> report</span>
+                              class="btn btn-material-blue-grey"> report</span>
                         <span th:attr="data-wa_id=${uielement.id}"
                               th:if="${uielement.approved == false}"
                               class="approveButton btn btn-info btn-sm"
@@ -351,49 +340,34 @@
                 </tr>
                 </tbody>
             </table>
-            <hr />
+            <hr/>
         </div>
 
 
         <div class="row" data-bind="visible: showDetails">
-            <ul class="nav nav-pills">
-                <li class="active"><a href="#details" data-toggle="tab">Details</a>
-                </li>
-                <li class=""><a href="#comments" data-toggle="tab">Comments</a>
-                </li>
-            </ul>
-            <hr />
 
-            <div class="tab-content">
-                <div class="tab-pane fade active in" id="details">
-                    <h3 data-bind="text: activeName"></h3>
+            <div id="details">
+                <h3 data-bind="text: activeName"></h3>
 
-                    <div class="form-group">
-                        <label>Comments</label>
-                        <blockquote class="commentBox" data-bind="text: activeComment"></blockquote>
-                    </div>
-                    <hr/>
-                    <br/>
-                    <label>WeakAura-String</label>
-                    <textarea data-bind="value: activeString" class="form-control" rows="8"></textarea>
-                    <hr/>
-
-                    <div id="images" data-bind="foreach: imageRefs">
-                        <a class="fancybox" rel="group" data-bind="attr: { href: '/shared/image/' + $data }">
-                            <img data-bind="attr: { src: '/shared/image/thumbnail-' + $data }" alt=""/>
-                        </a>
-                    </div>
+                <div class="form-group">
+                    <label>Comments</label>
+                    <blockquote class="commentBox" data-bind="text: activeComment"></blockquote>
                 </div>
+                <hr/>
+                <br/>
+                <label>WeakAura-String</label>
+                <textarea data-bind="value: activeString" class="form-control" rows="8"></textarea>
+                <hr/>
 
-                <div class="tab-pane fade" id="comments">
-                    <div id="commentPane">
-
-                    </div>
+                <div id="images" data-bind="foreach: imageRefs">
+                    <a class="fancybox" rel="group" data-bind="attr: { href: '/shared/image/' + $data }">
+                        <img data-bind="attr: { src: '/shared/image/thumbnail-' + $data }" alt=""/>
+                    </a>
                 </div>
-
             </div>
-
-
+        </div>
+        <div class="row" data-bind="visible: showDetails">
+            <button data-bind="click: redirectShare" class="btn btn-info">Leave a comment!</button>
         </div>
 
     </div>
@@ -410,12 +384,6 @@
             });
         });
 
-        function loadComments(id) {
-            $.get('/interface/comments/WA/' + id + '/disqus', function (data) {
-                $('#commentPane').html(data);
-            });
-        }
-
 
         var WaModel = function () {
             var self = this;
@@ -426,6 +394,7 @@
             self.showDetails = ko.observable(false);
             self.imageRefs = ko.observableArray([]);
             self.activeName = ko.observable();
+            self.activeWAId = ko.observable();
 
             self.view = function (data, event) {
                 var clickedElement = $(event.currentTarget);
@@ -434,21 +403,25 @@
                     if (resultValue !== null) {
                         self.activeWA(resultValue);
                         self.activeString(resultValue.actualValue);
+                        self.activeWAId(tmw_id);
                         self.activeComment(resultValue.comment);
                         self.imageRefs(resultValue.imageRefs);
                         self.activeName(resultValue.name);
                         self.showDetails(true);
-                        loadComments(tmw_id);
                         $(".fancybox").fancybox();
                     }
                 });
             };
 
-            self.report = function(data, event) {
+            self.report = function (data, event) {
                 var clickedElement = $(event.currentTarget);
                 var wa_id = clickedElement.data("wa_id");
                 $("#reported_wa").val(wa_id);
                 $('#report-dialog').modal('show');
+            };
+
+            self.redirectShare = function () {
+                window.open('/shared/wa/' + self.activeWAId(), '_blank');
             };
         };
 
@@ -500,12 +473,12 @@
             });
         });
 
-        $("#doReport").click(function() {
+        $("#doReport").click(function () {
             var message = $("#weakaura_report").val();
-            if(message !== ''){
+            if (message !== '') {
                 var command = {};
                 command['comment'] = message;
-                command['interfaceId'] =  $("#reported_wa").val();
+                command['interfaceId'] = $("#reported_wa").val();
                 command['interfaceType'] = 'wa';
                 var stringyfiedCommand = JSON.stringify(command);
                 $.ajax({
@@ -535,19 +508,24 @@
                 <div class="modal-body">
                     <p>
                         Is something wrong with this macro? Is it not working anymore? Is this your work that was
-                    unwillingly stolen and placed here? Tell us about it and we'll see what we can do!
+                        unwillingly stolen and placed here? Tell us about it and we'll see what we can do!
                     </p>
 
-                    <br /><br />
+                    <br/><br/>
                     <input type="hidden" id="reported_macro"/>
+
                     <div class="form-group">
-                        <textarea id="macro_report" class="form-control floating-label" placeholder="please be as specific as possible" rows="5"></textarea>
+                        <textarea id="macro_report" class="form-control floating-label"
+                                  placeholder="please be as specific as possible" rows="5"></textarea>
                     </div>
 
                 </div>
                 <div class="modal-footer">
-                    <button id="doReport" class="btn btn-primary btn-flat"><i class="mdi-navigation-check"></i> Ok</button>
-                    <button data-dismiss="modal" class="btn btn-default btn-flat"><i class="mdi-navigation-close"></i> Cancel</button>
+                    <button id="doReport" class="btn btn-primary btn-flat"><i class="mdi-navigation-check"></i> Ok
+                    </button>
+                    <button data-dismiss="modal" class="btn btn-default btn-flat"><i class="mdi-navigation-close"></i>
+                        Cancel
+                    </button>
                 </div>
             </div>
         </div>
@@ -607,38 +585,24 @@
                 </tr>
                 </tbody>
             </table>
-            <hr />
+            <hr/>
         </div>
         <div class="row" data-bind="visible: showDetails">
-            <ul class="nav nav-pills">
-                <li class="active"><a href="#details" data-toggle="tab">Details</a>
-                </li>
-                <li class=""><a href="#comments" data-toggle="tab">Comments</a>
-                </li>
-            </ul>
-            <hr />
+            <div id="details">
+                <h3 data-bind="text: activeName"></h3>
 
-            <div class="tab-content">
-                <div class="tab-pane fade active in" id="details">
-                    <h3 data-bind="text: activeName"></h3>
-
-                    <div class="form-group">
-                        <label>Comments</label>
-                        <blockquote class="commentBox" data-bind="text: activeComment"></blockquote>
-                    </div>
-                    <hr/>
-                    <br/>
-                    <label>Macro-String</label>
-                    <textarea data-bind="value: activeString" class="form-control" rows="5"></textarea>
+                <div class="form-group">
+                    <label>Comments</label>
+                    <blockquote class="commentBox" data-bind="text: activeComment"></blockquote>
                 </div>
-                <div class="tab-pane fade" id="comments">
-                    <div class="col-md-10 col-md-offset-1">
-                        <div id="commentPane">
-
-                        </div>
-                    </div>
-                </div>
+                <hr/>
+                <br/>
+                <label>Macro-String</label>
+                <textarea data-bind="value: activeString" class="form-control" rows="5"></textarea>
             </div>
+        </div>
+        <div class="row" data-bind="visible: showDetails">
+            <button data-bind="click: redirectShare" class="btn btn-info">Leave a comment!</button>
         </div>
     </div>
 
@@ -657,12 +621,6 @@
             });
         });
 
-        function loadComments(id) {
-            $.get('/interface/comments/MACRO/' + id + '/disqus', function (data) {
-                $('#commentPane').html(data);
-            });
-        }
-
         var MacroModel = function () {
             var self = this;
             self.activeName = ko.observable();
@@ -670,7 +628,7 @@
             self.activeString = ko.observable();
             self.activeComment = ko.observable();
             self.showDetails = ko.observable(false);
-
+            self.activeMacroId = ko.observable();
             self.view = function (data, event) {
                 var clickedElement = $(event.currentTarget);
                 var tmw_id = clickedElement.data("macro_id");
@@ -678,19 +636,23 @@
                     if (resultValue !== null) {
                         self.activeMacro(resultValue);
                         self.activeString(resultValue.actualValue);
+                        self.activeMacroId(tmw_id);
                         self.activeName(resultValue.name);
                         self.activeComment(resultValue.comment);
                         self.showDetails(true);
-                        loadComments(tmw_id);
                     }
                 });
             };
 
-            self.report = function(data, event) {
+            self.report = function (data, event) {
                 var clickedElement = $(event.currentTarget);
                 var macro_id = clickedElement.data("macro_id");
                 $("#reported_macro").val(macro_id);
                 $('#report-dialog').modal('show');
+            };
+
+            self.redirectShare = function () {
+                window.open('/shared/macro/' + self.activeMacroId(), '_blank');
             };
         };
 
@@ -741,12 +703,12 @@
             });
         });
 
-        $("#doReport").click(function() {
+        $("#doReport").click(function () {
             var message = $("#macro_report").val();
-            if(message !== ''){
+            if (message !== '') {
                 var command = {};
                 command['comment'] = message;
-                command['interfaceId'] =  $("#reported_macro").val();
+                command['interfaceId'] = $("#reported_macro").val();
                 command['interfaceType'] = 'macro';
                 var stringyfiedCommand = JSON.stringify(command);
                 $.ajax({

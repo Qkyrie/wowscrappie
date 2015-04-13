@@ -57,7 +57,28 @@ public class InterfaceCommentController {
     public String findByIdDisqus(ModelMap map, @PathVariable("type") String type, @PathVariable("id") long id) {
         map.put("configType", type);
         map.put("configId", id);
+        map.put("interfaceTitle", getTitle(type, id));
         return "comments/comments :: disqusComments";
+    }
+
+    private String getTitle(String type, long id) {
+        if (TMW.equalsIgnoreCase(type)) {
+            Optional<TellMeWhen> tmw = getTMW(id);
+            if (tmw.isPresent()) {
+                return String.format("TMW - %s", tmw.get().getName());
+            }
+        } else if (WA.equalsIgnoreCase(type)) {
+            Optional<WeakAura> wa = getWA(id);
+            if (wa.isPresent()) {
+                return String.format("WA - %s", wa.get().getName());
+            }
+        } else if (MACRO.equalsIgnoreCase(type)) {
+            Optional<Macro> macro = getMacro(id);
+            if (macro.isPresent()) {
+                return String.format("Macro - %s", macro.get().getName());
+            }
+        }
+        return "";
     }
 
     @RequestMapping(value = "/{type}/{id}/disqus", method = RequestMethod.POST)

@@ -51,43 +51,30 @@
             </div>
         </div>
         <div class="row" data-bind="visible: showDetails">
-            <ul class="nav nav-pills">
-                <li class="active"><a href="#details" data-toggle="tab">Details</a>
-                </li>
-                <li class=""><a href="#comments" data-toggle="tab">Comments</a>
-                </li>
-            </ul>
+            <div id="details">
+                <h3 data-bind="text: activeName"></h3>
 
-            <div class="tab-content">
-                <div class="tab-pane fade active in" id="details">
-                    <h3 data-bind="text: activeName"></h3>
+                <div class="form-group">
+                    <label>Comments</label>
 
-                    <div class="form-group">
-                        <label>Comments</label>
-
-                        <div class="commentBox" data-bind="text: activeComment"></div>
-                    </div>
-
-                    <label>TellMeWhen-String</label>
-                    <textarea data-bind="value: activeString" class="form-control" rows="5"></textarea>
-
-                    <hr/>
-
-                    <div id="images" data-bind="foreach: imageRefs">
-                        <a class="fancybox" rel="group" data-bind="attr: { href: '/shared/image/' + $data }">
-                            <img data-bind="attr: { src: '/shared/image/thumbnail-' + $data }" alt=""/>
-                        </a>
-                    </div>
+                    <div class="commentBox" data-bind="text: activeComment"></div>
                 </div>
-                <div class="tab-pane fade" id="comments">
-                    <div id="commentPane">
 
-                    </div>
+                <label>TellMeWhen-String</label>
+                <textarea data-bind="value: activeString" class="form-control" rows="5"></textarea>
+
+                <hr/>
+
+                <div id="images" data-bind="foreach: imageRefs">
+                    <a class="fancybox" rel="group" data-bind="attr: { href: '/shared/image/' + $data }">
+                        <img data-bind="attr: { src: '/shared/image/thumbnail-' + $data }" alt=""/>
+                    </a>
                 </div>
             </div>
-
         </div>
-
+        <div class="row" data-bind="visible: showDetails">
+            <button data-bind="click: redirectShare" class="btn btn-info">Leave a comment!</button>
+        </div>
     </div>
     <script type="application/javascript">
 
@@ -103,13 +90,6 @@
             });
         });
 
-
-        function loadComments(id) {
-            $.get('/interface/comments/TMW/' + id + '/disqus', function (data) {
-                $('#commentPane').html(data);
-            });
-        }
-
         var tmwVM = function () {
             var self = this;
 
@@ -119,6 +99,7 @@
             self.showDetails = ko.observable(false);
             self.imageRefs = ko.observableArray([]);
             self.activeName = ko.observable();
+            self.activeTMWId = ko.observable();
 
             self.view = function (data, event) {
                 var clickedElement = $(event.currentTarget);
@@ -128,13 +109,17 @@
                         self.activeTMW(resultValue);
                         self.activeString(resultValue.actualValue);
                         self.activeComment(resultValue.comment);
+                        self.activeTMWId(tmw_id);
                         self.imageRefs(resultValue.imageRefs);
                         self.activeName(resultValue.name);
                         self.showDetails(true);
-                        loadComments(tmw_id);
                         $(".fancybox").fancybox();
                     }
                 });
+            };
+
+            self.redirectShare = function () {
+                window.open('/shared/tmw/' + self.activeTMWId(), '_blank');
             };
         };
 
@@ -233,40 +218,29 @@
 
 
         <div class="row" data-bind="visible: showDetails">
-            <ul class="nav nav-pills">
-                <li class="active"><a href="#details" data-toggle="tab">Details</a>
-                </li>
-                <li class=""><a href="#comments" data-toggle="tab">Comments</a>
-                </li>
-            </ul>
+            <div id="details">
+                <h3 data-bind="text: activeName"></h3>
 
-            <div class="tab-content">
-                <div class="tab-pane fade active in" id="details">
-                    <h3 data-bind="text: activeName"></h3>
+                <div class="form-group">
+                    <label>Comments</label>
 
-                    <div class="form-group">
-                        <label>Comments</label>
-
-                        <div class="commentBox" data-bind="text: activeComment"></div>
-                    </div>
-
-                    <label>WeakAura-String</label>
-                    <textarea data-bind="value: activeString" class="form-control" rows="5"></textarea>
-                    <hr/>
-
-                    <div id="images" data-bind="foreach: imageRefs">
-                        <a class="fancybox" rel="group" data-bind="attr: { href: '/shared/image/' + $data }">
-                            <img data-bind="attr: { src: '/shared/image/thumbnail-' + $data }" alt=""/>
-                        </a>
-                    </div>
+                    <div class="commentBox" data-bind="text: activeComment"></div>
                 </div>
-                <div class="tab-pane fade" id="comments">
-                    <div id="commentPane">
 
-                    </div>
+                <label>WeakAura-String</label>
+                <textarea data-bind="value: activeString" class="form-control" rows="5"></textarea>
+                <hr/>
+
+                <div id="images" data-bind="foreach: imageRefs">
+                    <a class="fancybox" rel="group" data-bind="attr: { href: '/shared/image/' + $data }">
+                        <img data-bind="attr: { src: '/shared/image/thumbnail-' + $data }" alt=""/>
+                    </a>
                 </div>
             </div>
 
+        </div>
+        <div class="row" data-bind="visible: showDetails">
+            <button data-bind="click: redirectShare" class="btn btn-info">Leave a comment!</button>
         </div>
     </div>
     <script type="application/javascript">
@@ -283,12 +257,6 @@
         });
 
 
-        function loadComments(id) {
-            $.get('/interface/comments/WA/' + id + '/disqus', function (data) {
-                $('#commentPane').html(data);
-            });
-        }
-
         var WaModel = function () {
             var self = this;
 
@@ -298,6 +266,7 @@
             self.showDetails = ko.observable(false);
             self.imageRefs = ko.observableArray([]);
             self.activeName = ko.observable();
+            self.activeWAId = ko.observable();
 
             self.view = function (data, event) {
                 var clickedElement = $(event.currentTarget);
@@ -308,12 +277,16 @@
                         self.activeString(resultValue.actualValue);
                         self.activeComment(resultValue.comment);
                         self.imageRefs(resultValue.imageRefs);
+                        self.activeWAId(tmw_id);
                         self.activeName(resultValue.name);
                         self.showDetails(true);
-                        loadComments(tmw_id);
                         $(".fancybox").fancybox();
                     }
                 });
+            };
+
+            self.redirectShare = function () {
+                window.open('/shared/wa/' + self.activeWAId(), '_blank');
             };
         };
 
@@ -412,34 +385,22 @@
             </table>
         </div>
         <div class="row" data-bind="visible: showDetails">
-            <ul class="nav nav-pills">
-                <li class="active"><a href="#details" data-toggle="tab">Details</a>
-                </li>
-                <li class=""><a href="#comments" data-toggle="tab">Comments</a>
-                </li>
-            </ul>
+            <div id="details">
+                <h3 data-bind="text: activeName"></h3>
 
-            <div class="tab-content">
-                <div class="tab-pane fade active in" id="details">
-                    <h3 data-bind="text: activeName"></h3>
+                <div class="form-group">
+                    <label>Comments</label>
 
-                    <div class="form-group">
-                        <label>Comments</label>
-
-                        <div class="commentBox" data-bind="text: activeComment"></div>
-                    </div>
-
-                    <label>Macro-String</label>
-                    <textarea data-bind="value: activeString" class="form-control" rows="3"></textarea>
+                    <div class="commentBox" data-bind="text: activeComment"></div>
                 </div>
-                <div class="tab-pane fade" id="comments">
-                    <div class="col-md-10 col-md-offset-1">
-                        <div id="commentPane">
 
-                        </div>
-                    </div>
-                </div>
+                <label>Macro-String</label>
+                <textarea data-bind="value: activeString" class="form-control" rows="3"></textarea>
             </div>
+
+        </div>
+        <div class="row" data-bind="visible: showDetails">
+            <button data-bind="click: redirectShare" class="btn btn-info">Leave a comment!</button>
         </div>
     </div>
 
@@ -470,6 +431,7 @@
             self.activeString = ko.observable();
             self.activeComment = ko.observable();
             self.showDetails = ko.observable(false);
+            self.activeMacroId = ko.observable();
 
             self.view = function (data, event) {
                 var clickedElement = $(event.currentTarget);
@@ -479,11 +441,16 @@
                         self.activeMacro(resultValue);
                         self.activeString(resultValue.actualValue);
                         self.activeName(resultValue.name);
+                        self.activeMacroId(tmw_id);
                         self.activeComment(resultValue.comment);
                         self.showDetails(true);
                         loadComments(tmw_id);
                     }
                 });
+            };
+
+            self.redirectShare = function () {
+                window.open('/shared/macro/' + self.activeMacroId(), '_blank');
             };
         };
 
