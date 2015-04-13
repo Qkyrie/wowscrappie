@@ -124,7 +124,6 @@
                 </div>
                 <div class="tab-pane fade" id="comments">
                     <div id="commentPane">
-
                     </div>
                 </div>
             </div>
@@ -156,7 +155,7 @@
         });
 
         function loadComments(id) {
-            $.get('/interface/comments/tmw/' + id, function (data) {
+            $.get('/interface/comments/TMW/' + id + '/disqus', function (data) {
                 $('#commentPane').html(data);
             });
         }
@@ -412,7 +411,7 @@
         });
 
         function loadComments(id) {
-            $.get('/interface/comments/wa/' + id, function (data) {
+            $.get('/interface/comments/WA/' + id + '/disqus', function (data) {
                 $('#commentPane').html(data);
             });
         }
@@ -659,7 +658,7 @@
         });
 
         function loadComments(id) {
-            $.get('/interface/comments/macro/' + id, function (data) {
+            $.get('/interface/comments/MACRO/' + id + '/disqus', function (data) {
                 $('#commentPane').html(data);
             });
         }

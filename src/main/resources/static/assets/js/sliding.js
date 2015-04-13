@@ -10,7 +10,6 @@ var SlidingHeader = function() {
         $("#top-wrapper").slideUp('fast', function() {
             self.goingUp.hide();
             self.goingDown.show();
-            console.log(afterHide);
             if(afterHide !== undefined) {
                 afterHide();
             }

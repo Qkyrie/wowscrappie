@@ -30,14 +30,15 @@
     <link th:href="@{/assets/material_design/css/ripples.min.css}" rel="stylesheet"/>
     <link th:href="@{/assets/snackbar/snackbar.min.css}" rel="stylesheet"/>
     <link th:href="@{/assets/snackbar/snackbar-material.min.css}" rel="stylesheet"/>
+    <div layout:fragment="header"></div>
     <link th:href="@{/assets/css/notifications.css}" rel="stylesheet"/>
 
-
-    <div layout:fragment="header"></div>
 </head>
+
 
 <body>
 <div id="wrapper">
+    <script th:src="@{/assets/js/jquery-1.10.2.js}"></script>
     <nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
@@ -70,74 +71,7 @@
 
                         </ul>
                     </li>
-                    <!-- settings end -->
-                    <!-- inbox dropdown start-->
-                    <!--<li id="header_inbox_bar" class="dropdown">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
-                            <i class="fa fa-envelope-o"></i>
-                            <span class="badge bg-theme">5</span>
-                        </a>
-                        <ul class="dropdown-menu extended inbox">
-                            <div class="notify-arrow notify-arrow-green"></div>
-                            <li>
-                                <p class="green">You have 5 new messages</p>
-                            </li>
-                            <li>
-                                <a href="index.html#">
-                                    <span class="photo"></span>
-                                        <span class="subject">
-                                        <span class="from">Zac Snider</span>
-                                        <span class="time">Just now</span>
-                                        </span>
-                                        <span class="message">
-                                            Hi mate, how is everything?
-                                        </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="index.html#">
-                                    <span class="photo"></span>
-                                        <span class="subject">
-                                        <span class="from">Divya Manian</span>
-                                        <span class="time">40 mins.</span>
-                                        </span>
-                                        <span class="message">
-                                         Hi, I need your help with this.
-                                        </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="index.html#">
-                                    <span class="photo"></span>
-                                        <span class="subject">
-                                        <span class="from">Dan Rogers</span>
-                                        <span class="time">2 hrs.</span>
-                                        </span>
-                                        <span class="message">
-                                            Love your new Dashboard.
-                                        </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="index.html#">
-                                    <span class="photo"></span>
-                                        <span class="subject">
-                                        <span class="from">Dj Sherman</span>
-                                        <span class="time">4 hrs.</span>
-                                        </span>
-                                        <span class="message">
-                                            Please, answer asap.
-                                        </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="index.html#">See all messages</a>
-                            </li>
-                        </ul>
-                    </li>-->
-                    <!-- inbox dropdown end -->
                 </ul>
-                <!--  notification end -->
             </div>
 
         </div>
@@ -300,7 +234,6 @@
 <!-- /. WRAPPER  -->
 <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
 <!-- JQUERY SCRIPTS -->
-<script th:src="@{/assets/js/jquery-1.10.2.js}"></script>
 <!-- BOOTSTRAP SCRIPTS -->
 <script th:src="@{/assets/js/bootstrap.min.js}"></script>
 <!-- METISMENU SCRIPTS -->

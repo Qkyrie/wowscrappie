@@ -120,6 +120,13 @@ public class InterfaceCommentController {
         return "comments/comments :: showComments";
     }
 
+    @RequestMapping(value = "/{type}/{id}/disqus", method = RequestMethod.GET)
+    public String findByIdDisqus(ModelMap map, @PathVariable("type") String type, @PathVariable("id") long id) {
+        map.put("configType", type);
+        map.put("configId", id);
+        return "comments/comments :: disqusComments";
+    }
+
     @RequestMapping(value = "/{type}/{id}", method = RequestMethod.GET)
     public String findById(ModelMap map, @PathVariable("type") String type, @PathVariable("id") Long id) {
         if (TMW.equalsIgnoreCase(type)) {
