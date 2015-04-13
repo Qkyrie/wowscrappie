@@ -2,6 +2,7 @@ package com.deswaef.weakauras.ui.comments.controller;
 
 import com.deswaef.weakauras.messaging.domain.PrivateMessage;
 import com.deswaef.weakauras.ui.comments.controller.dto.CommentListDto;
+import com.deswaef.weakauras.ui.comments.controller.dto.DisqusCommentDto;
 import com.deswaef.weakauras.ui.comments.controller.dto.PostCommentDto;
 import com.deswaef.weakauras.ui.comments.domain.InterfaceComment;
 import com.deswaef.weakauras.ui.comments.service.InterfaceCommentService;
@@ -14,12 +15,10 @@ import com.deswaef.weakauras.ui.weakauras.service.WeakAuraService;
 import com.google.common.base.Strings;
 import org.ocpsoft.prettytime.PrettyTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -125,6 +124,13 @@ public class InterfaceCommentController {
         map.put("configType", type);
         map.put("configId", id);
         return "comments/comments :: disqusComments";
+    }
+
+    @RequestMapping(value = "/{type}/{id}/disqus", method = RequestMethod.POST)
+    public
+    @ResponseBody
+    String newComment(@PathVariable("type") String type, @PathVariable("id") long id, @RequestBody DisqusCommentDto disqusCommentDto) {
+        return "OK";
     }
 
     @RequestMapping(value = "/{type}/{id}", method = RequestMethod.GET)

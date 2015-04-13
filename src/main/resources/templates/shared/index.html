@@ -52,13 +52,27 @@
             <div class="col-md-4 col-sm-6 col-xs-6">
                 <div class="panel panel-back noti-box">
                 <span class="icon-box bg-color-blue set-icon">
-                    <i class="fa fa-thumbs-o-up"></i>
+                    <i class="fa fa-twitter"></i>
                 </span>
 
                     <div class="text-box">
-                        <p class="main-text" th:text="${rating}">240</p>
+                        <p class="main-text"><a href="https://twitter.com/share" class="twitter-share-button"
+                                                data-via="ScrappieWoW"
+                                                data-size="large" data-count="none">Tweet</a>
+                            <script>!function (d, s, id) {
+                                var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
+                                if (!d.getElementById(id)) {
+                                    js = d.createElement(s);
+                                    js.id = id;
+                                    js.src = p + '://platform.twitter.com/widgets.js';
+                                    fjs.parentNode.insertBefore(js, fjs);
+                                }
+                            }(document, 'script', 'twitter-wjs');</script>
+                        </p>
 
-                        <p class="text-muted">ScrapScore</p>
+                        <p class="text-muted">
+                            Share this page
+                        </p>
                     </div>
                 </div>
             </div>
@@ -83,7 +97,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-5 col-md-offset-1">
+                <div class="col-md-2 col-md-offset-1">
                     <button id="copy-button" th:attr="data-clipboard-text=${config.actualValue}"
                             class="btn btn-primary btn-sm">
                         <i class="mdi-action-assignment"></i>

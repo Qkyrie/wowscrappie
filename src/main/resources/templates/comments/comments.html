@@ -15,6 +15,21 @@
         /* * * CONFIGURATION VARIABLES * * */
         var disqus_shortname = 'wowscrappie';
         var disqus_identifier  = $("#disqus_identifier").val();
+        var fullUrl = '/interface/comments/' + disqus_identifier + '/disqus';
+
+        function disqus_config() {
+            this.callbacks.onNewComment = [function(comment) {
+                var stringyfiedCommand = JSON.stringify(comment);
+                $.ajax({
+                    url: fullUrl,
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    data: stringyfiedCommand, //Stringified Json Object
+                    cache: false,    //This will force requested pages not to be cached by the browser
+                    processData: false //To avoid making query String instead of JSON
+                });
+            }];
+        }
 
         /* * * DON'T EDIT BELOW THIS LINE * * */
         (function () {
