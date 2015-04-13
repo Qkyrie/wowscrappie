@@ -13,6 +13,8 @@ import com.deswaef.weakauras.ui.tellmewhen.service.TellMeWhenService;
 import com.deswaef.weakauras.ui.weakauras.domain.WeakAura;
 import com.deswaef.weakauras.ui.weakauras.service.WeakAuraService;
 import com.google.common.base.Strings;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.ocpsoft.prettytime.PrettyTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,6 +41,8 @@ public class InterfaceCommentController {
     private static final Comparator<InterfaceComment> byDate = (pm1, pm2) -> pm1.getPostDate().compareTo(pm2.getPostDate());
     private static final PrettyTime prettyTime = new PrettyTime(Locale.ENGLISH);
 
+    private Log logger = LogFactory.getLog(this.getClass());
+
 
     @Autowired
     private InterfaceCommentService interfaceCommentService;
@@ -48,76 +52,6 @@ public class InterfaceCommentController {
     private TellMeWhenService tellMeWhenService;
     @Autowired
     private WeakAuraService weakAuraService;
-
-    @RequestMapping(method = POST)
-    public String doComment(ModelMap map, @RequestBody PostCommentDto postCommentDto) {
-        if(!Strings.isNullOrEmpty(postCommentDto.getComment())) {
-            if (TMW.equalsIgnoreCase(postCommentDto.getType())) {
-                Optional<TellMeWhen> tmw = getTMW(postCommentDto.getInterfaceId());
-                if (tmw.isPresent()) {
-                    try {
-                        interfaceCommentService.postComment(postCommentDto, tmw.get());
-                    } catch (Exception ex) {
-                        map.put("post_failure", ex.getMessage());
-                    }
-                    map.put("comments", interfaceCommentService.findComments(tmw.get())
-                            .stream()
-                            .sorted(byDate)
-                            .map(comment -> new CommentListDto()
-                                    .setWhen(prettyTime.format(comment.getPostDate()))
-                                    .setCommenter(comment.getCommenter().getUsername())
-                                    .setId(comment.getId())
-                                    .setContent(comment.getComment())).collect(Collectors.toList()));
-                } else {
-                    map.put("comments", new ArrayList<>());
-                }
-            } else if (WA.equalsIgnoreCase(postCommentDto.getType())) {
-                Optional<WeakAura> wa = getWA(postCommentDto.getInterfaceId());
-                if (wa.isPresent()) {
-                    try {
-                        interfaceCommentService.postComment(postCommentDto, wa.get());
-                    } catch (Exception ex) {
-                        map.put("post_failure", ex.getMessage());
-                    }
-                    map.put("comments", interfaceCommentService.findComments(wa.get()).stream()
-                            .sorted(byDate)
-                            .map(comment -> new CommentListDto()
-                                    .setWhen(prettyTime.format(comment.getPostDate()))
-                                    .setCommenter(comment.getCommenter().getUsername())
-                                    .setId(comment.getId())
-                                    .setContent(comment.getComment())).collect(Collectors.toList()));
-                } else {
-                    map.put("comments", new ArrayList<>());
-                }
-            } else if (MACRO.equalsIgnoreCase(postCommentDto.getType())) {
-                Optional<Macro> macro = getMacro(postCommentDto.getInterfaceId());
-                if (macro.isPresent()) {
-                    try {
-                        interfaceCommentService.postComment(postCommentDto, macro.get());
-                    } catch (Exception ex) {
-                        map.put("post_failure", ex.getMessage());
-                    }
-                    map.put("comments", interfaceCommentService.findComments(macro.get()).stream()
-                            .sorted(byDate)
-                            .map(comment -> new CommentListDto()
-                                    .setWhen(prettyTime.format(comment.getPostDate()))
-                                    .setCommenter(comment.getCommenter().getUsername())
-                                    .setId(comment.getId())
-                                    .setContent(comment.getComment())).collect(Collectors.toList()));
-                } else {
-                    map.put("comments", new ArrayList<>());
-                }
-            } else {
-                map.put("comments", new ArrayList<>());
-            }
-        } else {
-            map.put("post_failure", "Please fill in an actual comment before posting");
-        }
-
-        map.put("interfaceType", postCommentDto.getType());
-        map.put("interfaceId", postCommentDto.getInterfaceId());
-        return "comments/comments :: showComments";
-    }
 
     @RequestMapping(value = "/{type}/{id}/disqus", method = RequestMethod.GET)
     public String findByIdDisqus(ModelMap map, @PathVariable("type") String type, @PathVariable("id") long id) {
@@ -130,6 +64,34 @@ public class InterfaceCommentController {
     public
     @ResponseBody
     String newComment(@PathVariable("type") String type, @PathVariable("id") long id, @RequestBody DisqusCommentDto disqusCommentDto) {
+        if (TMW.equalsIgnoreCase(type)) {
+            Optional<TellMeWhen> tmw = getTMW(id);
+            if (tmw.isPresent()) {
+                try {
+                    interfaceCommentService.notifyForComment(tmw.get());
+                } catch (Exception ex) {
+                    logger.error(String.format("error during notification of tmwcomment: %s", ex.getMessage()));
+                }
+            }
+        } else if (WA.equalsIgnoreCase(type)) {
+            Optional<WeakAura> wa = getWA(id);
+            if (wa.isPresent()) {
+                try {
+                    interfaceCommentService.notifyForComment(wa.get());
+                } catch (Exception ex) {
+                    logger.error(String.format("error during notification of wacomment: %s", ex.getMessage()));
+                }
+            }
+        } else if (MACRO.equalsIgnoreCase(type)) {
+            Optional<Macro> macro = getMacro(id);
+            if (macro.isPresent()) {
+                try {
+                    interfaceCommentService.notifyForComment(macro.get());
+                } catch (Exception ex) {
+                    logger.error(String.format("error during notification of macrocomment: %s", ex.getMessage()));
+                }
+            }
+        }
         return "OK";
     }
 

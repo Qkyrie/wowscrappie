@@ -33,11 +33,7 @@ public class InterfaceCommentServiceImpl implements InterfaceCommentService {
     @Autowired
     private TellMeWhenCommentRepository tellMeWhenCommentRepository;
     @Autowired
-    private InterfaceCommentRepository interfaceCommentRepository;
-    @Autowired
     private PersistentNotificationService persistentNotificationService;
-    @Autowired
-    private SecurityUtility securityUtility;
 
     @Override
     @Transactional(readOnly = true)
@@ -59,98 +55,36 @@ public class InterfaceCommentServiceImpl implements InterfaceCommentService {
 
     @Override
     @Transactional
-    public void postComment(PostCommentDto commentDto, WeakAura weakAura) {
-        try {
-            Optional<ScrappieUser> currentUser = securityUtility.currentUser();
-            if (currentUser.isPresent()) {
-                interfaceCommentRepository.save(
-                        new WeakAuraComment()
-                                .setWeakAura(weakAura)
-                                .setComment(commentDto.getComment())
-                                .setPostDate(now())
-                                .setCommenter(currentUser.get())
-                );
-
-                if (!currentUser.equals(weakAura.getUploader())) {
-                    persistentNotificationService.createPersistentNotification(
-                            weakAura.getUploader(),
-                            PersistentNotificationDto.create()
-                                    .setTitle(String.format("%s commented on %s", currentUser.get().getUsername(), weakAura.getName()))
-                                    .setContent(commentDto.getComment())
-                                    .setUrl(String.format("/shared/wa/%s", weakAura.getId())
-                                    ));
-                }
-            } else {
-                throw new IllegalArgumentException("Unable to post the comment, please try again later!");
-            }
-        } catch (Exception ex) {
-            throw new IllegalArgumentException("Unable to post the comment, please try again later!");
-        }
+    public void notifyForComment(WeakAura weakAura) {
+        persistentNotificationService.createPersistentNotification(
+                weakAura.getUploader(),
+                PersistentNotificationDto.create()
+                        .setTitle(String.format("Someone commented on %s", weakAura.getName()))
+                        .setContent(String.format("Someone commented on %s", weakAura.getName()))
+                        .setUrl(String.format("/shared/wa/%s", weakAura.getId())));
     }
 
     @Override
     @Transactional
-    public void postComment(PostCommentDto commentDto, TellMeWhen tellMeWhen) {
-        try {
-            Optional<ScrappieUser> currentUser = securityUtility.currentUser();
-            if (currentUser.isPresent()) {
-                interfaceCommentRepository.save(
-                        new TellMeWhenComment()
-                                .setTellMeWhen(tellMeWhen)
-                                .setComment(commentDto.getComment())
-                                .setPostDate(now())
-                                .setCommenter(currentUser.get())
-                );
-
-                if (!currentUser.equals(tellMeWhen.getUploader())) {
-                    persistentNotificationService.createPersistentNotification(
-                            tellMeWhen.getUploader(),
-                            PersistentNotificationDto.create()
-                                    .setTitle(String.format("%s commented on %s", currentUser.get().getUsername(), tellMeWhen.getName()))
-                                    .setContent(commentDto.getComment())
-                                    .setUrl(String.format("/shared/tmw/%s", tellMeWhen.getId()))
-                    );
-                }
-            } else {
-                throw new IllegalArgumentException("Unable to post the comment, please try again later!");
-            }
-        } catch (Exception ex) {
-            throw new IllegalArgumentException("Unable to post the comment, please try again later!");
-        }
+    public void notifyForComment(TellMeWhen tellMeWhen) {
+        persistentNotificationService.createPersistentNotification(
+                tellMeWhen.getUploader(),
+                PersistentNotificationDto.create()
+                        .setTitle(String.format("Someone commented on %s", tellMeWhen.getName()))
+                        .setContent(String.format("Someone commented on %s", tellMeWhen.getName()))
+                        .setUrl(String.format("/shared/tmw/%s", tellMeWhen.getId()))
+        );
     }
 
     @Override
     @Transactional
-    public void postComment(PostCommentDto commentDto, Macro macro) {
-        try {
-            Optional<ScrappieUser> currentUser = securityUtility.currentUser();
-            if (currentUser.isPresent()) {
-                interfaceCommentRepository.save(
-                        new MacroComment()
-                                .setMacro(macro)
-                                .setComment(commentDto.getComment())
-                                .setPostDate(now())
-                                .setCommenter(currentUser.get())
-                );
-
-                if (!currentUser.equals(macro.getUploader())) {
-                    persistentNotificationService.createPersistentNotification(
-                            macro.getUploader(),
-                            PersistentNotificationDto.create()
-                                    .setTitle(String.format("%s commented on %s", currentUser.get().getUsername(), macro.getName()))
-                                    .setContent(commentDto.getComment())
-                                    .setUrl(String.format("/shared/macro/%s", macro.getId()))
-                    );
-                }
-            } else {
-                throw new IllegalArgumentException("Unable to post the comment, please try again later!");
-            }
-        } catch (Exception ex) {
-            throw new IllegalArgumentException("Unable to post the comment, please try again later!");
-        }
-    }
-
-    private Date now() {
-        return new Date();
+    public void notifyForComment(Macro macro) {
+        persistentNotificationService.createPersistentNotification(
+                macro.getUploader(),
+                PersistentNotificationDto.create()
+                        .setTitle(String.format("Someone commented on %s", macro.getName()))
+                        .setContent(String.format("Someone commented on %s", macro.getName()))
+                        .setUrl(String.format("/shared/macro/%s", macro.getId()))
+        );
     }
 }

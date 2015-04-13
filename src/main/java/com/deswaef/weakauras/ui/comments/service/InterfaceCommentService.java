@@ -16,9 +16,7 @@ public interface InterfaceCommentService {
     List<MacroComment> findComments(Macro macro);
     List<TellMeWhenComment> findComments(TellMeWhen tellMeWhen);
 
-    void postComment(PostCommentDto commentDto, WeakAura weakAura);
-
-    void postComment(PostCommentDto commentDto, TellMeWhen tellMeWhen);
-
-    void postComment(PostCommentDto commentDto, Macro macro);
+    void notifyForComment(WeakAura weakAura);
+    void notifyForComment(TellMeWhen tellMeWhen);
+    void notifyForComment(Macro macro);
 }
