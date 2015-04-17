@@ -22,21 +22,21 @@ import java.util.List;
 @RequestMapping("/login")
 public class LoginController {
 
-    @Autowired
-    private ConnectionRepository connectionRepository;
+   /* @Autowired
+    private ConnectionRepository connectionRepository;*/
 
     @Autowired
     private AuthenticationSecurityInjector authenticationSecurityInjector;
 
     @RequestMapping(method = RequestMethod.GET)
     public String login(HttpServletRequest request) {
-        if (isAuthenticated() && !hasLogoutParameter(request)) {
+        /*if (isAuthenticated() && !hasLogoutParameter(request)) {
             Connection<?> facebook = connectionRepository.findConnections("facebook").get(0);
             authenticationSecurityInjector.injectFacebookId(new FacebookUser()
                     .setFacebookId(facebook.getKey().getProviderUserId())
                     .setUsername(facebook.fetchUserProfile().getFirstName() + facebook.fetchUserProfile().getLastName())
                     .setEmail(facebook.fetchUserProfile().getEmail()));
-        }
+        }*/
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null &&
                 authentication.isAuthenticated() &&
@@ -47,12 +47,12 @@ public class LoginController {
         }
     }
 
-    private boolean hasLogoutParameter(HttpServletRequest request) {
+ /*   private boolean hasLogoutParameter(HttpServletRequest request) {
         return request.getParameter("logout") != null;
     }
 
     private boolean isAuthenticated() {
         List<Connection<?>> facebook = connectionRepository.findConnections("facebook");
         return facebook.size() > 0 && facebook.get(0).fetchUserProfile() != null;
-    }
+    }*/
 }

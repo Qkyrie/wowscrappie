@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.context.request.WebRequest;
 
-@Component
+//@Component
 public class FacebookAsPrincipalInterceptor implements ConnectInterceptor<Facebook> {
 
     private Log logger = LogFactory.getLog(FacebookAsPrincipalInterceptor.class);

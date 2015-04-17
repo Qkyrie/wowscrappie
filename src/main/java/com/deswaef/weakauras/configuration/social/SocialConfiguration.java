@@ -7,7 +7,7 @@ import org.springframework.social.connect.web.ConnectController;
 
 import javax.annotation.PostConstruct;
 
-@Configuration
+//@Configuration
 public class SocialConfiguration {
 
     @Value("${com.deswaef.scrappie.fullbaseurl}")

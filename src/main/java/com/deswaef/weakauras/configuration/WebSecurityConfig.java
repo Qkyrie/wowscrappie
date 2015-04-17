@@ -21,8 +21,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserDetailsService userDetailsService;
-    @Autowired
-    private FacebookLogoutHandler facebookLogoutHandler;
+    //@Autowired
+    //private FacebookLogoutHandler facebookLogoutHandler;
     @Autowired
     private LoginSuccessHandler loginSuccessHandler;
 
@@ -42,7 +42,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .usernameParameter("j_username")
                 .passwordParameter("j_password")
                 .failureUrl("/login?error").and().logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).addLogoutHandler(facebookLogoutHandler).and()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                //.addLogoutHandler(facebookLogoutHandler)
+                 .and()
                 .exceptionHandling().accessDeniedPage("/access?error")
                 .and()
                 .csrf().disable();
