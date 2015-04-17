@@ -14,7 +14,7 @@ import javax.mail.internet.MimeMessage;
 import java.util.ArrayList;
 import java.util.List;
 
-//@Component
+@Component
 public class MailServiceImpl {
 
     @Autowired
