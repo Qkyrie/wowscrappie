@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
-@Configuration
+//@Configuration
 public class MailConfiguration {
 
     @Value("${mail.host}")

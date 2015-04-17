@@ -14,10 +14,8 @@ import org.springframework.context.annotation.Profile;
 import redis.clients.jedis.Protocol;
 import redis.embedded.RedisServer;
 
-import javax.persistence.Embedded;
-
 @Configuration
-@Profile("development")
+@Profile({"development", "integrationtest"})
 public class EmbeddedRedisConfiguration {
 
     private Log logger = LogFactory.getLog(EmbeddedRedisConfiguration.class);
