@@ -44,8 +44,8 @@ public class MailServiceImplTest {
                 .send();
 
         GreenMail greenMail = greenmailServerBean.getGreenMail();
-        if (greenMail != null) {
-            assertTrue(greenMail.waitForIncomingEmail(5000, 1));
+        boolean mailReceived = greenMail.waitForIncomingEmail(5000, 1);
+        if (mailReceived) {
             Message[] messages = greenMail.getReceivedMessages();
             assertEquals(1, messages.length);
             assertEquals(mailSubject, messages[0].getSubject());

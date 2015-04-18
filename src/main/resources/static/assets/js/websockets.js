@@ -17,6 +17,16 @@ function ApplicationModel(stompClient) {
         }
     };
 
+    function playNotificationSound() {
+        console.log("")
+        if ($("#Mp3Me") !== undefined && $("#Mp3Me").length != 0) {
+            $("#Mp3Me").bind("ended", function() {
+                $("#Mp3Me")[0].src = '/shared/sound/notification';
+            });
+            $("#Mp3Me")[0].play();
+        }
+    }
+
     function addOneToNotificationCount() {
         var html = self.notificationCount.html();
         if(html == undefined || html.trim() == "") {
@@ -24,6 +34,7 @@ function ApplicationModel(stompClient) {
         } else {
             self.setNotificationCount(parseInt(html) + 1);
         }
+        playNotificationSound();
     }
 
     self.connect = function() {

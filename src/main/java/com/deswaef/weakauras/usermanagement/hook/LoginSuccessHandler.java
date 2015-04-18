@@ -1,6 +1,5 @@
 package com.deswaef.weakauras.usermanagement.hook;
 
-import com.deswaef.weakauras.notifications.domain.Notification;
 import com.deswaef.weakauras.notifications.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -21,7 +20,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        notificationService.broadcastToAdmins(Notification.create(authentication.getName() + " just logged in!"));
+        //notificationService.broadcastToAdmins(Notification.create(authentication.getName() + " just logged in!"));
         new SimpleUrlAuthenticationSuccessHandler()
                 .onAuthenticationSuccess(request, response, authentication);
     }

@@ -73,7 +73,6 @@
                     </li>
                 </ul>
             </div>
-
         </div>
     </nav>
     <!-- /. NAV TOP  -->
@@ -261,6 +260,12 @@
 <script th:src="@{/assets/js/stomp/lib/stomp.js}"></script>
 <script th:src="@{/assets/js/websockets.js}"></script>
 
+
+<audio sec:authorize="isAuthenticated()" id="Mp3Me" style="visibility: hidden;" autobuffer="autobuffer" preload="preload">
+    <source th:src="@{/shared/sound/notification}" />
+</audio>
+
+
 <div sec:authorize="isAuthenticated()">
     <script type="application/javascript">
         (function () {
@@ -271,7 +276,6 @@
         })();
     </script>
 </div>
-
 
 <div layout:fragment="footer-content"></div>
 
