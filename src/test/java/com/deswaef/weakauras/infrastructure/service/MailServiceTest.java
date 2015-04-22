@@ -3,7 +3,6 @@ package com.deswaef.weakauras.infrastructure.service;
 import com.deswaef.weakauras.WeakAuras;
 import com.deswaef.weakauras.configuration.GreenmailConfiguration;
 import com.icegreen.greenmail.util.GreenMail;
-import com.icegreen.greenmail.util.GreenMailUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +22,10 @@ import static org.junit.Assert.*;
 @ActiveProfiles("integrationtest")
 @WebAppConfiguration
 @IntegrationTest("server.port:0")
-public class MailServiceImplTest {
+public class MailServiceTest {
 
     @Autowired
-    private MailServiceImpl mailService;
+    private MailService mailService;
     @Autowired
     private GreenmailConfiguration.GreenmailServerBean greenmailServerBean;
 

@@ -25,7 +25,7 @@ public class RedisSessionConfiguration {
         activeUserCache.setConnectionFactory(connectionFactory());
         activeUserCache.setKeySerializer(new StringRedisSerializer());
         activeUserCache.setHashKeySerializer(new StringRedisSerializer());
-        activeUserCache.setHashValueSerializer(new JacksonJsonRedisSerializer<ActiveWebSocketUser>(ActiveWebSocketUser.class));
+        activeUserCache.setHashValueSerializer(new JacksonJsonRedisSerializer<>(ActiveWebSocketUser.class));
         return activeUserCache;
     }
 }

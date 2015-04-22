@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class MailServiceImpl {
+public class MailService {
 
     @Autowired
     private JavaMailSender mailSender;
