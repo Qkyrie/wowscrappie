@@ -1,15 +1,21 @@
 package com.deswaef.weakauras.sounds.domain;
 
 public enum SoundRepositoryEnum {
-    NONE("no sounds"), DEFAULT("default sound"), SURPRISE("omg surprise me!");
+    NONE("no sounds", null), DEFAULT("default sound", "alerts"), SURPRISE("omg surprise me!", "fun");
 
     private String explanation;
+    private String storeValue;
 
-    SoundRepositoryEnum(String explanation) {
+    SoundRepositoryEnum(String explanation, String storeValue) {
         this.explanation = explanation;
+        this.storeValue = storeValue;
     }
 
     public String getExplanation() {
         return explanation;
+    }
+
+    public String getStoreValue() {
+        return storeValue;
     }
 }

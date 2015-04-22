@@ -1,5 +1,6 @@
 package com.deswaef.weakauras.sounds.configuration;
 
+import com.deswaef.weakauras.sounds.domain.SoundRepositoryEnum;
 import org.apache.commons.io.filefilter.FileFileFilter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -17,14 +18,18 @@ public class SoundStore {
     private String destinationLocation;
 
     public Optional<File> getRandomFile() {
+        return getRandomFile(SoundRepositoryEnum.DEFAULT);
+    }
+
+    public Optional<File> getRandomFile(SoundRepositoryEnum soundRepo) {
         try {
-            File parentFile = new File(destinationLocation);
+            File parentFile = new File(destinationLocation + File.separator + soundRepo.getStoreValue());
             if (parentFile.isDirectory()) {
-                File[] files = parentFile.listFiles((FileFilter)FileFileFilter.FILE);
+                File[] files = parentFile.listFiles((FileFilter) FileFileFilter.FILE);
                 long count = files.length;
-                if(count==0) return Optional.empty();
+                if (count == 0) return Optional.empty();
                 Random r = new Random();
-                long randomIndex=count<=Integer.MAX_VALUE? r.nextInt((int)count):
+                long randomIndex = count <= Integer.MAX_VALUE ? r.nextInt((int) count) :
                         r.longs(1, 0, count).findFirst().orElseThrow(AssertionError::new);
                 return Arrays.asList(files)
                         .stream()
@@ -37,5 +42,4 @@ public class SoundStore {
         }
         return Optional.empty();
     }
-
 }
