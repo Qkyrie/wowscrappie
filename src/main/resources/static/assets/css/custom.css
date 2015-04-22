@@ -40,6 +40,7 @@ body {
     padding:10px;
     min-height:1200px;
     overflow:hidden;
+    position: relative;
 }
 
 .text-center {
@@ -480,4 +481,8 @@ img.center {
     display: block;
     margin-left: auto;
     margin-right: auto;
+}
+
+.navbar {
+    height: 100px;
 }

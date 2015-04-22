@@ -1,5 +1,6 @@
 package com.deswaef.weakauras.usermanagement.controller.dto;
 
+import com.deswaef.weakauras.sounds.domain.SoundRepositoryEnum;
 import com.deswaef.weakauras.usermanagement.domain.ScrappieUser;
 import com.deswaef.weakauras.usermanagement.domain.UserProfile;
 
@@ -12,6 +13,8 @@ public class UserProfileDto {
     private Long macros;
     private Long tmws;
     private Long was;
+    private boolean receiveEmailNotifications;
+    private SoundRepositoryEnum soundRepository;
 
     public static UserProfileDto create(ScrappieUser user, UserProfile profile) {
         return new UserProfileDto()
@@ -19,7 +22,9 @@ public class UserProfileDto {
                 .setUserName(user.getUsername())
                 .setTwitchStream(profile.getTwitchStream())
                 .setTwitterName(profile.getTwitterName())
-                .setUserId(user.getId());
+                .setUserId(user.getId())
+                .setReceiveEmailNotifications(profile.isReceiveEmailNotifications())
+                .setSoundRepository(profile.getSoundRepositoryEnum());
     }
 
     public String getUserName() {
@@ -91,6 +96,24 @@ public class UserProfileDto {
 
     public UserProfileDto setUserId(Long userId) {
         this.userId = userId;
+        return this;
+    }
+
+    public boolean isReceiveEmailNotifications() {
+        return receiveEmailNotifications;
+    }
+
+    public UserProfileDto setReceiveEmailNotifications(boolean receiveEmailNotifications) {
+        this.receiveEmailNotifications = receiveEmailNotifications;
+        return this;
+    }
+
+    public SoundRepositoryEnum getSoundRepository() {
+        return soundRepository;
+    }
+
+    public UserProfileDto setSoundRepository(SoundRepositoryEnum soundRepository) {
+        this.soundRepository = soundRepository;
         return this;
     }
 }

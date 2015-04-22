@@ -1,6 +1,7 @@
 package com.deswaef.weakauras.usermanagement.controller;
 
 import com.deswaef.weakauras.security.SecurityUtility;
+import com.deswaef.weakauras.sounds.domain.SoundRepositoryEnum;
 import com.deswaef.weakauras.usermanagement.controller.dto.UserProfileDto;
 import com.deswaef.weakauras.usermanagement.domain.ScrappieUser;
 import com.deswaef.weakauras.usermanagement.domain.UserProfile;
@@ -43,6 +44,7 @@ public class EditProfileController {
             if (scrappieUser.isPresent()) {
                 UserProfile userProfile = userProfileService.findByUser(scrappieUser.get());
                 modelMap.put("profile", createProfileDto(scrappieUser, userProfile));
+                modelMap.put("soundRepositories", SoundRepositoryEnum.values());
                 return "users/edit-profile";
             } else {
                 return USERS_NOT_FOUND;

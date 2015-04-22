@@ -1,6 +1,10 @@
 package com.deswaef.weakauras.usermanagement.domain;
 
+import com.deswaef.weakauras.sounds.domain.SoundRepositoryEnum;
+
 import javax.persistence.*;
+
+import static com.deswaef.weakauras.sounds.domain.SoundRepositoryEnum.DEFAULT;
 
 @Table(name = "user_profile")
 @Entity
@@ -19,6 +23,13 @@ public class UserProfile {
 
     @Column(name = "twitter_name")
     private String twitterName;
+
+    @Column(name = "receive_email_notifications")
+    private boolean receiveEmailNotifications;
+
+    @Column(name = "sound_repository")
+    @Enumerated(value = EnumType.STRING)
+    private SoundRepositoryEnum soundRepositoryEnum = DEFAULT;
 
     @OneToOne
     @JoinColumn(name = "user_id")
@@ -66,6 +77,24 @@ public class UserProfile {
 
     public UserProfile setScrappieUser(ScrappieUser scrappieUser) {
         this.scrappieUser = scrappieUser;
+        return this;
+    }
+
+    public boolean isReceiveEmailNotifications() {
+        return receiveEmailNotifications;
+    }
+
+    public UserProfile setReceiveEmailNotifications(boolean receiveEmailNotifications) {
+        this.receiveEmailNotifications = receiveEmailNotifications;
+        return this;
+    }
+
+    public SoundRepositoryEnum getSoundRepositoryEnum() {
+        return soundRepositoryEnum;
+    }
+
+    public UserProfile setSoundRepositoryEnum(SoundRepositoryEnum soundRepositoryEnum) {
+        this.soundRepositoryEnum = soundRepositoryEnum;
         return this;
     }
 }

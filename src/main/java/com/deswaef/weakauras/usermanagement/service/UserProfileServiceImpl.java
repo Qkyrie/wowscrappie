@@ -1,5 +1,6 @@
 package com.deswaef.weakauras.usermanagement.service;
 
+import com.deswaef.weakauras.sounds.domain.SoundRepositoryEnum;
 import com.deswaef.weakauras.usermanagement.controller.dto.UserProfileDto;
 import com.deswaef.weakauras.usermanagement.domain.ScrappieUser;
 import com.deswaef.weakauras.usermanagement.domain.UserProfile;
@@ -53,12 +54,19 @@ public class UserProfileServiceImpl implements UserProfileService {
     @Override
     @Transactional
     public void update(UserProfileDto userProfileDto, ScrappieUser scrappieUser) {
+        if (userProfileDto.getSoundRepository() == null) {
+            userProfileDto.setSoundRepository(SoundRepositoryEnum.DEFAULT);
+        }
+
         UserProfile byUser = findByUser(scrappieUser);
+        UserProfile entity = byUser
+                .setAboutMe(userProfileDto.getAboutMe())
+                .setTwitterName(userProfileDto.getTwitterName())
+                .setTwitchStream(userProfileDto.getTwitchStream())
+                .setSoundRepositoryEnum(userProfileDto.getSoundRepository())
+                .setReceiveEmailNotifications(userProfileDto.isReceiveEmailNotifications());
         userProfileRepository.save(
-                byUser
-                        .setAboutMe(userProfileDto.getAboutMe())
-                        .setTwitterName(userProfileDto.getTwitterName())
-                        .setTwitchStream(userProfileDto.getTwitchStream())
+                entity
         );
     }
 }
