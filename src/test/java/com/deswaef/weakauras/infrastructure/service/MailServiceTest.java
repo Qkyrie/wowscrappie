@@ -33,7 +33,7 @@ public class MailServiceTest {
     public void sendBasicEmailWithFromAndTo() throws MessagingException {
         String mailText = "Hallo World";
         String mailSubject = "Hallo";
-        String mailTo = "test@excaple.com";
+        String mailTo = "test@example.com";
         String mailFrom = "no-reply@wowscrappie.com";
         mailService.createMail()
                 .body(mailText)
