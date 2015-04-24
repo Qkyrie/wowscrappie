@@ -1,5 +1,7 @@
 /* * * CONFIGURATION VARIABLES * * */
-var disqus_shortname = 'wowscrappie';
+
+var m = $("meta[name=_disqusname]");
+var disqus_shortname = m.attr("content");
 var disqus_identifier = $("#disqus_identifier").val();
 
 var fullUrl = '/interface/comments/' + disqus_identifier + '/disqus';
