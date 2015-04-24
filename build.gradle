@@ -92,8 +92,6 @@ dependencies {
     testCompile("com.h2database:h2")
     testCompile("org.springframework.boot:spring-boot-starter-test")
     testCompile('org.easytesting:fest-assert:1.4')
-
-
 }
 
 task wrapper(type: Wrapper) {
