@@ -64,9 +64,10 @@ dependencies {
     compile("org.springframework.security:spring-security-data:4.0.0.RELEASE")
     compile("org.springframework.boot:spring-boot-starter-websocket")
     compile("org.springframework:spring-messaging")
-    compile("org.springframework.boot:spring-boot-starter-redis")
     compile("org.springframework.social:spring-social-facebook")
     compile("org.springframework.social:spring-social-twitter")
+    compile 'org.springframework.data:spring-data-redis:1.5.0.RELEASE'
+    compile('redis.clients:jedis:2.6.2')
     compile("redis.embedded:embedded-redis:0.5")
     compile("org.springframework.session:spring-session:1.0.0.RELEASE")
     compile 'org.thymeleaf.extras:thymeleaf-extras-springsecurity4:2.1.2.RELEASE'
