@@ -29,7 +29,7 @@ group = 'com.de-swaef.scrappie'
 
 jar {
 	baseName = 'Scrappie'
-	version =  '1.2.0'
+	version =  '1.2.1-SNAPSHOT'
 }
 
 idea {
