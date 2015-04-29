@@ -23,6 +23,9 @@ public class TestMailRestController {
     @Autowired
     private MailService mailService;
 
+    @Value("${com.deswaef.scrappie.mailstore}")
+    private String mailStore;
+
     @Value("${com.deswaef.scrappie.fullbaseurl}")
     private String fullBaseUrl;
 
@@ -31,12 +34,13 @@ public class TestMailRestController {
         try {
             mailService
                     .createMail()
-                    .htmlBody(readMarshalledFile("/emails/testemail.html").replace("${com.deswaef.scrappie.fullbaseur}", fullBaseUrl))
+                    .htmlBody(readFromEmails("testemail.html").replace("${com.deswaef.scrappie.fullbaseur}", fullBaseUrl))
                     .to("quintendeswaef@gmail.com")
                     .subject("WowScrappie - Activate your Registration")
                     .send();
             return new HttpEntity<>("email was sent");
         } catch (Exception ex) {
+            ex.printStackTrace();
             return new HttpEntity<>("Failure when sending: " + ex.getMessage());
         }
     }
@@ -49,9 +53,8 @@ public class TestMailRestController {
     }
 
 
-    public String readMarshalledFile(String s) throws IOException {
-        URL url = this.getClass().getResource(s);
-        File htmlFile = new File(url.getFile());
+    public String readFromEmails(String s) throws IOException {
+        File htmlFile = new File(String.format("%s%s%s", mailStore, File.separator, s));
         return readFile(URLDecoder.decode(htmlFile.getPath()), Charset.defaultCharset());
     }
 
