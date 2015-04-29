@@ -9,6 +9,9 @@ public class Spec {
     @Id
     private Long id;
 
+    @Column(name = "wcl_id")
+    private Long warcraftlogsId;
+
     @Column(name = "name")
     private String name;
 
@@ -49,5 +52,14 @@ public class Spec {
 
     public void setWowClass(WowClass wowClass) {
         this.wowClass = wowClass;
+    }
+
+    public Long getWarcraftlogsId() {
+        return warcraftlogsId;
+    }
+
+    public Spec setWarcraftlogsId(Long warcraftlogsId) {
+        this.warcraftlogsId = warcraftlogsId;
+        return this;
     }
 }
