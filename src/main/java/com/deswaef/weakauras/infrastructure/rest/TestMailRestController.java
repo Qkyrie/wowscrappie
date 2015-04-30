@@ -1,5 +1,6 @@
 package com.deswaef.weakauras.infrastructure.rest;
 
+import com.deswaef.weakauras.infrastructure.service.CachingTestService;
 import com.deswaef.weakauras.infrastructure.service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,12 +23,19 @@ public class TestMailRestController {
 
     @Autowired
     private MailService mailService;
+    @Autowired
+    private CachingTestService cachingTestService;
 
     @Value("${com.deswaef.scrappie.mailstore}")
     private String mailStore;
 
     @Value("${com.deswaef.scrappie.fullbaseurl}")
     private String fullBaseUrl;
+
+    @RequestMapping(value = "/testcaches")
+    public HttpEntity<String> testCaches() {
+        return new HttpEntity<>(cachingTestService.cacheThis(7));
+    }
 
     @RequestMapping(value = "/test")
     public HttpEntity<String> sendEmail() {
