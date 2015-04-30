@@ -8,7 +8,8 @@ public class Raid {
 
     @Id
     private Long id;
-
+    @Column(name = "wcl_raid_id")
+    private Long warcraftlogsRaidId;
     @Column(name = "name")
     private String name;
 
@@ -49,5 +50,14 @@ public class Raid {
 
     public void setTier(Tier tier) {
         this.tier = tier;
+    }
+
+    public Long getWarcraftlogsRaidId() {
+        return warcraftlogsRaidId;
+    }
+
+    public Raid setWarcraftlogsRaidId(Long warcraftlogsRaidId) {
+        this.warcraftlogsRaidId = warcraftlogsRaidId;
+        return this;
     }
 }

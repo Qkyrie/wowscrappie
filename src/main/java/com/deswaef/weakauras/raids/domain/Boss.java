@@ -13,6 +13,8 @@ public class Boss {
 
     @Id
     private Long id;
+    @Column(name = "wcl_encounter_id")
+    private Long warcraftlogsEncounterId;
     @Column(name = "name")
     private String name;
     @Column(name = "slug")
@@ -54,5 +56,14 @@ public class Boss {
 
     public void setBossFightWeakAura(List<BossFightWeakAura> bossFightWeakAura) {
         this.bossFightWeakAura = bossFightWeakAura;
+    }
+
+    public Long getWarcraftlogsEncounterId() {
+        return warcraftlogsEncounterId;
+    }
+
+    public Boss setWarcraftlogsEncounterId(Long warcraftlogsEncounterId) {
+        this.warcraftlogsEncounterId = warcraftlogsEncounterId;
+        return this;
     }
 }
