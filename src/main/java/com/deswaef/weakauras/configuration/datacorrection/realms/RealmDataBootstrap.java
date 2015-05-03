@@ -10,6 +10,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
@@ -27,8 +28,11 @@ public class RealmDataBootstrap  implements DataCorrection {
     public static final long NO_REALMS_YET = 0L;
     private Log logger = LogFactory.getLog(RealmDataBootstrap.class);
 
-    private static final String realmsEUFile = "battlenet/realms/eu-realms.json";
-    private static final String realmsUSFile = "battlenet/realms/us-realms.json";
+    @Value("${com.deswaef.scrappie.scriptstore}")
+    private String scriptStore;
+
+    private static final String realmsEUFile = "eu-realms.json";
+    private static final String realmsUSFile = "us-realms.json";
 
     @Autowired
     private RealmService realmService;
@@ -69,7 +73,6 @@ public class RealmDataBootstrap  implements DataCorrection {
     }
 
     private File getFileAsString(String filename) throws MalformedURLException {
-        ClassLoader classLoader = getClass().getClassLoader();
-        return new File(classLoader.getResource(filename).getFile());
+        return new File(scriptStore + File.separator + filename);
     }
 }
