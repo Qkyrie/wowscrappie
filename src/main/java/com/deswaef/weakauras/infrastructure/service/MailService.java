@@ -1,6 +1,8 @@
 package com.deswaef.weakauras.infrastructure.service;
 
 import com.google.common.base.Optional;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
@@ -16,6 +18,8 @@ import java.util.List;
 
 @Component
 public class MailService {
+
+    private Log logger = LogFactory.getLog(MailService.class);
 
     @Autowired
     private JavaMailSender mailSender;
@@ -104,8 +108,8 @@ public class MailService {
 
         public void send() {
             sendMail(this);
+            logger.info("mail was sent to " + this.from.or("unknown"));
         }
-
     }
 
     private class Attachment {
