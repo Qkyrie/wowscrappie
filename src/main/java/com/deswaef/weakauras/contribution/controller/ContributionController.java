@@ -5,6 +5,7 @@ import com.deswaef.weakauras.classes.service.ClassService;
 import com.deswaef.weakauras.contribution.controller.dto.ContributionCommand;
 import com.deswaef.weakauras.contribution.controller.dto.SelectSpecDto;
 import com.deswaef.weakauras.contribution.service.ContributionService;
+import com.deswaef.weakauras.infrastructure.service.MailService;
 import com.deswaef.weakauras.notifications.controller.dto.PersistentNotificationDto;
 import com.deswaef.weakauras.notifications.domain.Notification;
 import com.deswaef.weakauras.notifications.service.NotificationService;
@@ -14,6 +15,9 @@ import com.deswaef.weakauras.raids.service.RaidService;
 import com.deswaef.weakauras.security.CurrentUser;
 import com.deswaef.weakauras.ui.image.ImageStore;
 import com.deswaef.weakauras.usermanagement.domain.ScrappieUser;
+import com.deswaef.weakauras.usermanagement.domain.UserProfile;
+import com.deswaef.weakauras.usermanagement.service.UserProfileService;
+import com.deswaef.weakauras.usermanagement.util.AdministratorsCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Controller;
@@ -47,7 +51,12 @@ public class ContributionController {
     private NotificationService notificationService;
     @Autowired
     private PersistentNotificationService persistentNotificationService;
-
+    @Autowired
+    private MailService mailService;
+    @Autowired
+    private AdministratorsCache administratorsCache;
+    @Autowired
+    private UserProfileService userProfileService;
 
     @RequestMapping
     public String index() {
@@ -111,8 +120,25 @@ public class ContributionController {
         persistentNotificationService.notifyAdmins(PersistentNotificationDto.create()
                 .setContent(String.format("%s just did a contribution", scrappieUser.getUsername()))
                 .setTitle("New Contribution!")
-                .setUrl("/admin/pending-uploads"))
-        ;
+                .setUrl("/admin/pending-uploads"));
+        mailAdmins("New Contribution!", String.format("%s just did a contribution", scrappieUser.getUsername()));
         return "success";
     }
+
+    private void mailAdmins(String subject, String content) {
+        administratorsCache.getAdmins()
+                .stream()
+                .map(userProfileService::findByUser)
+                .filter(UserProfile::isReceiveEmailNotifications)
+                .forEach(userProfile -> {
+                    mailService
+                            .createMail()
+                            .body(content)
+                            .subject(subject)
+                            .to(userProfile.getScrappieUser().getEmail())
+                            .send();
+                });
+    }
+
+
 }
