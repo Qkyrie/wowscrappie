@@ -26,32 +26,9 @@ public class WowClass {
         return id;
     }
 
-    public void setId(Long id) {
+    public WowClass setId(Long id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSlug() {
-        return slug;
-    }
-
-    public void setSlug(String slug) {
-        this.slug = slug;
-    }
-
-    public Set<Spec> getSpecs() {
-        return specs;
-    }
-
-    public void setSpecs(Set<Spec> specs) {
-        this.specs = specs;
+        return this;
     }
 
     public Long getWarcraftlogsId() {
@@ -60,6 +37,33 @@ public class WowClass {
 
     public WowClass setWarcraftlogsId(Long warcraftlogsId) {
         this.warcraftlogsId = warcraftlogsId;
+        return this;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public WowClass setName(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public String getSlug() {
+        return slug;
+    }
+
+    public WowClass setSlug(String slug) {
+        this.slug = slug;
+        return this;
+    }
+
+    public Set<Spec> getSpecs() {
+        return specs;
+    }
+
+    public WowClass setSpecs(Set<Spec> specs) {
+        this.specs = specs;
         return this;
     }
 }

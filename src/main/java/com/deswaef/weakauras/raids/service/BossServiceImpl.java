@@ -1,7 +1,9 @@
 package com.deswaef.weakauras.raids.service;
 
+import com.deswaef.weakauras.raids.domain.Boss;
 import com.deswaef.weakauras.raids.domain.Raid;
 import com.deswaef.weakauras.raids.domain.RaidBoss;
+import com.deswaef.weakauras.raids.repository.BossRepository;
 import com.deswaef.weakauras.raids.repository.RaidBossRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,8 @@ public class BossServiceImpl implements BossService {
 
     @Autowired
     private RaidBossRepository raidBossRepository;
+    @Autowired
+    private BossRepository bossRepository;
 
     @Override
     @Transactional(readOnly = true)
@@ -28,5 +32,8 @@ public class BossServiceImpl implements BossService {
         return raidBossRepository.findOne(id);
     }
 
-
+    @Override
+    public Optional<Boss> findByWarcraftlogsEncounterId(Long warcraftlogsEncounterId) {
+        return bossRepository.findByWarcraftlogsEncounterId(warcraftlogsEncounterId);
+    }
 }

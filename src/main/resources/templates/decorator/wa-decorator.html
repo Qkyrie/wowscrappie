@@ -221,6 +221,16 @@
                     </ul>
                 </li>
                 <li>
+                    <a href="#"><i class="fa fa-cog fa-3x"></i> Tools<span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a th:href="@{/warcraftlogs/character}"> Character Rankings</a>
+                        </li>
+
+                    </ul>
+                </li>
+                <li>
                     <a th:href="@{/contribute}"><i class="fa fa-laptop fa-3x"></i> Contribute!</a>
                 </li>
                 <li sec:authorize="isAuthenticated()">
@@ -269,8 +279,9 @@
 <script th:src="@{/assets/js/websockets.js}"></script>
 
 
-<audio sec:authorize="isAuthenticated()" id="Mp3Me" style="visibility: hidden;" autobuffer="autobuffer" preload="preload">
-    <source th:src="@{/shared/sound/notification}" />
+<audio sec:authorize="isAuthenticated()" id="Mp3Me" style="visibility: hidden;" autobuffer="autobuffer"
+       preload="preload">
+    <source th:src="@{/shared/sound/notification}"/>
 </audio>
 
 

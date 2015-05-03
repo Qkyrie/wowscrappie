@@ -36,4 +36,9 @@ public class SpecServiceImpl implements SpecService {
     public Optional<Spec> bySlug(WowClass wowClass, String slug) {
         return specRepository.findBySlugAndWowClass(slug, wowClass);
     }
+
+    @Override
+    public Optional<Spec> findByWarcraftlogsIdAndWowClassWarcraftlogsid(Long wclId, Long classWclId) {
+        return specRepository.findByWarcraftlogsIdAndWowClassWarcraftlogsId(wclId, classWclId);
+    }
 }

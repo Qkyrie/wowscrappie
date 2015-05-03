@@ -12,5 +12,5 @@ public interface SpecService {
     Set<Spec> byClass(WowClass wowClass);
 
     Optional<Spec> bySlug(WowClass wowClass, String slug);
-
+    Optional<Spec> findByWarcraftlogsIdAndWowClassWarcraftlogsid(Long wclId, Long classWclId);
 }
