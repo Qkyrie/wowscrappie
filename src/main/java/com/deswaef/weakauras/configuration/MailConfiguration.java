@@ -21,7 +21,6 @@ public class MailConfiguration {
     @Value("${mail.default.address}")
     private String defaultAddress;
 
-
     @Value("${mail.default.authentication.active}")
     private boolean authentication;
 
@@ -31,19 +30,23 @@ public class MailConfiguration {
     @Value("${mail.default.authentication.password}")
     private String authenticationPassword;
 
+    @Value("${mail.smtp.localhost}")
+    private String heloName;
+
     @Bean
     public JavaMailSender mailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost(host);
         mailSender.setPort(port);
 
+        Properties properties = new Properties();
+        properties.put("mail.smtp.localhost", heloName);
         if (authentication) {
-            Properties properties = new Properties();
             properties.setProperty("mail.smtp.auth", "true");
-            mailSender.setJavaMailProperties(properties);
             mailSender.setPassword(authenticationPassword);
             mailSender.setUsername(authenticationUsername);
         }
+        mailSender.setJavaMailProperties(properties);
 
         return mailSender;
     }
