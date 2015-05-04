@@ -118,10 +118,10 @@ public class ContributionController {
     String doUpload(@RequestBody ContributionCommand command, @CurrentUser ScrappieUser scrappieUser) {
         contributionService.contribute(command);
         persistentNotificationService.notifyAdmins(PersistentNotificationDto.create()
-                .setContent(String.format("%s just did a contribution", scrappieUser.getUsername()))
+                .setContent(String.format("%s just made a contribution", scrappieUser.getUsername()))
                 .setTitle("New Contribution!")
                 .setUrl("/admin/pending-uploads"));
-        mailAdmins("New Contribution!", String.format("%s just did a contribution", scrappieUser.getUsername()));
+        mailAdmins("New Contribution!", String.format("%s just made a contribution", scrappieUser.getUsername()));
         return "success";
     }
 
