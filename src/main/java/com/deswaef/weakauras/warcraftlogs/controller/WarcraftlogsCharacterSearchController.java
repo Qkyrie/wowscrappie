@@ -96,7 +96,7 @@ public class WarcraftlogsCharacterSearchController {
                     .setTotal(x.getTotal())
                     .setRank(x.getRank())
                     .setOutOf(x.getOutOf())
-                    .setRankPercentage(decimalformat.format(100 - (float)x.getRank() / x.getOutOf()) + "%")
+                    .setRankPercentage(decimalformat.format((1 - (float)x.getRank() / x.getOutOf())*100) + "%")
                     .setFightID(x.getFightID())
                     .setClassAndSpec(String.format("%s %s", spec.getName(), spec.getWowClass().getName()))
                     .setStartTimePretty(PRETTY_TIME.format(new Date(x.getStartTime())))
