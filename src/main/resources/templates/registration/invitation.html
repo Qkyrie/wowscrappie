@@ -134,12 +134,10 @@
             $.postJSON('/registration/username/available', {newName: newUsername},
                     function (data) {
                         if (data == false) {
-                            console.log('not a good username');
                             $('#newUsernameFormGroup').addClass('has-error');
                             changeUsernameModel.goodUsername(false);
 
                         } else {
-                            console.log('good username');
                             $('#newUsernameFormGroup').addClass('has-success');
                             changeUsernameModel.goodUsername(true);
                         }
