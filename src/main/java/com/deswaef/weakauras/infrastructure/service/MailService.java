@@ -108,7 +108,7 @@ public class MailService {
 
         public void send() {
             sendMail(this);
-            logger.info("mail was sent to " + this.from.or("unknown"));
+            logger.info("mail was sent to " + this.to.or("unknown"));
         }
     }
 
