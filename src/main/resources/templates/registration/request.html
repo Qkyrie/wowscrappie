@@ -13,10 +13,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-5">
-                    <h3>Request an invitation</h3>
+                    <h3>Register</h3>
                     <p>
-                        Oh, so you're showing interest in Scrappie? Invitation waves go out frequently, until the testing phase has finished and we're
-                        comfortable about releasing. Request your invitation here and we'll get back to you soon!
+                        Oh, so you're showing interest in Scrappie? You're in luck! We opened up the public registration page, just for you!
                     </p>
 
                     <div class="form-group">
@@ -28,14 +27,12 @@
                                data-bind="value: email"
                                class="form-control"/>
                         <br />
-                        <br />
-                        <textarea id="reason" data-bind="text: reason, value:reason" class="form-control floating-label" placeholder="Enter a reason" rows="8"></textarea>
                     </div>
-                    <a href="#" class="btn btn-primary" data-bind="click: save">Request Invitation!</a>
+                    <a href="#" class="btn btn-primary" data-bind="click: save">Register!</a>
                     <br />
                     <div class="form-group">
                         <div id="generalsuccess" style="display:none;" class="alert alert-success">
-                            Request successful, we'll get back to you soon.
+                            Request successful, you'll be receiving an email with your activation code. If you didn't, please contact info@wowscrappie.com or tweet us!
                         </div>
                     </div>
                 </div>
@@ -55,15 +52,13 @@
             var self = this;
 
             this.email = ko.observable("");
-            this.reason = ko.observable("");
 
             this.save = function () {
-                $.postJSON("/registration/request-invitation", {email: self.email(), reason: self.reason()}, function(data) {
+                $.postJSON("/registration", {email: self.email()}, function(data) {
                     if(data.hasErrors === false) {
                         $("#generalsuccess").show();
                         $("#generalfailure").hide();
                         this.email('');
-                        this.reason('');
                     } else {
                         $("#generalfailure").html(data.errorMessage);
                         $("#generalfailure").show();

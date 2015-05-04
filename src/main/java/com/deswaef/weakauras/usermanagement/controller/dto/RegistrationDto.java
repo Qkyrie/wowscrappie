@@ -1,31 +1,21 @@
 package com.deswaef.weakauras.usermanagement.controller.dto;
 
-public class RequestInvitationDto {
+public class RegistrationDto {
     private String email;
-    private String reason;
 
     private boolean hasErrors;
     private String errorMessage;
 
-    public static RequestInvitationDto create() {
-        return new RequestInvitationDto();
+    public static RegistrationDto create() {
+        return new RegistrationDto();
     }
 
     public String getEmail() {
         return email;
     }
 
-    public RequestInvitationDto setEmail(String email) {
+    public RegistrationDto setEmail(String email) {
         this.email = email;
-        return this;
-    }
-
-    public String getReason() {
-        return reason;
-    }
-
-    public RequestInvitationDto setReason(String reason) {
-        this.reason = reason;
         return this;
     }
 
@@ -33,7 +23,7 @@ public class RequestInvitationDto {
         return hasErrors;
     }
 
-    public RequestInvitationDto setHasErrors(boolean hasErrors) {
+    public RegistrationDto setHasErrors(boolean hasErrors) {
         this.hasErrors = hasErrors;
         return this;
     }
@@ -42,7 +32,7 @@ public class RequestInvitationDto {
         return errorMessage;
     }
 
-    public RequestInvitationDto setErrorMessage(String errorMessage) {
+    public RegistrationDto setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
         return this;
     }

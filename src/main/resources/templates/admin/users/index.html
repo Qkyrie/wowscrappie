@@ -21,7 +21,7 @@
                         <tr>
                             <th>ID</th>
                             <th>Username</th>
-                            <th>FacebookID</th>
+                            <th>activationCode</th>
                             <th>Email</th>
                             <th>Actions</th>
                         </tr>
@@ -31,7 +31,7 @@
                             th:class="${iterStat.odd}? 'gradeA' : 'gradeC'">
                             <td th:text="${user.id}">1</td>
                             <td th:text="${user.username}">Name</td>
-                            <td th:text="${user.facebookId}">1123154</td>
+                            <td th:text="${user.activationCode}">1123154</td>
                             <td th:text="${user.email}">Pikachu</td>
                             <td>
                                 <span th:attr="data-user_id=${user.id}"

@@ -1,7 +1,6 @@
 package com.deswaef.weakauras.usermanagement.controller;
 
-import com.deswaef.weakauras.notifications.service.NotificationService;
-import com.deswaef.weakauras.usermanagement.controller.dto.RequestInvitationDto;
+import com.deswaef.weakauras.usermanagement.controller.dto.RegistrationDto;
 import com.deswaef.weakauras.usermanagement.service.InvitationRequestService;
 import com.google.common.base.Strings;
 import org.apache.commons.validator.routines.EmailValidator;
@@ -15,29 +14,26 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Controller
-@RequestMapping("/registration/request-invitation")
-public class RequestInvitationController {
+@RequestMapping("/registration")
+public class RegistrationController {
 
     @Autowired
     private InvitationRequestService invitationRequestService;
 
     @RequestMapping(method = GET)
     public String index() {
-        return "registration/request-invitation";
+        return "registration/request";
     }
 
     @RequestMapping(method = POST)
-    public @ResponseBody RequestInvitationDto requestIt(@RequestBody RequestInvitationDto requestInvitationDto) {
-        if (Strings.isNullOrEmpty(requestInvitationDto.getEmail()) || !EmailValidator.getInstance().isValid(requestInvitationDto.getEmail()))  {
-            return requestInvitationDto
+    public @ResponseBody
+    RegistrationDto requestIt(@RequestBody RegistrationDto registrationDto) {
+        if (Strings.isNullOrEmpty(registrationDto.getEmail()) || !EmailValidator.getInstance().isValid(registrationDto.getEmail()))  {
+            return registrationDto
                     .setHasErrors(true)
                     .setErrorMessage("Please fill in a valid email address");
-        } else if (Strings.isNullOrEmpty(requestInvitationDto.getReason())) {
-            return requestInvitationDto
-                    .setHasErrors(true)
-                    .setErrorMessage("Please fill in a reason why you want to join this testing phase");
         } else {
-            return invitationRequestService.create(requestInvitationDto);
+            return invitationRequestService.create(registrationDto);
         }
     }
 
