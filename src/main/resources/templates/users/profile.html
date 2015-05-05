@@ -13,12 +13,52 @@
         <div class="row">
             <div class="col-md-10">
                 <h2 th:if="${canEdit}">Your Profile</h2>
+
                 <h2 th:if="${canEdit == false}" th:text="${profile.userName + '''s Profile'}"></h2>
             </div>
             <div class="col-md-2">
-                <a th:if="${canEdit}" class="btn btn-default btn-raised pull-right" th:href="@{/profiles/edit}">Edit Profile</a>
+                <a th:if="${canEdit}" class="btn btn-default btn-raised pull-right" th:href="@{/profiles/edit}">Edit
+                    Profile</a>
             </div>
         </div>
+        <br/><br/>
+
+        <div class="row">
+            <div class="col-md-6">
+                <h3>About Me!</h3>
+                <blockquote class="commentBox">
+                    <span th:if="${profile.aboutMe != null AND profile.aboutMe != ''}" th:text="${profile.aboutMe}">
+
+                    </span>
+                    <span th:if="${profile.aboutMe == null || profile.aboutMe == ''}">
+                        I don't have anything in particular to mention yet.
+                    </span>
+                    <small th:text="${profile.userName + ' on wowscrappie.com'}"></small>
+                </blockquote>
+            </div>
+            <div class="col-md-6" th:if="${profile.was != 0 || profile.tmws != 0 || profile.macros != 0}">
+                <h3>Contributions by <span th:text="${profile.userName}"></span></h3>
+
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div id="morris-donut-chart"></div>
+                    </div>
+
+                </div>
+                <a href="https://twitter.com/share" class="twitter-share-button" data-via="ScrappieWoW"
+                   data-size="large" data-count="none">Tweet</a>
+                <script>!function (d, s, id) {
+                    var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
+                    if (!d.getElementById(id)) {
+                        js = d.createElement(s);
+                        js.id = id;
+                        js.src = p + '://platform.twitter.com/widgets.js';
+                        fjs.parentNode.insertBefore(js, fjs);
+                    }
+                }(document, 'script', 'twitter-wjs');</script>
+            </div>
+        </div>
+
         <br/><br/>
 
         <div class="row">
@@ -70,19 +110,6 @@
         <hr/>
 
         <div class="row">
-            <div class="col-md-6" th:if="${profile.twitterName == null || profile.twitterName == ''}">
-                <p class="alert alert-info"><span th:text="${profile.userName}"></span> hasn't provided his personal
-                    twitter yet.</p>
-            </div>
-            <div class="col-md-6" th:if="${profile.twitchStream == null || profile.twitchStream == ''}">
-                <p class="alert alert-info"><span th:text="${profile.userName}"></span> does not have a Twitch stream.
-                </p>
-            </div>
-            <div class="col-md-6" th:if="${profile.twitchStream != null AND profile.twitchStream != ''}">
-                <a class="embedly-card" th:href="${ 'http://twitch.tv/' + profile.twitchStream}"
-                   th:text="${profile.twitchStream + ' - Twitch'}">StreamingForAnimals - Twitch</a>
-                <script async="async" src="//cdn.embedly.com/widgets/platform.js" charset="UTF-8"></script>
-            </div>
             <div class="col-md-6" th:if="${profile.twitterName != null AND profile.twitterName != ''}">
                 <h3>Twitter</h3>
                 <a class="twitter-timeline" href="https://twitter.com/ScrappieWoW"
@@ -98,37 +125,18 @@
                     }
                 }(document, "script", "twitter-wjs");</script>
             </div>
-
+            <div class="col-md-6" th:if="${profile.twitchStream != null AND profile.twitchStream != ''}">
+                <a class="embedly-card" th:href="${ 'http://twitch.tv/' + profile.twitchStream}"
+                   th:text="${profile.twitchStream + ' - Twitch'}">StreamingForAnimals - Twitch</a>
+                <script async="async" src="//cdn.embedly.com/widgets/platform.js" charset="UTF-8"></script>
+            </div>
         </div>
         <br/>
         <hr/>
         <br/>
 
         <div class="row">
-            <div class="col-md-6" th:if="${profile.was != 0 || profile.tmws != 0 || profile.macros != 0}">
-                <h3>Contributions by <span th:text="${profile.userName}"></span></h3>
 
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <div id="morris-donut-chart"></div>
-                    </div>
-
-                </div>
-                <a href="https://twitter.com/share" class="twitter-share-button" data-via="ScrappieWoW" data-size="large" data-count="none">Tweet</a>
-                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-            </div>
-            <div class="col-md-6">
-                <h3>About Me!</h3>
-                <blockquote class="commentBox">
-                    <span th:if="${profile.aboutMe != null AND profile.aboutMe != ''}" th:text="${profile.aboutMe}">
-
-                    </span>
-                    <span th:if="${profile.aboutMe == null || profile.aboutMe == ''}">
-                        I don't have anything in particular to mention yet.
-                    </span>
-                    <small th:text="${profile.userName + ' on wowscrappie.com'}"></small>
-                </blockquote>
-            </div>
         </div>
 
         <div class="row">
@@ -170,6 +178,7 @@
     <script type="application/javascript" th:if="${profile.was != 0 || profile.tmws != 0 || profile.macros != 0}">
         Morris.Donut({
             element: 'morris-donut-chart',
+            resize: true,
             data: [{
                 label: "Macros",
                 value: $("#macroCount").val()

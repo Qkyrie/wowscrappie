@@ -56,8 +56,7 @@
 
                 <div class="form-group">
                     <label>Comments</label>
-
-                    <div class="commentBox" data-bind="text: activeComment"></div>
+                    <blockquote id="commentBox" class="commentBox" data-bind="text: activeComment"></blockquote>
                 </div>
 
                 <label>TellMeWhen-String</label>
@@ -76,6 +75,7 @@
             <button data-bind="click: redirectShare" class="btn btn-info">Leave a comment!</button>
         </div>
     </div>
+    <script type="text/javascript" th:src="@{/assets/js/md-v1.2.0.js}"/>
     <script type="application/javascript">
 
         $('.shareButton').each(function () {
@@ -112,6 +112,7 @@
                         self.activeTMWId(tmw_id);
                         self.imageRefs(resultValue.imageRefs);
                         self.activeName(resultValue.name);
+                        Mdjs().on($("#commentBox"));
                         self.showDetails(true);
                         $(".fancybox").fancybox();
                     }
@@ -223,8 +224,7 @@
 
                 <div class="form-group">
                     <label>Comments</label>
-
-                    <div class="commentBox" data-bind="text: activeComment"></div>
+                    <blockquote id="commentBox" class="commentBox" data-bind="text: activeComment"></blockquote>
                 </div>
 
                 <label>WeakAura-String</label>
@@ -243,6 +243,7 @@
             <button data-bind="click: redirectShare" class="btn btn-info">Leave a comment!</button>
         </div>
     </div>
+    <script type="text/javascript" th:src="@{/assets/js/md-v1.2.0.js}"/>
     <script type="application/javascript">
         $('.shareButton').each(function () {
             $(this).click(function () {
@@ -279,6 +280,7 @@
                         self.imageRefs(resultValue.imageRefs);
                         self.activeWAId(tmw_id);
                         self.activeName(resultValue.name);
+                        Mdjs().on($("#commentBox"));
                         self.showDetails(true);
                         $(".fancybox").fancybox();
                     }
@@ -390,8 +392,7 @@
 
                 <div class="form-group">
                     <label>Comments</label>
-
-                    <div class="commentBox" data-bind="text: activeComment"></div>
+                    <blockquote id="commentBox" class="commentBox" data-bind="text: activeComment"></blockquote>
                 </div>
 
                 <label>Macro-String</label>
@@ -403,7 +404,7 @@
             <button data-bind="click: redirectShare" class="btn btn-info">Leave a comment!</button>
         </div>
     </div>
-
+    <script type="text/javascript" th:src="@{/assets/js/md-v1.2.0.js}"/>
     <script type="application/javascript">
 
         $('.shareButton').each(function () {
@@ -443,6 +444,7 @@
                         self.activeName(resultValue.name);
                         self.activeMacroId(tmw_id);
                         self.activeComment(resultValue.comment);
+                        Mdjs().on($("#commentBox"));
                         self.showDetails(true);
                         loadComments(tmw_id);
                     }

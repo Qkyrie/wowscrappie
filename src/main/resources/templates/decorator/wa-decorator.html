@@ -91,11 +91,11 @@
 
 
                 <li>
-                    <a class="active-menu" th:href="@{/}"><i class="fa fa-dashboard fa-3x"></i> News</a>
+                    <a class="active-menu" th:href="@{/}"><i class="fa fa-dashboard fa-2x"></i> News</a>
                 </li>
 
                 <li sec:authorize="hasRole('ROLE_ADMIN')">
-                    <a href="#"><i class="fa fa-th fa-3x"></i> Administration<span
+                    <a href="#"><i class="fa fa-th fa-2x"></i> Administration<span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
 
@@ -118,7 +118,7 @@
                 </li>
 
                 <li sec:authorize="hasRole('ROLE_USER')">
-                    <a href="#"><i class="fa fa-user fa-3x"></i> Personal<span
+                    <a href="#"><i class="fa fa-user fa-2x"></i> Personal<span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
@@ -134,7 +134,7 @@
                 </li>
 
                 <li>
-                    <a href="#"><i class="fa fa-fighter-jet fa-3x"></i> Raids<span
+                    <a href="#"><i class="fa fa-fighter-jet fa-2x"></i> Raids<span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
@@ -148,7 +148,7 @@
                 </li>
 
                 <li>
-                    <a href="#"><i class="fa fa-wrench fa-3x"></i> Classes<span
+                    <a href="#"><i class="fa fa-wrench fa-2x"></i> <span>Classes</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
 
@@ -221,7 +221,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#"><i class="fa fa-cog fa-3x"></i> Tools<span
+                    <a href="#"><i class="fa fa-cog fa-2x"></i> Tools<span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
@@ -231,10 +231,10 @@
                     </ul>
                 </li>
                 <li>
-                    <a th:href="@{/contribute}"><i class="fa fa-laptop fa-3x"></i> Contribute!</a>
+                    <a th:href="@{/contribute}"><i class="fa fa-laptop fa-2x"></i> Contribute!</a>
                 </li>
                 <li sec:authorize="isAuthenticated()">
-                    <a th:href="@{/logout}"><i class="fa fa-sign-out fa-3x"></i> Logout!</a>
+                    <a th:href="@{/logout}"><i class="fa fa-sign-out fa-2x"></i> Logout!</a>
                 </li>
             </ul>
 

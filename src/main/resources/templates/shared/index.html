@@ -85,7 +85,7 @@
                 <div class="col-md-10 col-md-offset-1">
                     <div class="form-group">
                         <label>Comments</label>
-                        <blockquote class="commentBox" th:text="${config.comment}"></blockquote>
+                        <blockquote id="commentBox" class="commentBox" th:text="${config.comment}"></blockquote>
                     </div>
                     <hr/>
                     <br/>
@@ -141,6 +141,7 @@
 <div layout:fragment="footer-content">
     <script type="application/javascript" th:src="@{/assets/zeroclipboard/ZeroClipboard.min.js}"></script>
     <script type="text/javascript" th:src="@{/assets/fancybox/jquery.fancybox.pack.js?v=2.1.5}"/>
+    <script type="text/javascript" th:src="@{/assets/js/md-v1.2.0.js}"/>
 
     <script type="application/javascript">
         function doClipboardBinding() {
@@ -156,7 +157,7 @@
                     $('#commentPane').html(data);
                 });
             }
-
+            Mdjs().on($("#commentBox"));
             loadComments();
         });
     </script>

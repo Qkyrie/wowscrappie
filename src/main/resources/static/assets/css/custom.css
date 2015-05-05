@@ -239,6 +239,7 @@ max-width:170px;
 
 .arrow {
     float: right;
+    margin-top: 10px;
 }
 
 .fa.arrow:before {
