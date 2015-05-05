@@ -6,6 +6,8 @@
 <div layout:fragment="header">
     <link th:href="@{/assets/js/dataTables/dataTables.bootstrap.css}" rel="stylesheet"/>
     <title th:text="${wowclass.name} + ' - Scrappie'">Generate Invitation - Scrappie</title>
+    <meta name="description" th:content="${wowclass.name} + ' - WeakAuras, TellMeWhens and Macros - Scrappie'" />
+    <meta name="keywords" th:content="${wowclass.name} + ', ' + ${specnames}  + ', weakauras, weakaura, class, tellmewhen, macro, macros, spec'" />
 </div>
 
 <div layout:fragment="main-content">

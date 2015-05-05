@@ -64,12 +64,14 @@ public class ClassController {
                             .setTmwAmount(tellMeWhenService.countByWowclass(wc))
                             .setWaAmount(weakAuraService.countByWowClass(wc))
             );
-            modelmap.put("specs",  specService.byClass(wc).stream()
+            Set<SpecDto> specs = specService.byClass(wc).stream()
                     .map(spec -> SpecDto.fromSpec(spec)
-                        .setMacroAmount(macroService.countBySpec(spec))
-                        .setTmwAmount(tellMeWhenService.countBySpec(spec))
-                        .setWaAmount(weakAuraService.countBySpec(spec)))
-                    .collect(Collectors.toSet()));
+                            .setMacroAmount(macroService.countBySpec(spec))
+                            .setTmwAmount(tellMeWhenService.countBySpec(spec))
+                            .setWaAmount(weakAuraService.countBySpec(spec)))
+                    .collect(Collectors.toSet());
+            modelmap.put("specs", specs);
+            modelmap.put("specnames", specs.stream().map(spec -> spec.getName()).collect(Collectors.joining(", ")));
             return "classes/specs";
         } else {
             return "classes/index";
