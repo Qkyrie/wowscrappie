@@ -114,6 +114,7 @@
                         self.activeName(resultValue.name);
                         Mdjs().on($("#commentBox"));
                         self.showDetails(true);
+                        $("html, body").animate({ scrollTop: $(document).height() }, 1000);
                         $(".fancybox").fancybox();
                     }
                 });
@@ -282,6 +283,7 @@
                         self.activeName(resultValue.name);
                         Mdjs().on($("#commentBox"));
                         self.showDetails(true);
+                        $("html, body").animate({ scrollTop: $(document).height() }, 1000);
                         $(".fancybox").fancybox();
                     }
                 });
@@ -446,6 +448,7 @@
                         self.activeComment(resultValue.comment);
                         Mdjs().on($("#commentBox"));
                         self.showDetails(true);
+                        $("html, body").animate({ scrollTop: $(document).height() }, 1000);
                         loadComments(tmw_id);
                     }
                 });
