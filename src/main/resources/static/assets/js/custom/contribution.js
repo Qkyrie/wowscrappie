@@ -123,11 +123,15 @@ var ActualInformationVM = function () {
                 contentType: "application/json; charset=utf-8",
                 data: stringyfiedCommand, //Stringified Json Object
                 cache: false,    //This will force requested pages not to be cached by the browser
-                processData: false, //To avoid making query String instead of JSON
-                success: function (resposeJsonObject) {
+                processData: false //To avoid making query String instead of JSON
+
+            })
+                .done(function() {
                     window.location = "/?thankyou";
-                }
-            });
+            })
+                .fail(function() {
+
+                });
         }
     };
 }

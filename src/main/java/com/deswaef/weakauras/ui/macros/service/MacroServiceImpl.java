@@ -2,6 +2,8 @@ package com.deswaef.weakauras.ui.macros.service;
 
 import com.deswaef.weakauras.classes.domain.Spec;
 import com.deswaef.weakauras.classes.domain.WowClass;
+import com.deswaef.weakauras.notifications.controller.dto.PersistentNotificationDto;
+import com.deswaef.weakauras.notifications.service.PersistentNotificationService;
 import com.deswaef.weakauras.raids.domain.Boss;
 import com.deswaef.weakauras.ui.macros.domain.Macro;
 import com.deswaef.weakauras.ui.macros.repository.BossMacroRepository;
@@ -13,6 +15,7 @@ import com.deswaef.weakauras.ui.rating.service.ConfigRatingService;
 import com.deswaef.weakauras.usermanagement.domain.ScrappieUser;
 import com.google.common.base.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,6 +35,8 @@ public class MacroServiceImpl implements MacroService {
     private ConfigRatingService configRatingService;
     @Autowired
     private BossMacroRepository bossMacroRepository;
+    @Autowired
+    private PersistentNotificationService persistentNotificationService;
 
     @Override
     @Transactional
@@ -41,7 +46,7 @@ public class MacroServiceImpl implements MacroService {
 
     @Override
     public List<Macro> findByWowClass(WowClass wowClass) {
-        if(isAdmin()) {
+        if (isAdmin()) {
             return wowClassMacroRepository.findByWowClass(wowClass);
         } else {
             return wowClassMacroRepository.findByWowClassAndApproved(wowClass);
@@ -50,7 +55,7 @@ public class MacroServiceImpl implements MacroService {
 
     @Override
     public List<Macro> findBySpec(Spec spec) {
-        if(isAdmin()){
+        if (isAdmin()) {
             return specMacroRepository.findBySpec(spec);
         } else {
             return specMacroRepository.findBySpecAndApproved(spec);
@@ -59,7 +64,7 @@ public class MacroServiceImpl implements MacroService {
 
     @Override
     public List<Macro> findByBoss(Boss boss) {
-        if(isAdmin()){
+        if (isAdmin()) {
             return bossMacroRepository.findByBoss(boss);
         } else {
             return bossMacroRepository.findByBossAndApproved(boss);
@@ -67,30 +72,21 @@ public class MacroServiceImpl implements MacroService {
     }
 
     @Override
+    @Cacheable(value = "amountscache", key = "'macroCount-wowclass-'.concat(#wowClass.id)")
     public Long countByWowClass(WowClass wowClass) {
-        if(isAdmin()) {
-            return wowClassMacroRepository.countByWowClass(wowClass);
-        } else {
-            return wowClassMacroRepository.countByWowClassAndApproved(wowClass);
-        }
+        return wowClassMacroRepository.countByWowClassAndApproved(wowClass);
     }
 
     @Override
+    @Cacheable(value = "amountscache", key = "'macroCount-spec-'.concat(#spec.id)")
     public Long countBySpec(Spec spec) {
-        if(isAdmin()){
-            return specMacroRepository.countBySpec(spec);
-        } else {
-            return specMacroRepository.countBySpecAndApproved(spec);
-        }
+        return specMacroRepository.countBySpecAndApproved(spec);
     }
 
     @Override
+    @Cacheable(value = "amountscache", key = "'macroCount-boss-'.concat(#boss.id)")
     public Long countByBoss(Boss boss) {
-        if(isAdmin()){
-            return bossMacroRepository.countByBoss(boss);
-        } else {
-            return bossMacroRepository.countByBossAndApproved(boss);
-        }
+        return bossMacroRepository.countByBossAndApproved(boss);
     }
 
     @Override
@@ -99,13 +95,19 @@ public class MacroServiceImpl implements MacroService {
     }
 
     @Override
+    @Cacheable(value = "amountscache", key = "'macroCount'")
     public long count() {
         return macroRepository.countApproved(true);
     }
 
     @Override
+    public long countUnapproved() {
+        return macroRepository.countApproved(false);
+    }
+
+    @Override
     public List<Macro> findAll() {
-        if(isAdmin()){
+        if (isAdmin()) {
             return macroRepository.findAll();
         } else {
             return macroRepository.findAllApproved(true);
@@ -117,8 +119,17 @@ public class MacroServiceImpl implements MacroService {
         Optional<Macro> one = macroRepository.findOne(id);
         if (one.isPresent()) {
             Macro macro = one.get();
-            macro.setApproved(true);
-            macroRepository.save(macro);
+            if (!macro.isApproved()) {
+                macro.setApproved(true);
+                macroRepository.save(macro);
+                persistentNotificationService.createPersistentNotification(
+                        macro.getUploader(),
+                        PersistentNotificationDto.create()
+                                .setContent(String.format("An admin just approved your macro (%s)", macro.getName()))
+                                .setUrl(String.format("/shared/macro/%d", macro.getId()))
+                                .setTitle("Macro approved!")
+                );
+            }
         } else {
             throw new IllegalArgumentException("a macro with that id was not found");
         }
@@ -154,11 +165,6 @@ public class MacroServiceImpl implements MacroService {
     @Transactional(readOnly = true)
     public long countAllFromUser(ScrappieUser scrappieUser) {
         return macroRepository.countByUploader(scrappieUser);
-    }
-
-    @Override
-    public long countUnapproved() {
-        return macroRepository.countApproved(false);
     }
 
     @Override

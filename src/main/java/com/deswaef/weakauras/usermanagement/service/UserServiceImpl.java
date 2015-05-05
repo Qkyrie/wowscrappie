@@ -9,6 +9,7 @@ import com.deswaef.weakauras.usermanagement.repository.RoleRepository;
 import com.deswaef.weakauras.usermanagement.repository.UserRepository;
 import com.deswaef.weakauras.usermanagement.util.FacebookUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -65,6 +66,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
+    @Cacheable(value = "amountscache", key = "'userCount'")
     public Long count() {
         return userRepository.count();
     }

@@ -18,6 +18,7 @@ import static java.lang.String.*;
 public class CacheAbstractionConfiguration {
 
     public static final String BRACKETSCACHE = "bracketscache";
+    public static final String AMOUNTS_CACHE = "amountscache";
     private final RedisSerializer serializer = new StringRedisSerializer();
 
     @Bean
@@ -29,9 +30,10 @@ public class CacheAbstractionConfiguration {
 
     @Bean
     public RedisCacheManager redisCacheManager(JedisConnectionFactory jedisConnectionFactory) {
-        RedisCacheManager redisCacheManager = new RedisCacheManager(redisTemplate(jedisConnectionFactory), Arrays.asList(BRACKETSCACHE));
+        RedisCacheManager redisCacheManager = new RedisCacheManager(redisTemplate(jedisConnectionFactory), Arrays.asList(BRACKETSCACHE, AMOUNTS_CACHE));
         redisCacheManager.setUsePrefix(true);
         redisCacheManager.setCachePrefix(cacheName -> serializer.serialize((format("scrappiecache.%s:", cacheName))));
+        redisCacheManager.setDefaultExpiration(300);
         return redisCacheManager;
     }
 }

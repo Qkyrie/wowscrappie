@@ -2,6 +2,8 @@ package com.deswaef.weakauras.ui.weakauras.service;
 
 import com.deswaef.weakauras.classes.domain.Spec;
 import com.deswaef.weakauras.classes.domain.WowClass;
+import com.deswaef.weakauras.notifications.controller.dto.PersistentNotificationDto;
+import com.deswaef.weakauras.notifications.service.PersistentNotificationService;
 import com.deswaef.weakauras.raids.domain.Boss;
 import com.deswaef.weakauras.ui.image.domain.Screenshot;
 import com.deswaef.weakauras.ui.macros.domain.Macro;
@@ -20,6 +22,7 @@ import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import javafx.stage.Screen;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,6 +44,8 @@ public class WeakAuraServiceImpl implements WeakAuraService {
     private ConfigRatingService configRatingService;
     @Autowired
     private BossFightWeakAuraRepository bossFightWeakAuraRepository;
+    @Autowired
+    private PersistentNotificationService persistentNotificationService;
 
     @Override
     @Transactional
@@ -51,7 +56,7 @@ public class WeakAuraServiceImpl implements WeakAuraService {
     @Override
     @Transactional(readOnly = true)
     public List<WeakAura> findByWowClass(WowClass wowClass) {
-        if(isAdmin()) {
+        if (isAdmin()) {
             return wowclassWeakAuraRepository.findByWowClass(wowClass);
         } else {
             return wowclassWeakAuraRepository.findByWowClassAndApproved(wowClass);
@@ -61,7 +66,7 @@ public class WeakAuraServiceImpl implements WeakAuraService {
     @Override
     @Transactional(readOnly = true)
     public List<WeakAura> findBySpec(Spec spec) {
-        if(isAdmin()) {
+        if (isAdmin()) {
             return specWeakAuraRepository.findBySpec(spec);
         } else {
             return specWeakAuraRepository.findBySpecAndApproved(spec);
@@ -71,7 +76,7 @@ public class WeakAuraServiceImpl implements WeakAuraService {
     @Override
     @Transactional(readOnly = true)
     public List<WeakAura> findByBoss(Boss boss) {
-        if(isAdmin()) {
+        if (isAdmin()) {
             return bossFightWeakAuraRepository.findByBoss(boss);
         } else {
             return bossFightWeakAuraRepository.findByBossAndApproved(boss);
@@ -80,32 +85,23 @@ public class WeakAuraServiceImpl implements WeakAuraService {
 
     @Override
     @Transactional(readOnly = true)
+    @Cacheable(value = "amountscache", key = "'waCount-wowclass-'.concat(#wowClass.id)")
     public Long countByWowClass(WowClass wowClass) {
-        if(isAdmin()) {
-            return wowclassWeakAuraRepository.countByWowClass(wowClass);
-        } else {
-            return wowclassWeakAuraRepository.countByWowClassAndApproved(wowClass);
-        }
+        return wowclassWeakAuraRepository.countByWowClassAndApproved(wowClass);
     }
 
     @Override
     @Transactional(readOnly = true)
+    @Cacheable(value = "amountscache", key = "'waCount-spec-'.concat(#spec.id)")
     public Long countBySpec(Spec spec) {
-        if(isAdmin()) {
-            return specWeakAuraRepository.countBySpec(spec);
-        } else {
-            return specWeakAuraRepository.countBySpecAndApproved(spec);
-        }
+        return specWeakAuraRepository.countBySpecAndApproved(spec);
     }
 
     @Override
     @Transactional(readOnly = true)
+    @Cacheable(value = "amountscache", key = "'waCount-boss-'.concat(#boss.id)")
     public Long countByBoss(Boss boss) {
-        if(isAdmin()) {
-            return bossFightWeakAuraRepository.countByBoss(boss);
-        } else {
-            return bossFightWeakAuraRepository.countByBossAndApproved(boss);
-        }
+        return bossFightWeakAuraRepository.countByBossAndApproved(boss);
     }
 
     @Override
@@ -114,6 +110,7 @@ public class WeakAuraServiceImpl implements WeakAuraService {
     }
 
     @Override
+    @Cacheable(value = "amountscache", key = "'waCount'")
     public long count() {
         return weakAuraRepository.countApproved(true);
     }
@@ -129,7 +126,7 @@ public class WeakAuraServiceImpl implements WeakAuraService {
     @Transactional(readOnly = true)
     public List<Screenshot> findScreenshots(WeakAura weakAura) {
         Optional<WeakAura> one = weakAuraRepository.findOne(weakAura.getId());
-        if(one.isPresent()) {
+        if (one.isPresent()) {
             return weakAuraScreenshotRepository.findByWeakAura(one.get());
         } else {
             return Lists.newArrayList();
@@ -138,7 +135,7 @@ public class WeakAuraServiceImpl implements WeakAuraService {
 
     @Override
     public List<WeakAura> findAll() {
-        if(isAdmin()) {
+        if (isAdmin()) {
             return weakAuraRepository.findAll();
         } else {
             return weakAuraRepository.findAllApproved(true);
@@ -152,8 +149,17 @@ public class WeakAuraServiceImpl implements WeakAuraService {
         Optional<WeakAura> one = weakAuraRepository.findOne(id);
         if (one.isPresent()) {
             WeakAura weakAura = one.get();
-            weakAura.setApproved(true);
-            weakAuraRepository.save(weakAura);
+            if(!weakAura.isApproved()) {
+                weakAura.setApproved(true);
+                WeakAura savedWeakAura = weakAuraRepository.save(weakAura);
+                persistentNotificationService.createPersistentNotification(
+                        weakAura.getUploader(),
+                        PersistentNotificationDto.create()
+                                .setContent(String.format("An admin just approved your weakaura (%s)", savedWeakAura.getName()))
+                                .setUrl(String.format("/shared/wa/%d", savedWeakAura.getId()))
+                                .setTitle("Weakaura approved!")
+                );
+            }
         } else {
             throw new IllegalArgumentException("A weakaura with that id was not found");
         }
@@ -232,7 +238,7 @@ public class WeakAuraServiceImpl implements WeakAuraService {
 
     private void deleteScreenshotsFor(Long id) {
         Optional<WeakAura> one = weakAuraRepository.findOne(id);
-        if(one.isPresent()) {
+        if (one.isPresent()) {
             List<Screenshot> byWeakAura = weakAuraScreenshotRepository.findByWeakAura(one.get());
             if (!byWeakAura.isEmpty()) {
                 byWeakAura.forEach(ss -> weakAuraScreenshotRepository.delete(ss.getId()));

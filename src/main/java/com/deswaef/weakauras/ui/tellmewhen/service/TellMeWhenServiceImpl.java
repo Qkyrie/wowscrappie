@@ -2,6 +2,8 @@ package com.deswaef.weakauras.ui.tellmewhen.service;
 
 import com.deswaef.weakauras.classes.domain.Spec;
 import com.deswaef.weakauras.classes.domain.WowClass;
+import com.deswaef.weakauras.notifications.controller.dto.PersistentNotificationDto;
+import com.deswaef.weakauras.notifications.service.PersistentNotificationService;
 import com.deswaef.weakauras.raids.domain.Boss;
 import com.deswaef.weakauras.ui.image.domain.Screenshot;
 import com.deswaef.weakauras.ui.macros.domain.Macro;
@@ -19,6 +21,7 @@ import com.deswaef.weakauras.usermanagement.domain.ScrappieUser;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,6 +43,8 @@ public class TellMeWhenServiceImpl implements TellMeWhenService {
     private ConfigRatingService configRatingService;
     @Autowired
     private BossFightTellMeWhenRepository bossFightTellMeWhenRepository;
+    @Autowired
+    private PersistentNotificationService persistentNotificationService;
 
     @Override
     @Transactional
@@ -79,6 +84,7 @@ public class TellMeWhenServiceImpl implements TellMeWhenService {
 
     @Override
     @Transactional(readOnly = true)
+    @Cacheable(value = "amountscache", key = "'tmwCount-wowclass-'.concat(#wowClass.id)")
     public Long countByWowclass(WowClass wowClass) {
         if(isAdmin()) {
             return wowclassTellMeWhenRepository.countByWowClass(wowClass);
@@ -89,6 +95,7 @@ public class TellMeWhenServiceImpl implements TellMeWhenService {
 
     @Override
     @Transactional(readOnly = true)
+    @Cacheable(value = "amountscache", key = "'tmwCount-spec-'.concat(#spec.id)")
     public Long countBySpec(Spec spec) {
         if(isAdmin()) {
             return specTellMeWhenRepository.countBySpec(spec);
@@ -99,6 +106,7 @@ public class TellMeWhenServiceImpl implements TellMeWhenService {
 
     @Override
     @Transactional(readOnly = true)
+    @Cacheable(value = "amountscache", key = "'tmwCount-boss-'.concat(#boss.id)")
     public Long countByBoss(Boss boss) {
         if(isAdmin()) {
             return bossFightTellMeWhenRepository.countByBoss(boss);
@@ -114,6 +122,7 @@ public class TellMeWhenServiceImpl implements TellMeWhenService {
     }
 
     @Override
+    @Cacheable(value = "amountscache", key = "'tmwCount'")
     public long count() {
         return tellMeWhenRepository.countApproved(true);
     }
@@ -147,8 +156,17 @@ public class TellMeWhenServiceImpl implements TellMeWhenService {
         Optional<TellMeWhen> one = tellMeWhenRepository.findOne(id);
         if (one.isPresent()) {
             TellMeWhen tellMeWhen = one.get();
-            tellMeWhen.setApproved(true);
-            tellMeWhenRepository.save(tellMeWhen);
+            if(!tellMeWhen.isApproved()) {
+                tellMeWhen.setApproved(true);
+                TellMeWhen savedTellMeWhen = tellMeWhenRepository.save(tellMeWhen);
+                persistentNotificationService.createPersistentNotification(
+                        savedTellMeWhen.getUploader(),
+                        PersistentNotificationDto.create()
+                                .setContent(String.format("An admin just approved your tellmewhen (%s)", savedTellMeWhen.getName()))
+                                .setUrl(String.format("/shared/tmw/%d", savedTellMeWhen.getId()))
+                                .setTitle("TellMeWhen approved!")
+                );
+            }
         } else {
             throw new IllegalArgumentException("a tmw-config with that id was not found");
         }

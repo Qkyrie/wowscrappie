@@ -1,11 +1,20 @@
 package com.deswaef.weakauras.ui.weakauras.domain;
 
-import com.deswaef.weakauras.ui.comments.domain.MacroComment;
 import com.deswaef.weakauras.ui.comments.domain.WeakAuraComment;
 import com.deswaef.weakauras.ui.reports.domain.WeakAuraReport;
 import com.deswaef.weakauras.usermanagement.domain.ScrappieUser;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import java.util.Set;
 

@@ -1,5 +1,6 @@
 package com.deswaef.weakauras.notifications.service;
 
+import com.deswaef.weakauras.infrastructure.service.MailService;
 import com.deswaef.weakauras.notifications.controller.dto.PersistentNotificationDto;
 import com.deswaef.weakauras.notifications.domain.Notification;
 import com.deswaef.weakauras.notifications.domain.PersistentNotification;
