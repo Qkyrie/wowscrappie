@@ -18,7 +18,9 @@ public class WebSocketConfiguration extends AbstractSessionWebSocketMessageBroke
                 .setAllowedOrigins("http://localhost:8090",
                                     "http://localhost",
                                     "http://wowscrappie.com",
+                                    "https://wowscrappie.com",
                                     "http://www.wowscrappie.com",
+                                    "https://www.wowscrappie.com",
                                     "http://127.0.0.1",
                                     "http://127.0.0.1:8090")
                 .withSockJS();
