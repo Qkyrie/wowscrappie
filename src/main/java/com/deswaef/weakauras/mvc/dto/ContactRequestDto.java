@@ -3,6 +3,7 @@ package com.deswaef.weakauras.mvc.dto;
 public class ContactRequestDto {
     private String title;
     private String content;
+    private Long toUserId;
 
     private boolean hasErrors = false;
     private String errorMessage;
@@ -40,6 +41,15 @@ public class ContactRequestDto {
 
     public ContactRequestDto setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
+        return this;
+    }
+
+    public Long getToUserId() {
+        return toUserId;
+    }
+
+    public ContactRequestDto setToUserId(Long toUserId) {
+        this.toUserId = toUserId;
         return this;
     }
 }

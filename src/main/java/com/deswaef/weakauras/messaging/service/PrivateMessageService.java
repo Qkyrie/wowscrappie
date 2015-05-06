@@ -19,4 +19,6 @@ public interface PrivateMessageService {
     Optional<PrivateMessage> findOne(Long id);
 
     void replyTo(PrivateMessageReplyDto privateMessageReplyDto);
+
+    void sendtoUser(ContactRequestDto contactRequestDto);
 }

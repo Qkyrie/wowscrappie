@@ -4,6 +4,8 @@ import com.deswaef.weakauras.messaging.controller.dto.PrivateMessageReplyDto;
 import com.deswaef.weakauras.messaging.domain.PrivateMessage;
 import com.deswaef.weakauras.messaging.repository.PrivateMessageRepository;
 import com.deswaef.weakauras.mvc.dto.ContactRequestDto;
+import com.deswaef.weakauras.notifications.controller.dto.PersistentNotificationDto;
+import com.deswaef.weakauras.notifications.service.PersistentNotificationService;
 import com.deswaef.weakauras.security.SecurityUtility;
 import com.deswaef.weakauras.usermanagement.domain.ScrappieUser;
 import com.deswaef.weakauras.usermanagement.repository.UserRepository;
@@ -17,12 +19,15 @@ import java.util.*;
 public class PrivateMessageServiceImpl implements PrivateMessageService {
 
     public static final long PIKA_ID = 1L;
+    public static final String PERSONAL_INBOX = "/personal/inbox";
     @Autowired
     private PrivateMessageRepository privateMessageRepository;
     @Autowired
     private UserRepository userRepository;
     @Autowired
     private SecurityUtility securityUtility;
+    @Autowired
+    private PersistentNotificationService persistentNotificationService;
 
 
     @Override
@@ -32,7 +37,7 @@ public class PrivateMessageServiceImpl implements PrivateMessageService {
         List<PrivateMessage> returnValue = new ArrayList<>();
         for (PrivateMessage privateMessage : messagesToUser) {
             if (privateMessage.getResponseTo() != null) {
-                if(!returnValue.contains(privateMessage.getResponseTo())){
+                if (!returnValue.contains(privateMessage.getResponseTo())) {
                     returnValue.add(privateMessage.getResponseTo());
                 }
             } else {
@@ -49,18 +54,52 @@ public class PrivateMessageServiceImpl implements PrivateMessageService {
         Optional<ScrappieUser> currentUser = securityUtility.currentUser();
         if (pikachu.isPresent() && currentUser.isPresent()) {
             try {
-            privateMessageRepository.save(new PrivateMessage()
-                            .setContent(contactRequestDto.getContent())
-                            .setDateOfPosting(now())
-                            .setFromUser(currentUser.get())
-                            .setToUser(pikachu.get())
-                            .setResponseTo(null)
-                            .setTitle(contactRequestDto.getTitle()));
-            } catch(Exception ex) {
+                privateMessageRepository.save(new PrivateMessage()
+                        .setContent(contactRequestDto.getContent())
+                        .setDateOfPosting(now())
+                        .setFromUser(currentUser.get())
+                        .setToUser(pikachu.get())
+                        .setResponseTo(null)
+                        .setTitle(contactRequestDto.getTitle()));
+                persistentNotificationService.createPersistentNotification(
+                        pikachu.get(),
+                        PersistentNotificationDto.create()
+                                .setContent(String.format("%s just sent you a private message.", currentUser.get().getUsername()))
+                                .setTitle(String.format("%s just sent you a private message.", currentUser.get().getUsername()))
+                                .setUrl(PERSONAL_INBOX));
+            } catch (Exception ex) {
                 throw new IllegalArgumentException("Unable to send the message :(");
             }
         } else {
             throw new IllegalArgumentException("Unable to send the message, make sure you're logged in -> Error 69");
+        }
+    }
+
+    @Override
+    public void sendtoUser(ContactRequestDto contactRequestDto) {
+        Optional<ScrappieUser> toUser = userRepository.findOne(contactRequestDto.getToUserId());
+        Optional<ScrappieUser> currentUser = securityUtility.currentUser();
+        if (toUser.isPresent() && currentUser.isPresent()) {
+            try {
+                privateMessageRepository.save(new PrivateMessage()
+                        .setContent(contactRequestDto.getContent())
+                        .setDateOfPosting(now())
+                        .setFromUser(currentUser.get())
+                        .setToUser(toUser.get())
+                        .setResponseTo(null)
+                        .setTitle(contactRequestDto.getTitle()));
+                persistentNotificationService.createPersistentNotification(
+                        toUser.get(),
+                        PersistentNotificationDto.create()
+                                .setContent(String.format("%s just sent you a private message.", currentUser.get().getUsername()))
+                                .setTitle(String.format("%s just sent you a private message.", currentUser.get().getUsername()))
+                                .setUrl(PERSONAL_INBOX)
+                );
+            } catch (Exception ex) {
+                throw new IllegalArgumentException("Unable to send the message :(");
+            }
+        } else {
+            throw new IllegalArgumentException("Unable to send the message, make sure you're logged in -> Error 69 - Giggity");
         }
     }
 
@@ -93,6 +132,7 @@ public class PrivateMessageServiceImpl implements PrivateMessageService {
         Optional<PrivateMessage> originalMessage = privateMessageRepository.findOne(privateMessageReplyDto.getOriginalMessageId());
         Optional<ScrappieUser> currentUser = securityUtility.currentUser();
         if (originalMessage.isPresent() && currentUser.isPresent() && isOneOfBoth(currentUser.get(), originalMessage.get())) {
+            ScrappieUser toUser = getToUser(originalMessage, currentUser);
             privateMessageRepository.save(new PrivateMessage()
                             .setTitle(originalMessage.get().getTitle())
                             .setContent(privateMessageReplyDto.getContent())
@@ -100,9 +140,15 @@ public class PrivateMessageServiceImpl implements PrivateMessageService {
                             .setDateOfPosting(now())
                             .setFromUser(currentUser.get())
                             .setToUser(
-                                    getToUser(originalMessage, currentUser)
+                                    toUser
                             )
             );
+            persistentNotificationService.createPersistentNotification(
+                    toUser,
+                    PersistentNotificationDto.create()
+                            .setContent(String.format("%s just replied to your private message.", currentUser.get().getUsername()))
+                            .setTitle(String.format("%s just replied to your private message.", currentUser.get().getUsername()))
+                            .setUrl(PERSONAL_INBOX));
         } else {
             throw new IllegalArgumentException("That original message was not found");
         }

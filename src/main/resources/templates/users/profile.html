@@ -1,7 +1,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorator="decorator/wa-decorator">
+      layout:decorator="decorator/wa-decorator"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 
 <div layout:fragment="header">
     <link th:href="@{/assets/js/dataTables/dataTables.bootstrap.css}" rel="stylesheet"/>
@@ -27,9 +28,8 @@
             <div class="col-md-6">
                 <h3>About Me!</h3>
                 <blockquote class="commentBox">
-                    <span th:if="${profile.aboutMe != null AND profile.aboutMe != ''}" th:text="${profile.aboutMe}">
-
-                    </span>
+                    <span th:if="${profile.aboutMe != null AND profile.aboutMe != ''}"
+                          th:text="${profile.aboutMe}"></span>
                     <span th:if="${profile.aboutMe == null || profile.aboutMe == ''}">
                         I don't have anything in particular to mention yet.
                     </span>
@@ -109,8 +109,42 @@
 
         <hr/>
 
+        <div class="row" th:if="${canEdit == false}" sec:authorize="hasRole('ROLE_USER')">
+            <div class="col-md-10 col-md-offset-1">
+                <h3>Send a PM to this <span th:text="${profile.userName}"></span></h3>
+
+                <div id="genericAlert" class="alert alert-warning alert-dismissible collapse" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <strong>error!</strong> <span id="genericAlertText"></span>
+                </div>
+
+                <div id="genericWinAlert" class="alert alert-success alert-dismissible collapse" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <strong>success!</strong>Private message to <span th:text="${profile.userName}"></span> has been sent!.
+                    possible.
+                </div>
+
+                <div class="form-group">
+                    <input id="userId" th:value="${profile.userId}" type="hidden"/>
+                    <label>Title</label>
+                    <input data-bind="value: title" id="txtTitle" class="form-control floating-label"
+                           placeholder="What is this about?"/>
+
+                </div>
+                <br/>
+                <br/>
+                <label>Private Message</label>
+                <textarea data-bind="value: content, text: content" id="txtContact" class="form-control floating-label"
+                          placeholder="What's on your mind?" rows="8"></textarea>
+                <br/>
+                <button data-bind="click: sendIt" class="btn btn-raised btn-success">Send your message</button>
+            </div>
+        </div>
+
         <div class="row">
-            <div class="col-md-6" th:if="${profile.twitterName != null AND profile.twitterName != ''}">
+            <div class="col-md-5 col-md-offset-1" th:if="${profile.twitterName != null AND profile.twitterName != ''}">
                 <h3>Twitter</h3>
                 <a class="twitter-timeline" href="https://twitter.com/ScrappieWoW"
                    th:attr="data-screen-name=${profile.twitterName}" data-widget-id="582534150621687808">Tweets by
@@ -125,25 +159,16 @@
                     }
                 }(document, "script", "twitter-wjs");</script>
             </div>
-            <div class="col-md-6" th:if="${profile.twitchStream != null AND profile.twitchStream != ''}">
+
+            <div class="col-md-5 col-md-offset-1" th:if="${profile.twitchStream != null AND profile.twitchStream != ''}">
                 <a class="embedly-card" th:href="${ 'http://twitch.tv/' + profile.twitchStream}"
                    th:text="${profile.twitchStream + ' - Twitch'}">StreamingForAnimals - Twitch</a>
                 <script async="async" src="//cdn.embedly.com/widgets/platform.js" charset="UTF-8"></script>
             </div>
         </div>
         <br/>
-        <hr/>
         <br/>
-
-        <div class="row">
-
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-
-            </div>
-        </div>
+        <hr/>
 
     </div>
     <!-- /. PAGE INNER  -->
@@ -152,9 +177,41 @@
 <div layout:fragment="footer-content">
     <script th:src="@{/assets/js/dataTables/jquery.dataTables.js}"></script>
     <script th:src="@{/assets/js/dataTables/dataTables.bootstrap.js}"></script>
-    <script type="application/javascript">
+    <script type="application/javascript" sec:authorize="hasRole('ROLE_USER')">
         var ViewModel = function () {
             var self = this;
+            self.content = ko.observable("");
+            self.title = ko.observable("");
+            self.sendIt = function () {
+
+                var command = {};
+                command['title'] = self.title();
+                command['content'] = self.content();
+                var userId = $("#userId").val();
+                command['toUserId'] = userId;
+                var stringyfiedCommand = JSON.stringify(command);
+
+                $.ajax({
+                    url: '/contact/' + userId,
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    data: stringyfiedCommand, //Stringified Json Object
+                    cache: false,    //This will force requested pages not to be cached by the browser
+                    processData: false, //To avoid making query String instead of JSON
+                    success: function (resposeJsonObject) {
+                        console.log(resposeJsonObject);
+                        if (resposeJsonObject.hasErrors) {
+                            $("#genericAlertText").html(resposeJsonObject.errorMessage);
+                            $("#genericAlert").show();
+                        } else {
+                            $("#genericAlert").hide();
+                            $("#genericWinAlert").show();
+                            self.content("");
+                            self.title("");
+                        }
+                    }
+                });
+            };
         }
         var viewModel = new ViewModel();
         ko.applyBindings(viewModel);
@@ -191,6 +248,7 @@
             }],
             resize: true
         });
+
     </script>
 
 </div>
