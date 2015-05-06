@@ -65,7 +65,7 @@
     <script th:src="@{/assets/js/dataTables/dataTables.bootstrap.js}"></script>
     <script type="application/javascript">
         /*<![CDATA[*/
-        $('#myTable').dataTable();
+
 
         $(".view-user").click(function() {
             $.get('/admin/users/' + $(this).data('user_id'), function (data) {
@@ -115,6 +115,8 @@
 
         $(".enable-user").click(doEnable);
         $(".disable-user").click(doDisable);
+
+        $('#myTable').dataTable();
         /*]]>*/
     </script>
 </div>
