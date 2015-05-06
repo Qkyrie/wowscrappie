@@ -27,7 +27,8 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 public class PrivateMessageController {
 
     private static final PrettyTime prettyTime = new PrettyTime(Locale.ENGLISH);
-    private static final Comparator<PrivateMessage> byDate = (pm1, pm2) -> pm1.getDateOfPosting().compareTo(pm2.getDateOfPosting());
+    private static final Comparator<PrivateMessage> byDateForList = (pm1, pm2) -> pm1.getDateOfPosting().compareTo(pm2.getDateOfPosting());
+    private static final Comparator<PrivateMessageListDto> byDate = (pm1, pm2) -> pm2.getActualDate().compareTo(pm1.getActualDate());
 
     @Autowired
     private PrivateMessageService privateMessageService;
@@ -37,8 +38,16 @@ public class PrivateMessageController {
     public String index(ModelMap modelMap) {
         modelMap.put("inbox", privateMessageService.findMessagesToUser(getThisUser())
                 .stream()
-                .sorted(byDate)
                 .map(PrivateMessageListDto::create)
+                .map(pmdto -> {
+                    Optional<Date> lastActionDateForPrivateMessage = privateMessageService.getLastActionDateForPrivateMessage(pmdto.getId());
+                    if (lastActionDateForPrivateMessage.isPresent()) {
+                        pmdto.setWhen(prettyTime.format(lastActionDateForPrivateMessage.get()));
+                        pmdto.setActualDate(lastActionDateForPrivateMessage.get());
+                    }
+                    return pmdto ;
+                })
+                .sorted(byDate)
                 .collect(Collectors.toList()));
         return "personal/inbox/index";
     }
@@ -83,7 +92,7 @@ public class PrivateMessageController {
         if (originalMessage.isPresent()) {
             return privateMessageService.findAllByRoot(originalMessageId)
                     .stream()
-                    .sorted(byDate)
+                    .sorted(byDateForList)
                     .map(pm -> new PrivateMessageDetailsDto()
                                     .setTitle(pm.getTitle())
                                     .setContent(pm.getContent())

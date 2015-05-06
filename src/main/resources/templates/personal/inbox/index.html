@@ -74,7 +74,9 @@
     <script th:src="@{/assets/js/dataTables/dataTables.bootstrap.js}"></script>
     <script type="text/javascript">
 
-        $('#myTable').dataTable();
+        $('#myTable').dataTable({
+            "aaSorting": []
+        });
 
         var InboxVM  = function() {
             var self = this;

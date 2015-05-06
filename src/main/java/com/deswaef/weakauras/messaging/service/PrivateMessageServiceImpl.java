@@ -48,6 +48,12 @@ public class PrivateMessageServiceImpl implements PrivateMessageService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public Optional<Date> getLastActionDateForPrivateMessage(Long privateMessage) {
+        return privateMessageRepository.findMaxDateForRootMessage(privateMessage);
+}
+
+    @Override
     @Transactional
     public void sendToPika(ContactRequestDto contactRequestDto) {
         Optional<ScrappieUser> pikachu = userRepository.findOne(PIKA_ID);

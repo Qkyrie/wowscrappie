@@ -3,6 +3,7 @@ package com.deswaef.weakauras.messaging.controller.dto;
 import com.deswaef.weakauras.messaging.domain.PrivateMessage;
 import org.ocpsoft.prettytime.PrettyTime;
 
+import java.util.Date;
 import java.util.Locale;
 
 public class PrivateMessageListDto {
@@ -14,6 +15,7 @@ public class PrivateMessageListDto {
     private String from;
     private Long fromId;
     private String title;
+    private Date actualDate;
 
     public static PrivateMessageListDto create(PrivateMessage privateMessage) {
         return new PrivateMessageListDto()
@@ -21,7 +23,8 @@ public class PrivateMessageListDto {
                 .setId(privateMessage.getId())
                 .setFromId(privateMessage.getFromUser().getId())
                 .setTitle(privateMessage.getTitle())
-                .setWhen(prettyTime.format(privateMessage.getDateOfPosting()));
+                .setWhen(prettyTime.format(privateMessage.getDateOfPosting()))
+                .setActualDate(privateMessage.getDateOfPosting());
     }
 
     public Long getId() {
@@ -66,6 +69,15 @@ public class PrivateMessageListDto {
 
     public PrivateMessageListDto setTitle(String title) {
         this.title = title;
+        return this;
+    }
+
+    public Date getActualDate() {
+        return actualDate;
+    }
+
+    public PrivateMessageListDto setActualDate(Date actualDate) {
+        this.actualDate = actualDate;
         return this;
     }
 }

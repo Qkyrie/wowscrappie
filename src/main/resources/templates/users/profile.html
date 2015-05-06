@@ -203,6 +203,7 @@
                         if (resposeJsonObject.hasErrors) {
                             $("#genericAlertText").html(resposeJsonObject.errorMessage);
                             $("#genericAlert").show();
+                            $("#genericWinAlert").hide();
                         } else {
                             $("#genericAlert").hide();
                             $("#genericWinAlert").show();
