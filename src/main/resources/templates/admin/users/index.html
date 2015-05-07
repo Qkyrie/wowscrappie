@@ -63,14 +63,44 @@
 <div layout:fragment="footer-content">
     <script th:src="@{/assets/js/dataTables/jquery.dataTables.js}"></script>
     <script th:src="@{/assets/js/dataTables/dataTables.bootstrap.js}"></script>
+    <script th:src="@{/assets/js/history.js}"></script>
     <script type="application/javascript">
         /*<![CDATA[*/
 
+        $.urlParam = function(name){
+            var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+            if (results==null){
+                return null;
+            }
+            else{
+                return results[1] || 0;
+            }
+        };
+
+        (function(window,undefined){
+
+            // Bind to StateChange Event
+            function fetchUserInformation(userId) {
+                $.get('/admin/users/' + userId, function (data) {
+                    $('#details').html(data);
+                });
+            }
+
+            History.Adapter.bind(window,'statechange',function(){ // Note: We are using statechange instead of popstate
+                var State = History.getState(); // Note: We are using History.getState() instead of event.state
+                fetchUserInformation(State.data.userId);
+            });
+
+            var userid = $.urlParam("userid");
+            if(userid !== null && userid !== null) {
+                fetchUserInformation(userid);
+            }
+        })(window);
+
 
         $(".view-user").click(function() {
-            $.get('/admin/users/' + $(this).data('user_id'), function (data) {
-                $('#details').html(data);
-            });
+            var thisId = $(this).data('user_id');
+            History.pushState({userId: thisId}, "Active Users - Scrappie", "?userid=" + thisId);
         });
 
         var doEnable = function() {
@@ -129,7 +159,7 @@
 </div>
 
 <div th:fragment="notfound">
-    <h3>Specied user was not found</h3>
+    <h3>The specified user was not found :(</h3>
 </div>
 
 </html>

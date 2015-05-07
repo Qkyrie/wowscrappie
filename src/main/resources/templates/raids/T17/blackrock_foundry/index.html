@@ -244,47 +244,8 @@
     <script th:src="@{/assets/js/dataTables/jquery.dataTables.js}"></script>
     <script th:src="@{/assets/js/dataTables/dataTables.bootstrap.js}"></script>
     <script type="text/javascript" th:src="@{/assets/js/sliding.js}"/>
-
-    <script type="application/javascript">
-        $(".btn-macro").click(function() {
-            $.get("/raids/2/bosses/" + $(this).data('boss-id') + "/macro", function(data) {
-                $("#resultPane").html(data);
-                $('#myTable')
-                        .on('init.dt', function () {
-                            if (slidingHeader.manualPreference !== true) {
-                                slidingHeader.hideHeader();
-                            }
-                        })
-                        .dataTable();
-            });
-        });
-
-        $(".btn-wa").click(function() {
-            $.get("/raids/2/bosses/" + $(this).data('boss-id') + "/weakaura", function(data) {
-                $("#resultPane").html(data);
-                $('#myTable')
-                        .on('init.dt', function () {
-                            if (slidingHeader.manualPreference !== true) {
-                                slidingHeader.hideHeader();
-                            }
-                        })
-                        .dataTable();
-            });
-        });
-
-        $(".btn-tmw").click(function() {
-            $.get("/raids/2/bosses/" + $(this).data('boss-id') + "/tellmewhen", function(data) {
-                $("#resultPane").html(data);
-                $('#myTable')
-                        .on('init.dt', function () {
-                            if (slidingHeader.manualPreference !== true) {
-                                slidingHeader.hideHeader();
-                            }
-                        })
-                        .dataTable();
-            });
-        });
-    </script>
+    <script th:src="@{/assets/js/history.js}"></script>
+    <script type="application/javascript" th:src="@{/assets/js/raids/blackrockfoundry.js}"></script>
     <script type="text/javascript" th:src="@{/assets/fancybox/jquery.fancybox.pack.js?v=2.1.5}"/>
 </div>
 

@@ -91,7 +91,11 @@
         $("#waBox").click(function () {
             $.get('/personal/uploads/weakaura', function(result) {
                 $("#resultPane").html(result);
-                $('#myTable').dataTable();
+                $('#myTable').dataTable({
+                    "columnDefs": [
+                        { "width": "20%", "targets": 0 }
+                    ]
+                });
             });
         });
 

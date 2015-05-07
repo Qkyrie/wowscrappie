@@ -209,7 +209,7 @@
                             $("#genericWinAlert").show();
                             self.content("");
                             self.title("");
-                        }
+                        }µ
                     }
                 });
             };
@@ -232,7 +232,7 @@
     </script>
 
     <script th:src="@{/assets/js/morris/raphael-2.1.0.min.js}"></script>
-    <script th:src="@{/assets/js/morris/morris.js}"></script>
+    <script th:src="@{/assets/js/morris/morris.min.js}"></script>
     <script type="application/javascript" th:if="${profile.was != 0 || profile.tmws != 0 || profile.macros != 0}">
         Morris.Donut({
             element: 'morris-donut-chart',
