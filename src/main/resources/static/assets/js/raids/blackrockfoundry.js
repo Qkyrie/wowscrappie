@@ -1,35 +1,65 @@
-(function(window,undefined){
+(function (window, undefined) {
     // Bind to StateChange Event
-    History.Adapter.bind(window,'statechange',function(){ // Note: We are using statechange instead of popstate
+    History.Adapter.bind(window, 'statechange', function () { // Note: We are using statechange instead of popstate
         var State = History.getState(); // Note: We are using History.getState() instead of event.state
-        $.get("/raids/2/bosses/" + State.data.bossId + "/" + State.data.configType, function(data) {
-            $("#resultPane").html(data);
-            $('#myTable')
-                .on('init.dt', function () {
-                    if (slidingHeader.manualPreference !== true) {
-                        slidingHeader.hideHeader();
+        console.log('configid: ' + State.data.configId);
+        if (State.data.configId !== undefined) {
+            $.get("/interface/" + State.data.configType + "/" + State.data.configId, function (resultValue) {
+                if (resultValue !== null) {
+                    configModel.activeConfig(resultValue);
+                    configModel.activeConfigId(State.data.configId);
+                    configModel.activeString(resultValue.actualValue);
+                    configModel.activeComment(resultValue.comment);
+                    if (configModel.imageRefs !== undefined) {
+                        configModel.imageRefs(resultValue.imageRefs);
                     }
-                })
-                .dataTable();
-        });
+                    configModel.activeName(resultValue.name);
+                    Mdjs().on($("#commentBox"));
+                    configModel.showDetails(true);
+                    $("html, body").animate({scrollTop: $(document).height()}, 1000);
+                    $(".fancybox").fancybox();
+                    console.log("done showing stuff");
+                }
+            });
+        } else {
+            var bossid = State.data.bossId;
+            var configtype = State.data.configType;
+            if (configtype !== undefined && configtype !== 0 && configtype !== null && bossid !== undefined && bossid !== 0 && bossid !== null) {
+                $.get("/raids/2/bosses/" + State.data.bossId + "/" + State.data.configType, function (data) {
+                    $("#resultPane").html(data);
+                    $('#myTable')
+                        .on('init.dt', function () {
+                            if (slidingHeader.manualPreference !== true) {
+                                slidingHeader.hideHeader();
+                            }
+                        })
+                        .dataTable();
+                });
+            } else {
+                $("#resultPane").html('');
+                slidingHeader.showHeader();
+            }
+
+        }
     });
 })(window);
 
-$.urlParam = function(name){
+$.urlParam = function (name) {
     var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
-    if (results==null){
+    if (results == null) {
         return null;
     }
-    else{
+    else {
         return results[1] || 0;
     }
 };
 
 var bossid = $.urlParam("bossid");
 var configtype = $.urlParam("configtype");
+var configId = $.urlParam("configid");
 
-if(configtype !== 0 && configtype !== null && bossid !== 0 && bossid !== null) {
-    $.get("/raids/2/bosses/" + bossid + "/" + configtype, function(data) {
+if (configtype !== 0 && configtype !== null && bossid !== 0 && bossid !== null) {
+    $.get("/raids/2/bosses/" + bossid + "/" + configtype, function (data) {
         $("#resultPane").html(data);
         $('#myTable')
             .on('init.dt', function () {
@@ -38,11 +68,29 @@ if(configtype !== 0 && configtype !== null && bossid !== 0 && bossid !== null) {
                 }
             })
             .dataTable();
+        if (configId !== 0 && configId !== null) {
+            $.get("/interface/" + configtype + "/" + configId, function (resultValue) {
+                if (resultValue !== null) {
+                    configModel.activeConfig(resultValue);
+                    configModel.activeConfigId(configId);
+                    configModel.activeString(resultValue.actualValue);
+                    configModel.activeComment(resultValue.comment);
+                    if (configModel.imageRefs !== undefined) {
+                        configModel.imageRefs(resultValue.imageRefs);
+                    }
+                    configModel.activeName(resultValue.name);
+                    Mdjs().on($("#commentBox"));
+                    configModel.showDetails(true);
+                    $("html, body").animate({scrollTop: $(document).height()}, 1000);
+                    $(".fancybox").fancybox();
+                    console.log("done showing stuff");
+                }
+            });
+        }
     });
 }
 
-
-$(".btn-macro").click(function() {
+$(".btn-macro").click(function () {
     var bossId = $(this).data('boss-id');
     History.pushState(
         {
@@ -53,24 +101,24 @@ $(".btn-macro").click(function() {
     );
 });
 
-$(".btn-wa").click(function() {
+$(".btn-wa").click(function () {
     var bossId = $(this).data('boss-id');
     History.pushState(
         {
             bossId: bossId,
             configType: 'weakaura'
         },
-        "Blackrock Foundry Weakauras- WowScrappie", "?bossid=" + bossId + '&configtype=weakaura'
+        "Blackrock Foundry Weakauras - WowScrappie", "?bossid=" + bossId + '&configtype=weakaura'
     );
 });
 
-$(".btn-tmw").click(function() {
+$(".btn-tmw").click(function () {
     var bossId = $(this).data('boss-id');
     History.pushState(
         {
             bossId: bossId,
             configType: 'tellmewhen'
         },
-        "Blackrock Foundry Tellmewhens - WowScrappie", "?bossid=" + bossId + '&configtype=tellmewhen'
+        "Blackrock Foundry TellMeWhens - WowScrappie", "?bossid=" + bossId + '&configtype=tellmewhen'
     );
 });

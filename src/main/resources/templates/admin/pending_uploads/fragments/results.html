@@ -24,7 +24,7 @@
                     <tbody>
                     <tr th:each="uielement, iterStat : ${uielements}"
                         th:class="${iterStat.odd}? 'gradeA' : 'gradeC'">
-                        <td th:text="${uielement.name}">Name</td>
+                        <td><p th:text="${uielement.name}"></p></td>
                         <td th:text="${uielement.type}">Type</td>
                         <td>
                             <a th:href="@{'/users/' + ${uielement.uploaderId}}">

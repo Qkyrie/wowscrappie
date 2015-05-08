@@ -14,6 +14,7 @@
     <div id="page-inner">
 
         <div id="top-wrapper">
+            <input id="wowclass" type="hidden" th:value="${wowclass.slug}" />
             <div class="row" th:if="${wowclass.slug.equals('general')}">
                 <div class="col-md-offset-1 col-md-10 alert alert-success">
                     This is a section for some more general configurations, not specifically related to any class,
@@ -175,45 +176,8 @@
     <script th:src="@{/assets/js/dataTables/jquery.dataTables.js}"></script>
     <script th:src="@{/assets/js/dataTables/dataTables.bootstrap.js}"></script>
     <script type="text/javascript" th:src="@{/assets/js/sliding.js}"/>
-
-    <script type="application/javascript">
-        var ViewModel = function () {
-
-            var self = this;
-
-            self.doGet = function (wowclass, wowspec, stringtype) {
-                $.get('/classes/' + wowclass + '/' + wowspec + '/' + stringtype, function (result) {
-                    $("#resultPane").html(result);
-                    $('#myTable')
-                            .on('init.dt', function () {
-                                if (slidingHeader.manualPreference !== true) {
-                                    slidingHeader.hideHeader();
-                                }
-                            })
-                            .dataTable();
-                });
-            };
-
-            self.wowClassChosen = function (data, event) {
-                var clickedElement = $(event.currentTarget);
-                var wowclass = clickedElement.data("wowclass_slug");
-                var stringType = clickedElement.data("string_type");
-                var spec = "class_specific";
-                self.doGet(wowclass, spec, stringType);
-            };
-
-            self.specChosen = function (data, event) {
-                var clickedElement = $(event.currentTarget);
-                var wowclass = clickedElement.data("wowclass_slug");
-                var spec = clickedElement.data("spec_slug");
-                var stringType = clickedElement.data("string_type");
-                self.doGet(wowclass, spec, stringType);
-            }
-        }
-        var viewModel = new ViewModel();
-        ko.applyBindings(viewModel);
-
-    </script>
+    <script th:src="@{/assets/js/history.js}"></script>
+    <script type="application/javascript" th:src="@{/assets/js/custom/specs.js}"></script>
 
     <script type="text/javascript" th:src="@{/assets/fancybox/jquery.fancybox.pack.js?v=2.1.5}"/>
 
