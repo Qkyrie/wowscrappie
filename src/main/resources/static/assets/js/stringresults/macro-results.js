@@ -22,7 +22,6 @@ var MacroModel = function () {
     self.view = function (data, event) {
         var clickedElement = $(event.currentTarget);
         var tmw_id = clickedElement.data("macro_id");
-        var state = History.getState();
         var wowclass = $("#wowclass").val();
         if(wowclass !== undefined) {
             var wowspec = $.urlParam("wowspec");
@@ -42,7 +41,7 @@ var MacroModel = function () {
                     configType: 'macro',
                     configId: tmw_id
                 },
-                "Raid Macros - WowScrappie", "?bossid=" + state.data.bossId + '&configtype=macro&configid=' + tmw_id
+                "Raid Macros - WowScrappie", "?bossid=" + bossid + '&configtype=macro&configid=' + tmw_id
             );
         }
     };

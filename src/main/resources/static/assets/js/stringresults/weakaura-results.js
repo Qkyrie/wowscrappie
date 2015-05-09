@@ -25,6 +25,7 @@ var WaModel = function () {
     self.view = function (data, event) {
         var clickedElement = $(event.currentTarget);
         var tmw_id = clickedElement.data("wa_id");
+        var state = History.getState();
         var wowclass = $("#wowclass").val();
         if (wowclass !== undefined) {
             var wowspec = $.urlParam("wowspec");

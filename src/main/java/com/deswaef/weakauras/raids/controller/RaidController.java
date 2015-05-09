@@ -54,6 +54,7 @@ public class RaidController {
         Optional<Raid> raid = raidService.findById(raidId);
         if(raid.isPresent()) {
             modelMap.put("overview", getBossconfigurations(raid.get()));
+            modelMap.put("raidId", raid);
             return String.format("raids/%s/%s/index", raid.get().getTier().getName(), raid.get().getSlug());
         } else {
             return  "redirect:/raids";

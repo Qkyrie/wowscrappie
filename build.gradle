@@ -90,6 +90,7 @@ dependencies {
     compile("org.ocpsoft.prettytime:prettytime:4.0.0.Final")
     compile('com.icegreen:greenmail:1.4.0')
     compile("javax.mail:mail:1.4.7")
+    compile('net.sourceforge.htmlunit:htmlunit:2.4')
     testCompile("com.h2database:h2")
     testCompile("org.springframework.boot:spring-boot-starter-test")
     testCompile('org.easytesting:fest-assert:1.4')
