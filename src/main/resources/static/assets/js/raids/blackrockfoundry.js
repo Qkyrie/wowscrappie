@@ -45,7 +45,7 @@
 })(window);
 
 $.urlParam = function (name) {
-    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href.replace('?_escaped_fragment_=', ''));
     if (results == null) {
         return null;
     }

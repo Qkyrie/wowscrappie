@@ -45,8 +45,8 @@
     });
 })(window);
 
-$.hashValue = function(key) {
-    var results =  location.hash.match(new RegExp(key+'=([^&]*)'));
+$.urlParam = function (name) {
+    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href.replace('?_escaped_fragment_=', ''));
     if (results == null) {
         return null;
     }
@@ -55,9 +55,9 @@ $.hashValue = function(key) {
     }
 };
 
-var bossid = $.hashValue("bossid");
-var configtype = $.hashValue("configtype");
-var configId = $.hashValue("configid");
+var bossid = $.urlParam("bossid");
+var configtype = $.urlParam("configtype");
+var configId = $.urlParam("configid");
 
 if (configtype !== 0 && configtype !== null && bossid !== 0 && bossid !== null) {
     $.get("/raids/1/bosses/" + bossid + "/" + configtype, function (data) {
@@ -97,7 +97,7 @@ $(".btn-macro").click(function () {
             bossId: bossId,
             configType: 'macro'
         },
-        "Highmaul Macros - WowScrappie", "1#!bossid=" + bossId + '&configtype=macro'
+        "Highmaul Macros - WowScrappie", "?bossid=" + bossId + '&configtype=macro'
     );
 });
 
@@ -108,7 +108,7 @@ $(".btn-wa").click(function () {
             bossId: bossId,
             configType: 'weakaura'
         },
-        "Highmaul Weakauras - WowScrappie", "1#!bossid=" + bossId + '&configtype=weakaura'
+        "Highmaul Weakauras - WowScrappie", "?bossid=" + bossId + '&configtype=weakaura'
     );
 });
 
@@ -119,6 +119,6 @@ $(".btn-tmw").click(function () {
             bossId: bossId,
             configType: 'tellmewhen'
         },
-        "Highmaul TellMeWhens - WowScrappie", "1#!bossid=" + bossId + '&configtype=tellmewhen'
+        "Highmaul TellMeWhens - WowScrappie", "?bossid=" + bossId + '&configtype=tellmewhen'
     );
 });
