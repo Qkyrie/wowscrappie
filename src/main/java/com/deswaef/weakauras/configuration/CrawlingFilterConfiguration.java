@@ -1,6 +1,8 @@
 package com.deswaef.weakauras.configuration;
 
+import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.WebClientOptions;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -61,11 +63,12 @@ public class CrawlingFilterConfiguration {
                 String ajaxPage=fullURLQueryString.replace("?_escaped_fragment_=", "");
 
 
-                final WebClient webClient = new WebClient();
-                webClient.setCssEnabled(true);
-                webClient.setThrowExceptionOnScriptError(false);
-                webClient.setThrowExceptionOnFailingStatusCode(false);
-                webClient.setJavaScriptEnabled(true);
+                final WebClient webClient = new WebClient(BrowserVersion.CHROME);
+                WebClientOptions options = webClient.getOptions();
+                options.setCssEnabled(true);
+                options.setJavaScriptEnabled(true);
+                options.setThrowExceptionOnScriptError(false);
+                options.setThrowExceptionOnFailingStatusCode(false);
 
                 HtmlPage page = webClient.getPage(ajaxPage);
 
@@ -73,14 +76,18 @@ public class CrawlingFilterConfiguration {
                 // The exact time to wait may depend on your application.
 
                 webClient.setJavaScriptTimeout(20000);
-
-                // return the snapshot
-                //String originalHtml=page.getWebResponse().getContentAsString();
-                //System.out.println(originalHtml+" +++++++++");
-                System.out.println(page.asXml()+" +++++++++");
-
+                response.setContentType("text/html;charset=UTF-8");
                 PrintWriter out = response.getWriter();
-                response.setContentType("text/html");
+       /*         out.println("<hr />");
+                out.println("<center><h3>You are viewing a non-interactive page that is intended for the crawler.  "
+                        + "You probably want to see this page: <a href=\""
+                        + ajaxPage
+                        + "\">"
+                        + ajaxPage + "</a></h3></center>");
+                out.println("<hr />"); */
+
+                out.println(page.asXml());
+                webClient.closeAllWindows();
                 out.println(page.asXml());
                 //out.println(originalHtml);
             } else {
