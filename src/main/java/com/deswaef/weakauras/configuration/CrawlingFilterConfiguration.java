@@ -54,7 +54,6 @@ public class CrawlingFilterConfiguration {
 
             HttpServletRequest httpRequest = (HttpServletRequest) request;
             String fullURLQueryString = getFullURL(httpRequest);
-            System.out.println(fullURLQueryString+" what wrong");
 
             if ((fullURLQueryString != null) && (fullURLQueryString.contains("?_escaped_fragment_="))) {
                 // remember to unescape any %XX characters
@@ -95,7 +94,7 @@ public class CrawlingFilterConfiguration {
                     // not an _escaped_fragment_ URL, so move up the chain of servlet (filters)
                     chain.doFilter(request, response);
                 } catch (ServletException e) {
-                    System.err.println("Servlet exception caught: " + e);
+                    System.err.printf("Servlet exception caught while filtering for crawler: %s%n", e.getMessage());
                     e.printStackTrace();
                 }
             }

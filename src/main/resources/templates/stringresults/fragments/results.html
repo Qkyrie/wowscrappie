@@ -72,7 +72,11 @@
 
                             <span th:attr="data-tmw_id=${uielement.id},
                             data-share-url=${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/shared/tmw/} + ${uielement.id}"
-                                  class="shareButton btn btn-success btn-sm"> <i class="mdi-social-share"></i>  share link</span>
+                                  class="shareButton btn btn-success btn-sm">
+                                 <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/shared/tmw/} + ${uielement.id}" style="display: none;"></a>
+                                <i class="mdi-social-share">
+
+                            </i>  share link</span>
                               <span data-bind="click: report" th:attr="data-tmw_id=${uielement.id}"
                                     class="btn btn-material-blue-grey"> report</span>
 
@@ -196,7 +200,10 @@
                           class="btn btn-success btn-sm"> <i class="mdi-maps-local-library"></i> view</span>
 
                         <span th:attr="data-wa_id=${uielement.id}, data-share-url=${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/shared/wa/} + ${uielement.id}"
-                              class="shareButton btn btn-success btn-sm"> <i
+                              class="shareButton btn btn-success btn-sm">
+                        <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/shared/wa/} + ${uielement.id}"
+                           style="display: none;"></a>
+                            <i
                                 class="mdi-social-share"></i> share link</span>
                         <span data-bind="click: report" th:attr="data-wa_id=${uielement.id}"
                               class="btn btn-material-blue-grey"> report</span>
@@ -317,7 +324,9 @@
                     <span data-bind="click: view" th:attr="data-macro_id=${uielement.id}"
                           class="btn btn-success btn-sm"><i class="mdi-maps-local-library"></i> view</span>
                         <span th:attr="data-macro_id=${uielement.id}, data-share-url=${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/shared/macro/} + ${uielement.id}"
-                              class="shareButton btn btn-success btn-sm"> <i
+                              class="shareButton btn btn-success btn-sm">
+                            <a style="display: none;" th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/shared/macro/} + ${uielement.id}"></a>
+                            <i
                                 class="mdi-social-share"></i> share link</span>
                            <span data-bind="click: report" th:attr="data-macro_id=${uielement.id}"
                                  class="btn btn-material-blue-grey"> report</span>

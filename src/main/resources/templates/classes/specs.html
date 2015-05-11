@@ -27,7 +27,6 @@
                     <div class="col-md-12 text-center">
                         <h2 th:text="${wowclass.name}"></h2>
                         <img th:src="@{'/assets/img/classes/' + ${wowclass.slug} + '/' + ${wowclass.slug} + '.png'}"/>
-
                     <span data-bind="click: wowClassChosen"
                           th:attr="data-wowclass_slug=${wowclass.slug}, data-string_type=macro"
                           class="btn btn-primary btn-sm">Macros <span
