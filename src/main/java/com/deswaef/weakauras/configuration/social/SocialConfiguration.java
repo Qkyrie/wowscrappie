@@ -7,7 +7,7 @@ import org.springframework.social.connect.web.ConnectController;
 
 import javax.annotation.PostConstruct;
 
-//@Configuration
+@Configuration
 public class SocialConfiguration {
 
     @Value("${com.deswaef.scrappie.fullbaseurl}")
@@ -15,12 +15,12 @@ public class SocialConfiguration {
 
     @Autowired
     private ConnectController connectController;
-    @Autowired
-    private FacebookAsPrincipalInterceptor facebookAsPrincipalInterceptor;
+ /*   @Autowired
+    private FacebookAsPrincipalInterceptor facebookAsPrincipalInterceptor;*/
 
     @PostConstruct
     public void init() {
-        connectController.addInterceptor(facebookAsPrincipalInterceptor);
+       // connectController.addInterceptor(facebookAsPrincipalInterceptor);
         connectController.setApplicationUrl(baseUrl);
     }
 }

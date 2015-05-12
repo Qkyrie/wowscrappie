@@ -29,7 +29,7 @@ group = 'com.de-swaef.scrappie'
 
 jar {
 	baseName = 'Scrappie'
-	version =  '1.3.3'
+	version =  '1.3.4-SNAPSHOT'
 }
 
 idea {
@@ -65,7 +65,9 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-websocket")
     compile("org.springframework:spring-messaging")
     compile("org.springframework.social:spring-social-facebook")
-    compile("org.springframework.social:spring-social-twitter")
+    compile("org.springframework.social:spring-social-core:1.1.0.RELEASE")
+    compile("org.springframework.social:spring-social-config:1.1.0.RELEASE")
+    compile("org.springframework.social:spring-social-twitter:1.1.0.RELEASE")
     compile 'org.springframework.data:spring-data-redis:1.5.0.RELEASE'
     compile('redis.clients:jedis:2.6.3')
     compile("redis.embedded:embedded-redis:0.5")

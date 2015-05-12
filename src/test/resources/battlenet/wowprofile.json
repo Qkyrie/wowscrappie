@@ -1,0 +1,443 @@
+{
+  "characters": [{
+    "name": "Moories",
+    "realm": "Al'Akir",
+    "battlegroup": "Glutsturm / Emberstorm",
+    "class": 3,
+    "race": 6,
+    "gender": 0,
+    "level": 8,
+    "achievementPoints": 0,
+    "thumbnail": "xavius/189/106150589-avatar.jpg"
+  }, {
+    "name": "Murzim",
+    "realm": "Frostwhisper",
+    "battlegroup": "Cruelty / Crueldad",
+    "class": 9,
+    "race": 7,
+    "gender": 0,
+    "level": 22,
+    "achievementPoints": 0,
+    "thumbnail": "internal-record-3657/9/108197897-avatar.jpg"
+  }, {
+    "name": "Bysmal",
+    "realm": "Frostwhisper",
+    "battlegroup": "Cruelty / Crueldad",
+    "class": 2,
+    "race": 6,
+    "gender": 0,
+    "level": 10,
+    "achievementPoints": 0,
+    "thumbnail": "internal-record-3657/82/109142098-avatar.jpg"
+  }, {
+    "name": "Epicraider",
+    "realm": "Frostwhisper",
+    "battlegroup": "Cruelty / Crueldad",
+    "class": 7,
+    "race": 11,
+    "gender": 0,
+    "level": 22,
+    "achievementPoints": 0,
+    "thumbnail": "internal-record-3657/59/108199483-avatar.jpg",
+    "guild": "Legendary name",
+    "guildRealm": "Frostwhisper"
+  }, {
+    "name": "Colthrah",
+    "realm": "Frostmane",
+    "battlegroup": "Misery",
+    "class": 2,
+    "race": 11,
+    "gender": 0,
+    "level": 1,
+    "achievementPoints": 0,
+    "thumbnail": "frostmane/11/75040523-avatar.jpg"
+  }, {
+    "name": "Coltra",
+    "realm": "Silvermoon",
+    "battlegroup": "Misery",
+    "class": 8,
+    "race": 4,
+    "gender": 0,
+    "level": 20,
+    "achievementPoints": 8465,
+    "thumbnail": "cerchio-del-sangue/65/109146945-avatar.jpg",
+    "spec": {
+      "name": "Arcane",
+      "role": "DPS",
+      "backgroundImage": "bg-mage-arcane",
+      "icon": "spell_holy_magicalsentry",
+      "description": "Manipulate the arcane, destroying enemies with overwhelming power.",
+      "order": 0
+    },
+    "guild": "Descendants of Madness",
+    "guildRealm": "Silvermoon"
+  }, {
+    "name": "Vacu",
+    "realm": "Silvermoon",
+    "battlegroup": "Misery",
+    "class": 7,
+    "race": 11,
+    "gender": 0,
+    "level": 17,
+    "achievementPoints": 8465,
+    "thumbnail": "cerchio-del-sangue/38/109462310-avatar.jpg",
+    "spec": {
+      "name": "Enhancement",
+      "role": "DPS",
+      "backgroundImage": "bg-shaman-enhancement",
+      "icon": "spell_shaman_improvedstormstrike",
+      "description": "A totemic warrior who strikes foes with weapons imbued with elemental power.",
+      "order": 1
+    }
+  }, {
+    "name": "Charmänder",
+    "realm": "Silvermoon",
+    "battlegroup": "Misery",
+    "class": 10,
+    "race": 25,
+    "gender": 0,
+    "level": 100,
+    "achievementPoints": 8595,
+    "thumbnail": "cerchio-del-sangue/82/109243474-avatar.jpg",
+    "spec": {
+      "name": "Brewmaster",
+      "role": "TANK",
+      "backgroundImage": "bg-monk-brewmaster",
+      "icon": "spell_monk_brewmaster_spec",
+      "description": "A sturdy brawler who uses liquid fortification and unpredictable movement to avoid damage and protect allies.",
+      "order": 0
+    },
+    "guild": "Thistle Tea Party",
+    "guildRealm": "Silvermoon"
+  }, {
+    "name": "Bertsta43AF9",
+    "realm": "Aszune",
+    "battlegroup": "Reckoning / Abrechnung",
+    "class": 1,
+    "race": 1,
+    "gender": 0,
+    "level": 1,
+    "achievementPoints": 0,
+    "thumbnail": "internal-record-3666/249/91503353-avatar.jpg"
+  }, {
+    "name": "Shamroh",
+    "realm": "Al'Akir",
+    "battlegroup": "Glutsturm / Emberstorm",
+    "class": 8,
+    "race": 10,
+    "gender": 0,
+    "level": 9,
+    "achievementPoints": 0,
+    "thumbnail": "xavius/205/106158797-avatar.jpg"
+  }, {
+    "name": "Aurigo",
+    "realm": "Al'Akir",
+    "battlegroup": "Glutsturm / Emberstorm",
+    "class": 9,
+    "race": 5,
+    "gender": 0,
+    "level": 32,
+    "achievementPoints": 0,
+    "thumbnail": "xavius/155/106149019-avatar.jpg"
+  }, {
+    "name": "Boundaryless",
+    "realm": "Darksorrow",
+    "battlegroup": "Cruelty / Crueldad",
+    "class": 2,
+    "race": 11,
+    "gender": 0,
+    "level": 2,
+    "achievementPoints": 0,
+    "thumbnail": "internal-record-3660/14/100839438-avatar.jpg"
+  }, {
+    "name": "Scuti",
+    "realm": "Frostwhisper",
+    "battlegroup": "Cruelty / Crueldad",
+    "class": 4,
+    "race": 7,
+    "gender": 1,
+    "level": 29,
+    "achievementPoints": 0,
+    "thumbnail": "internal-record-3657/248/108222712-avatar.jpg"
+  }, {
+    "name": "Moriess",
+    "realm": "Frostwhisper",
+    "battlegroup": "Cruelty / Crueldad",
+    "class": 2,
+    "race": 1,
+    "gender": 0,
+    "level": 11,
+    "achievementPoints": 0,
+    "thumbnail": "internal-record-3657/143/108237455-avatar.jpg"
+  }, {
+    "name": "Klesha",
+    "realm": "Silvermoon",
+    "battlegroup": "Misery",
+    "class": 1,
+    "race": 11,
+    "gender": 1,
+    "level": 57,
+    "achievementPoints": 8595,
+    "thumbnail": "cerchio-del-sangue/184/109301432-avatar.jpg",
+    "spec": {
+      "name": "Protection",
+      "role": "TANK",
+      "backgroundImage": "bg-warrior-protection",
+      "icon": "ability_warrior_defensivestance",
+      "description": "A stalwart protector who uses a shield to safeguard herself and her allies.",
+      "order": 2
+    },
+    "guild": "Thistle Tea Party",
+    "guildRealm": "Silvermoon"
+  }, {
+    "name": "Pichü",
+    "realm": "Silvermoon",
+    "battlegroup": "Misery",
+    "class": 9,
+    "race": 22,
+    "gender": 1,
+    "level": 100,
+    "achievementPoints": 8595,
+    "thumbnail": "cerchio-del-sangue/175/109771695-avatar.jpg",
+    "spec": {
+      "name": "Demonology",
+      "role": "DPS",
+      "backgroundImage": "bg-warlock-demonology",
+      "icon": "spell_shadow_metamorphosis",
+      "description": "A master of demonic magic who transforms into a demon and compels demonic powers to aid him.",
+      "order": 1
+    },
+    "guild": "Thistle Tea Party",
+    "guildRealm": "Silvermoon"
+  }, {
+    "name": "Shamro",
+    "realm": "Frostmane",
+    "battlegroup": "Misery",
+    "class": 4,
+    "race": 4,
+    "gender": 1,
+    "level": 6,
+    "achievementPoints": 0,
+    "thumbnail": "frostmane/204/75063756-avatar.jpg",
+    "guild": "Seriously Casual",
+    "guildRealm": "Frostmane"
+  }, {
+    "name": "Dothraci",
+    "realm": "Frostwhisper",
+    "battlegroup": "Cruelty / Crueldad",
+    "class": 11,
+    "race": 6,
+    "gender": 0,
+    "level": 82,
+    "achievementPoints": 7280,
+    "thumbnail": "internal-record-3657/22/109120278-avatar.jpg",
+    "spec": {
+      "name": "Restoration",
+      "role": "HEALING",
+      "backgroundImage": "bg-druid-restoration",
+      "icon": "spell_nature_healingtouch",
+      "description": "Uses heal-over-time Nature spells to keep allies alive.",
+      "order": 3
+    },
+    "guild": "ULTRANUMB",
+    "guildRealm": "Frostwhisper"
+  }, {
+    "name": "Gualichu",
+    "realm": "Silvermoon",
+    "battlegroup": "Misery",
+    "class": 2,
+    "race": 1,
+    "gender": 0,
+    "level": 93,
+    "achievementPoints": 8465,
+    "thumbnail": "cerchio-del-sangue/238/109586670-avatar.jpg",
+    "spec": {
+      "name": "Protection",
+      "role": "TANK",
+      "backgroundImage": "bg-paladin-protection",
+      "icon": "ability_paladin_shieldofthetemplar",
+      "description": "Uses Holy magic to shield himself and defend allies from attackers.",
+      "order": 1
+    },
+    "guild": "Thistle Tea Party",
+    "guildRealm": "Silvermoon"
+  }, {
+    "name": "Pintelu823C4",
+    "realm": "Trollbane",
+    "battlegroup": "Vindication",
+    "class": 1,
+    "race": 1,
+    "gender": 1,
+    "level": 9,
+    "achievementPoints": 0,
+    "thumbnail": "shattered-halls/196/106439620-avatar.jpg"
+  }, {
+    "name": "Procyos",
+    "realm": "Frostmane",
+    "battlegroup": "Misery",
+    "class": 6,
+    "race": 22,
+    "gender": 0,
+    "level": 55,
+    "achievementPoints": 890,
+    "thumbnail": "frostmane/249/77106937-avatar.jpg",
+    "spec": {
+      "name": "Frost",
+      "role": "DPS",
+      "backgroundImage": "bg-deathknight-frost",
+      "icon": "spell_deathknight_frostpresence",
+      "description": "An icy harbinger of doom, channeling runic power and delivering vicious weapon strikes.",
+      "order": 1
+    },
+    "guild": "Chaos Inoculation",
+    "guildRealm": "Frostmane"
+  }, {
+    "name": "Raichü",
+    "realm": "Silvermoon",
+    "battlegroup": "Misery",
+    "class": 5,
+    "race": 11,
+    "gender": 0,
+    "level": 0,
+    "achievementPoints": 0,
+    "thumbnail": "cerchio-del-sangue/135/109164935-avatar.jpg"
+  }, {
+    "name": "Xalstrom",
+    "realm": "Frostwhisper",
+    "battlegroup": "Cruelty / Crueldad",
+    "class": 5,
+    "race": 10,
+    "gender": 0,
+    "level": 4,
+    "achievementPoints": 0,
+    "thumbnail": "internal-record-3657/156/109120412-avatar.jpg"
+  }, {
+    "name": "Pikachü",
+    "realm": "Silvermoon",
+    "battlegroup": "Misery",
+    "class": 7,
+    "race": 11,
+    "gender": 0,
+    "level": 100,
+    "achievementPoints": 8595,
+    "thumbnail": "cerchio-del-sangue/122/109770874-avatar.jpg",
+    "spec": {
+      "name": "Elemental",
+      "role": "DPS",
+      "backgroundImage": "bg-shaman-elemental",
+      "icon": "spell_nature_lightning",
+      "description": "A spellcaster who harnesses the destructive forces of nature and the elements.",
+      "order": 0
+    },
+    "guild": "Thistle Tea Party",
+    "guildRealm": "Silvermoon"
+  }, {
+    "name": "Skillcap",
+    "realm": "Silvermoon",
+    "battlegroup": "Misery",
+    "class": 4,
+    "race": 7,
+    "gender": 0,
+    "level": 100,
+    "achievementPoints": 8570,
+    "thumbnail": "cerchio-del-sangue/254/121550334-avatar.jpg",
+    "spec": {
+      "name": "Subtlety",
+      "role": "DPS",
+      "backgroundImage": "bg-rogue-subtlety",
+      "icon": "ability_stealth",
+      "description": "A dark stalker who leaps from the shadows to ambush her unsuspecting prey.",
+      "order": 2
+    },
+    "guild": "Thistle Tea Party",
+    "guildRealm": "Silvermoon"
+  }, {
+    "name": "Cultrix",
+    "realm": "Frostmane",
+    "battlegroup": "Misery",
+    "class": 9,
+    "race": 22,
+    "gender": 0,
+    "level": 14,
+    "achievementPoints": 1030,
+    "thumbnail": "frostmane/41/77152809-avatar.jpg",
+    "spec": {
+      "name": "Destruction",
+      "role": "DPS",
+      "backgroundImage": "bg-warlock-destruction",
+      "icon": "spell_shadow_rainoffire",
+      "description": "A master of chaos who calls down fire to burn and demolish enemies.",
+      "order": 2
+    },
+    "guild": "Everest",
+    "guildRealm": "Frostmane"
+  }, {
+    "name": "Dothraci",
+    "realm": "Silvermoon",
+    "battlegroup": "Misery",
+    "class": 6,
+    "race": 4,
+    "gender": 0,
+    "level": 92,
+    "achievementPoints": 8595,
+    "thumbnail": "cerchio-del-sangue/223/109148127-avatar.jpg",
+    "spec": {
+      "name": "Frost",
+      "role": "DPS",
+      "backgroundImage": "bg-deathknight-frost",
+      "icon": "spell_deathknight_frostpresence",
+      "description": "An icy harbinger of doom, channeling runic power and delivering vicious weapon strikes.",
+      "order": 1
+    },
+    "guild": "Thistle Tea Party",
+    "guildRealm": "Silvermoon"
+  }, {
+    "name": "Scuti",
+    "realm": "Al'Akir",
+    "battlegroup": "Glutsturm / Emberstorm",
+    "class": 4,
+    "race": 5,
+    "gender": 0,
+    "level": 3,
+    "achievementPoints": 0,
+    "thumbnail": "xavius/66/106131522-avatar.jpg"
+  }, {
+    "name": "Colthrah",
+    "realm": "Frostwhisper",
+    "battlegroup": "Cruelty / Crueldad",
+    "class": 6,
+    "race": 9,
+    "gender": 0,
+    "level": 85,
+    "achievementPoints": 7170,
+    "thumbnail": "internal-record-3657/108/109675372-avatar.jpg",
+    "spec": {
+      "name": "Frost",
+      "role": "DPS",
+      "backgroundImage": "bg-deathknight-frost",
+      "icon": "spell_deathknight_frostpresence",
+      "description": "An icy harbinger of doom, channeling runic power and delivering vicious weapon strikes.",
+      "order": 1
+    }
+  }, {
+    "name": "Maurice",
+    "realm": "Frostwhisper",
+    "battlegroup": "Cruelty / Crueldad",
+    "class": 8,
+    "race": 1,
+    "gender": 0,
+    "level": 11,
+    "achievementPoints": 0,
+    "thumbnail": "internal-record-3657/172/108241068-avatar.jpg"
+  }, {
+    "name": "Pikachü",
+    "realm": "Frostwhisper",
+    "battlegroup": "Cruelty / Crueldad",
+    "class": 5,
+    "race": 1,
+    "gender": 1,
+    "level": 1,
+    "achievementPoints": 0,
+    "thumbnail": "internal-record-3657/184/122627768-avatar.jpg"
+  }]
+}
