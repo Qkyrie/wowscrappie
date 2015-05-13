@@ -2,7 +2,7 @@ package com.deswaef.weakauras.battlenet.api;
 
 import java.io.Serializable;
 
-public class UserProfile implements Serializable {
+public class BattlenetProfile implements Serializable {
     private Long id;
     private String battletag;
 
@@ -11,7 +11,7 @@ public class UserProfile implements Serializable {
         return id;
     }
 
-    public UserProfile setId(Long id) {
+    public BattlenetProfile setId(Long id) {
         this.id = id;
         return this;
     }
@@ -20,7 +20,7 @@ public class UserProfile implements Serializable {
         return battletag;
     }
 
-    public UserProfile setBattletag(String battletag) {
+    public BattlenetProfile setBattletag(String battletag) {
         this.battletag = battletag;
         return this;
     }

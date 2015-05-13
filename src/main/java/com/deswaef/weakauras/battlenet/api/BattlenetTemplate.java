@@ -58,7 +58,7 @@ public class BattlenetTemplate extends AbstractOAuth2ApiBinding implements Battl
     }
 
     private void initSubApis() {
-        userOperations = new UserTemplate(getRestTemplate());
+        userOperations = new UserTemplate(getRestTemplate(), isAuthorized());
     }
 
     @Override

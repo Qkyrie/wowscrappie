@@ -28,6 +28,12 @@ public class BossServiceImpl implements BossService {
 
     @Override
     @Transactional(readOnly = true)
+    public List<RaidBoss> findAllRaidBosses() {
+        return raidBossRepository.findAll();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public Optional<RaidBoss> findById(long id) {
         return raidBossRepository.findOne(id);
     }

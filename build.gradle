@@ -68,7 +68,7 @@ dependencies {
     compile("org.springframework.social:spring-social-core:1.1.0.RELEASE")
     compile("org.springframework.social:spring-social-config:1.1.0.RELEASE")
     compile("org.springframework.social:spring-social-twitter:1.1.0.RELEASE")
-    compile 'org.springframework.data:spring-data-redis:1.5.0.RELEASE'
+    compile('org.springframework.data:spring-data-redis:1.5.0.RELEASE')
     compile('redis.clients:jedis:2.6.3')
     compile("redis.embedded:embedded-redis:0.5")
     compile("org.springframework.session:spring-session:1.0.1.RELEASE")

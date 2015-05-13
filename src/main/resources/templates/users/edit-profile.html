@@ -38,7 +38,8 @@
                 <h4>About you!</h4>
 
                 <div class="form-group">
-                <textarea th:text="${profile.aboutMe}" th:value="${profile.aboutMe}" id="aboutMe" class="form-control floating-label"
+                <textarea th:text="${profile.aboutMe}" th:value="${profile.aboutMe}" id="aboutMe"
+                          class="form-control floating-label"
                           placeholder="About You!" rows="10"></textarea>
                 </div>
             </div>
@@ -46,23 +47,28 @@
         <div class="row">
             <div class="col-md-4 col-md-offset-1">
                 <h4>Sound Notifications</h4>
+
                 <div class="form-group" id="soundRepoForm">
                     <div class="radio" th:each="soundRepo : ${soundRepositories}">
                         <label>
-                            <input th:radiogroup="soundRepos" name="soundRadios" type="radio"  th:value="${soundRepo}" th:checked="${soundRepo.equals(profile.soundRepository)}" th:text="${soundRepo.explanation}"  />
+                            <input th:radiogroup="soundRepos" name="soundRadios" type="radio" th:value="${soundRepo}"
+                                   th:checked="${soundRepo.equals(profile.soundRepository)}"
+                                   th:text="${soundRepo.explanation}"/>
                         </label>
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
                 <h4>Email notifications?</h4>
+
                 <p>Would you like to receive email notifications for important things? (like comments etc..)</p>
+
                 <div class="form-group" id="emailNotificationForm">
                     <div class="checkbox">
                         <label>
                             <input type="checkbox" id="emailNotificationOption" th:radiogroup="emailNotifications"
                                    name="emailNotifications" th:checked="${profile.receiveEmailNotifications}">
-                                Receive email notifications?
+                            Receive email notifications?
                             </input>
                         </label>
                     </div>
@@ -74,6 +80,26 @@
                 <a id="btnSave" class="btn btn-primary btn-raised pull-right">Save</a>
             </div>
         </div>
+
+        <hr/>
+        <div class="row">
+            <div class="col-md-offset-1 col-md-10" th:if="${hasBattleNet}">
+                <p>You have already linked your battlenet account: <span th:text="${battlenetName}"></span></p>
+            </div>
+            <div class="col-md-offset-1 col-md-10" th:if="${!hasBattleNet}">
+                <p>You have not yet linked a battlenet account! Connect now!</p>
+
+                <form th:action="@{/connect/battlenet}" method="POST">
+                    <input type="hidden" name="scope" value="wow.profile"/>
+                    <p>
+                        <button class="btn btn-primary" type="submit">
+                            EU-account
+                        </button>
+                    </p>
+                </form>
+                <a class="btn btn-primary btn-raised">US-account (coming soon)</a>
+            </div>
+        </div>
     </div>
 
     <!-- /. PAGE INNER  -->
@@ -81,7 +107,7 @@
 <!-- /. layout fragment -->
 <div layout:fragment="footer-content">
     <script type="application/javascript">
-        $("#btnSave").click(function() {
+        $("#btnSave").click(function () {
             var aboutMe = $("#aboutMe").val();
             var twitterName = $('#twitterName').val();
             var twitchStream = $('#twitchStream').val();

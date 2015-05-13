@@ -30,7 +30,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Controller
-@RequestMapping(value = "/classes")
+@RequestMapping(value = ClassController.CLASSES)
 public class ClassController {
 
     public static final String WEAK_AURA = "weakaura";
@@ -39,6 +39,7 @@ public class ClassController {
     public static final String CLASS_SPECIFIC = "class_specific";
     public static final String DEFAULT_RATING = "0%";
     public static final String MAX_RATING = "100%";
+    public static final String CLASSES = "/classes";
 
     @Autowired
     private ClassService classService;

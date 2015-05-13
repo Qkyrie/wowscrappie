@@ -1,5 +1,6 @@
 package com.deswaef.weakauras.usermanagement.controller;
 
+import com.deswaef.weakauras.battlenet.api.Battlenet;
 import com.deswaef.weakauras.ui.macros.service.MacroService;
 import com.deswaef.weakauras.ui.tellmewhen.service.TellMeWhenService;
 import com.deswaef.weakauras.ui.weakauras.service.WeakAuraService;
@@ -11,6 +12,8 @@ import com.deswaef.weakauras.usermanagement.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.social.connect.Connection;
+import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,6 +39,8 @@ public class UserController {
     private TellMeWhenService tellMeWhenService;
     @Autowired
     private WeakAuraService weakAuraService;
+    @Autowired
+    private UsersConnectionRepository connectionRepository;
 
     @RequestMapping("/count")
     public @ResponseBody Long count() {
@@ -49,6 +54,15 @@ public class UserController {
             UserProfile userProfile = userProfileService.findByUser(scrappieUser.get());
             modelmap.put("profile", createProfileDto(scrappieUser, userProfile));
             modelmap.put("canEdit", canEdit(scrappieUser.get()));
+
+            Connection<Battlenet> primaryConnection = connectionRepository.createConnectionRepository(scrappieUser.get().getUsername())
+                    .findPrimaryConnection(Battlenet.class);
+            if(primaryConnection != null) {
+                modelmap.put("hasBattleNet", true);
+                modelmap.put("battlenetName", primaryConnection.getDisplayName());
+            } else {
+                modelmap.put("hasBattleNet", false);
+            }
             return "users/profile";
         } else {
             return "users/not-found";

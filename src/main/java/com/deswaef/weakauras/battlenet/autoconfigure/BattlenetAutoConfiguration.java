@@ -18,14 +18,17 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.core.env.Environment;
+import org.springframework.security.crypto.encrypt.Encryptors;
 import org.springframework.social.config.annotation.ConnectionFactoryConfigurer;
 import org.springframework.social.config.annotation.EnableSocial;
 import org.springframework.social.config.annotation.SocialConfigurerAdapter;
-import org.springframework.social.connect.Connection;
-import org.springframework.social.connect.ConnectionFactory;
-import org.springframework.social.connect.ConnectionRepository;
+import org.springframework.social.connect.*;
+import org.springframework.social.connect.jdbc.JdbcUsersConnectionRepository;
 import org.springframework.social.connect.web.GenericConnectionStatusView;
 import org.springframework.web.servlet.View;
+
+import javax.sql.DataSource;
+import java.math.BigInteger;
 
 @Configuration
 @ConditionalOnClass({SocialConfigurerAdapter.class, BattlenetConnectionFactory.class})
@@ -42,6 +45,8 @@ public class BattlenetAutoConfiguration {
 
         @Autowired
         private BattlenetProperties properties;
+        @Autowired
+        private DataSource dataSource;
 
         @Bean
         @ConditionalOnMissingBean(Battlenet.class)
@@ -68,6 +73,15 @@ public class BattlenetAutoConfiguration {
         public void addConnectionFactories(ConnectionFactoryConfigurer configurer,
                                            Environment environment) {
             configurer.addConnectionFactory(createConnectionFactory());
+        }
+
+        @Override
+        public UsersConnectionRepository getUsersConnectionRepository(ConnectionFactoryLocator connectionFactoryLocator) {
+            return new JdbcUsersConnectionRepository(dataSource, connectionFactoryLocator, Encryptors.noOpText());
+        }
+
+        public String toHex(String arg) {
+            return String.format("%040x", new BigInteger(1, arg.getBytes(/*YOUR_CHARSET?*/)));
         }
     }
 }

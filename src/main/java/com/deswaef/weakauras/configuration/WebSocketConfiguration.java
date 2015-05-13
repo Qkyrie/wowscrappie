@@ -21,6 +21,8 @@ public class WebSocketConfiguration extends AbstractSessionWebSocketMessageBroke
                                     "https://wowscrappie.com",
                                     "http://www.wowscrappie.com",
                                     "https://www.wowscrappie.com",
+                                    "https://wowscrappie.ngrok.io",
+                                    "http://wowscrappie.ngrok.io",
                                     "http://127.0.0.1",
                                     "http://127.0.0.1:8090")
                 .withSockJS();
@@ -30,7 +32,5 @@ public class WebSocketConfiguration extends AbstractSessionWebSocketMessageBroke
         registry.enableSimpleBroker("/queue/", "/topic/");
         registry.setApplicationDestinationPrefixes("/app");
     }
-
-
 
 }

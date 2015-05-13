@@ -12,10 +12,13 @@
 <div layout:fragment="main-content">
     <div id="page-inner">
         <div class="row">
-            <div class="col-md-10">
+            <div class="col-md-6">
                 <h2 th:if="${canEdit}">Your Profile</h2>
 
                 <h2 th:if="${canEdit == false}" th:text="${profile.userName + '''s Profile'}"></h2>
+            </div>
+            <div class="col-md-4">
+                <p th:if="${hasBattleNet}" class="alert alert-success">User has linked his battlenet account!</p>
             </div>
             <div class="col-md-2">
                 <a th:if="${canEdit}" class="btn btn-default btn-raised pull-right" th:href="@{/profiles/edit}">Edit

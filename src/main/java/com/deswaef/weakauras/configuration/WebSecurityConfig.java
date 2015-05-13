@@ -31,6 +31,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/contribute", "contribute/**").fullyAuthenticated()
+                .antMatchers("/connect/battlenet", "connect/**").fullyAuthenticated()
                 .antMatchers("/personal", "personal/**").fullyAuthenticated()
                 .antMatchers("/admin", "/admin/**").hasRole("ADMIN")
                 .antMatchers("/**").permitAll()

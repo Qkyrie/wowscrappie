@@ -1,5 +1,7 @@
 package com.deswaef.weakauras.usermanagement.controller;
 
+import com.deswaef.weakauras.battlenet.api.Battlenet;
+import com.deswaef.weakauras.battlenet.api.WowProfile;
 import com.deswaef.weakauras.security.SecurityUtility;
 import com.deswaef.weakauras.sounds.domain.SoundRepositoryEnum;
 import com.deswaef.weakauras.usermanagement.controller.dto.UserProfileDto;
@@ -11,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.social.connect.Connection;
+import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,6 +38,8 @@ public class EditProfileController {
     private UserProfileService userProfileService;
     @Autowired
     private SecurityUtility securityUtility;
+    @Autowired
+    private UsersConnectionRepository connectionRepository;
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @RequestMapping(method = GET)
@@ -45,6 +51,23 @@ public class EditProfileController {
                 UserProfile userProfile = userProfileService.findByUser(scrappieUser.get());
                 modelMap.put("profile", createProfileDto(scrappieUser, userProfile));
                 modelMap.put("soundRepositories", SoundRepositoryEnum.values());
+
+                Connection<Battlenet> primaryConnection = connectionRepository.createConnectionRepository(scrappieUser.get().getUsername())
+                        .findPrimaryConnection(Battlenet.class);
+                if(primaryConnection != null) {
+                    modelMap.put("hasBattleNet", true);
+                    modelMap.put("battlenetName", primaryConnection.getDisplayName());
+                    try {
+
+                        WowProfile wowProfile = primaryConnection.getApi().userOperations().getWowProfile();
+                        modelMap.put("characters", wowProfile);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                } else {
+                    modelMap.put("hasBattleNet", false);
+                }
+
                 return "users/edit-profile";
             } else {
                 return USERS_NOT_FOUND;
