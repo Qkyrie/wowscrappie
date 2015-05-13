@@ -1,6 +1,7 @@
 package com.deswaef.weakauras.mvc;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.connect.web.ConnectController;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/connect")
+@Profile({"development", "production", "default"})
 public class CustomConnectController extends ConnectController {
     /**
      * Constructs a ConnectController.
