@@ -1,4 +1,4 @@
-package com.deswaef.weakauras.battlenet.api;
+package com.deswaef.weakauras.battlenet.api.domain;
 
 import java.io.Serializable;
 

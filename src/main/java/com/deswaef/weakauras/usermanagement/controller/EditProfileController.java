@@ -1,7 +1,7 @@
 package com.deswaef.weakauras.usermanagement.controller;
 
 import com.deswaef.weakauras.battlenet.api.Battlenet;
-import com.deswaef.weakauras.battlenet.api.WowProfile;
+import com.deswaef.weakauras.battlenet.api.domain.WowProfile;
 import com.deswaef.weakauras.security.SecurityUtility;
 import com.deswaef.weakauras.sounds.domain.SoundRepositoryEnum;
 import com.deswaef.weakauras.usermanagement.controller.dto.UserProfileDto;
@@ -11,8 +11,6 @@ import com.deswaef.weakauras.usermanagement.service.UserProfileService;
 import com.deswaef.weakauras.usermanagement.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.stereotype.Controller;

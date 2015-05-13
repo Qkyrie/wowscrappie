@@ -1,7 +1,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorator="decorator/wa-decorator">
+      layout:decorator="decorator/wa-decorator"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <div layout:fragment="header">
     <link th:href="@{/assets/js/dataTables/dataTables.bootstrap.css}" rel="stylesheet"/>
@@ -82,7 +83,15 @@
         </div>
 
         <hr/>
-        <div class="row">
+
+        <div class="row" sec:authorize="!hasRole('ROLE_ADMIN')">
+            <div class="col-md-offset-1 col-md-10">
+                <p class="alert alert-success">You'll be able to connect your account to battlenet soon, so you can
+                    login using your battlenet account</p>
+            </div>
+        </div>
+
+        <div class="row" sec:authorize="hasRole('ROLE_ADMIN')">
             <div class="col-md-offset-1 col-md-10" th:if="${hasBattleNet}">
                 <p>You have already linked your battlenet account: <span th:text="${battlenetName}"></span></p>
             </div>
@@ -91,6 +100,7 @@
 
                 <form th:action="@{/connect/battlenet}" method="POST">
                     <input type="hidden" name="scope" value="wow.profile"/>
+
                     <p>
                         <button class="btn btn-primary" type="submit">
                             EU-account

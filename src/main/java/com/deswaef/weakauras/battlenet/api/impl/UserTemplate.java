@@ -2,8 +2,8 @@ package com.deswaef.weakauras.battlenet.api.impl;
 
 import com.deswaef.weakauras.battlenet.api.AbstractBattlenetOperations;
 import com.deswaef.weakauras.battlenet.api.UserOperations;
-import com.deswaef.weakauras.battlenet.api.BattlenetProfile;
-import com.deswaef.weakauras.battlenet.api.WowProfile;
+import com.deswaef.weakauras.battlenet.api.domain.BattlenetProfile;
+import com.deswaef.weakauras.battlenet.api.domain.WowProfile;
 import org.springframework.web.client.RestTemplate;
 
 public class UserTemplate extends AbstractBattlenetOperations implements UserOperations {

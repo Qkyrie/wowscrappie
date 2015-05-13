@@ -7,3 +7,4 @@ src/main/resources/config/application.properties
 gradle/
 gradlew
 gradlew.bat
+application.pid

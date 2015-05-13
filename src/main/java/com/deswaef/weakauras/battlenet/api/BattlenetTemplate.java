@@ -1,5 +1,8 @@
 package com.deswaef.weakauras.battlenet.api;
 
+import com.deswaef.weakauras.battlenet.api.domain.WowItem;
+import com.deswaef.weakauras.battlenet.api.impl.CharacterProfileTemplate;
+import com.deswaef.weakauras.battlenet.api.impl.ItemTemplate;
 import com.deswaef.weakauras.battlenet.api.impl.UserTemplate;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,6 +25,8 @@ public class BattlenetTemplate extends AbstractOAuth2ApiBinding implements Battl
     private String appId;
 
     private UserOperations userOperations;
+    private ItemOperations itemOperations;
+    private CharacterProfileOperations characterProfileOperations;
 
     private ObjectMapper objectMapper;
 
@@ -48,6 +53,16 @@ public class BattlenetTemplate extends AbstractOAuth2ApiBinding implements Battl
     }
 
     @Override
+    public CharacterProfileOperations characterProfileOperations() {
+        return null;
+    }
+
+    @Override
+    public ItemOperations itemOperations() {
+        return itemOperations;
+    }
+
+    @Override
     public RestOperations restOperations() {
         return getRestTemplate();
     }
@@ -60,6 +75,8 @@ public class BattlenetTemplate extends AbstractOAuth2ApiBinding implements Battl
 
     private void initSubApis() {
         userOperations = new UserTemplate(getRestTemplate(), isAuthorized());
+        itemOperations = new ItemTemplate(getRestTemplate(), isAuthorized());
+        characterProfileOperations = new CharacterProfileTemplate(getRestTemplate(), isAuthorized());
     }
 
     @SuppressWarnings("unchecked")
