@@ -10,6 +10,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.social.UncategorizedApiException;
 import org.springframework.social.facebook.api.impl.json.FacebookModule;
 import org.springframework.social.oauth2.AbstractOAuth2ApiBinding;
+import org.springframework.social.oauth2.TokenStrategy;
 import org.springframework.social.support.ClientHttpRequestFactorySelector;
 import org.springframework.web.client.RestOperations;
 
@@ -20,17 +21,17 @@ public class BattlenetTemplate extends AbstractOAuth2ApiBinding implements Battl
 
     private String appId;
 
-
     private UserOperations userOperations;
 
     private ObjectMapper objectMapper;
 
     public BattlenetTemplate() {
+        super();
         initialize();
     }
 
     public BattlenetTemplate(String accesstoken, String appId) {
-        super(accesstoken);
+        super(accesstoken, TokenStrategy.ACCESS_TOKEN_PARAMETER);
         this.appId = appId;
         initialize();
     }
@@ -59,15 +60,6 @@ public class BattlenetTemplate extends AbstractOAuth2ApiBinding implements Battl
 
     private void initSubApis() {
         userOperations = new UserTemplate(getRestTemplate(), isAuthorized());
-    }
-
-    @Override
-    protected MappingJackson2HttpMessageConverter getJsonMessageConverter() {
-        MappingJackson2HttpMessageConverter converter = super.getJsonMessageConverter();
-        objectMapper = new ObjectMapper();
-        objectMapper.registerModule(new FacebookModule());
-        converter.setObjectMapper(objectMapper);
-        return converter;
     }
 
     @SuppressWarnings("unchecked")

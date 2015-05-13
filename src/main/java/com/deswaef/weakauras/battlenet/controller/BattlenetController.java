@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/connect/battlenetConnected")
 public class BattlenetController {
 
-
     @Autowired
     private UsersConnectionRepository connectionRepository;
 
