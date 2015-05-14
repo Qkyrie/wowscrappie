@@ -13,9 +13,6 @@
     <div id="page-inner">
 
         <div class="container" >
-            <div sec:authorize="isAuthenticated()">
-                Authenticated :D
-            </div>
             <div class="row">
                 <div class="col-md-4 col-md-offset-4">
                     <div class="login-panel panel panel-default">
@@ -40,14 +37,6 @@
                                     <!-- Change this to a button or input when using this as a form -->
                                     <input type="submit" id="login" value="Login" class="btn btn-lg btn-success btn-block" />
                                 </fieldset>
-                            </form>
-
-                            <h4>Or Connect With Battlenet</h4>
-                            <form action="/connect/battlenet" method="POST">
-                                <input type="hidden" name="scope" value="wow.profile" />
-                                <p><button class="btn btn-primary" type="submit">
-                                    <i class="fa fa-facebook "> </i>
-                                    Login with Battelenet</button></p>
                             </form>
                         </div>
                     </div>
