@@ -13,6 +13,7 @@
         <div class="row">
             <div class="col-md-12">
                 <h2 th:text="${config.name}">Name of the Configuration</h2>
+                <input type="hidden" th:value="${config.id}" id="configId"/>
             </div>
         </div>
 
@@ -83,12 +84,27 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-2 col-md-offset-1">
+                <div class="col-md-10 col-md-offset-1">
                     <button id="copy-button" th:attr="data-clipboard-text=${config.actualValue}"
                             class="btn btn-primary btn-sm">
-                        <i class="mdi-action-assignment"></i>
-                        Copy to clipboard
+                        <i class="mdi-action-assignment"></i> Copy to clipboard
                     </button>
+
+                    <span th:if="${!isOwn}" id="canVote">
+                             <button id="votePositive"
+                                     th:disabled="${personalRating == T(com.deswaef.weakauras.ui.rating.domain.Rating).POSITIVE}"
+                                     th:classappend="${personalRating == T(com.deswaef.weakauras.ui.rating.domain.Rating).NEGATIVE} ? 'btn-flat' : ''"
+                                     class="btn btn-primary" sec:authorize="hasRole('ROLE_USER')">
+                                 <i class=" fa fa-thumbs-o-up "></i> Upvote
+                             </button>
+                            <button id="voteNegative"
+                                    th:disabled="${personalRating == T(com.deswaef.weakauras.ui.rating.domain.Rating).NEGATIVE}"
+                                    th:classappend="${personalRating == T(com.deswaef.weakauras.ui.rating.domain.Rating).POSITIVE} ? 'btn-flat' : ''"
+                                    class="btn btn-danger" sec:authorize="hasRole('ROLE_USER')">
+                                <i class=" fa fa-thumbs-o-down "></i> Downvote
+                            </button>
+                    </span>
+
                 </div>
             </div>
             <div class="row">
@@ -172,8 +188,64 @@
                     $('#commentPane').html(data);
                 });
             }
+
             Mdjs().on($("#commentBox"));
             loadComments();
+        });
+    </script>
+    <script th:if="${!isOwn}" sec:authorize="hasRole('ROLE_USER')">
+
+        jQuery.fn.extend({
+            disable: function (state) {
+                return this.each(function () {
+                    this.disabled = state;
+                });
+            }
+        });
+
+        var votePost = function (negorpos, success, fail) {
+            $.ajax({
+                url: $("#configId").val() + '/' + negorpos,
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify([]), //Stringified Json Object
+                cache: false,    //This will force requested pages not to be cached by the browser
+                processData: false //To avoid making query String instead of JSON
+            })
+                    .done(function () {
+                        success();
+                    })
+                    .fail(function () {
+                        fail();
+                    });
+        };
+
+        $("#voteNegative").click(function () {
+            votePost(
+                    "negative",
+                    function () {
+                        $("#votePositive").disable(false);
+                        $("#voteNegative").disable(true);
+                        $("#votePositive").addClass("btn-flat");
+                        $("#voteNegative").removeClass("btn-flat");
+                    },
+                    function () {
+                        //failed
+                    });
+        });
+
+        $("#votePositive").click(function () {
+            votePost(
+                    "positive",
+                    function () {
+                        $("#votePositive").disable(true);
+                        $("#voteNegative").disable(false);
+                        $("#votePositive").removeClass("btn-flat");
+                        $("#voteNegative").addClass("btn-flat");
+                    },
+                    function () {
+                        //failed
+                    });
         });
     </script>
 </div>
