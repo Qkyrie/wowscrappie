@@ -108,109 +108,38 @@ public class ConfigRatingServiceImpl implements ConfigRatingService {
     @Override
     @Transactional(readOnly = true)
     public Rating getPersonalRatingWA(Long weakAura, ScrappieUser user) {
-        Optional<WeakAuraConfigRating> byWeakAura = findByWeakAura(weakAura);
-        if (byWeakAura.isPresent()) {
-            if(byWeakAura.get().getUpvoters()
-                    .stream().anyMatch(voter -> voter.getId().equals(user.getId()))) {
-                return Rating.POSITIVE;
-            } else if (byWeakAura.get().getDownvoters()
-                    .stream().anyMatch(voter -> voter.getId().equals(user.getId()))) {
-                return Rating.NEGATIVE;
-            } else {
-                return Rating.NONE;
-            }
-        } else {
-            return Rating.NONE;
-        }
+       return Rating.NONE;
     }
 
     @Override
     @Transactional(readOnly = true)
     public Rating getPersonalRatingTMW(Long tmw, ScrappieUser user) {
-        Optional<TellMeWhenConfigRating> byTMW = findByTellMeWhen(tmw);
-        if (byTMW.isPresent()) {
-            if(byTMW.get().getUpvoters()
-                    .stream().anyMatch(voter -> voter.getId().equals(user.getId()))) {
-                return Rating.POSITIVE;
-            } else if (byTMW.get().getDownvoters()
-                    .stream().anyMatch(voter -> voter.getId().equals(user.getId()))) {
-                return Rating.NEGATIVE;
-            } else {
-                return Rating.NONE;
-            }
-        } else {
-            return Rating.NONE;
-        }
+        return Rating.NONE;
+
     }
 
     @Override
     @Transactional(readOnly = true)
     public Rating getPersonalRatingMacro(Long macro, ScrappieUser user) {
-        Optional<MacroConfigRating> byMacro = findByMacro(macro);
-        if (byMacro.isPresent()) {
-            if(byMacro.get().getUpvoters()
-                    .stream().anyMatch(voter -> voter.getId().equals(user.getId()))) {
-                return Rating.POSITIVE;
-            } else if (byMacro.get().getDownvoters()
-                    .stream().anyMatch(voter -> voter.getId().equals(user.getId()))) {
-                return Rating.NEGATIVE;
-            } else {
-                return Rating.NONE;
-            }
-        } else {
-            return Rating.NONE;
-        }
+        return Rating.NONE;
     }
 
     @Override
     @Transactional
     public void voteTMW(Long tmw, Rating rating, ScrappieUser user) {
-        Optional<TellMeWhenConfigRating> byTellMeWhen = findByTellMeWhen(tmw);
-        if (byTellMeWhen.isPresent()) {
-            TellMeWhenConfigRating tellMeWhenConfigRating = byTellMeWhen.get();
-            tellMeWhenConfigRating.getDownvoters().remove(user);
-            tellMeWhenConfigRating.getUpvoters().remove(user);
-            if (rating == Rating.POSITIVE) {
-                tellMeWhenConfigRating.getUpvoters().add(user);
-            } else if (rating == Rating.NEGATIVE) {
-                tellMeWhenConfigRating.getDownvoters().add(user);
-            }
-            tellMeWhenConfigRatingRepository.save(tellMeWhenConfigRating);
-        }
+       //todo: implement
     }
 
     @Override
     @Transactional
     public void voteWA(Long wa, Rating rating, ScrappieUser user) {
-        Optional<WeakAuraConfigRating> byWA = findByWeakAura(wa);
-        if (byWA.isPresent()) {
-            WeakAuraConfigRating waConfigRating = byWA.get();
-            waConfigRating.getDownvoters().remove(user);
-            waConfigRating.getUpvoters().remove(user);
-            if (rating == Rating.POSITIVE) {
-                waConfigRating.getUpvoters().add(user);
-            } else if (rating == Rating.NEGATIVE) {
-                waConfigRating.getDownvoters().add(user);
-            }
-            weakAuraConfigRatingRepository.save(waConfigRating);
-        }
+       //todo: implement
     }
 
     @Override
     @Transactional
     public void voteMacro(Long macro, Rating rating, ScrappieUser user) {
-        Optional<MacroConfigRating> byMacro = findByMacro(macro);
-        if (byMacro.isPresent()) {
-            MacroConfigRating macroConfigRating = byMacro.get();
-            macroConfigRating.getDownvoters().remove(user);
-            macroConfigRating.getUpvoters().remove(user);
-            if (rating == Rating.POSITIVE) {
-                macroConfigRating.getUpvoters().add(user);
-            } else if (rating == Rating.NEGATIVE) {
-                macroConfigRating.getDownvoters().add(user);
-            }
-            macroConfigRatingRepository.save(macroConfigRating);
-        }
+        //todo: implement
     }
 
     @Override

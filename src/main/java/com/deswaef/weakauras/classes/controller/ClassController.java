@@ -162,8 +162,8 @@ public class ClassController {
     private String getRating(Optional<? extends ConfigRating> configRating) {
         if (configRating.isPresent()) {
             ConfigRating actualRating = configRating.get();
-            int downvoters = actualRating.getDownvoters().size();
-            int upvoters = actualRating.getUpvoters().size();
+            int downvoters = 0;//todo: implement
+            int upvoters = 0; //todo: implement
             if (upvoters == 0) {
                 return DEFAULT_RATING;
             } else if (downvoters == 0 && upvoters > 0) {

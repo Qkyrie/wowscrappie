@@ -1,10 +1,7 @@
 package com.deswaef.weakauras.ui.rating.domain;
 
-import com.deswaef.weakauras.usermanagement.domain.ScrappieUser;
-
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -16,19 +13,8 @@ public class ConfigRating implements Serializable {
     @GeneratedValue
     private Long id;
 
-    @ManyToMany
-    @JoinTable(name = "positive_rating_user",
-            joinColumns = {   @JoinColumn(name = "rating_id", referencedColumnName = "id") } ,
-            inverseJoinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "id")
-                        })
-    private List<ScrappieUser> upvoters = new ArrayList<>();
-    @ManyToMany
-    @JoinTable(name = "negative_rating_user",
-            joinColumns = {   @JoinColumn(name = "rating_id", referencedColumnName = "id") },
-            inverseJoinColumns = {
-                    @JoinColumn(name = "user_id", referencedColumnName = "id")
-            })
-    private List<ScrappieUser> downvoters = new ArrayList<>();
+    @OneToMany(mappedBy = "configRating", cascade = CascadeType.REMOVE)
+    private List<RatingByUser> ratings;
 
     public Long getId() {
         return id;
@@ -38,19 +24,12 @@ public class ConfigRating implements Serializable {
         this.id = id;
     }
 
-    public List<ScrappieUser> getUpvoters() {
-        return upvoters;
+    public List<RatingByUser> getRatings() {
+        return ratings;
     }
 
-    public void setUpvoters(List<ScrappieUser> upvoters) {
-        this.upvoters = upvoters;
-    }
-
-    public List<ScrappieUser> getDownvoters() {
-        return downvoters;
-    }
-
-    public void setDownvoters(List<ScrappieUser> downvoters) {
-        this.downvoters = downvoters;
+    public ConfigRating setRatings(List<RatingByUser> ratings) {
+        this.ratings = ratings;
+        return this;
     }
 }
