@@ -17,14 +17,14 @@
         </div>
 
         <div class="row">
-            <div class="col-md-4 col-sm-8 col-xs-8">
+            <div class="col-md-4 col-sm-4 col-xs-4">
                 <div class="panel panel-back noti-box">
                 <span class="icon-box bg-color-red set-icon">
                     <i class="fa fa-user"></i>
                 </span>
 
                     <div class="text-box">
-                        <p class="main-text">Uploaded by</p>
+                        <p class="main-text">Contributor</p>
 
                         <p class="text-muted">
                             <a th:href="@{'/users/' + ${config.uploader.id}}">
@@ -34,7 +34,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 col-sm-6 col-xs-6">
+            <div class="col-md-4 col-sm-4 col-xs-4">
                 <div class="panel panel-back noti-box">
                 <span class="icon-box bg-color-green set-icon">
                     <i class="fa fa-laptop"></i>
@@ -49,30 +49,16 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 col-sm-6 col-xs-6">
+            <div class="col-md-4 col-sm-4 col-xs-4">
                 <div class="panel panel-back noti-box">
                 <span class="icon-box bg-color-blue set-icon">
-                    <i class="fa fa-twitter"></i>
+                    <i class="fa fa-star"></i>
                 </span>
 
                     <div class="text-box">
-                        <p class="main-text"><a href="https://twitter.com/share" class="twitter-share-button"
-                                                data-via="ScrappieWoW"
-                                                data-size="large" data-count="none">Tweet</a>
-                            <script>!function (d, s, id) {
-                                var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
-                                if (!d.getElementById(id)) {
-                                    js = d.createElement(s);
-                                    js.id = id;
-                                    js.src = p + '://platform.twitter.com/widgets.js';
-                                    fjs.parentNode.insertBefore(js, fjs);
-                                }
-                            }(document, 'script', 'twitter-wjs');</script>
-                        </p>
+                        <p class="main-text">ScrapScore</p>
 
-                        <p class="text-muted">
-                            Share this page
-                        </p>
+                        <p class="text-muted" th:text="${rating}">TMW-Configs</p>
                     </div>
                 </div>
             </div>
@@ -132,6 +118,35 @@
             <hr/>
             <div id="commentPane" class="col-md-10 col-md-offset-1">
 
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-offset-4 col-sm-offset-4 col-xs-offset-4 col-md-4 col-sm-4 col-xs-4">
+                <div class="panel panel-back noti-box">
+                <span class="icon-box bg-color-brown set-icon">
+                    <i class="fa fa-twitter"></i>
+                </span>
+
+                    <div class="text-box">
+                        <p class="main-text"><a href="https://twitter.com/share" class="twitter-share-button"
+                                                data-via="ScrappieWoW"
+                                                data-size="large" data-count="none">Tweet</a>
+                            <script>!function (d, s, id) {
+                                var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
+                                if (!d.getElementById(id)) {
+                                    js = d.createElement(s);
+                                    js.id = id;
+                                    js.src = p + '://platform.twitter.com/widgets.js';
+                                    fjs.parentNode.insertBefore(js, fjs);
+                                }
+                            }(document, 'script', 'twitter-wjs');</script>
+                        </p>
+
+                        <p class="text-muted">
+                            Share this page
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

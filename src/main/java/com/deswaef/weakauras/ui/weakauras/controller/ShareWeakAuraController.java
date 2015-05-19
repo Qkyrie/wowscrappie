@@ -36,7 +36,7 @@ public class ShareWeakAuraController implements ShareController {
                 modelMap.put("configType", CONFIG_TYPE);
                 modelMap.put("configId", id);
                 modelMap.put("screenshots", weakAuraService.findScreenshots(weakAura.get()));
-                modelMap.put("rating", getRating(configRatingService.findByMacro(weakAura.get().getId())));
+                modelMap.put("rating", getRating(configRatingService.findByWeakAura(weakAura.get().getId())));
                 modelMap.put("config", weakAura.get());
                 /*
                 if(SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof ScrappieUser) {

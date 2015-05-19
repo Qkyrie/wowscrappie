@@ -27,9 +27,12 @@ public interface ShareController extends OnRoleDependable {
                     .stream()
                     .filter(x -> x.getRating().equals(Rating.POSITIVE))
                     .count();
-            if (upvoters == 0) {
+            if (upvoters == 0 && downvoters == 0) {
+                return NOT_YET_RANKED;
+            } else if(upvoters == 0 && downvoters > 0) {
                 return WORST_RATING;
-            } else if (downvoters == 0 && upvoters > 0) {
+            }
+            else if (downvoters == 0 && upvoters > 0) {
                 return MAX_RATING;
             } else {
                 long result = upvoters / (upvoters + downvoters);

@@ -5,7 +5,7 @@ import com.deswaef.weakauras.usermanagement.domain.ScrappieUser;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "rating_user")
+@Table(name = "rating_by_user")
 public class RatingByUser {
 
     @Id
