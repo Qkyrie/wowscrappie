@@ -6,6 +6,7 @@
 
 <div layout:fragment="header">
     <title>Scrappie - Your World of Warcraft Consultant</title>
+    <link rel="stylesheet" th:href="@{/assets/bxslider/jquery.bxslider.css}"/>
 </div>
 <div layout:fragment="main-content">
     <div id="page-inner">
@@ -154,95 +155,116 @@
         </div>
         <!-- /. ROW  -->
         <div class="row">
-            <hr/>
-            <div class="col-md-offset-2 col-md-8">
-                <h3>Coming Up!</h3>
 
-                <p>
-                    As we're constantly working to improve WoWScrappie, we've got a checklist that should be implemented
-                    and fully
-                    up and running by the end of <b>May 2015</b>!
-                </p>
-
-                <p>
-                <ul>
-                    <li>A vote System, so every share can get his own ScrapScore. <b>More Scrap = Less Crap</b></li>
-                    <li>Request a configuration!</li>
-                </ul>
-                </p>
-
-                <h3>Under Construction.</h3>
-
-                <p>Yes, this delightful place of awesomeness is indeed under contruction, and it will be for quite some
-                    time. Not because we're not confortable about the features, but because we iterate and deploy a new version each week.
-                    The good part of continuous development, is that you'll all be able to first-handedly witness the
-                    prototypal creation of this place.
-                </p>
-
-                <h3>Help is appreciated.</h3>
-
-                <p> This site can only get better by the <b>help of you guys</b>. Scrappie has to <i>develop this site
-                    all on his own</i>, and therefore he will rely
-                    on the community to fill in the <b>content</b>. Recently, I've been getting real sad that there is
-                    no real collection of useful weakauras, tellmewhen-configuration and
-                    macros. Well yeah, here and there we can find some tips, but I want to see them gathered in one
-                    place, and you can help!
-                </p>
-                <hr/>
-            </div>
         </div>
 
         <div class="row">
-            <div class="col-md-offset-2 col-md-4 text-center">
-                <h4>Raids</h4>
+            <ul id="mainContentSlider">
+                <li>
+                    <div class="col-md-offset-2 col-md-8">
+                        <h3>Coming Up!</h3>
+                        <p>
+                            As we're constantly working to improve WoWScrappie, we've got a checklist that should be
+                            implemented
+                            and fully
+                            up and running by the end of <b>May 2015</b>!
+                        </p>
 
-                <p>
-                    Weakauras, TellMeWhen configurations and macros for specific encounters can be found
-                </p>
-            </div>
-            <div class="col-md-4 text-center">
-                <h4>Classes and Specs</h4>
+                        <p>
+                        <ul>
+                            <li>A vote System, so every share can get his own ScrapScore. <b>More Scrap = Less Crap</b>
+                            </li>
+                            <li>Request a configuration!</li>
+                        </ul>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <div class="col-md-offset-2 col-md-8">
 
-                <p>
-                    Weakauras, TellMeWhen configurations and macros for specific classes and specs can be found
-                </p>
-            </div>
+                        <h3>Under Construction.</h3>
+
+                        <p>Yes, this delightful place of awesomeness is indeed under contruction, and it will be for
+                            quite some
+                            time. Not because we're not comfortable about the features, <b>but because we iterate and
+                            deploy a new
+                            version each week.</b>
+                            The good part of continuous development, is that you'll all be able to first-handedly
+                            witness the
+                            prototypal creation of this place.
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <div class="col-md-offset-2 col-md-8">
+                        <h3>Help is appreciated.</h3>
+
+                        <p> This site can only get better by the <b>help of you guys</b>. Scrappie has to <i>develop
+                            this site
+                            all on his own</i>, and therefore he will rely
+                            on the community to fill in the <b>content</b>. Recently, I've been getting real sad that
+                            there is
+                            no real collection of useful weakauras, tellmewhen-configuration and
+                            macros. Well yeah, here and there we can find some tips, but I want to see them gathered in
+                            one
+                            place, and you can help!
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <div class="col-md-12 text-center">
+
+                        <h4>Raids</h4>
+
+                        <p>
+                            Weakauras, TellMeWhen configurations and macros for specific encounters can be found
+                        </p>
+
+                        <p>
+                            <a class="btn btn-primary" th:href="@{/raids}">Here</a>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <div class="col-md-12 text-center">
+
+                        <h4>Classes and Specs</h4>
+
+                        <p>
+                            Weakauras, TellMeWhen configurations and macros for specific classes and specs can be found
+                        </p>
+
+                        <p>
+                            <a class="btn btn-primary" th:href="@{/classes/index}">Here</a>
+                        </p>
+                    </div>
+                </li>
+            </ul>
         </div>
+    </div>
 
-        <div class="row">
-            <div class="col-md-offset-2 col-md-4 text-center">
+    <div class="row">
+        <div class="col-md-offset-1 col-md-10">
+            <div class="jumbotron">
+                <h2>Contribute</h2>
+
                 <p>
-                    <a class="btn btn-primary" th:href="@{/raids}">Here</a>
+                    Do you have any WeakAuras, TellMeWhens or macros you'd like to share with the community? Don't
+                    hesitate and put them up for approval.
+                    You can even include a screenshot of your UI if you like.
                 </p>
-            </div>
-            <div class="col-md-4 text-center">
-                <p>
-                    <a class="btn btn-primary" th:href="@{/classes/index}">Here</a>
-                </p>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-offset-1 col-md-10">
-                <div class="jumbotron">
-                    <h2>Contribute</h2>
-
-                    <p>
-                        Do you have any WeakAuras, TellMeWhens or macros you'd like to share with the community? Don't
-                        hesitate and put them up for approval.
-                        You can even include a screenshot of your UI if you like.
-                    </p>
-                    <a th:href="@{/contribute}" class="btn btn-primary btn-lg" role="button">Learn more</a>
-                    <a th:href="@{/contact}" class="btn btn-primary btn-lg" role="button">Contact Us!</a>
-                </div>
+                <a th:href="@{/contribute}" class="btn btn-primary btn-lg" role="button">Learn more</a>
+                <a th:href="@{/contact}" class="btn btn-primary btn-lg" role="button">Contact Us!</a>
             </div>
         </div>
     </div>
-    <!-- /. PAGE INNER  -->
+<!-- /. PAGE INNER  -->
 </div>
 <!-- /. layout fragment -->
 
 <div layout:fragment="footer-content">
+
+    <script type="application/javascript" th:src="@{/assets/bxslider/jquery.bxslider.min.js}"></script>
 
     <div sec:authorize="hasRole('ROLE_ADMIN')">
         <script type="application/javascript">
@@ -255,6 +277,16 @@
     </div>
 
     <script type="application/javascript">
+
+        $('#mainContentSlider').bxSlider({
+            mode: 'fade',
+            auto: true,
+            pager: false,
+            autoControls: false,
+            controls: false,
+            pause: 7000
+        });
+
         $("#alertThankYou").show();
     </script>
 </div>
