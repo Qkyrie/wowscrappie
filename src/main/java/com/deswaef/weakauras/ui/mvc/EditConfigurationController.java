@@ -1,11 +1,15 @@
 package com.deswaef.weakauras.ui.mvc;
 
 import com.deswaef.weakauras.ui.macros.domain.Macro;
+import com.deswaef.weakauras.ui.macros.domain.MacroConfigRating;
 import com.deswaef.weakauras.ui.macros.service.MacroService;
 import com.deswaef.weakauras.ui.mvc.dto.EditConfigurationDto;
+import com.deswaef.weakauras.ui.rating.service.ConfigRatingService;
 import com.deswaef.weakauras.ui.tellmewhen.domain.TellMeWhen;
+import com.deswaef.weakauras.ui.tellmewhen.domain.TellMeWhenConfigRating;
 import com.deswaef.weakauras.ui.tellmewhen.service.TellMeWhenService;
 import com.deswaef.weakauras.ui.weakauras.domain.WeakAura;
+import com.deswaef.weakauras.ui.weakauras.domain.WeakAuraConfigRating;
 import com.deswaef.weakauras.ui.weakauras.service.WeakAuraService;
 import com.deswaef.weakauras.usermanagement.domain.RoleEnum;
 import com.deswaef.weakauras.usermanagement.domain.ScrappieUser;
@@ -36,6 +40,8 @@ public class EditConfigurationController {
     private TellMeWhenService tellMeWhenService;
     @Autowired
     private WeakAuraService weakAuraService;
+    @Autowired
+    private ConfigRatingService configRatingService;
 
     public static final String TMW = "tmw";
     public static final String WA = "wa";
@@ -55,14 +61,16 @@ public class EditConfigurationController {
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @RequestMapping(value = "/{id}", method = POST)
-    public @ResponseBody EditConfigurationDto edit(@RequestBody EditConfigurationDto dto, @PathVariable("config") String config, @PathVariable("id") Long id) {
-        if(!id.equals(dto.getId())) {
+    public
+    @ResponseBody
+    EditConfigurationDto edit(@RequestBody EditConfigurationDto dto, @PathVariable("config") String config, @PathVariable("id") Long id) {
+        if (!id.equals(dto.getId())) {
             return dto
                     .setHasErrors(true)
                     .setErrorMessage("Something unexpected went wrong, hacking stuff? o.o");
         }
         try {
-            if(getConfig(config, id).isPresent()) {
+            if (getConfig(config, id).isPresent()) {
                 saveEdit(config, dto);
                 return dto;
             } else {
@@ -130,38 +138,53 @@ public class EditConfigurationController {
     }
 
     private Optional<EditConfigurationDto> convert(Macro macro) {
+        EditConfigurationDto configDto = create()
+                .setActualValue(macro.getActualValue())
+                .setCaption(macro.getName())
+                .setComments(macro.getComment())
+                .setType(MACRO)
+                .setUploader(macro.getUploader().getUsername())
+                .setId(macro.getId());
+        Optional<MacroConfigRating> byMacro = configRatingService.findByMacro(macro.getId());
+        if (byMacro.isPresent()) {
+            configDto.setRating(byMacro.get().calculateEffectiveRating());
+        }
         return Optional.of(
-                create()
-                        .setActualValue(macro.getActualValue())
-                        .setCaption(macro.getName())
-                        .setComments(macro.getComment())
-                        .setType(MACRO)
-                        .setUploader(macro.getUploader().getUsername())
-                        .setId(macro.getId())
+                configDto
         );
     }
 
     private Optional<EditConfigurationDto> convert(WeakAura weakAura) {
+        EditConfigurationDto configDto = create()
+                .setId(weakAura.getId())
+                .setUploader(weakAura.getUploader().getUsername())
+                .setType(WA)
+                .setComments(weakAura.getComment())
+                .setCaption(weakAura.getName())
+                .setActualValue(weakAura.getActualValue());
+        Optional<WeakAuraConfigRating> byWeakAura = configRatingService.findByWeakAura(weakAura.getId());
+        if (byWeakAura.isPresent()) {
+            configDto.setRating(byWeakAura.get().calculateEffectiveRating());
+        }
         return Optional.of(
-                create()
-                        .setId(weakAura.getId())
-                        .setUploader(weakAura.getUploader().getUsername())
-                        .setType(WA)
-                        .setComments(weakAura.getComment())
-                        .setCaption(weakAura.getName())
-                        .setActualValue(weakAura.getActualValue())
+                configDto
         );
     }
 
     private Optional<EditConfigurationDto> convert(TellMeWhen tellMeWhen) {
+        EditConfigurationDto configDto = create()
+                .setId(tellMeWhen.getId())
+                .setActualValue(tellMeWhen.getActualValue())
+                .setCaption(tellMeWhen.getName())
+                .setComments(tellMeWhen.getComment())
+                .setUploader(tellMeWhen.getUploader().getUsername())
+                .setType(TMW);
+        Optional<TellMeWhenConfigRating> byTellMeWhen = configRatingService.findByTellMeWhen(tellMeWhen.getId());
+        if (byTellMeWhen.isPresent()) {
+            configDto.setRating(byTellMeWhen.get().calculateEffectiveRating());
+        }
         return Optional.of(
-                create()
-                        .setId(tellMeWhen.getId())
-                        .setActualValue(tellMeWhen.getActualValue())
-                        .setCaption(tellMeWhen.getName())
-                        .setComments(tellMeWhen.getComment())
-                        .setUploader(tellMeWhen.getUploader().getUsername())
-                        .setType(TMW)
+                configDto
         );
     }
 

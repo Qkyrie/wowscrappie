@@ -8,7 +8,7 @@ public class MacroDto {
     private String actualValue;
     private String comment;
     private String uploader;
-    private String rating = "0%";
+    private long rating = 0;
     private boolean approved;
     private long uploaderId;
 
@@ -68,11 +68,11 @@ public class MacroDto {
         return this;
     }
 
-    public String getRating() {
+    public long getRating() {
         return rating;
     }
 
-    public MacroDto setRating(String rating) {
+    public MacroDto setRating(long rating) {
         this.rating = rating;
         return this;
     }

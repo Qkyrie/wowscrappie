@@ -11,35 +11,14 @@ public interface ShareController extends OnRoleDependable {
     public static final String NOT_FOUND_URL = "shared/not-found";
     public static final String INDEX_URL = "shared/index";
 
-    public static final String WORST_RATING = "0%";
-    public static final String NOT_YET_RANKED = "not yet ranked";
-    public static final String MAX_RATING = "100%";
-
+    public static final String DEFAULT_RATING = "0 points";
 
     default String getRating(Optional<? extends ConfigRating> configRating) {
         if (configRating.isPresent()) {
-            ConfigRating actualRating = configRating.get();
-            long downvoters = actualRating.getRatings()
-                    .stream()
-                    .filter(x -> x.getRating().equals(Rating.NEGATIVE))
-                    .count();
-            long upvoters = actualRating.getRatings()
-                    .stream()
-                    .filter(x -> x.getRating().equals(Rating.POSITIVE))
-                    .count();
-            if (upvoters == 0 && downvoters == 0) {
-                return NOT_YET_RANKED;
-            } else if(upvoters == 0 && downvoters > 0) {
-                return WORST_RATING;
-            }
-            else if (downvoters == 0 && upvoters > 0) {
-                return MAX_RATING;
-            } else {
-                long result = upvoters / (upvoters + downvoters);
-                return result + "%";
-            }
+            long effectiveRating = configRating.get().calculateEffectiveRating();
+            return String.format("%s %s", effectiveRating, effectiveRating == 1 || effectiveRating == -1 ? "point" : "points");
         } else {
-            return NOT_YET_RANKED;
+            return DEFAULT_RATING;
         }
     }
 }

@@ -12,6 +12,7 @@
 <div layout:fragment="main-content">
     <div id="page-inner">
         <div class="row">
+            <input id="thisUser" th:value="${profile.userId}" type="hidden"/>
             <div class="col-md-6">
                 <h2 th:if="${canEdit}">Your Profile</h2>
 
@@ -30,7 +31,7 @@
         <div class="row">
             <div class="col-md-6">
                 <h3>About Me!</h3>
-                <blockquote class="commentBox">
+                <blockquote id="commentBox">
                     <span th:if="${profile.aboutMe != null AND profile.aboutMe != ''}"
                           th:text="${profile.aboutMe}"></span>
                     <span th:if="${profile.aboutMe == null || profile.aboutMe == ''}">
@@ -63,53 +64,6 @@
         </div>
 
         <br/><br/>
-
-        <div class="row">
-            <input id="waCount" type="hidden" th:value="${profile.was}"/>
-            <input id="macroCount" type="hidden" th:value="${profile.macros}"/>
-            <input id="tmwCount" type="hidden" th:value="${profile.tmws}"/>
-
-            <div class="col-md-4 col-sm-8 col-xs-8">
-                <div id="waBox" class="panel panel-back noti-box">
-                <span class="icon-box bg-color-red set-icon">
-                    <i class="fa fa-envelope-o"></i>
-                </span>
-
-                    <div class="text-box">
-                        <p class="main-text" th:text="${profile.was}">120</p>
-
-                        <p class="text-muted">WeakAuras</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-sm-6 col-xs-6">
-                <div id="tmwBox" class="panel panel-back noti-box">
-                <span class="icon-box bg-color-green set-icon">
-                    <i class="fa fa-bars"></i>
-                </span>
-
-                    <div class="text-box">
-                        <p class="main-text" th:text="${profile.tmws}">30</p>
-
-                        <p class="text-muted">TMW-Configs</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-sm-6 col-xs-6">
-                <div id="macroBox" class="panel panel-back noti-box">
-                <span class="icon-box bg-color-blue set-icon">
-                    <i class="fa fa-bell-o"></i>
-                </span>
-
-                    <div class="text-box">
-                        <p class="main-text" th:text="${profile.macros}">240</p>
-
-                        <p class="text-muted">Macros</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <hr/>
 
         <div class="row" th:if="${canEdit == false}" sec:authorize="hasRole('ROLE_USER')">
@@ -172,7 +126,55 @@
         <br/>
         <br/>
         <hr/>
+        <div class="row">
+            <input id="waCount" type="hidden" th:value="${profile.was}"/>
+            <input id="macroCount" type="hidden" th:value="${profile.macros}"/>
+            <input id="tmwCount" type="hidden" th:value="${profile.tmws}"/>
 
+            <div class="col-md-4 col-sm-8 col-xs-8">
+                <div id="waBox" class="panel panel-back noti-box">
+                <span class="icon-box bg-color-red set-icon">
+                    <i class="fa fa-envelope-o"></i>
+                </span>
+
+                    <div class="text-box">
+                        <p class="main-text" th:text="${profile.was}">120</p>
+
+                        <p class="text-muted">WeakAuras</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-6">
+                <div id="tmwBox" class="panel panel-back noti-box">
+                <span class="icon-box bg-color-green set-icon">
+                    <i class="fa fa-bars"></i>
+                </span>
+
+                    <div class="text-box">
+                        <p class="main-text" th:text="${profile.tmws}">30</p>
+
+                        <p class="text-muted">TMW-Configs</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-6">
+                <div id="macroBox" class="panel panel-back noti-box">
+                <span class="icon-box bg-color-blue set-icon">
+                    <i class="fa fa-bell-o"></i>
+                </span>
+
+                    <div class="text-box">
+                        <p class="main-text" th:text="${profile.macros}">240</p>
+
+                        <p class="text-muted">Macros</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1" id="resultPane"></div>
+        </div>
     </div>
     <!-- /. PAGE INNER  -->
 </div>
@@ -180,6 +182,7 @@
 <div layout:fragment="footer-content">
     <script th:src="@{/assets/js/dataTables/jquery.dataTables.js}"></script>
     <script th:src="@{/assets/js/dataTables/dataTables.bootstrap.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/js/md-v1.2.0.js}"/>
     <script type="application/javascript" sec:authorize="hasRole('ROLE_USER')">
         var ViewModel = function () {
             var self = this;
@@ -220,22 +223,42 @@
         var viewModel = new ViewModel();
         ko.applyBindings(viewModel);
 
-        $("#tmwBox").click(function () {
-            //do things
-            //
-        });
-
-        $("#waBox").click(function () {
-            //do things
-        });
-
-        $("#macroBox").click(function () {
-            //do things
-        });
+        Mdjs().on($("#commentBox"));
     </script>
 
     <script th:src="@{/assets/js/morris/raphael-2.1.0.min.js}"></script>
     <script th:src="@{/assets/js/morris/morris.min.js}"></script>
+
+    <script type="application/javascript">
+        $("#tmwBox").click(function () {
+            console.log("clicking tmw");
+            $.get('/users/' + $('#thisUser').val() + '/uploads/tmw', function (result) {
+                $("#resultPane").html(result);
+                $('#myTable').dataTable({
+                    "order": [[ 3, "desc" ]]
+                });
+            });
+        });
+
+        $("#waBox").click(function () {
+            $.get('/users/' + $('#thisUser').val() + '/uploads/weakaura', function(result) {
+                $("#resultPane").html(result);
+                $('#myTable').dataTable({
+                    "order": [[ 3, "desc" ]]
+                });
+            });
+        });
+
+        $("#macroBox").click(function () {
+            $.get('/users/' + $('#thisUser').val() + '/uploads/macro', function(result) {
+                $("#resultPane").html(result);
+                $('#myTable').dataTable({
+                    "order": [[ 3, "desc" ]]
+                });
+            });
+        });
+    </script>
+
     <script type="application/javascript" th:if="${profile.was != 0 || profile.tmws != 0 || profile.macros != 0}">
         Morris.Donut({
             element: 'morris-donut-chart',

@@ -83,26 +83,31 @@
         $("#tmwBox").click(function () {
                     $.get('/personal/uploads/tmw', function (result) {
                         $("#resultPane").html(result);
-                        $('#myTable').dataTable();
+                        $('#myTable').dataTable({
+                            "order": [[3, "desc"]]
+                        });
+                        $("html, body").animate({scrollTop: $(document).height()}, 1000);
                     });
                 }
         );
 
         $("#waBox").click(function () {
-            $.get('/personal/uploads/weakaura', function(result) {
+            $.get('/personal/uploads/weakaura', function (result) {
                 $("#resultPane").html(result);
                 $('#myTable').dataTable({
-                    "columnDefs": [
-                        { "width": "20%", "targets": 0 }
-                    ]
+                    "order": [[3, "desc"]]
                 });
+                $("html, body").animate({scrollTop: $(document).height()}, 1000);
             });
         });
 
         $("#macroBox").click(function () {
-            $.get('/personal/uploads/macro', function(result) {
+            $.get('/personal/uploads/macro', function (result) {
                 $("#resultPane").html(result);
-                $('#myTable').dataTable();
+                $('#myTable').dataTable({
+                    "order": [[3, "desc"]]
+                });
+                $("html, body").animate({scrollTop: $(document).height()}, 1000);
             });
         });
     </script>

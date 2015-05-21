@@ -54,6 +54,7 @@
                     <tr>
                         <th>Caption</th>
                         <th>Uploader</th>
+                        <th>ScrapScore</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
@@ -66,6 +67,7 @@
                                 <span th:text="${uielement.uploader}">Pikachu</span>
                             </a>
                         </td>
+                        <td th:text="${uielement.rating}"></td>
                         <td>
                             <span data-bind="click: view" th:attr="data-tmw_id=${uielement.id}"
                                   class="btn btn-success btn-sm"> <i class="mdi-maps-local-library"></i> view</span>
@@ -106,7 +108,7 @@
 
                 <div class="form-group">
                     <label>Comments</label>
-                    <blockquote id="commentBox" class="commentBox" data-bind="text: activeComment"></blockquote>
+                    <blockquote id="commentBox" data-bind="text: activeComment"></blockquote>
                 </div>
                 <hr/>
                 <br/>
@@ -183,6 +185,7 @@
                 <tr>
                     <th>Caption</th>
                     <th>Uploader</th>
+                    <th>ScrapScore</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
@@ -195,6 +198,7 @@
                             <span th:text="${uielement.uploader}">Pikachu</span>
                         </a>
                     </td>
+                    <td th:text="${uielement.rating}"></td>
                     <td>
                     <span data-bind="click: view" th:attr="data-wa_id=${uielement.id}"
                           class="btn btn-success btn-sm"> <i class="mdi-maps-local-library"></i> view</span>
@@ -235,7 +239,7 @@
 
                 <div class="form-group">
                     <label>Comments</label>
-                    <blockquote id="commentBox" class="commentBox" data-bind="text: activeComment"></blockquote>
+                    <blockquote id="commentBox" data-bind="text: activeComment"></blockquote>
                 </div>
                 <hr/>
                 <br/>
@@ -308,6 +312,7 @@
                 <tr>
                     <th>Caption</th>
                     <th>Uploader</th>
+                    <th>ScrapScore</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
@@ -320,6 +325,7 @@
                             <span th:text="${uielement.uploader}">Pikachu</span>
                         </a>
                     </td>
+                    <td th:text="${uielement.rating}"></td>
                     <td>
                     <span data-bind="click: view" th:attr="data-macro_id=${uielement.id}"
                           class="btn btn-success btn-sm"><i class="mdi-maps-local-library"></i> view</span>
@@ -356,7 +362,7 @@
 
                 <div class="form-group">
                     <label>Comments</label>
-                    <blockquote id="commentBox" class="commentBox" data-bind="text: activeComment"></blockquote>
+                    <blockquote id="commentBox" data-bind="text: activeComment"></blockquote>
                 </div>
                 <hr/>
                 <br/>

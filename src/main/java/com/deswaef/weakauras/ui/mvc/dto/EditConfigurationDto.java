@@ -7,6 +7,7 @@ public class EditConfigurationDto {
     private String actualValue;
     private String comments;
     private String uploader;
+    private long rating;
 
     private boolean hasErrors;
     private String errorMessage;
@@ -84,6 +85,15 @@ public class EditConfigurationDto {
 
     public EditConfigurationDto setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
+        return this;
+    }
+
+    public long getRating() {
+        return rating;
+    }
+
+    public EditConfigurationDto setRating(long rating) {
+        this.rating = rating;
         return this;
     }
 }

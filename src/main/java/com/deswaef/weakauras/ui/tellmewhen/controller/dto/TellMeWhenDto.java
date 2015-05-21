@@ -9,7 +9,7 @@ public class TellMeWhenDto {
     private String comment;
     private String[] imageRefs;
     private String uploader;
-    private String rating = "0%";
+    private long rating = 0;
     private boolean approved;
     private long uploaderId;
 
@@ -78,11 +78,11 @@ public class TellMeWhenDto {
         return this;
     }
 
-    public String getRating() {
+    public long getRating() {
         return rating;
     }
 
-    public TellMeWhenDto setRating(String rating) {
+    public TellMeWhenDto setRating(long rating) {
         this.rating = rating;
         return this;
     }

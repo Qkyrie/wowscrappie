@@ -13,6 +13,7 @@ public class PersonallyUploadedWeakAuraDto {
     private boolean approved;
     private String type;
     private String whatFor;
+    private long rating = 0;
 
     public static PersonallyUploadedWeakAuraDto create(WeakAura weakAura) {
         return new PersonallyUploadedWeakAuraDto()
@@ -109,6 +110,15 @@ public class PersonallyUploadedWeakAuraDto {
 
     public PersonallyUploadedWeakAuraDto setWhatFor(String whatFor) {
         this.whatFor = whatFor;
+        return this;
+    }
+
+    public long getRating() {
+        return rating;
+    }
+
+    public PersonallyUploadedWeakAuraDto setRating(long rating) {
+        this.rating = rating;
         return this;
     }
 }

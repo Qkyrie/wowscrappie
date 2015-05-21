@@ -32,13 +32,14 @@
                                 slidingHeader.hideHeader();
                             }
                         })
-                        .dataTable();
+                        .dataTable({
+                            "order": [[ 3, "desc" ]]
+                        });
                 });
             } else {
                 $("#resultPane").html('');
                 slidingHeader.showHeader();
             }
-
         }
     });
 })(window);
@@ -92,7 +93,9 @@ if (configtype !== 0 && configtype !== null && wowspec !== 0 && wowspec !== null
                     slidingHeader.hideHeader();
                 }
             })
-            .dataTable();
+            .dataTable({
+                "order": [[ 3, "desc" ]]
+            });
             if(configId !== 0 && configId !== null){
                 $.get("/interface/" + configtype + "/" + configId, function (resultValue) {
                     if (resultValue !== null) {

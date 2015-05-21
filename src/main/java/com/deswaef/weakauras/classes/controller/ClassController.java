@@ -37,7 +37,7 @@ public class ClassController {
     public static final String MACRO = "macro";
     public static final String TMW = "tellmewhen";
     public static final String CLASS_SPECIFIC = "class_specific";
-    public static final String DEFAULT_RATING = "0%";
+    public static final long DEFAULT_RATING = 0;
     public static final String MAX_RATING = "100%";
     public static final String CLASSES = "/classes";
 
@@ -116,7 +116,7 @@ public class ClassController {
             return weakAuraService.findByWowClass(wowClass)
                     .stream()
                     .map(WeakAuraDto::fromWeakAura)
-                    .map(x -> x.setRating(getRating(configRatingService.findByTellMeWhen(x.getId()))))
+                    .map(x -> x.setRating(getRating(configRatingService.findByWeakAura(x.getId()))))
                     .collect(Collectors.toList());
         } else {
             return weakAuraService.findBySpec(spec.get())
@@ -159,23 +159,11 @@ public class ClassController {
         }
     }
 
-    private String getRating(Optional<? extends ConfigRating> configRating) {
+    private long getRating(Optional<? extends ConfigRating> configRating) {
         if (configRating.isPresent()) {
-            ConfigRating actualRating = configRating.get();
-            int downvoters = 0;//todo: implement
-            int upvoters = 0; //todo: implement
-            if (upvoters == 0) {
-                return DEFAULT_RATING;
-            } else if (downvoters == 0 && upvoters > 0) {
-                return MAX_RATING;
-            } else {
-                int result = upvoters / (upvoters + downvoters);
-                return result + "%";
-            }
+            return configRating.get().calculateEffectiveRating();
         } else {
             return DEFAULT_RATING;
         }
     }
-
-
 }

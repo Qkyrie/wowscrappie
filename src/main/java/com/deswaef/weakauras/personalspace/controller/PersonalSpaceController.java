@@ -5,6 +5,8 @@ import com.deswaef.weakauras.personalspace.controller.dto.PersonallyUploadedTell
 import com.deswaef.weakauras.personalspace.controller.dto.PersonallyUploadedWeakAuraDto;
 import com.deswaef.weakauras.security.SecurityUtility;
 import com.deswaef.weakauras.ui.macros.service.MacroService;
+import com.deswaef.weakauras.ui.rating.domain.ConfigRating;
+import com.deswaef.weakauras.ui.rating.service.ConfigRatingService;
 import com.deswaef.weakauras.ui.tellmewhen.service.TellMeWhenService;
 import com.deswaef.weakauras.ui.weakauras.service.WeakAuraService;
 import com.deswaef.weakauras.usermanagement.domain.ScrappieUser;
@@ -17,6 +19,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -26,6 +29,8 @@ import java.util.stream.Collectors;
 @PreAuthorize("hasRole('ROLE_USER')")
 public class PersonalSpaceController {
 
+    public static final long DEFAULT_RATING = 0;
+
     @Autowired
     private MacroService macroService;
     @Autowired
@@ -34,6 +39,8 @@ public class PersonalSpaceController {
     private WeakAuraService weakAuraService;
     @Autowired
     private SecurityUtility securityUtility;
+    @Autowired
+    private ConfigRatingService configRatingService;
 
     @RequestMapping("/uploads")
     @PreAuthorize("hasRole('ROLE_USER')")
@@ -48,8 +55,6 @@ public class PersonalSpaceController {
             return "index";
         }
     }
-
-
 
     @RequestMapping("/uploads/macro")
     @PreAuthorize("hasRole('ROLE_USER')")
@@ -92,10 +97,17 @@ public class PersonalSpaceController {
             return macroService.findAllFromUser(currentUser.get())
                     .stream()
                     .map(PersonallyUploadedMacroDto::create)
+                    .map(x -> x.setRating(getRating(configRatingService.findByMacro(x.getId()))))
+                    .sorted(getPersonallyUploadedMacroDtoComparator())
                     .collect(Collectors.toList());
         } else {
             return new ArrayList<>();
         }
+    }
+
+    private Comparator<PersonallyUploadedMacroDto> getPersonallyUploadedMacroDtoComparator() {
+        return (o1, o2) -> o1.getRating()<o2.getRating()?-1:
+                o1.getRating() >o2.getRating()?1:0;
     }
 
     private List<PersonallyUploadedTellMeWhenDto> getTMWs() {
@@ -104,10 +116,17 @@ public class PersonalSpaceController {
             return tellMeWhenService.findAllFromUser(currentUser.get())
                     .stream()
                     .map(PersonallyUploadedTellMeWhenDto::create)
+                    .map(x -> x.setRating(getRating(configRatingService.findByTellMeWhen(x.getId()))))
+                    .sorted(getPersonallyUploadedTellMeWhenDtoComparator())
                     .collect(Collectors.toList());
         } else {
             return new ArrayList<>();
         }
+    }
+
+    private Comparator<PersonallyUploadedTellMeWhenDto> getPersonallyUploadedTellMeWhenDtoComparator() {
+        return (o1, o2) -> o1.getRating()<o2.getRating()?-1:
+                o1.getRating() >o2.getRating()?1:0;
     }
 
     private List<PersonallyUploadedWeakAuraDto> getWeakAuras() {
@@ -116,9 +135,24 @@ public class PersonalSpaceController {
             return weakAuraService.findAllFromUser(currentUser.get())
                     .stream()
                     .map(PersonallyUploadedWeakAuraDto::create)
+                    .map(x -> x.setRating(getRating(configRatingService.findByWeakAura(x.getId()))))
+                    .sorted(getPersonallyUploadedWeakAuraDtoComparator())
                     .collect(Collectors.toList());
         } else {
             return new ArrayList<>();
+        }
+    }
+
+    private Comparator<PersonallyUploadedWeakAuraDto> getPersonallyUploadedWeakAuraDtoComparator() {
+        return (o1, o2) -> o1.getRating()<o2.getRating()?-1:
+                o1.getRating() >o2.getRating()?1:0;
+    }
+
+    private long getRating(Optional<? extends ConfigRating> configRating) {
+        if (configRating.isPresent()) {
+            return configRating.get().calculateEffectiveRating();
+        } else {
+            return DEFAULT_RATING;
         }
     }
 }

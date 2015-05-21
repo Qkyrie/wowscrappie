@@ -10,7 +10,7 @@ public class WeakAuraDto {
     private String comment;
     private String[] imageRefs;
     private String uploader;
-    private String rating = "0%";
+    private long rating = 0;
     private boolean approved;
     private long uploaderId;
 
@@ -79,11 +79,11 @@ public class WeakAuraDto {
         return this;
     }
 
-    public String getRating() {
+    public long getRating() {
         return rating;
     }
 
-    public WeakAuraDto setRating(String rating) {
+    public WeakAuraDto setRating(long rating) {
         this.rating = rating;
         return this;
     }

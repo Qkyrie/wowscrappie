@@ -14,6 +14,7 @@ public class PersonallyUploadedTellMeWhenDto {
     private boolean approved;
     private String type;
     private String whatFor;
+    private long rating = 0;
 
     public static PersonallyUploadedTellMeWhenDto create(TellMeWhen tellMeWhen) {
         return new PersonallyUploadedTellMeWhenDto()
@@ -110,6 +111,15 @@ public class PersonallyUploadedTellMeWhenDto {
 
     public PersonallyUploadedTellMeWhenDto setWhatFor(String whatFor) {
         this.whatFor = whatFor;
+        return this;
+    }
+
+    public long getRating() {
+        return rating;
+    }
+
+    public PersonallyUploadedTellMeWhenDto setRating(long rating) {
+        this.rating = rating;
         return this;
     }
 }

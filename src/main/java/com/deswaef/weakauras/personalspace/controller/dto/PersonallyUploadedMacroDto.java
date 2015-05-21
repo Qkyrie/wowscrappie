@@ -14,6 +14,7 @@ public class PersonallyUploadedMacroDto {
     private boolean approved;
     private String type;
     private String whatFor;
+    private long rating = 0;
 
 
     public static PersonallyUploadedMacroDto create(Macro macro) {
@@ -111,6 +112,15 @@ public class PersonallyUploadedMacroDto {
 
     public PersonallyUploadedMacroDto setWhatFor(String whatFor) {
         this.whatFor = whatFor;
+        return this;
+    }
+
+    public long getRating() {
+        return rating;
+    }
+
+    public PersonallyUploadedMacroDto setRating(long rating) {
+        this.rating = rating;
         return this;
     }
 }
