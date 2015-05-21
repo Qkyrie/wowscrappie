@@ -1,5 +1,12 @@
 package com.deswaef.weakauras.usermanagement.service;
 
+import com.deswaef.weakauras.ui.macros.domain.MacroConfigRating;
+import com.deswaef.weakauras.ui.macros.service.MacroService;
+import com.deswaef.weakauras.ui.rating.service.ConfigRatingService;
+import com.deswaef.weakauras.ui.tellmewhen.domain.TellMeWhenConfigRating;
+import com.deswaef.weakauras.ui.tellmewhen.service.TellMeWhenService;
+import com.deswaef.weakauras.ui.weakauras.domain.WeakAuraConfigRating;
+import com.deswaef.weakauras.ui.weakauras.service.WeakAuraService;
 import com.deswaef.weakauras.usermanagement.controller.admin.dto.CreateInvitationDto;
 import com.deswaef.weakauras.usermanagement.controller.dto.RegistrationByInvitationDto;
 import com.deswaef.weakauras.usermanagement.domain.Role;
@@ -28,6 +35,15 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     @Autowired
     private RoleRepository roleRepository;
+    @Autowired
+    private MacroService macroService;
+    @Autowired
+    private WeakAuraService weakAuraService;
+    @Autowired
+    private TellMeWhenService tellMeWhenService;
+    @Autowired
+    private ConfigRatingService configRatingService;
+
 
     private PasswordEncoder standardPasswordEncoder;
 
@@ -69,6 +85,42 @@ public class UserServiceImpl implements UserService {
     @Cacheable(value = "amountscache", key = "'userCount'")
     public Long count() {
         return userRepository.count();
+    }
+
+    @Override
+    @Cacheable(value = "amountscache", key = "'userScore-' + #scrappieUser.id")
+    public long calculateUserScore(ScrappieUser scrappieUser) {
+        long waCount = weakAuraService.findAllFromUser(scrappieUser)
+                .stream()
+                .mapToLong(x -> {
+                    Optional<WeakAuraConfigRating> byWeakAura = configRatingService.findByWeakAura(x.getId());
+                    if (byWeakAura.isPresent()) {
+                        return byWeakAura.get().calculateEffectiveRating();
+                    } else {
+                        return 0;
+                    }
+                }).sum();
+        long tmwCount = tellMeWhenService.findAllFromUser(scrappieUser)
+                .stream()
+                .mapToLong(x -> {
+                    Optional<TellMeWhenConfigRating> byTellMeWhen = configRatingService.findByTellMeWhen(x.getId());
+                    if (byTellMeWhen.isPresent()) {
+                        return byTellMeWhen.get().calculateEffectiveRating();
+                    } else {
+                        return 0;
+                    }
+                }).sum();
+        long macroCount = macroService.findAllFromUser(scrappieUser)
+                .stream()
+                .mapToLong(x -> {
+                    Optional<MacroConfigRating> byMacro = configRatingService.findByMacro(x.getId());
+                    if (byMacro.isPresent()) {
+                        return byMacro.get().calculateEffectiveRating();
+                    } else {
+                        return 0;
+                    }
+                }).sum();
+        return waCount + tmwCount + macroCount;
     }
 
     @Override

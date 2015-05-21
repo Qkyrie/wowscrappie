@@ -24,4 +24,6 @@ public interface UserService {
     void changeUsername(ScrappieUser principal, String newName);
 
     void setEnabled(Long id, boolean b);
+
+    long calculateUserScore(ScrappieUser scrappieUser);
 }

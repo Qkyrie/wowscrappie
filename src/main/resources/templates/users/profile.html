@@ -17,6 +17,8 @@
                 <h2 th:if="${canEdit}">Your Profile</h2>
 
                 <h2 th:if="${canEdit == false}" th:text="${profile.userName + '''s Profile'}"></h2>
+
+                <div class="alert alert-success" th:text="${profile.userName + ' has a total ScrapScore of ' + score}"></div>
             </div>
             <div class="col-md-4">
                 <p th:if="${hasBattleNet}" class="alert alert-success">User has linked his battlenet account!</p>
@@ -25,6 +27,7 @@
                 <a th:if="${canEdit}" class="btn btn-default btn-raised pull-right" th:href="@{/profiles/edit}">Edit
                     Profile</a>
             </div>
+            <hr />
         </div>
         <br/><br/>
 

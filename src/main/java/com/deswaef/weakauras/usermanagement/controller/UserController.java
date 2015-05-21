@@ -67,6 +67,7 @@ public class UserController {
         if (scrappieUser.isPresent()) {
             UserProfile userProfile = userProfileService.findByUser(scrappieUser.get());
             modelmap.put("profile", createProfileDto(scrappieUser, userProfile));
+            modelmap.put("score", getFullScore(scrappieUser.get()));
             modelmap.put("canEdit", canEdit(scrappieUser.get()));
 
             Connection<Battlenet> primaryConnection = connectionRepository.createConnectionRepository(scrappieUser.get().getUsername())
@@ -81,6 +82,11 @@ public class UserController {
         } else {
             return "users/not-found";
         }
+    }
+
+    private String getFullScore(ScrappieUser scrappieUser) {
+        long score = userService.calculateUserScore(scrappieUser);
+        return String.format("%s %s", score, score == 1 || score == -1 ? "point" : "points");
     }
 
     @RequestMapping("/{userId}/uploads/macro")
