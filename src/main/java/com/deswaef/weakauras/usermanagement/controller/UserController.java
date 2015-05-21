@@ -89,7 +89,7 @@ public class UserController {
         return String.format("%s %s", score, score == 1 || score == -1 ? "point" : "points");
     }
 
-    @RequestMapping("/{userId}/uploads/macro")
+    @RequestMapping("/{id}/uploads/macro")
     public String macrosFromUser(ModelMap model, @PathVariable("id") long userId) {
         model.put("uielements", getMacrosFromUser(userId));
         return "users/fragments/results :: macro";
