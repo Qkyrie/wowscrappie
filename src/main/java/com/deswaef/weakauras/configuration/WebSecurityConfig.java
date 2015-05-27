@@ -34,6 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/connect/battlenet", "connect/**").fullyAuthenticated()
                 .antMatchers("/personal", "personal/**").fullyAuthenticated()
                 .antMatchers("/admin", "/admin/**").hasRole("ADMIN")
+                .antMatchers("/manage", "/manage/**").hasRole("ADMIN")
                 .antMatchers("/**").permitAll()
                 .and()
                 .formLogin()
