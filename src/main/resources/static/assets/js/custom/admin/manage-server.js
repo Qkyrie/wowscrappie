@@ -7,16 +7,13 @@ var ManageServerVM  = function() {
     self.dbHealth = ko.observable('');
 
     self.getHealth = function() {
-
         $.get('/manage/health', function(data) {
-
             self.overallHealth(data.status);
             self.diskspaceHealth(data.diskSpace);
             self.redisHealth(data.redis);
             self.dbHealth(data.db);
         });
     };
-
     self.getHealth();
 };
 
