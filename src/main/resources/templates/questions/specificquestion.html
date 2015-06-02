@@ -1,0 +1,45 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      layout:decorator="decorator/wa-decorator">
+
+<div layout:fragment="header">
+    <title th:text="${question.title + ' - WowScrappie'}">Specific Question - WowScrappie</title>
+</div>
+
+<div layout:fragment="main-content">
+    <div id="page-inner">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10">
+                    <h2 th:text="${question.title}"></h2>
+                </div>
+                <div class="col-md-2">
+                    <a th:if="${canEdit}" th:href="@{'/questions/' + ${question.id} + '/edit'}" class="btn btn-default btn-raised pull-right">Edit</a>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <p>
+                                <span id="contentText" th:text="${question.content}"></span>
+                            </p>
+                            <br/><br/>
+
+                            <small>Posted <span th:text="${question.postDate}"></span> by <span
+                                    th:text="${question.posterName}"></span></small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div layout:fragment="footer-content">
+
+</div>
+</html>

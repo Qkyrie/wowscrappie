@@ -6,7 +6,7 @@ import org.ocpsoft.prettytime.PrettyTime;
 import java.util.Date;
 import java.util.Locale;
 
-public class QuestionDto {
+public class QuestionListDto {
     private static final PrettyTime prettyTime = new PrettyTime(Locale.ENGLISH);
 
     private Long id;
@@ -17,8 +17,8 @@ public class QuestionDto {
     private String originalPostDatePretty;
     private String content;
 
-    public static QuestionDto fromConfigRequest(ConfigRequest configRequest) {
-        return new QuestionDto()
+    public static QuestionListDto fromConfigRequest(ConfigRequest configRequest) {
+        return new QuestionListDto()
                 .setId(configRequest.getId())
                 .setOriginalPostDate(configRequest.getOriginalPostDate())
                 .setOriginalPostDatePretty(prettyTime.format(configRequest.getOriginalPostDate()))
@@ -32,7 +32,7 @@ public class QuestionDto {
         return id;
     }
 
-    public QuestionDto setId(Long id) {
+    public QuestionListDto setId(Long id) {
         this.id = id;
         return this;
     }
@@ -41,7 +41,7 @@ public class QuestionDto {
         return title;
     }
 
-    public QuestionDto setTitle(String title) {
+    public QuestionListDto setTitle(String title) {
         this.title = title;
         return this;
     }
@@ -50,7 +50,7 @@ public class QuestionDto {
         return poster;
     }
 
-    public QuestionDto setPoster(String poster) {
+    public QuestionListDto setPoster(String poster) {
         this.poster = poster;
         return this;
     }
@@ -59,7 +59,7 @@ public class QuestionDto {
         return posterId;
     }
 
-    public QuestionDto setPosterId(Long posterId) {
+    public QuestionListDto setPosterId(Long posterId) {
         this.posterId = posterId;
         return this;
     }
@@ -68,7 +68,7 @@ public class QuestionDto {
         return originalPostDate;
     }
 
-    public QuestionDto setOriginalPostDate(Date originalPostDate) {
+    public QuestionListDto setOriginalPostDate(Date originalPostDate) {
         this.originalPostDate = originalPostDate;
         return this;
     }
@@ -81,7 +81,7 @@ public class QuestionDto {
         return originalPostDatePretty;
     }
 
-    public QuestionDto setOriginalPostDatePretty(String originalPostDatePretty) {
+    public QuestionListDto setOriginalPostDatePretty(String originalPostDatePretty) {
         this.originalPostDatePretty = originalPostDatePretty;
         return this;
     }
@@ -90,7 +90,7 @@ public class QuestionDto {
         return content;
     }
 
-    public QuestionDto setContent(String content) {
+    public QuestionListDto setContent(String content) {
         this.content = content;
         return this;
     }
