@@ -18,7 +18,7 @@ import org.springframework.context.annotation.Profile;
 import javax.annotation.PostConstruct;
 
 @Configuration
-@Profile({"development", "integrationtest", "default"})
+@Profile({"local", "integrationtest", "default"})
 public class GreenmailConfiguration {
 
     private Log logger = LogFactory.getLog(this.getClass());

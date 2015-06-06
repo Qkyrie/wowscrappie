@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/connect")
-@Profile({"development", "production", "default"})
+@Profile({"development", "local", "production", "default"})
 public class CustomConnectController extends ConnectController {
     /**
      * Constructs a ConnectController.
