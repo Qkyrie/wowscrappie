@@ -1,0 +1,523 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="decorator/wa-decorator">
+<div layout:fragment="header">
+    <meta name="description" content="Tier 17 - Blackrock Foundry - Weakauras, TellMeWhens, Macros" />
+    <meta name="keywords" content="weakauras, weakaura, weakaura strings, class, tellmewhen, macro, macros,
+                                   Blackrock Foundry, Blackrock, Oregorger, Gruul, Blast Furnace, Hansgar and Franzok, hans and franz, Flamebender, Flamebender Ka'graz, Kromog,
+                                   Beastlord Darmac, Operator Thogar, Train Boss, The Iron Maidens, Iron Maidens, Blackhand, African American Hand" />
+    <title text="Blackrock Foundry Weakauras, TellMeWhens, Macros - Scrappie"></title>
+</div>
+
+<div layout:fragment="main-content">
+    <div id="page-inner">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Blackrock Foundry</h2>
+                <h5>Tier 17</h5>
+            </div>
+        </div>
+        <!-- /. ROW  -->
+
+        <input id="raidId" type="hidden" th:value="${raidId}"/>
+
+
+        <div id="top-wrapper">
+            <div class="row">
+                <div class="col-md-4 col-sm-6 col-xs-6">
+                    <div class="panel panel-back noti-box">
+                <span class="icon-box set-icon">
+
+                </span>
+
+                        <div class="text-box">
+                            <p class="main-text"> Hellfire Assault</p>
+
+                            <p class="text-muted">
+                                <span data-boss-id="18"
+                                      class="btn btn-macro btn-primary btn-sm">Macros <span class="badge"
+                                                                                            th:text="${overview.get(18L).macroCount}">0</span>
+                                  <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/3?bossid=18&amp;configtype=macro}"
+                                     style="display: none;"></a>
+                                    <h2 style="display: none;">Hellfire Assault Macros</h2>
+                                </span>
+                                <span data-boss-id="18"
+                                      class="btn btn-wa btn-primary btn-sm">WeakAuras <span class="badge"
+                                                                                            th:text="${overview.get(18L).waCount}">0</span>
+                                    <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/3?bossid=18&amp;configtype=weakaura}"
+                                        style="display: none;"></a>
+                                    <h2 style="display: none;">Hellfire Assault Weakauras</h2>
+                                </span>
+                                <span data-boss-id="18"
+                                      class="btn btn-tmw btn-primary btn-sm">TMW <span class="badge"
+                                                                                       th:text="${overview.get(18L).tmwCount}">0</span>
+                                      <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/3?bossid=18&amp;configtype=tellmewhen}"
+                                         style="display: none;"></a>
+                                    <h2 style="display: none;">Hellfire Assault TellMeWhen</h2>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 col-xs-6">
+                    <div class="panel panel-back noti-box">
+                <span class="icon-box set-icon">
+
+                </span>
+
+                        <div class="text-box">
+                            <p class="main-text">Iron Reaver</p>
+
+                            <p class="text-muted">
+                                <span data-boss-id="19"
+                                      class="btn btn-macro btn-primary btn-sm">Macros <span class="badge"
+                                                                                            th:text="${overview.get(19L).macroCount}">0</span>
+                                    <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/3?bossid=19&amp;configtype=macro}"
+                                                style="display: none;"></a>
+                                    <h2 style="display: none;">Iron Reaver Macros</h2>
+                                </span>
+                                <span data-boss-id="19"
+                                      class="btn btn-wa btn-primary btn-sm">WeakAuras <span class="badge"
+                                                                                            th:text="${overview.get(19L).waCount}">0</span>
+                                   <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/3?bossid=19&amp;configtype=weakaura}"
+                                      style="display: none;"></a>
+                                    <h2 style="display: none;">Iron Reaver Weakauras</h2>
+                                </span>
+                                <span data-boss-id="19"
+                                      class="btn btn-tmw btn-primary btn-sm">TMW <span class="badge"
+                                                                                       th:text="${overview.get(19L).tmwCount}">0</span>
+                                   <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/3?bossid=19&amp;configtype=tellmewhen}"
+                                      style="display: none;"></a>
+                                    <h2 style="display: none;">Iron Reaver TellMeWhen</h2>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6 col-xs-6">
+                    <div class="panel panel-back noti-box">
+                <span class="icon-box set-icon">
+
+                </span>
+
+                        <div class="text-box">
+                            <p class="main-text">Kormrok</p>
+
+                            <p class="text-muted">
+                                   <span data-boss-id="20"
+                                         class="btn btn-macro btn-primary btn-sm">Macros <span class="badge"
+                                                                                               th:text="${overview.get(20L).macroCount}">0</span>
+                                      <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/3?bossid=20&amp;configtype=macro}"
+                                         style="display: none;"></a>
+                                    <h2 style="display: none;">Kormrok Macros</h2>
+                                   </span>
+                                <span data-boss-id="20"
+                                      class="btn btn-wa btn-primary btn-sm">WeakAuras <span class="badge"
+                                                                                            th:text="${overview.get(20L).waCount}">0</span>
+                                  <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/3?bossid=20&amp;configtype=weakaura}"
+                                     style="display: none;"></a>
+                                    <h2 style="display: none;">Kormrok WeakAuras</h2>
+                                </span>
+                                <span data-boss-id="20"
+                                      class="btn btn-tmw btn-primary btn-sm">TMW <span class="badge"
+                                                                                       th:text="${overview.get(20L).tmwCount}">0</span>
+                                  <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/3?bossid=20&amp;configtype=tellmewhen}"
+                                     style="display: none;"></a>
+                                    <h2 style="display: none;">Kormrok TellMeWhen</h2>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6 col-xs-6">
+                    <div class="panel panel-back noti-box">
+                <span class="icon-box set-icon">
+
+                </span>
+
+                        <div class="text-box">
+                            <p class="main-text">Hellfire High Council</p>
+
+                            <p class="text-muted">
+                                   <span data-boss-id="21"
+                                         class="btn btn-macro btn-primary btn-sm">Macros <span class="badge"
+                                                                                               th:text="${overview.get(21L).macroCount}">0</span>
+                                     <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/3?bossid=21&amp;configtype=macro}"
+                                        style="display: none;"></a>
+                                    <h2 style="display: none;">Hellfire High Council Macros</h2>
+                                   </span>
+                                <span data-boss-id="21"
+                                      class="btn btn-wa btn-primary btn-sm">WeakAuras <span class="badge"
+                                                                                            th:text="${overview.get(21L).waCount}">0</span>
+                                   <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/3?bossid=21&amp;configtype=weakaura}"
+                                      style="display: none;"></a>
+                                    <h2 style="display: none;">Hellfire High Council Weakauras</h2>
+                                </span>
+                                <span data-boss-id="21"
+                                      class="btn btn-tmw btn-primary btn-sm">TMW <span class="badge"
+                                                                                       th:text="${overview.get(21L).tmwCount}">0</span>
+                                   <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/3?bossid=21&amp;configtype=tellmewhen}"
+                                      style="display: none;"></a>
+                                    <h2 style="display: none;">Hellfire High Council TellMeWhens</h2>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 col-xs-6">
+                    <div class="panel panel-back noti-box">
+                <span class="icon-box set-icon">
+
+                </span>
+
+                        <div class="text-box">
+                            <p class="main-text">Kilrogg Deadeye</p>
+
+                            <p class="text-muted">
+                                    <span data-boss-id="22"
+                                          class="btn btn-macro btn-primary btn-sm">Macros <span class="badge"
+                                                                                                th:text="${overview.get(22L).macroCount}">0</span>
+                                       <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/3?bossid=22&amp;configtype=macro}"
+                                          style="display: none;"></a>
+                                    <h2 style="display: none;">Kilrogg Deadeye Macros</h2>
+                                    </span>
+                                <span data-boss-id="22"
+                                      class="btn btn-wa btn-primary btn-sm">WeakAuras <span class="badge"
+                                                                                            th:text="${overview.get(22L).waCount}">0</span>
+                                    <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/3?bossid=22&amp;configtype=weakaura}"
+                                            style="display: none;"></a>
+                                    <h2 style="display: none;">Kilrogg  Weakauras</h2>
+                                </span>
+                                <span data-boss-id="22"
+                                      class="btn btn-tmw btn-primary btn-sm">TMW <span class="badge"
+                                                                                       th:text="${overview.get(22L).tmwCount}">0</span>
+                                  <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/3?bossid=22&amp;configtype=tellmewhen}"
+                                     style="display: none;"></a>
+                                    <h2 style="display: none;">Kilrogg Deadeye TellMeWhen</h2>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 col-xs-6">
+                    <div class="panel panel-back noti-box">
+                <span class="icon-box set-icon">
+
+                </span>
+
+                        <div class="text-box">
+                            <p class="main-text">Gorefiend</p>
+
+                            <p class="text-muted">
+                                <span data-boss-id="23"
+                                      class="btn btn-macro btn-primary btn-sm">Macros <span class="badge"
+                                                                                            th:text="${overview.get(23L).macroCount}">0</span>
+                                    <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/3?bossid=23&amp;configtype=macro}"
+                                         style="display: none;"></a>
+                                    <h2 style="display: none;">Gorefiend Macros</h2>
+                                </span>
+                                <span data-boss-id="23"
+                                      class="btn btn-wa btn-primary btn-sm">WeakAuras <span class="badge"
+                                                                                            th:text="${overview.get(23L).waCount}">0</span>
+                                  <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/3?bossid=23&amp;configtype=weakaura}"
+                                     style="display: none;"></a>
+                                    <h2 style="display: none;">Gorefiend Weakauras</h2>
+                                </span>
+                                <span data-boss-id="23"
+                                      class="btn btn-tmw btn-primary btn-sm">TMW <span class="badge"
+                                                                                       th:text="${overview.get(23L).tmwCount}">0</span>
+                                  <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/3?bossid=23&amp;configtype=tellmewhen}"
+                                     style="display: none;"></a>
+                                    <h2 style="display: none;">Gorefiend TellMeWhen</h2>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6 col-xs-6">
+                    <div class="panel panel-back noti-box">
+                <span class="icon-box set-icon">
+
+                </span>
+
+                        <div class="text-box">
+                            <p class="main-text">Shadow-Lord Iskar</p>
+
+                            <p class="text-muted">
+                                 <span data-boss-id="24"
+                                       class="btn btn-macro btn-primary btn-sm">Macros <span class="badge"
+                                                                                             th:text="${overview.get(24L).macroCount}">0</span>
+                                      <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/3?bossid=24&amp;configtype=macro}"
+                                         style="display: none;"></a>
+                                    <h2 style="display: none;">Shadow-Lord Iskar Macros</h2>
+                                 </span>
+                                <span data-boss-id="24"
+                                      class="btn btn-wa btn-primary btn-sm">WeakAuras <span class="badge"
+                                                                                            th:text="${overview.get(24L).waCount}">0</span>
+                                 <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/3?bossid=24&amp;configtype=weakaura}"
+                                    style="display: none;"></a>
+                                    <h2 style="display: none;">Shadow-Lord Iskar Weakauras</h2>
+                                </span>
+                                <span data-boss-id="24"
+                                      class="btn btn-tmw btn-primary btn-sm">TMW <span class="badge"
+                                                                                       th:text="${overview.get(24L).tmwCount}">0</span>
+                                 <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/3?bossid=24&amp;configtype=tellmewhen}"
+                                    style="display: none;"></a>
+                                    <h2 style="display: none;">Shadow-Lord Iskar TellMeWhen</h2>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6 col-xs-6">
+                    <div class="panel panel-back noti-box">
+                <span class="icon-box set-icon">
+
+                </span>
+
+                        <div class="text-box">
+                            <p class="main-text">Fel Lord Zakuun</p>
+
+                            <p class="text-muted">
+                                  <span data-boss-id="25"
+                                        class="btn btn-macro btn-primary btn-sm">Macros <span class="badge"
+                                                                                              th:text="${overview.get(25L).macroCount}">0</span>
+                                   <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/3?bossid=25&amp;configtype=macro}"
+                                      style="display: none;"></a>
+                                    <h2 style="display: none;">Fel Lord Zakuun Macros</h2>
+                                  </span>
+                                <span data-boss-id="25"
+                                      class="btn btn-wa btn-primary btn-sm">WeakAuras <span class="badge"
+                                                                                            th:text="${overview.get(25L).waCount}">0</span>
+                                 <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/3?bossid=25&amp;configtype=weakaura}"
+                                    style="display: none;"></a>
+                                    <h2 style="display: none;">Fel Lord Zakuun Weakauras</h2>
+                                </span>
+                                <span data-boss-id="25"
+                                      class="btn btn-tmw btn-primary btn-sm">TMW <span class="badge"
+                                                                                       th:text="${overview.get(25L).tmwCount}">0</span>
+                                 <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/3?bossid=25&amp;configtype=tellmewhen}"
+                                    style="display: none;"></a>
+                                    <h2 style="display: none;">Fel Lord Zakuun TellMeWhen</h2>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6 col-xs-6">
+                    <div class="panel panel-back noti-box">
+                <span class="icon-box set-icon">
+
+                </span>
+
+                        <div class="text-box">
+                            <p class="main-text">Xhul’horac</p>
+
+                            <p class="text-muted">
+                                  <span data-boss-id="26"
+                                        class="btn btn-macro btn-primary btn-sm">Macros <span class="badge"
+                                                                                              th:text="${overview.get(26L).macroCount}">0</span>
+                                   <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/3?bossid=26&amp;configtype=macro}"
+                                      style="display: none;"></a>
+                                    <h2 style="display: none;">Xhul’horac Macros</h2>
+                                  </span>
+                                <span data-boss-id="26"
+                                      class="btn btn-wa btn-primary btn-sm">WeakAuras <span class="badge"
+                                                                                            th:text="${overview.get(26L).waCount}">0</span>
+                                 <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/3?bossid=26&amp;configtype=weakaura}"
+                                    style="display: none;"></a>
+                                    <h2 style="display: none;">Xhul’horac Weakauras</h2>
+                                </span>
+                                <span data-boss-id="26"
+                                      class="btn btn-tmw btn-primary btn-sm">TMW <span class="badge"
+                                                                                       th:text="${overview.get(26L).tmwCount}">0</span>
+                                       <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/3?bossid=26&amp;configtype=tellmewhen}"
+                                          style="display: none;"></a>
+                                    <h2 style="display: none;">Xhul’horac TellMeWhen</h2>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6 col-xs-6">
+                    <div class="panel panel-back noti-box">
+                <span class="icon-box set-icon">
+
+                </span>
+
+                        <div class="text-box">
+                            <p class="main-text">Socrethar the Eternal</p>
+
+                            <p class="text-muted">
+                                
+                                <span data-boss-id="27"
+                                      class="btn btn-macro btn-primary btn-sm">Macros <span class="badge"
+                                                                                            th:text="${overview.get(27L).macroCount}">0</span>
+                                    <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/3?bossid=27&amp;configtype=macro}"
+                                          style="display: none;"></a>
+                                    <h2 style="display: none;">Socrethar the Eternal Macros</h2>
+                                </span>
+                                <span data-boss-id="27"
+                                      class="btn btn-wa btn-primary btn-sm">WeakAuras <span class="badge"
+                                                                                            th:text="${overview.get(27L).waCount}">0</span>
+                                       <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/3?bossid=27&amp;configtype=weakaura}"
+                                          style="display: none;"></a>
+                                    <h2 style="display: none;">Socrethar the Eternal Weakauras</h2>
+                                </span>
+                                <span data-boss-id="27"
+                                      class="btn btn-tmw btn-primary btn-sm">TMW <span class="badge"
+                                                                                       th:text="${overview.get(27L).tmwCount}">0</span>
+                                     <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/3?bossid=27&amp;configtype=tellmewhen}"
+                                        style="display: none;"></a>
+                                    <h2 style="display: none;">Socrethar the Eternal TellMeWhen</h2>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6 col-xs-6">
+                    <div class="panel panel-back noti-box">
+                <span class="icon-box set-icon">
+
+                </span>
+
+                        <div class="text-box">
+                            <p class="main-text">Tyrant Velhari</p>
+
+                            <p class="text-muted">
+
+                                <span data-boss-id="28"
+                                      class="btn btn-macro btn-primary btn-sm">Macros <span class="badge"
+                                                                                            th:text="${overview.get(28L).macroCount}">0</span>
+                                    <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/3?bossid=28&amp;configtype=macro}"
+                                       style="display: none;"></a>
+                                    <h2 style="display: none;">Tyrant Velhari Macros</h2>
+                                </span>
+                                <span data-boss-id="28"
+                                      class="btn btn-wa btn-primary btn-sm">WeakAuras <span class="badge"
+                                                                                            th:text="${overview.get(28L).waCount}">0</span>
+                                       <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/3?bossid=28&amp;configtype=weakaura}"
+                                          style="display: none;"></a>
+                                    <h2 style="display: none;">Tyrant Velhari Weakauras</h2>
+                                </span>
+                                <span data-boss-id="28"
+                                      class="btn btn-tmw btn-primary btn-sm">TMW <span class="badge"
+                                                                                       th:text="${overview.get(28L).tmwCount}">0</span>
+                                     <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/3?bossid=28&amp;configtype=tellmewhen}"
+                                        style="display: none;"></a>
+                                    <h2 style="display: none;">Tyrant Velhari TellMeWhen</h2>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6 col-xs-6">
+                    <div class="panel panel-back noti-box">
+                <span class="icon-box set-icon">
+
+                </span>
+
+                        <div class="text-box">
+                            <p class="main-text">Mannoroth</p>
+
+                            <p class="text-muted">
+
+                                <span data-boss-id="29"
+                                      class="btn btn-macro btn-primary btn-sm">Macros <span class="badge"
+                                                                                            th:text="${overview.get(29L).macroCount}">0</span>
+                                    <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/3?bossid=29&amp;configtype=macro}"
+                                       style="display: none;"></a>
+                                    <h2 style="display: none;">Mannoroth Macros</h2>
+                                </span>
+                                <span data-boss-id="29"
+                                      class="btn btn-wa btn-primary btn-sm">WeakAuras <span class="badge"
+                                                                                            th:text="${overview.get(29L).waCount}">0</span>
+                                       <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/3?bossid=29&amp;configtype=weakaura}"
+                                          style="display: none;"></a>
+                                    <h2 style="display: none;">Mannoroth Weakauras</h2>
+                                </span>
+                                <span data-boss-id="29"
+                                      class="btn btn-tmw btn-primary btn-sm">TMW <span class="badge"
+                                                                                       th:text="${overview.get(29L).tmwCount}">0</span>
+                                     <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/3?bossid=29&amp;configtype=tellmewhen}"
+                                        style="display: none;"></a>
+                                    <h2 style="display: none;">Mannoroth TellMeWhen</h2>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6 col-xs-6">
+                    <div class="panel panel-back noti-box">
+                <span class="icon-box set-icon">
+
+                </span>
+
+                        <div class="text-box">
+                            <p class="main-text">Archimonde</p>
+
+                            <p class="text-muted">
+
+                                <span data-boss-id="30"
+                                      class="btn btn-macro btn-primary btn-sm">Macros <span class="badge"
+                                                                                            th:text="${overview.get(30L).macroCount}">0</span>
+                                    <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/3?bossid=30&amp;configtype=macro}"
+                                       style="display: none;"></a>
+                                    <h2 style="display: none;">Archimonde Macros</h2>
+                                </span>
+                                <span data-boss-id="30"
+                                      class="btn btn-wa btn-primary btn-sm">WeakAuras <span class="badge"
+                                                                                            th:text="${overview.get(30L).waCount}">0</span>
+                                       <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/3?bossid=30&amp;configtype=weakaura}"
+                                          style="display: none;"></a>
+                                    <h2 style="display: none;">Archimonde Weakauras</h2>
+                                </span>
+                                <span data-boss-id="30"
+                                      class="btn btn-tmw btn-primary btn-sm">TMW <span class="badge"
+                                                                                       th:text="${overview.get(30L).tmwCount}">0</span>
+                                     <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/3?bossid=30&amp;configtype=tellmewhen}"
+                                        style="display: none;"></a>
+                                    <h2 style="display: none;">Archimonde TellMeWhen</h2>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="expand-button" class="row">
+            <img id="arrowUpBtn" th:src="@{/assets/img/button_up.png}"/>
+            <img id="arrowDownBtn" th:src="@{/assets/img/button_down.png}" style="display: none"/>
+        </div>
+        <hr/>
+
+        <!-- /. ROW  -->
+        <div class="row" style="margin-top: 5%;">
+            <div class="col-md-10 col-md-offset-1">
+                <div id="resultPane"></div>
+            </div>
+        </div>
+    </div>
+    <!-- /. PAGE INNER  -->
+</div>
+<!-- /. layout fragment -->
+<div layout:fragment="footer-content">
+    <script th:src="@{/assets/js/dataTables/jquery.dataTables.js}"></script>
+    <script th:src="@{/assets/js/dataTables/dataTables.bootstrap.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/js/sliding.js}"/>
+    <script th:src="@{/assets/js/history.js}"></script>
+    <script type="application/javascript" th:src="@{/assets/js/raids/blackrockfoundry.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/fancybox/jquery.fancybox.pack.js?v=2.1.5}"/>
+</div>
+
+</html>
