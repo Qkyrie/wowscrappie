@@ -15,7 +15,7 @@ import redis.clients.jedis.Protocol;
 import redis.embedded.RedisServer;
 
 @Configuration
-@Profile({"development", "integrationtest"})
+@Profile({"local", "integrationtest"})
 public class EmbeddedRedisConfiguration {
 
     private Log logger = LogFactory.getLog(EmbeddedRedisConfiguration.class);
