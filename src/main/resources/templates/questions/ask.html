@@ -21,10 +21,20 @@
 
         <div class="row" data-bind="visible: hasErrors">
             <div class="col-md-12">
-                <div class="alert alert-danger alert-dismissible collapse" role="alert">
+                <div id="titleAlert" class="alert alert-danger alert-dismissible collapse" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
-                    <strong>Warning!</strong> <span data-bind="text: errorMessage">Please add a caption before submitting the form</span>
+                    <strong>Warning!</strong> <span>Please add a title</span>
+                </div>
+                <div id="questionAlert" class="alert alert-danger alert-dismissible collapse" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <strong>Warning!</strong> <span>Please fill in your actual question</span>
+                </div>
+                <div id="generalAlert" class="alert alert-danger alert-dismissible collapse" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <strong>Warning!</strong> <span data-bind="text: errorMessage"></span>
                 </div>
             </div>
         </div>

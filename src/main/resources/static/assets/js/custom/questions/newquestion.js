@@ -23,11 +23,29 @@ var NewQuestionVM = function() {
     self.posting = false;
 
     self.askit = function() {
+        $("#questionAlert").hide();
+        $("#titleAlert").hide();
+        $("#generalAlert").hide();
+        self.hasErrors(false);
+
         var questionObject = {};
         questionObject['title'] = self.title();
         questionObject['question'] = self.question();
 
-        //TODO: do some validation
+        if(self.title() == undefined || self.title().trim() == '') {
+            self.hasErrors(true);
+            $("#titleAlert").show();
+        }
+
+        if(self.question() == undefined || self.question().trim() == '') {
+            self.hasErrors(true);
+            $("#questionAlert").show();
+        }
+
+        if(self.hasErrors()) {
+            return;
+        }
+
         if(!self.posting) {
             self.errorMessage('');
             self.hasErrors(false);
@@ -38,6 +56,7 @@ var NewQuestionVM = function() {
                 if(data.hasErrors) {
                     self.errorMessage(data.errorMessage);
                     self.hasErrors(true);
+                    $("#generalAlert").show();
                 } else {
                     self.title('');
                     self.question('');

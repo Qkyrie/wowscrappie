@@ -8,10 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
     <meta name="_disqusname" th:content="${@environment.getProperty('com.deswaef.scrappie.disqusname')}"/>
-<!--    <meta name="description" content="wowscrappie provides you with a commonplace to share your weakauras, tellmewhens and macros, created by and for the community." />
-    <meta name="keywords" content="weakauras, weakaura, weakaura strings, class, tellmewhen, macro, macros, spec,
-                                    hunter, druid, warlock, paladin, shaman,
-                                    death knight, mage, monk, priest, rogue, warrior" />-->
+    <!--    <meta name="description" content="wowscrappie provides you with a commonplace to share your weakauras, tellmewhens and macros, created by and for the community." />
+        <meta name="keywords" content="weakauras, weakaura, weakaura strings, class, tellmewhen, macro, macros, spec,
+                                        hunter, druid, warlock, paladin, shaman,
+                                        death knight, mage, monk, priest, rogue, warrior" />-->
 
     <!--    <meta name="_csrf" th:content="${_csrf.token}"/>
         &lt;!&ndash; default header name is X-CSRF-TOKEN &ndash;&gt;
@@ -115,6 +115,23 @@
                         </li>
                         <li>
                             <a th:href="@{/admin/requested-invitations}"> Requested Invitations</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li sec:authorize="!isAuthenticated()">
+                    <a th:href="@{/questions}"><i class="fa fa-question-circle fa-2x"></i> Questions!</a>
+                </li>
+
+                <li sec:authorize="hasRole('ROLE_USER')">
+                    <a href="#"><i class="fa fa-question-circle fa-2x"></i> Questions<span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a th:href="@{/questions}"> Questions</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/questions/new}"> New Question</a>
                         </li>
                     </ul>
                 </li>

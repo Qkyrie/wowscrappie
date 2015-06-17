@@ -49,7 +49,7 @@ public class ConfigRequestResponse {
     @Temporal(TemporalType.TIMESTAMP)
     private Date originalPostDate;
 
-    @Column(name = "lastEditDate")
+    @Column(name = "last_edit_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastEditDate;
 

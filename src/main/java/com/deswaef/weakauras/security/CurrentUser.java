@@ -1,6 +1,7 @@
 package com.deswaef.weakauras.security;
 
-import org.springframework.security.web.bind.annotation.AuthenticationPrincipal;
+
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

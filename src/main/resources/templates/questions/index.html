@@ -41,13 +41,15 @@
                         </div>
                         <div class="col-md-8">
                             <p>
-                                <span th:text="${question.title}">
+                                <a th:href="@{'/questions/' + ${question.id}}" th:text="${question.title}">
                                                                     Question will come here
 
-                                </span>
+                                </a>
                                 <br/>
                                 <small>posted</small>
                                 <small th:text="${question.originalPostDatePretty}"></small>
+                                <small>by</small>
+                                <small th:text="${question.poster}"></small>
                             </p>
                             <p>
                             </p>

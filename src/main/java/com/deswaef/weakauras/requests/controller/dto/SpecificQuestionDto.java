@@ -3,6 +3,8 @@ package com.deswaef.weakauras.requests.controller.dto;
 import com.deswaef.weakauras.requests.domain.ConfigRequest;
 import org.ocpsoft.prettytime.PrettyTime;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -26,6 +28,8 @@ public class SpecificQuestionDto {
 
     private String lastEditDate;
     private String postDate;
+
+    private List<QuestionResponseDto> responses = new ArrayList<>();
 
     public static SpecificQuestionDto fromConfigRequest(ConfigRequest configRequest) {
         return new SpecificQuestionDto()
@@ -98,6 +102,15 @@ public class SpecificQuestionDto {
 
     public SpecificQuestionDto setPostDate(String postDate) {
         this.postDate = postDate;
+        return this;
+    }
+
+    public List<QuestionResponseDto> getResponses() {
+        return responses;
+    }
+
+    public SpecificQuestionDto setResponses(List<QuestionResponseDto> responses) {
+        this.responses = responses;
         return this;
     }
 }

@@ -10,36 +10,64 @@
 
 <div layout:fragment="main-content">
     <div id="page-inner">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-10">
-                    <h2 th:text="${question.title}"></h2>
-                </div>
-                <div class="col-md-2">
-                    <a th:if="${canEdit}" th:href="@{'/questions/' + ${question.id} + '/edit'}" class="btn btn-default btn-raised pull-right">Edit</a>
-                </div>
+        <div class="row">
 
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <p>
-                                <span id="contentText" th:text="${question.content}"></span>
-                            </p>
-                            <br/><br/>
-
-                            <small>Posted <span th:text="${question.postDate}"></span> by <span
-                                    th:text="${question.posterName}"></span></small>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <h1 th:text="${question.title}"></h1>
+                            </div>
+                            <div class="col-md-2">
+                                <a th:if="${canEdit}" th:href="@{'/questions/' + ${question.id} + '/edit'}"
+                                   class="btn btn-default btn-raised pull-right">Edit</a>
+                            </div>
                         </div>
+                    </div>
+                    <input id="questionId" th:value="${question.id}" type="hidden"/>
+
+                    <div class="panel-body">
+                        <p>
+                            <span id="contentText" th:text="${question.content}"></span>
+                        </p>
+                        <br/><br/>
+                        <a sec:authorize="isAuthenticated()"  title="comment">
+                            <i data-bind="click: commentOnQuestion" class="fa fa-2x fa-comment"></i></a>
+                        <small class="pull-right">Posted <span th:text="${question.postDate}"></span> by <span
+                                th:text="${question.posterName}"></span></small>
                     </div>
                 </div>
             </div>
         </div>
+
+
+        <div id="responsesHolder">
+        </div>
+
+        <!--post comment -->
+        <div class="row" style="display: none;" id="commentSection" sec:authorize="hasRole('ROLE_USER')">
+            <div class="col-md-12">
+                <hr/>
+                <br/><br/>
+
+                <h3>Place a comment</h3>
+
+                <div class="form-group">
+                    <textarea id="placeComment" data-bind="value: userComment" class="form-control floating-label"
+                              placeholder="Your thoughts on this?" rows="5"></textarea>
+                </div>
+                <span class="btn btn-primary" data-bind="click: makeComment"> <i class="mdi-navigation-check"></i> Post Comment!</span>
+            </div>
+        </div>
+
     </div>
 </div>
 
 <div layout:fragment="footer-content">
-
+    <script th:src="@{/assets/js/custom/questions/specificquestion.js}" type="application/javascript"></script>
 </div>
+
 </html>
