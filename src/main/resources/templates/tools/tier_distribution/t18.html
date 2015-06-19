@@ -8,7 +8,7 @@
     <meta name="keywords" content="weakauras, weakaura, weakaura strings, class, tellmewhen, macro, macros,
                                    Scrappie, WowScrappie, Warcraftlogs, Ranking, Character Ranking, Personal Ranking"/>
     <title>Tier 18 - Hellfire Citadel - Tier Distribution</title>
-    <link th:href="@{/assets/js/dataTables/dataTables.bootstrap.css}" rel="stylesheet"/>
+    <link th:href="@{/assets/dynatable/jquery.dynatable.css}" rel="stylesheet"/>
     <link th:href="@{/assets/js/c3/c3.min.css}" rel="stylesheet"/>
 </div>
 
@@ -16,31 +16,36 @@
     <div id="page-inner">
         <div id="chart"></div>
 
-        <table class="table table-striped table-bordered table-hover" id="myTable">
+        <div class="form-group">
+            <label>Filter on tokens</label>
+            <select id="tokenSelection" class="form-control" data-bind="options: availableTokens, selectedOptions: chosenTokens, event:{ change: tokenSelected}" size="5" multiple="true"></select>
+        </div>
+
+        <table class="table table-bordered" id="myTable">
             <thead>
             <tr>
-                <th>class</th>
+                <th data-dynatable-column="className">class</th>
                 <th>spec</th>
                 <th>token</th>
-                <th>normalized dps</th>
-                <th>2pc dps</th>
-                <th>4pc dps</th>
-                <th>2pc dps gain (%)</th>
-                <th>4pc dps gain (%)</th>
-                <th>total Gain (%)</th>
+                <th data-dynatable-column="normalDps">normal dps</th>
+                <th data-dynatable-column="twoPiece">2-set</th>
+                <th data-dynatable-column="fourPiece">4-set</th>
+                <th data-dynatable-column="normalToTwo">0-2set gain</th>
+                <th data-dynatable-column="twoToFour">2-4set gain</th>
+                <th data-dynatable-column="totalGain">total gain</th>
             </tr>
             </thead>
-            <tbody data-bind="foreach: specs">
+            <tbody>
             <tr>
-                <td data-bind="text: className"></td>
-                <td data-bind="text: spec"></td>
-                <td data-bind="text: token"></td>
-                <td data-bind="text: normalDps"></td>
-                <td data-bind="text: twoPiece"></td>
-                <td data-bind="text: fourPiece"></td>
-                <td data-bind="text: normalToTwo"></td>
-                <td data-bind="text: twoToFour"></td>
-                <td data-bind="text: totalGain"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
             </tr>
             </tbody>
         </table>
@@ -51,8 +56,7 @@
 </div>
 <!-- /. layout fragment -->
 <div layout:fragment="footer-content">
-    <script th:src="@{/assets/js/dataTables/jquery.dataTables.js}"></script>
-    <script th:src="@{/assets/js/dataTables/dataTables.bootstrap.js}"></script>
+    <script th:src="@{/assets/dynatable/jquery.dynatable.js}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js" charset="utf-8"></script>
     <script th:src="@{/assets/js/c3/c3.min.js}"></script>
     <script th:src="@{/assets/js/custom/tools/tierdistribution/t18.js}"></script>

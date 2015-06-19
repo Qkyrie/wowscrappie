@@ -1,28 +1,8 @@
-/*var chart = c3.generate({
- bindto: '#chart',
- data: {
- columns: [
- ['0set', 66283, 59218],
- ['2set', 70008, 63221],
- ['4set', 78615, 70174]
- ],
- type: 'bar',
- groups: [
- ['0set', '2set', '4set']
- ]
- },
- grid: {
- y: {
- lines: [{value:0}]
- }
- }
- });*/
-
 var Tier18LootDistribution = function () {
 
     var self = this;
 
-    this.specs = ko.observableArray([
+    self.specs = ko.observableArray([
         {
             className: "Death Knight",
             spec: "Frost 1H",
@@ -110,19 +90,287 @@ var Tier18LootDistribution = function () {
             normalToTwo: 6.20,
             twoToFour: 2.88,
             totalGain: 9.26
+        },
+        {
+            className: "Mage",
+            spec: "Arcane",
+            token: "Vanquisher",
+            normalDps: 62945,
+            twoPiece: 70335,
+            fourPiece: 74099,
+            normalToTwo: 11.74,
+            twoToFour: 5.35,
+            totalGain: 17.72
+        },
+        {
+            className: "Mage",
+            spec: "Fire",
+            token: "Vanquisher",
+            normalDps: 52026,
+            twoPiece: 55103,
+            fourPiece: 58130,
+            normalToTwo: 5.91,
+            twoToFour: 5.49,
+            totalGain: 11.73
+        },
+        {
+            className: "Mage",
+            spec: "Frost",
+            token: "Vanquisher",
+            normalDps: 62567,
+            twoPiece: 66321,
+            fourPiece: 68190,
+            normalToTwo: 6.00,
+            twoToFour: 2.82,
+            totalGain: 8.99
+        },
+        {
+            className: "Monk",
+            spec: "1H Windwalker",
+            token: "Protector",
+            normalDps: 52685,
+            twoPiece: 57787,
+            fourPiece: 60878,
+            normalToTwo: 9.68,
+            twoToFour: 5.35,
+            totalGain: 15.55
+        },
+        {
+            className: "Monk",
+            spec: "2H Windwalker ",
+            token: "Protector",
+            normalDps: 53357,
+            twoPiece: 58439,
+            fourPiece: 61647,
+            normalToTwo: 9.52,
+            twoToFour: 5.49,
+            totalGain: 15.54
+        },
+        {
+            className: "Paladin",
+            spec: "Retribution",
+            token: "Conqueror",
+            normalDps: 60149,
+            twoPiece: 64200,
+            fourPiece: 69299,
+            normalToTwo: 6.73,
+            twoToFour: 7.94,
+            totalGain: 15.21
+        },
+        {
+            className: "Priest",
+            spec: "AS Shadow",
+            token: "Conqueror",
+            normalDps: 49831,
+            twoPiece: 52134,
+            fourPiece: 55299,
+            normalToTwo: 4.62,
+            twoToFour: 6.07,
+            totalGain: 10.97
+        },
+        {
+            className: "Priest",
+            spec: "CoP Shadow",
+            token: "Conqueror",
+            normalDps: 54877,
+            twoPiece: 55956,
+            fourPiece: 58935,
+            normalToTwo: 1.97,
+            twoToFour: 5.32,
+            totalGain: 7.39
+        },
+        {
+            className: "Priest",
+            spec: "VE Shadow",
+            token: "Conqueror",
+            normalDps: 47672,
+            twoPiece: 52570,
+            fourPiece: 55518,
+            normalToTwo: 10.27,
+            twoToFour: 5.61,
+            totalGain: 16.46
+        },
+        {
+            className: "Rogue",
+            spec: "Assassination",
+            token: "Vanquisher",
+            normalDps: 54590,
+            twoPiece: 57020,
+            fourPiece: 61625,
+            normalToTwo: 4.45,
+            twoToFour: 8.08,
+            totalGain: 12.89
+        },
+        {
+            className: "Rogue",
+            spec: "Combat",
+            token: "Vanquisher",
+            normalDps: 49240,
+            twoPiece: 52682,
+            fourPiece: 55816,
+            normalToTwo: 6.99,
+            twoToFour: 5.95,
+            totalGain: 13.35
+        },
+        {
+            className: "Rogue",
+            spec: "Subtlety",
+            token: "Vanquisher",
+            normalDps: 56707,
+            twoPiece: 58293,
+            fourPiece: 61295,
+            normalToTwo: 2.80,
+            twoToFour: 5.15,
+            totalGain: 8.09
+        },
+        {
+            className: "Shaman",
+            spec: "Elemental",
+            token: "Protector",
+            normalDps: 51030,
+            twoPiece: 53450,
+            fourPiece: 57722,
+            normalToTwo: 4.74,
+            twoToFour: 7.99,
+            totalGain: 13.11
+        },
+        {
+            className: "Shaman",
+            spec: "Enhancement",
+            token: "Protector",
+            normalDps: 48557,
+            twoPiece: 51268,
+            fourPiece: 56957,
+            normalToTwo: 5.58,
+            twoToFour: 11.10,
+            totalGain: 17.30
+        },
+        {
+            className: "Warlock",
+            spec: "Affliction",
+            token: "Conqueror",
+            normalDps: 55054,
+            twoPiece: 62816,
+            fourPiece: 68088,
+            normalToTwo: 14.10,
+            twoToFour: 8.39,
+            totalGain: 23.67
+        },
+        {
+            className: "Warlock",
+            spec: "Demonology",
+            token: "Conqueror",
+            normalDps: 51149,
+            twoPiece: 54081,
+            fourPiece: 57283,
+            normalToTwo: 5.73,
+            twoToFour: 5.92,
+            totalGain: 11.99
+        },
+        {
+            className: "Warlock",
+            spec: "Destruction",
+            token: "Conqueror",
+            normalDps: 51149,
+            twoPiece: 55075,
+            fourPiece: 58140,
+            normalToTwo: 7.69,
+            twoToFour: 5.57,
+            totalGain: 13.69
+        },
+        {
+            className: "Warrior",
+            spec: "Arms",
+            token: "Protector",
+            normalDps: 52727,
+            twoPiece: 53405,
+            fourPiece: 58330,
+            normalToTwo: 1.29,
+            twoToFour: 9.22,
+            totalGain: 10.63
+        },
+        {
+            className: "Warrior",
+            spec: "1H Fury",
+            token: "Protector",
+            normalDps: 66556,
+            twoPiece: 68530,
+            fourPiece: 71427,
+            normalToTwo: 2.97,
+            twoToFour: 4.23,
+            totalGain: 7.32
+        },
+        {
+            className: "Warrior",
+            spec: "2H Fury",
+            token: "Protector",
+            normalDps: 64305,
+            twoPiece: 66297,
+            fourPiece: 69338,
+            normalToTwo: 3.10,
+            twoToFour: 4.59,
+            totalGain: 7.83
+        },
+        {
+            className: "Warrior",
+            spec: "Gladiator",
+            token: "Protector",
+            normalDps: 57269,
+            twoPiece: 62754,
+            fourPiece: 64292,
+            normalToTwo: 9.58,
+            twoToFour: 2.45,
+            totalGain: 12.26
         }
     ]);
+
+    self.filteredSpecs = ko.observableArray(self.specs());
+
+    function filterSpecsByToken() {
+        var filteredSpecs = [];
+        self.specs()
+            .forEach(function (spec) {
+                if ($.inArray(spec.token, self.chosenTokens()) != -1) {
+                    filteredSpecs.push(spec);
+                }
+            });
+        self.filteredSpecs(filteredSpecs);
+        dynatable.settings.dataset.originalRecords = filteredSpecs;
+        dynatable.process();
+        return filteredSpecs;
+    }
+
+    self.tokenSelected = function () {
+        filterSpecsByToken();
+    };
+
+    var tokenTypes = ["Vanquisher", "Protector", "Conqueror"];
+    self.availableTokens = ko.observableArray(tokenTypes);
+    self.chosenTokens = ko.observableArray(tokenTypes);
 };
 
 
 var tier18LootDistribution = new Tier18LootDistribution();
 ko.applyBindings(tier18LootDistribution, $("#page-inner")[0]);
 
-$('#myTable').dataTable();
+var dynatable = $('#myTable').dynatable({
+    dataset: {
+        records: tier18LootDistribution.filteredSpecs()
+    }
+}).data("dynatable");
+
 
 /**
  *
----TODO---
+ Class    Spec    Token    0p DPS    2p DPS    4p DPS    0-2pc gain    2-4pc gain    0-4pc gain
+ Death Knight    1H Frost    Vanquisher    66283    70008    78615    5.62%    12.29%    18.61%
+ Death Knight    2H Frost    Vanquisher    59218    63221    70174    6.76%    11.00%    18.50%
+ Death Knight    Unholy    Vanquisher    56112    56350    63830    0.42%    13.27%    13.75%
+ Druid    Balance    Vanquisher    54642    60242    63916    10.25%    6.10%    16.97%
+ Druid    Feral    Vanquisher    57755    61836    67764    7.07%    9.59%    17.33%
+ Hunter    Beast Mastery    Protector    52317    54629    59514    4.42%    8.94%    13.76%
+ Hunter    Marksmanship    Protector    57471    58906    65389    2.50%    11.01%    13.78%
+ Hunter    Survival    Protector    52554    55812    57422    6.20%    2.88%    9.26%
  Mage    Arcane    Vanquisher    62945    70335    74099    11.74%    5.35%    17.72%
  Mage    Fire    Vanquisher    52026    55103    58130    5.91%    5.49%    11.73%
  Mage    Frost    Vanquisher    62567    66321    68190    6.00%    2.82%    8.99%
@@ -144,17 +392,4 @@ $('#myTable').dataTable();
  Warrior    1H Fury    Protector    66556    68530    71427    2.97%    4.23%    7.32%
  Warrior    2H Fury    Protector    64305    66297    69338    3.10%    4.59%    7.83%
  Warrior    Gladiator    Protector    57269    62754    64292    9.58%    2.45%    12.26%
-
-
----DONE---
-
- *              Class    Spec    Token    0p DPS    2p DPS    4p DPS    0-2pc gain    2-4pc gain    0-4pc gain
- Death Knight    1H Frost    Vanquisher    66283    70008    78615    5.62%    12.29%    18.61%
- Death Knight    2H Frost    Vanquisher    59218    63221    70174    6.76%    11.00%    18.50%
- Death Knight    Unholy    Vanquisher    56112    56350    63830    0.42%    13.27%    13.75%
- Druid    Balance    Vanquisher    54642    60242    63916    10.25%    6.10%    16.97%
- Druid    Feral    Vanquisher    57755    61836    67764    7.07%    9.59%    17.33%
- Hunter    Beast Mastery    Protector    52317    54629    59514    4.42%    8.94%    13.76%
- Hunter    Marksmanship    Protector    57471    58906    65389    2.50%    11.01%    13.78%
- Hunter    Survival    Protector    52554    55812    57422    6.20%    2.88%    9.26%
  */
