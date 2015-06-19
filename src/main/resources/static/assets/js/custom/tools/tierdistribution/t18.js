@@ -325,6 +325,19 @@ var Tier18LootDistribution = function () {
     ]);
 
     self.filteredSpecs = ko.observableArray(self.specs());
+    self.gainChart = null;
+    self.dpsChart = null;
+
+
+    function generateCharts() {
+        self.gainChart = createGainCharts();
+        self.dpsChart = createDpsCharts();
+    }
+
+    var reloadCharts = function(){
+        createDpsCharts(dynatable.records.getFromTable());
+        createGainCharts(dynatable.records.getFromTable());
+    };
 
     function filterSpecsByToken() {
         var filteredSpecs = [];
@@ -337,6 +350,7 @@ var Tier18LootDistribution = function () {
         self.filteredSpecs(filteredSpecs);
         dynatable.settings.dataset.originalRecords = filteredSpecs;
         dynatable.process();
+        reloadCharts();
         return filteredSpecs;
     }
 
@@ -347,17 +361,118 @@ var Tier18LootDistribution = function () {
     var tokenTypes = ["Vanquisher", "Protector", "Conqueror"];
     self.availableTokens = ko.observableArray(tokenTypes);
     self.chosenTokens = ko.observableArray(tokenTypes);
+
+    var getGainData = function() {
+        var dpsColumns = [];
+        self.filteredSpecs()
+            .forEach(function (spec) {
+                dpsColumns.push(
+                    [spec.className + " " + spec.spec, spec.normalToTwo, spec.twoToFour]
+                )
+            });
+        return dpsColumns;
+    };
+
+    var createGainCharts = function (gainData) {
+        var myGainData = [];
+        if(gainData == undefined || gainData == null) {
+            myGainData = getGainData();
+        } else {
+            gainData.forEach(function (spec) {
+                myGainData.push(
+                    [spec.className + " " + spec.spec, spec.normalToTwo, spec.twoToFour]
+                )
+            });
+        }
+        return c3.generate({
+            bindto: "#dpsChart",
+            data: {
+                columns: myGainData,
+                type: 'spline'
+            },
+            axis: {
+                x: {
+                    type: 'category',
+                    categories: ['2set gain', '4set gain']
+                }
+            },
+            tooltip: {
+                grouped: false // Default true
+            }
+        });
+    };
+
+    var getDpsData = function() {
+        var dpsColumns = [];
+        self.filteredSpecs()
+            .forEach(function (spec) {
+                dpsColumns.push(
+                    [spec.className + " " + spec.spec, spec.normalDps, spec.twoPiece, spec.fourPiece]
+                )
+            });
+        return dpsColumns;
+    };
+
+    var createDpsCharts = function (dpsData) {
+        var myDpsData = [];
+        if(dpsData == undefined || dpsData == null) {
+            myDpsData = getDpsData();
+        } else {
+            dpsData.forEach(function (spec) {
+                myDpsData.push(
+                    [spec.className + " " + spec.spec, spec.normalDps, spec.twoPiece, spec.fourPiece]
+                )
+            });
+        }
+
+        return c3.generate({
+            bindto: "#gainChart",
+            data: {
+                columns: myDpsData,
+                type: 'bar'
+            },
+            axis: {
+                x: {
+                    type: 'category',
+                    categories: ['normal dps', '2set dps dps', '4set dps']
+                },
+                y: {
+                    max: 80000,
+                    min: 40000
+                }
+            },
+            tooltip: {
+                grouped: false // Default true
+            }
+        });
+    };
+    generateCharts();
+
+    generateCharts();
+
+
+    var table = $('#myTable');
+
+
+    var dynatable = table.dynatable({
+        dataset: {
+            records: self.filteredSpecs()
+        }
+    }).data("dynatable");
+
+    table.bind('dynatable:afterProcess', function(e, dynatable){
+        reloadCharts();
+    });
+
+
+
 };
 
 
 var tier18LootDistribution = new Tier18LootDistribution();
 ko.applyBindings(tier18LootDistribution, $("#page-inner")[0]);
 
-var dynatable = $('#myTable').dynatable({
-    dataset: {
-        records: tier18LootDistribution.filteredSpecs()
-    }
-}).data("dynatable");
+
 
 
 /**

@@ -14,41 +14,63 @@
 
 <div layout:fragment="main-content">
     <div id="page-inner">
-        <div id="chart"></div>
-
-        <div class="form-group">
-            <label>Filter on tokens</label>
-            <select id="tokenSelection" class="form-control" data-bind="options: availableTokens, selectedOptions: chosenTokens, event:{ change: tokenSelected}" size="5" multiple="true"></select>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Filter on tokens</label>
+                    <select id="tokenSelection" class="form-control"
+                            data-bind="options: availableTokens, selectedOptions: chosenTokens, event:{ change: tokenSelected}"
+                            size="5" multiple="true"></select>
+                </div>
+            </div>
         </div>
 
-        <table class="table table-bordered" id="myTable">
-            <thead>
-            <tr>
-                <th data-dynatable-column="className">class</th>
-                <th>spec</th>
-                <th>token</th>
-                <th data-dynatable-column="normalDps">normal dps</th>
-                <th data-dynatable-column="twoPiece">2-set</th>
-                <th data-dynatable-column="fourPiece">4-set</th>
-                <th data-dynatable-column="normalToTwo">0-2set gain</th>
-                <th data-dynatable-column="twoToFour">2-4set gain</th>
-                <th data-dynatable-column="totalGain">total gain</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            </tbody>
-        </table>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-bordered" id="myTable">
+                    <thead>
+                    <tr>
+                        <th data-dynatable-column="className">class</th>
+                        <th>spec</th>
+                        <th>token</th>
+                        <th data-dynatable-column="normalDps">normal dps</th>
+                        <th data-dynatable-column="twoPiece">2-set</th>
+                        <th data-dynatable-column="fourPiece">4-set</th>
+                        <th data-dynatable-column="normalToTwo">0-2set gain</th>
+                        <th data-dynatable-column="twoToFour">2-4set gain</th>
+                        <th data-dynatable-column="totalGain">total gain</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <br /><br />
+                <div id="dpsChart"></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <br /><br />
+                <div id="gainChart"></div>
+            </div>
+        </div>
+
 
 
     </div>
