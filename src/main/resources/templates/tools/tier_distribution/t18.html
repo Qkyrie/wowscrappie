@@ -15,6 +15,27 @@
 <div layout:fragment="main-content">
     <div id="page-inner">
         <div class="row">
+            <div class="col-md-12">
+                <h1>Tier 18 DPS Set Piece gain per spec.</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <p>This small spreadsheet will help you in deciding who should get which setpiece by looking at the
+                    average dps-gain per spec.</p>
+
+                <p>Please note that these are simulated values (using simcraft) and will probably differ in
+                    an actual encounter.<br/>
+                    Neither do these calculation take into account the possibility of still wearing a t17 2set.</p>
+
+                <p>
+                    Special Kudos go out to ckernan2 on reddit for providing the <a
+                        href="https://docs.google.com/spreadsheets/d/1i1gDYSo6vcxcgRgcyGu-LrtzJh3wTWqc7h8I6Qyzk-c/edit">
+                    initial spreadsheet.</a></p>
+                <hr />
+            </div>
+        </div>
+        <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Filter on tokens</label>
@@ -36,9 +57,9 @@
                         <th data-dynatable-column="normalDps">normal dps</th>
                         <th data-dynatable-column="twoPiece">2-set</th>
                         <th data-dynatable-column="fourPiece">4-set</th>
-                        <th data-dynatable-column="normalToTwo">0-2set gain</th>
-                        <th data-dynatable-column="twoToFour">2-4set gain</th>
-                        <th data-dynatable-column="totalGain">total gain</th>
+                        <th data-dynatable-column="normalToTwo">0-2set gain (%)</th>
+                        <th data-dynatable-column="twoToFour">2-4set gain (%)</th>
+                        <th data-dynatable-column="totalGain">total gain (%)</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -59,18 +80,22 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <br /><br />
-                <div id="dpsChart"></div>
+                <h3>An overview of the dps-gain (%) for 2- and 4set</h3>
+                <br/><br/>
+
+                <div id="gainChart"></div>
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-12">
-                <br /><br />
-                <div id="gainChart"></div>
+                <h3>Simulated dps for 0- 2- and 4-set</h3>
+
+                <br/><br/>
+
+                <div id="dpsChart"></div>
             </div>
         </div>
-
 
 
     </div>

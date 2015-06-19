@@ -335,8 +335,11 @@ var Tier18LootDistribution = function () {
     }
 
     var reloadCharts = function(){
-        createDpsCharts(dynatable.records.getFromTable());
-        createGainCharts(dynatable.records.getFromTable());
+        dynatable.records.resetOriginal();
+        dynatable.queries.run();
+        var ts = dynatable.records.sort();
+        self.gainChart = createDpsCharts(ts);
+        self.dpsChart = createGainCharts(ts);
     };
 
     function filterSpecsByToken() {
@@ -447,9 +450,6 @@ var Tier18LootDistribution = function () {
         });
     };
     generateCharts();
-
-    generateCharts();
-
 
     var table = $('#myTable');
 
