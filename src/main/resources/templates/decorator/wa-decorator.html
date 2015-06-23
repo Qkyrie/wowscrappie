@@ -119,11 +119,11 @@
                     </ul>
                 </li>
 
-                <li sec:authorize="!isAuthenticated()">
+<!--                <li sec:authorize="hasRole('ROLE_ADMIN')">
                     <a th:href="@{/questions}"><i class="fa fa-question-circle fa-2x"></i> Questions!</a>
-                </li>
+                </li>-->
 
-                <li sec:authorize="hasRole('ROLE_USER')">
+                <li sec:authorize="hasRole('ROLE_ADMIN')">
                     <a href="#"><i class="fa fa-question-circle fa-2x"></i> Questions<span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">

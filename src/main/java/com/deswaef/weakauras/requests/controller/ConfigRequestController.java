@@ -44,6 +44,7 @@ public class ConfigRequestController {
     private RequestService requestService;
 
     @RequestMapping(method = GET)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String index(ModelMap modelMap, @PageableDefault Pageable pageable) {
         modelMap.put("questions", getTopQuestions(pageable));
         modelMap.put("all", requestService.findAll(pageable));
@@ -51,6 +52,7 @@ public class ConfigRequestController {
     }
 
     @RequestMapping(method = GET, value = "/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String specificQuestion(ModelMap modelMap, @PathVariable("id") Long id, @CurrentUser ScrappieUser scrappieUser) {
         Optional<ConfigRequest> byId = requestService.findById(id);
         if (byId.isPresent()) {
@@ -63,6 +65,7 @@ public class ConfigRequestController {
     }
 
     @RequestMapping(method = GET, value = "/{id}/responses")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String responsesForQuestions(ModelMap modelMap, @PathVariable("id") Long id, @CurrentUser ScrappieUser scrappieUser) {
         Optional<ConfigRequest> byId = requestService.findById(id);
         if (byId.isPresent()) {
@@ -74,7 +77,7 @@ public class ConfigRequestController {
     }
 
     @RequestMapping(method = POST, value = "/{id}/comment")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public
     @ResponseBody
     CreateResponseDto
@@ -96,7 +99,7 @@ public class ConfigRequestController {
     }
 
     @RequestMapping(method = POST, value = "/{questionId}/comment/{responseId}/respond")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public
     @ResponseBody
     CreateResponseDto respondToComment(@RequestBody CreateResponseDto createResponseDto,
@@ -114,7 +117,7 @@ public class ConfigRequestController {
     }
 
     @RequestMapping(method = GET, value = "/{questionId}/comment/{responseId}/delete")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public @ResponseBody HttpStatus deleteComment(@CurrentUser ScrappieUser scrappieUser,
                                     @PathVariable("questionId") Long questionId,
                                     @PathVariable("responseId") Long responseId) {
@@ -136,7 +139,7 @@ public class ConfigRequestController {
     }
 
     @RequestMapping(method = GET, value = "/{id}/edit")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String editQuestion(ModelMap modelMap, @PathVariable("id") Long id, @CurrentUser ScrappieUser scrappieUser) {
         Optional<ConfigRequest> byId = requestService.findById(id);
         if (byId.isPresent() && canEdit(scrappieUser, byId.get())) {
@@ -148,7 +151,7 @@ public class ConfigRequestController {
     }
 
     @RequestMapping(method = POST, value = "/{id}/edit")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public
     @ResponseBody
     ResponseEntity<CreateQuestionDto> doEditQuestion(@PathVariable("id") Long id,
@@ -173,13 +176,13 @@ public class ConfigRequestController {
     }
 
     @RequestMapping(value = "/new", method = GET)
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String ask() {
         return "questions/ask";
     }
 
     @RequestMapping(value = "/new", method = POST)
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public
     @ResponseBody
     ResponseEntity<CreateQuestionDto> askNewQuestion(@RequestBody CreateQuestionDto createQuestionDto, @CurrentUser ScrappieUser scrappieUser) {
