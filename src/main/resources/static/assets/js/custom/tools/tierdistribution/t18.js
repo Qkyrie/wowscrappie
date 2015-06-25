@@ -2,327 +2,504 @@ var Tier18LootDistribution = function () {
 
     var self = this;
 
-    self.specs = ko.observableArray([
-        {
-            className: "Death Knight",
-            spec: "Frost 1H",
-            token: "Vanquisher",
-            normalDps: 66283,
-            twoPiece: 70008,
-            fourPiece: 78615,
-            normalToTwo: 5.62,
-            twoToFour: 12.29,
-            totalGain: 18.61
-        },
-        {
-            className: "Death Knight",
-            spec: "Frost 2H",
-            token: "Vanquisher",
-            normalDps: 59218,
-            twoPiece: 63221,
-            fourPiece: 70174,
-            normalToTwo: 6.76,
-            twoToFour: 11.00,
-            totalGain: 18.50
-        },
-        {
-            className: "Death Knight",
-            spec: "Unholy",
-            token: "Vanquisher",
-            normalDps: 56112,
-            twoPiece: 56350,
-            fourPiece: 63830,
-            normalToTwo: 0.42,
-            twoToFour: 13.27,
-            totalGain: 13.75
-        },
-        {
-            className: "Druid",
-            spec: "Balance",
-            token: "Vanquisher",
-            normalDps: 54642,
-            twoPiece: 60242,
-            fourPiece: 63916,
-            normalToTwo: 10.25,
-            twoToFour: 6.10,
-            totalGain: 16.97
-        },
-        {
-            className: "Druid",
-            spec: "Feral",
-            token: "Vanquisher",
-            normalDps: 57755,
-            twoPiece: 61836,
-            fourPiece: 67764,
-            normalToTwo: 7.07,
-            twoToFour: 9.59,
-            totalGain: 17.33
-        },
-        {
-            className: "Hunter",
-            spec: "Beast Mastery",
-            token: "Protector",
-            normalDps: 52317,
-            twoPiece: 54629,
-            fourPiece: 59514,
-            normalToTwo: 4.42,
-            twoToFour: 8.94,
-            totalGain: 13.76
-        },
-        {
-            className: "Hunter",
-            spec: "Marksmanship",
-            token: "Protector",
-            normalDps: 57471,
-            twoPiece: 58906,
-            fourPiece: 65389,
-            normalToTwo: 2.50,
-            twoToFour: 11.01,
-            totalGain: 13.78
-        },
-        {
-            className: "Hunter",
-            spec: "Survival",
-            token: "Protector",
-            normalDps: 52554,
-            twoPiece: 55812,
-            fourPiece: 57422,
-            normalToTwo: 6.20,
-            twoToFour: 2.88,
-            totalGain: 9.26
-        },
-        {
-            className: "Mage",
-            spec: "Arcane",
-            token: "Vanquisher",
-            normalDps: 62945,
-            twoPiece: 70335,
-            fourPiece: 74099,
-            normalToTwo: 11.74,
-            twoToFour: 5.35,
-            totalGain: 17.72
-        },
-        {
-            className: "Mage",
-            spec: "Fire",
-            token: "Vanquisher",
-            normalDps: 52026,
-            twoPiece: 55103,
-            fourPiece: 58130,
-            normalToTwo: 5.91,
-            twoToFour: 5.49,
-            totalGain: 11.73
-        },
-        {
-            className: "Mage",
-            spec: "Frost",
-            token: "Vanquisher",
-            normalDps: 62567,
-            twoPiece: 66321,
-            fourPiece: 68190,
-            normalToTwo: 6.00,
-            twoToFour: 2.82,
-            totalGain: 8.99
-        },
-        {
-            className: "Monk",
-            spec: "1H Windwalker",
-            token: "Protector",
-            normalDps: 52685,
-            twoPiece: 57787,
-            fourPiece: 60878,
-            normalToTwo: 9.68,
-            twoToFour: 5.35,
-            totalGain: 15.55
-        },
-        {
-            className: "Monk",
-            spec: "2H Windwalker ",
-            token: "Protector",
-            normalDps: 53357,
-            twoPiece: 58439,
-            fourPiece: 61647,
-            normalToTwo: 9.52,
-            twoToFour: 5.49,
-            totalGain: 15.54
-        },
-        {
-            className: "Paladin",
-            spec: "Retribution",
-            token: "Conqueror",
-            normalDps: 60149,
-            twoPiece: 64200,
-            fourPiece: 69299,
-            normalToTwo: 6.73,
-            twoToFour: 7.94,
-            totalGain: 15.21
-        },
-        {
-            className: "Priest",
-            spec: "AS Shadow",
-            token: "Conqueror",
-            normalDps: 49831,
-            twoPiece: 52134,
-            fourPiece: 55299,
-            normalToTwo: 4.62,
-            twoToFour: 6.07,
-            totalGain: 10.97
-        },
-        {
-            className: "Priest",
-            spec: "CoP Shadow",
-            token: "Conqueror",
-            normalDps: 54877,
-            twoPiece: 55956,
-            fourPiece: 58935,
-            normalToTwo: 1.97,
-            twoToFour: 5.32,
-            totalGain: 7.39
-        },
-        {
-            className: "Priest",
-            spec: "VE Shadow",
-            token: "Conqueror",
-            normalDps: 47672,
-            twoPiece: 52570,
-            fourPiece: 55518,
-            normalToTwo: 10.27,
-            twoToFour: 5.61,
-            totalGain: 16.46
-        },
-        {
-            className: "Rogue",
-            spec: "Assassination",
-            token: "Vanquisher",
-            normalDps: 54590,
-            twoPiece: 57020,
-            fourPiece: 61625,
-            normalToTwo: 4.45,
-            twoToFour: 8.08,
-            totalGain: 12.89
-        },
-        {
-            className: "Rogue",
-            spec: "Combat",
-            token: "Vanquisher",
-            normalDps: 49240,
-            twoPiece: 52682,
-            fourPiece: 55816,
-            normalToTwo: 6.99,
-            twoToFour: 5.95,
-            totalGain: 13.35
-        },
-        {
-            className: "Rogue",
-            spec: "Subtlety",
-            token: "Vanquisher",
-            normalDps: 56707,
-            twoPiece: 58293,
-            fourPiece: 61295,
-            normalToTwo: 2.80,
-            twoToFour: 5.15,
-            totalGain: 8.09
-        },
-        {
-            className: "Shaman",
-            spec: "Elemental",
-            token: "Protector",
-            normalDps: 51030,
-            twoPiece: 53450,
-            fourPiece: 57722,
-            normalToTwo: 4.74,
-            twoToFour: 7.99,
-            totalGain: 13.11
-        },
-        {
-            className: "Shaman",
-            spec: "Enhancement",
-            token: "Protector",
-            normalDps: 48557,
-            twoPiece: 51268,
-            fourPiece: 56957,
-            normalToTwo: 5.58,
-            twoToFour: 11.10,
-            totalGain: 17.30
-        },
-        {
-            className: "Warlock",
-            spec: "Affliction",
-            token: "Conqueror",
-            normalDps: 55054,
-            twoPiece: 62816,
-            fourPiece: 68088,
-            normalToTwo: 14.10,
-            twoToFour: 8.39,
-            totalGain: 23.67
-        },
-        {
-            className: "Warlock",
-            spec: "Demonology",
-            token: "Conqueror",
-            normalDps: 51149,
-            twoPiece: 54081,
-            fourPiece: 57283,
-            normalToTwo: 5.73,
-            twoToFour: 5.92,
-            totalGain: 11.99
-        },
-        {
-            className: "Warlock",
-            spec: "Destruction",
-            token: "Conqueror",
-            normalDps: 51149,
-            twoPiece: 55075,
-            fourPiece: 58140,
-            normalToTwo: 7.69,
-            twoToFour: 5.57,
-            totalGain: 13.69
-        },
-        {
-            className: "Warrior",
-            spec: "Arms",
-            token: "Protector",
-            normalDps: 52727,
-            twoPiece: 53405,
-            fourPiece: 58330,
-            normalToTwo: 1.29,
-            twoToFour: 9.22,
-            totalGain: 10.63
-        },
-        {
-            className: "Warrior",
-            spec: "1H Fury",
-            token: "Protector",
-            normalDps: 66556,
-            twoPiece: 68530,
-            fourPiece: 71427,
-            normalToTwo: 2.97,
-            twoToFour: 4.23,
-            totalGain: 7.32
-        },
-        {
-            className: "Warrior",
-            spec: "2H Fury",
-            token: "Protector",
-            normalDps: 64305,
-            twoPiece: 66297,
-            fourPiece: 69338,
-            normalToTwo: 3.10,
-            twoToFour: 4.59,
-            totalGain: 7.83
-        },
-        {
-            className: "Warrior",
-            spec: "Gladiator",
-            token: "Protector",
-            normalDps: 57269,
-            twoPiece: 62754,
-            fourPiece: 64292,
-            normalToTwo: 9.58,
-            twoToFour: 2.45,
-            totalGain: 12.26
-        }
-    ]);
+    self.specs = ko.observableArray(
+        [
+            {
+                "dpsColor": "red",
+                "className": "Death Knight",
+                "spec": "1H Frost",
+                "token": "Vanquisher",
+                "normalDps": 62689,
+                "fourP17": 64887,
+                "twoP17twop18": 65155,
+                "fourP18": 72641,
+                "twoP18": 65032,
+                "normalTotwoP18Gain": "3,74",
+                "twoP17twoP18Gain": "3,93",
+                "combiTo4P18Gain": "11,49",
+                "normalTo4P18Gain": "15,88",
+                "fourP17ToCombiGain": "0,41",
+                "fourP17ToFourP18Gain": "11,95"
+            },
+            {
+                "dpsColor": "red",
+                "className": "Death Knight",
+                "spec": "2H Frost",
+                "token": "Vanquisher",
+                "normalDps": 57812,
+                "fourP17": 59858,
+                "twoP17twop18": 60202,
+                "fourP18": 66972,
+                "twoP18": 59941,
+                "normalTotwoP18Gain": "3,68",
+                "twoP17twoP18Gain": "4,13",
+                "combiTo4P18Gain": "11,25",
+                "normalTo4P18Gain": "15,84",
+                "fourP17ToCombiGain": "0,57",
+                "fourP17ToFourP18Gain": "11,88"
+            },
+            {
+                "dpsColor": "red",
+                "className": "Death Knight",
+                "spec": "Unholy",
+                "token": "Vanquisher",
+                "normalDps": 56693,
+                "fourP17": 58935,
+                "twoP17twop18": 57875,
+                "fourP18": 64564,
+                "twoP18": 56827,
+                "normalTotwoP18Gain": "0,24",
+                "twoP17twoP18Gain": "2,08",
+                "combiTo4P18Gain": "11,56",
+                "normalTo4P18Gain": "13,88",
+                "fourP17ToCombiGain": "-1,80",
+                "fourP17ToFourP18Gain": "9,55"
+            },
+            {
+                "dpsColor": "orange",
+                "className": "Druid",
+                "spec": "Balance",
+                "token": "Vanquisher",
+                "normalDps": 55676,
+                "fourP17": 60714,
+                "twoP17twop18": 64634,
+                "fourP18": 64607,
+                "twoP18": 61522,
+                "normalTotwoP18Gain": "10,50",
+                "twoP17twoP18Gain": "16,09",
+                "combiTo4P18Gain": "-0,04",
+                "normalTo4P18Gain": "16,04",
+                "fourP17ToCombiGain": "6,46",
+                "fourP17ToFourP18Gain": "6,41"
+            },
+            {
+                "dpsColor": "orange",
+                "className": "Druid",
+                "spec": "Feral",
+                "token": "Vanquisher",
+                "normalDps": 57207,
+                "fourP17": 61645,
+                "twoP17twop18": 61669,
+                "fourP18": 65598,
+                "twoP18": 60118,
+                "normalTotwoP18Gain": "5,09",
+                "twoP17twoP18Gain": "7,80",
+                "combiTo4P18Gain": "6,37",
+                "normalTo4P18Gain": "14,67",
+                "fourP17ToCombiGain": "0,04",
+                "fourP17ToFourP18Gain": "6,41"
+            },
+            {
+                "dpsColor": '#69CCF0',
+                "className": "Mage",
+                "spec": "Arcane",
+                "token": "Vanquisher",
+                "normalDps": 63940,
+                "fourP17": 68524,
+                "twoP17twop18": 72283,
+                "fourP18": 76229,
+                "twoP18": 70412,
+                "normalTotwoP18Gain": "10,12",
+                "twoP17twoP18Gain": "13,05",
+                "combiTo4P18Gain": "5,46",
+                "normalTo4P18Gain": "19,22",
+                "fourP17ToCombiGain": "5,49",
+                "fourP17ToFourP18Gain": "11,24"
+            },
+            {
+                "dpsColor": '#69CCF0',
+                "className": "Mage",
+                "spec": "Fire",
+                "token": "Vanquisher",
+                "normalDps": 52039,
+                "fourP17": 54909,
+                "twoP17twop18": 57087,
+                "fourP18": 59455,
+                "twoP18": 55759,
+                "normalTotwoP18Gain": "7,15",
+                "twoP17twoP18Gain": "9,70",
+                "combiTo4P18Gain": "4,15",
+                "normalTo4P18Gain": "14,25",
+                "fourP17ToCombiGain": "3,97",
+                "fourP17ToFourP18Gain": "8,28"
+            },
+            {
+                "dpsColor": '#69CCF0',
+                "className": "Mage",
+                "spec": "Frost",
+                "token": "Vanquisher",
+                "normalDps": 65910,
+                "fourP17": 67798,
+                "twoP17twop18": 69077,
+                "fourP18": 72465,
+                "twoP18": 68649,
+                "normalTotwoP18Gain": "4,16",
+                "twoP17twoP18Gain": "4,81",
+                "combiTo4P18Gain": "4,90",
+                "normalTo4P18Gain": "9,95",
+                "fourP17ToCombiGain": "1,89",
+                "fourP17ToFourP18Gain": "6,88"
+            },
+            {
+                "dpsColor": 'yellow',
+                "className": "Rogue",
+                "spec": "Assassination",
+                "token": "Vanquisher",
+                "normalDps": 56022,
+                "fourP17": 63280,
+                "twoP17twop18": 66699,
+                "fourP18": 65400,
+                "twoP18": 61127,
+                "normalTotwoP18Gain": "9,11",
+                "twoP17twoP18Gain": "19,06",
+                "combiTo4P18Gain": "-1,95",
+                "normalTo4P18Gain": "16,74",
+                "fourP17ToCombiGain": "5,40",
+                "fourP17ToFourP18Gain": "3,35"
+            },
+            {
+                "dpsColor": 'yellow',
+                "className": "Rogue",
+                "spec": "Combat",
+                "token": "Vanquisher",
+                "normalDps": 49008,
+                "fourP17": 54179,
+                "twoP17twop18": 53896,
+                "fourP18": 55767,
+                "twoP18": 52429,
+                "normalTotwoP18Gain": "6,98",
+                "twoP17twoP18Gain": "9,97",
+                "combiTo4P18Gain": "3,47",
+                "normalTo4P18Gain": "13,79",
+                "fourP17ToCombiGain": "-0,52",
+                "fourP17ToFourP18Gain": "2,93"
+            },
+            {
+                "dpsColor": 'yellow',
+                "className": "Rogue",
+                "spec": "Subtlety",
+                "token": "Vanquisher",
+                "normalDps": 53249,
+                "fourP17": 56079,
+                "twoP17twop18": 58238,
+                "fourP18": 60572,
+                "twoP18": 56367,
+                "normalTotwoP18Gain": "5,86",
+                "twoP17twoP18Gain": "9,37",
+                "combiTo4P18Gain": "4,01",
+                "normalTo4P18Gain": "13,75",
+                "fourP17ToCombiGain": "3,85",
+                "fourP17ToFourP18Gain": "8,01"
+            },
+            {
+                "dpsColor": '#ABD473',
+                "className": "Hunter",
+                "spec": "Beast Mastery",
+                "token": "Protector",
+                "normalDps": 52773,
+                "fourP17": 58392,
+                "twoP17twop18": 56882,
+                "fourP18": 60993,
+                "twoP18": 55739,
+                "normalTotwoP18Gain": "5,62",
+                "twoP17twoP18Gain": "7,79",
+                "combiTo4P18Gain": "7,23",
+                "normalTo4P18Gain": "15,58",
+                "fourP17ToCombiGain": "-2,59",
+                "fourP17ToFourP18Gain": "4,45"
+            },
+            {
+                "dpsColor": '#ABD473',
+                "className": "Hunter",
+                "spec": "Marksmanship",
+                "token": "Protector",
+                "normalDps": 56461,
+                "fourP17": 58892,
+                "twoP17twop18": 58426,
+                "fourP18": 67163,
+                "twoP18": 57499,
+                "normalTotwoP18Gain": "1,84",
+                "twoP17twoP18Gain": "3,48",
+                "combiTo4P18Gain": "14,95",
+                "normalTo4P18Gain": "18,95",
+                "fourP17ToCombiGain": "-0,79",
+                "fourP17ToFourP18Gain": "14,04"
+            },
+            {
+                "dpsColor": '#ABD473',
+                "className": "Hunter",
+                "spec": "Survival",
+                "token": "Protector",
+                "normalDps": 48515,
+                "fourP17": 52917,
+                "twoP17twop18": 55812,
+                "fourP18": 57422,
+                "twoP18": 51590,
+                "normalTotwoP18Gain": "6,34",
+                "twoP17twoP18Gain": "15,04",
+                "combiTo4P18Gain": "2,88",
+                "normalTo4P18Gain": "18,36",
+                "fourP17ToCombiGain": "5,47",
+                "fourP17ToFourP18Gain": "8,51"
+            },
+            {
+                "dpsColor": '#00FF96',
+                "className": "Monk",
+                "spec": "1H Windwalker",
+                "token": "Protector",
+                "normalDps": 52076,
+                "fourP17": 56408,
+                "twoP17twop18": 57879,
+                "fourP18": 59861,
+                "twoP18": 56185,
+                "normalTotwoP18Gain": "7,89",
+                "twoP17twoP18Gain": "11,14",
+                "combiTo4P18Gain": "3,42",
+                "normalTo4P18Gain": "14,95",
+                "fourP17ToCombiGain": "2,61",
+                "fourP17ToFourP18Gain": "6,12"
+            },
+            {
+                "dpsColor": '#00FF96',
+                "className": "Monk",
+                "spec": "2H Windwalker",
+                "token": "Protector",
+                "normalDps": 52576,
+                "fourP17": 57057,
+                "twoP17twop18": 58466,
+                "fourP18": 60381,
+                "twoP18": 56764,
+                "normalTotwoP18Gain": "7,97",
+                "twoP17twoP18Gain": "11,20",
+                "combiTo4P18Gain": "3,28",
+                "normalTo4P18Gain": "14,85",
+                "fourP17ToCombiGain": "2,47",
+                "fourP17ToFourP18Gain": "5,83"
+            },
+            {
+                "dpsColor": '#C79C6E',
+                "className": "Warrior",
+                "spec": "Arms",
+                "token": "Protector",
+                "normalDps": 48614,
+                "fourP17": 51156,
+                "twoP17twop18": 52139,
+                "fourP18": 64470,
+                "twoP18": 51140,
+                "normalTotwoP18Gain": "5,20",
+                "twoP17twoP18Gain": "7,25",
+                "combiTo4P18Gain": "23,65",
+                "normalTo4P18Gain": "32,62",
+                "fourP17ToCombiGain": "1,92",
+                "fourP17ToFourP18Gain": "26,03"
+            },
+            {
+                "dpsColor": '#C79C6E',
+                "className": "Warrior",
+                "spec": "1H Fury",
+                "token": "Protector",
+                "normalDps": 60269,
+                "fourP17": 65734,
+                "twoP17twop18": 63762,
+                "fourP18": 66650,
+                "twoP18": 62849,
+                "normalTotwoP18Gain": "4,28",
+                "twoP17twoP18Gain": "5,80",
+                "combiTo4P18Gain": "4,53",
+                "normalTo4P18Gain": "10,59",
+                "fourP17ToCombiGain": "-3,00",
+                "fourP17ToFourP18Gain": "1,39"
+            },
+            {
+                "dpsColor": '#C79C6E',
+                "className": "Warrior",
+                "spec": "2H Fury",
+                "token": "Protector",
+                "normalDps": 60914,
+                "fourP17": 65770,
+                "twoP17twop18": 64282,
+                "fourP18": 67380,
+                "twoP18": 63317,
+                "normalTotwoP18Gain": "3,94",
+                "twoP17twoP18Gain": "5,53",
+                "combiTo4P18Gain": "4,82",
+                "normalTo4P18Gain": "10,61",
+                "fourP17ToCombiGain": "-2,26",
+                "fourP17ToFourP18Gain": "2,45"
+            },
+            {
+                "dpsColor": '#C79C6E',
+                "className": "Warrior",
+                "spec": "Gladiator",
+                "token": "Protector",
+                "normalDps": 54990,
+                "fourP17": 59046,
+                "twoP17twop18": 61071,
+                "fourP18": 61618,
+                "twoP18": 60339,
+                "normalTotwoP18Gain": "9,73",
+                "twoP17twoP18Gain": "11,06",
+                "combiTo4P18Gain": "0,90",
+                "normalTo4P18Gain": "12,05",
+                "fourP17ToCombiGain": "3,43",
+                "fourP17ToFourP18Gain": "4,36"
+            },
+            {
+                "dpsColor": '#0070DE',
+                "className": "Shaman",
+                "spec": "Elemental",
+                "token": "Protector",
+                "normalDps": 52649,
+                "fourP17": 57180,
+                "twoP17twop18": 57331,
+                "fourP18": 60245,
+                "twoP18": 55261,
+                "normalTotwoP18Gain": "4,96",
+                "twoP17twoP18Gain": "8,89",
+                "combiTo4P18Gain": "5,08",
+                "normalTo4P18Gain": "14,43",
+                "fourP17ToCombiGain": "0,26",
+                "fourP17ToFourP18Gain": "5,36"
+            },
+            {
+                "dpsColor": '#0070DE',
+                "className": "Shaman",
+                "spec": "Enhancement",
+                "token": "Protector",
+                "normalDps": 49124,
+                "fourP17": 52093,
+                "twoP17twop18": 52780,
+                "fourP18": 55643,
+                "twoP18": 51946,
+                "normalTotwoP18Gain": "5,74",
+                "twoP17twoP18Gain": "7,44",
+                "combiTo4P18Gain": "5,42",
+                "normalTo4P18Gain": "13,27",
+                "fourP17ToCombiGain": "1,32",
+                "fourP17ToFourP18Gain": "6,81"
+            },
+            {
+                "dpsColor": '#F58CBA',
+                "className": "Paladin",
+                "spec": "Retribution",
+                "token": "Conqueror",
+                "normalDps": 55148,
+                "fourP17": 55912,
+                "twoP17twop18": 61404,
+                "fourP18": 64482,
+                "twoP18": 60487,
+                "normalTotwoP18Gain": "9,68",
+                "twoP17twoP18Gain": "11,34",
+                "combiTo4P18Gain": "5,01",
+                "normalTo4P18Gain": "16,93",
+                "fourP17ToCombiGain": "9,82",
+                "fourP17ToFourP18Gain": "15,33"
+            },
+            {
+                "dpsColor": 'purple',
+                "className": "Warlock",
+                "spec": "Affliction",
+                "token": "Conqueror",
+                "normalDps": 53602,
+                "fourP17": 60379,
+                "twoP17twop18": 59098,
+                "fourP18": 58841,
+                "twoP18": 55323,
+                "normalTotwoP18Gain": "3,21",
+                "twoP17twoP18Gain": "10,25",
+                "combiTo4P18Gain": "-0,43",
+                "normalTo4P18Gain": "9,77",
+                "fourP17ToCombiGain": "-2,12",
+                "fourP17ToFourP18Gain": "-2,55"
+            },
+            {
+                "dpsColor": 'purple',
+                "className": "Warlock",
+                "spec": "Demonology",
+                "token": "Conqueror",
+                "normalDps": 54015,
+                "fourP17": 56992,
+                "twoP17twop18": 57562,
+                "fourP18": 59469,
+                "twoP18": 56389,
+                "normalTotwoP18Gain": "4,40",
+                "twoP17twoP18Gain": "6,57",
+                "combiTo4P18Gain": "3,31",
+                "normalTo4P18Gain": "10,10",
+                "fourP17ToCombiGain": "1,00",
+                "fourP17ToFourP18Gain": "4,35"
+            },
+            {
+                "dpsColor": 'purple',
+                "className": "Warlock",
+                "spec": "Destruction",
+                "token": "Conqueror",
+                "normalDps": 57126,
+                "fourP17": 63003,
+                "twoP17twop18": 64500,
+                "fourP18": 65651,
+                "twoP18": 62218,
+                "normalTotwoP18Gain": "8,91",
+                "twoP17twoP18Gain": "12,91",
+                "combiTo4P18Gain": "1,78",
+                "normalTo4P18Gain": "14,92",
+                "fourP17ToCombiGain": "2,38",
+                "fourP17ToFourP18Gain": "4,20"
+            },
+            {
+                "dpsColor": 'gray',
+                "className": "Priest",
+                "spec": "AS Shadow",
+                "token": "Conqueror",
+                "normalDps": 49568,
+                "fourP17": 52340,
+                "twoP17twop18": 53031,
+                "fourP18": 56546,
+                "twoP18": 52720,
+                "normalTotwoP18Gain": "6,36",
+                "twoP17twoP18Gain": "6,99",
+                "combiTo4P18Gain": "6,63",
+                "normalTo4P18Gain": "14,08",
+                "fourP17ToCombiGain": "1,32",
+                "fourP17ToFourP18Gain": "8,04"
+            },
+            {
+                "dpsColor": 'gray',
+                "className": "Priest",
+                "spec": "CoP Shadow",
+                "token": "Conqueror",
+                "normalDps": 55194,
+                "fourP17": 59238,
+                "twoP17twop18": 58436,
+                "fourP18": 60207,
+                "twoP18": 56306,
+                "normalTotwoP18Gain": "2,01",
+                "twoP17twoP18Gain": "5,87",
+                "combiTo4P18Gain": "3,03",
+                "normalTo4P18Gain": "9,08",
+                "fourP17ToCombiGain": "-1,35",
+                "fourP17ToFourP18Gain": "1,64"
+            },
+            {
+                "dpsColor": 'gray',
+                "className": "Priest",
+                "spec": "VE Shadow",
+                "token": "Conqueror",
+                "normalDps": 47554,
+                "fourP17": 49442,
+                "twoP17twop18": 51205,
+                "fourP18": 54377,
+                "twoP18": 50738,
+                "normalTotwoP18Gain": "6,70",
+                "twoP17twoP18Gain": "7,68",
+                "combiTo4P18Gain": "6,19",
+                "normalTo4P18Gain": "14,35",
+                "fourP17ToCombiGain": "3,57",
+                "fourP17ToFourP18Gain": "9,98"
+            }
+        ]
+    );
+
 
     self.filteredSpecs = ko.observableArray(self.specs());
     self.gainChart = null;
@@ -334,7 +511,7 @@ var Tier18LootDistribution = function () {
         self.dpsChart = createDpsCharts();
     }
 
-    var reloadCharts = function(){
+    var reloadCharts = function () {
         dynatable.records.resetOriginal();
         dynatable.queries.run();
         var ts = dynatable.records.sort();
@@ -365,12 +542,21 @@ var Tier18LootDistribution = function () {
     self.availableTokens = ko.observableArray(tokenTypes);
     self.chosenTokens = ko.observableArray(tokenTypes);
 
-    var getGainData = function() {
+    var getGainData = function () {
         var dpsColumns = [];
         self.filteredSpecs()
             .forEach(function (spec) {
                 dpsColumns.push(
-                    [spec.className + " " + spec.spec, spec.normalToTwo, spec.twoToFour]
+                    [
+                        spec.className + " " +
+                        spec.spec,
+                        parseFloat(spec.normalTotwoP18Gain.replace(',', '.')),
+                        parseFloat(spec.twoP17twoP18Gain.replace(',', '.')),
+                        parseFloat(spec.combiTo4P18Gain.replace(',', '.')),
+                        parseFloat(spec.normalTo4P18Gain.replace(',', '.')),
+                        parseFloat(spec.fourP17ToCombiGain.replace(',', '.')),
+                        parseFloat(spec.fourP17ToFourP18Gain.replace(',', '.'))
+                    ]
                 )
             });
         return dpsColumns;
@@ -378,25 +564,51 @@ var Tier18LootDistribution = function () {
 
     var createGainCharts = function (gainData) {
         var myGainData = [];
-        if(gainData == undefined || gainData == null) {
+        var dpsColors = [];
+        if (gainData == undefined || gainData == null) {
             myGainData = getGainData();
+            dpsColors = getDpsColors();
         } else {
             gainData.forEach(function (spec) {
                 myGainData.push(
-                    [spec.className + " " + spec.spec, spec.normalToTwo, spec.twoToFour]
+                    [spec.className + " " + spec.spec,
+                        parseFloat(spec.normalTotwoP18Gain.replace(',', '.')),
+                        parseFloat(spec.twoP17twoP18Gain.replace(',', '.')),
+                        parseFloat(spec.combiTo4P18Gain.replace(',', '.')),
+                        parseFloat(spec.normalTo4P18Gain.replace(',', '.')),
+                        parseFloat(spec.fourP17ToCombiGain.replace(',', '.')),
+                        parseFloat(spec.fourP17ToFourP18Gain.replace(',', '.'))
+                    ]
                 )
+                dpsColors.push(spec.dpsColor);
             });
         }
         return c3.generate({
             bindto: "#dpsChart",
+            size: {
+                height: 600,
+            },
             data: {
                 columns: myGainData,
                 type: 'spline'
             },
+            color: {
+                pattern: dpsColors
+            },
+            grid: {
+                y: {
+                    lines: [
+                        { value: 0, text: "breakeven"}
+                    ]
+                }
+            },
+            zoom: {
+                enabled: true
+            },
             axis: {
                 x: {
                     type: 'category',
-                    categories: ['2set gain', '4set gain']
+                    categories: ['T18 2P', '2P+2P', '2P+2P to T18 4P', '0P to 4P T18', 'T17 4P to 2P+2P', '4P T17 to 4P T18']
                 }
             },
             tooltip: {
@@ -405,26 +617,40 @@ var Tier18LootDistribution = function () {
         });
     };
 
-    var getDpsData = function() {
+    var getDpsData = function () {
         var dpsColumns = [];
         self.filteredSpecs()
             .forEach(function (spec) {
                 dpsColumns.push(
-                    [spec.className + " " + spec.spec, spec.normalDps, spec.twoPiece, spec.fourPiece]
+                    [spec.className + " " + spec.spec, spec.normalDps, spec.fourP17, spec.twoP17twop18, spec.fourP18, spec.twoP18]
                 )
             });
         return dpsColumns;
     };
 
+    var getDpsColors = function() {
+        var dpsColors = [];
+        self.filteredSpecs()
+            .forEach(function (spec) {
+                dpsColors.push(
+                    [spec.dpsColor]
+                )
+            });
+        return dpsColors;
+    };
+
     var createDpsCharts = function (dpsData) {
         var myDpsData = [];
-        if(dpsData == undefined || dpsData == null) {
+        var dpsColors = [];
+        if (dpsData == undefined || dpsData == null) {
             myDpsData = getDpsData();
+            dpsColors = getDpsColors();
         } else {
             dpsData.forEach(function (spec) {
                 myDpsData.push(
-                    [spec.className + " " + spec.spec, spec.normalDps, spec.twoPiece, spec.fourPiece]
-                )
+                    [spec.className + " " + spec.spec, spec.normalDps, spec.fourP17, spec.twoP17twop18, spec.fourP18, spec.twoP18]
+                );
+                dpsColors.push(spec.dpsColor);
             });
         }
 
@@ -434,10 +660,13 @@ var Tier18LootDistribution = function () {
                 columns: myDpsData,
                 type: 'bar'
             },
+            color: {
+                pattern: dpsColors
+            },
             axis: {
                 x: {
                     type: 'category',
-                    categories: ['normal dps', '2set dps dps', '4set dps']
+                    categories: ['0P', '4P T17', '2P T17 + 2P T18', '4P T18', '2P T18']
                 },
                 y: {
                     max: 80000,
@@ -460,10 +689,9 @@ var Tier18LootDistribution = function () {
         }
     }).data("dynatable");
 
-    table.bind('dynatable:afterProcess', function(e, dynatable){
+    table.bind('dynatable:afterProcess', function (e, dynatable) {
         reloadCharts();
     });
-
 
 
 };
@@ -472,39 +700,3 @@ var Tier18LootDistribution = function () {
 var tier18LootDistribution = new Tier18LootDistribution();
 ko.applyBindings(tier18LootDistribution, $("#page-inner")[0]);
 
-
-
-
-/**
- *
- Class    Spec    Token    0p DPS    2p DPS    4p DPS    0-2pc gain    2-4pc gain    0-4pc gain
- Death Knight    1H Frost    Vanquisher    66283    70008    78615    5.62%    12.29%    18.61%
- Death Knight    2H Frost    Vanquisher    59218    63221    70174    6.76%    11.00%    18.50%
- Death Knight    Unholy    Vanquisher    56112    56350    63830    0.42%    13.27%    13.75%
- Druid    Balance    Vanquisher    54642    60242    63916    10.25%    6.10%    16.97%
- Druid    Feral    Vanquisher    57755    61836    67764    7.07%    9.59%    17.33%
- Hunter    Beast Mastery    Protector    52317    54629    59514    4.42%    8.94%    13.76%
- Hunter    Marksmanship    Protector    57471    58906    65389    2.50%    11.01%    13.78%
- Hunter    Survival    Protector    52554    55812    57422    6.20%    2.88%    9.26%
- Mage    Arcane    Vanquisher    62945    70335    74099    11.74%    5.35%    17.72%
- Mage    Fire    Vanquisher    52026    55103    58130    5.91%    5.49%    11.73%
- Mage    Frost    Vanquisher    62567    66321    68190    6.00%    2.82%    8.99%
- Monk    1H Windwalker    Protector    52685    57787    60878    9.68%    5.35%    15.55%
- Monk    2H Windwalker    Protector    53357    58439    61647    9.52%    5.49%    15.54%
- Paladin    Retribution    Conqueror    60149    64200    69299    6.73%    7.94%    15.21%
- Priest    AS Shadow    Conqueror    49831    52134    55299    4.62%    6.07%    10.97%
- Priest    CoP Shadow    Conqueror    54877    55956    58935    1.97%    5.32%    7.39%
- Priest    VE Shadow    Conqueror    47672    52570    55518    10.27%    5.61%    16.46%
- Rogue    Assassination    Vanquisher    54590    57020    61625    4.45%    8.08%    12.89%
- Rogue    Combat    Vanquisher    49240    52682    55816    6.99%    5.95%    13.35%
- Rogue    Subtelty    Vanquisher    56707    58293    61295    2.80%    5.15%    8.09%
- Shaman    Elemental    Protector    51030    53450    57722    4.74%    7.99%    13.11%
- Shaman    Enhancement    Protector    48557    51268    56957    5.58%    11.10%    17.30%
- Warlock    Affliction    Conqueror    55054    62816    68088    14.10%    8.39%    23.67%
- Warlock    Demonology    Conqueror    51149    54081    57283    5.73%    5.92%    11.99%
- Warlock    Destruction    Conqueror    51140    55075    58140    7.69%    5.57%    13.69%
- Warrior    Arms    Protector    52727    53405    58330    1.29%    9.22%    10.63%
- Warrior    1H Fury    Protector    66556    68530    71427    2.97%    4.23%    7.32%
- Warrior    2H Fury    Protector    64305    66297    69338    3.10%    4.59%    7.83%
- Warrior    Gladiator    Protector    57269    62754    64292    9.58%    2.45%    12.26%
- */
