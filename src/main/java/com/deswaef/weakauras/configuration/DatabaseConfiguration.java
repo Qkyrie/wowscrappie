@@ -50,7 +50,7 @@ public class DatabaseConfiguration {
     private static final String PROPERTY_NAME_HIBERNATE_FORMAT_SQL = "hibernate.format_sql";
     private static final String PROPERTY_NAME_HIBERNATE_HBM2DDL_AUTO = "hibernate.hbm2ddl.auto";
     private static final String PROPERTY_NAME_HIBERNATE_SHOW_SQL = "hibernate.show_sql";
-    private static final String PROPERTY_PACKAGES_TO_SCAN = "com.deswaef.weakauras";
+    private static final String PROPERTY_PACKAGES_TO_SCAN = "com.deswaef";
 
     @Bean
     public JpaTransactionManager transactionManager() {

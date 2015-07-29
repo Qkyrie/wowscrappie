@@ -1,12 +1,13 @@
 buildscript {
     ext {
-        springBootVersion = '1.2.3.RELEASE'
+        springBootVersion = '1.2.5.RELEASE'
     }
     repositories {
         mavenLocal()
         mavenCentral()
         jcenter()
         maven { url "http://repo.spring.io/release" }
+        maven { url "http://repo.spring.io/milestone" }
         maven { url "http://clojars.org/repo" }
     }
     dependencies {
@@ -16,6 +17,7 @@ buildscript {
 }
 
 apply plugin: 'java'
+apply plugin: 'scala'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
 apply plugin: 'checkstyle'
@@ -38,16 +40,32 @@ idea {
         outputDir = file("$buildDir/classes/main/")
     }
 }
-/*
-run {
-  systemProperties = System.properties
-}
-*/
+
 repositories {
     mavenLocal()
     mavenCentral()
     maven { url "http://clojars.org/repo" }
     maven { url "http://repo.spring.io/release" }
+    maven { url "http://repo.spring.io/milestone" }
+}
+
+sourceSets {
+    test {
+        scala {
+            srcDirs = ['src/test/scala', 'src/test/java']
+        }
+        java {
+            srcDirs = []
+        }
+    }
+    main {
+        scala {
+            srcDirs = ['src/main/scala', 'src/main/java']
+        }
+        java {
+            srcDirs = []
+        }
+    }
 }
 
 dependencies {
@@ -78,7 +96,6 @@ dependencies {
     compile("org.apache.commons:commons-lang3:3.0")
     compile('commons-validator:commons-validator:1.4.0')
     compile("commons-io:commons-io:2.4")
-    compile("org.projectreactor.spring:reactor-spring-context")
     compile("com.fasterxml.jackson.core:jackson-databind")
     compile 'org.projectlombok:lombok:1.14.8'
     compile("mysql:mysql-connector-java")
@@ -94,9 +111,11 @@ dependencies {
     compile('com.icegreen:greenmail:1.4.0')
     compile("javax.mail:mail:1.4.7")
     compile('net.sourceforge.htmlunit:htmlunit:2.16')
+    compile 'org.scala-lang:scala-library:2.11.7'
     testCompile("com.h2database:h2")
     testCompile("org.springframework.boot:spring-boot-starter-test")
     testCompile('org.easytesting:fest-assert:1.4')
+    testCompile('org.scalatest:scalatest_2.11:2.2.4')
 }
 
 task wrapper(type: Wrapper) {
