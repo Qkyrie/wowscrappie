@@ -16,6 +16,7 @@ public class QuestionListDto {
     private Date originalPostDate;
     private String originalPostDatePretty;
     private String content;
+    private Long viewcount;
 
     public static QuestionListDto fromConfigRequest(ConfigRequest configRequest) {
         return new QuestionListDto()
@@ -25,7 +26,8 @@ public class QuestionListDto {
                 .setPoster(configRequest.getPoster().getUsername())
                 .setPosterId(configRequest.getPoster().getId())
                 .setTitle(configRequest.getTitle())
-                .setContent(configRequest.getQuestion());
+                .setContent(configRequest.getQuestion())
+                .setViewcount(configRequest.getViews());
     }
 
     public Long getId() {
@@ -92,6 +94,15 @@ public class QuestionListDto {
 
     public QuestionListDto setContent(String content) {
         this.content = content;
+        return this;
+    }
+
+    public Long getViewcount() {
+        return viewcount;
+    }
+
+    public QuestionListDto setViewcount(Long viewcount) {
+        this.viewcount = viewcount;
         return this;
     }
 }

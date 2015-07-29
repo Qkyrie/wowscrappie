@@ -47,6 +47,9 @@ public class ConfigRequest {
     @Column(name = "deleted")
     private boolean deleted = false;
 
+    @Column(name = "viewcount")
+    private Long views = 0L;
+
     @ManyToOne
     @JoinColumn(name = "poster_id")
     private ScrappieUser poster;
@@ -114,4 +117,12 @@ public class ConfigRequest {
         return this;
     }
 
+    public Long getViews() {
+        return views;
+    }
+
+    public ConfigRequest setViews(Long views) {
+        this.views = views;
+        return this;
+    }
 }

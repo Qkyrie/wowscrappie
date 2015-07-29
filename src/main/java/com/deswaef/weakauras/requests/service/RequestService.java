@@ -16,6 +16,10 @@ import java.util.Optional;
 public interface RequestService {
     Page<ConfigRequest> findAll(Pageable pageable);
     Optional<ConfigRequest> findById(Long id);
+
+    @Transactional
+    void incrementViews(ConfigRequest configRequest);
+
     CreateQuestionDto createNewRequest(ScrappieUser scrappieUser, CreateQuestionDto createQuestionDto);
     CreateQuestionDto updateRequest(CreateQuestionDto createQuestionDto);
     List<QuestionResponseDto> findByConfigRequest(ConfigRequest configRequest, ScrappieUser scrappieUser);

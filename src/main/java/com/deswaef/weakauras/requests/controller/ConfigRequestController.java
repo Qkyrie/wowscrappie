@@ -56,6 +56,7 @@ public class ConfigRequestController {
     public String specificQuestion(ModelMap modelMap, @PathVariable("id") Long id, @CurrentUser ScrappieUser scrappieUser) {
         Optional<ConfigRequest> byId = requestService.findById(id);
         if (byId.isPresent()) {
+            requestService.incrementViews(byId.get());
             modelMap.put("question", SpecificQuestionDto.fromConfigRequest(byId.get()));
             modelMap.put("canEdit", canEdit(scrappieUser, byId.get()));
             return "questions/specificquestion";

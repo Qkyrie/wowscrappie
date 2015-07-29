@@ -105,5 +105,6 @@ var SpecificQuestion = function() {
     self.loadComments();
 };
 
+new Mdjs().on($('#contentText'));
 var specificQuestion = new SpecificQuestion();
 ko.applyBindings(specificQuestion, $("#page-inner")[0]);

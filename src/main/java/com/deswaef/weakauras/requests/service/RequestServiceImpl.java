@@ -12,6 +12,7 @@ import org.ocpsoft.prettytime.PrettyTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,6 +51,15 @@ public class RequestServiceImpl implements RequestService {
     @Transactional(readOnly = true)
     public Optional<ConfigRequest> findById(Long id) {
         return configRequestRepository.findOne(id);
+    }
+
+    @Override
+    @Transactional
+    @Async
+    public void incrementViews(ConfigRequest configRequest) {
+        configRequestRepository.save(
+                configRequest.setViews(configRequest.getViews() + 1)
+        );
     }
 
     @Override

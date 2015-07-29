@@ -1,18 +1,18 @@
 package com.deswaef.weakauras.controller;
 
-        import com.deswaef.weakauras.WeakAuras;
-        import org.junit.Before;
-        import org.junit.Test;
-        import org.junit.runner.RunWith;
-        import org.springframework.beans.factory.annotation.Autowired;
-        import org.springframework.boot.test.IntegrationTest;
-        import org.springframework.boot.test.SpringApplicationConfiguration;
-        import org.springframework.test.context.ActiveProfiles;
-        import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-        import org.springframework.test.context.web.WebAppConfiguration;
-        import org.springframework.test.web.servlet.MockMvc;
-        import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-        import org.springframework.web.context.WebApplicationContext;
+import com.deswaef.wowscrappie.WowScrappie;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.IntegrationTest;
+import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
  * User: Quinten
@@ -22,7 +22,7 @@ package com.deswaef.weakauras.controller;
  * @author Quinten De Swaef
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = WeakAuras.class)
+@SpringApplicationConfiguration(classes = WowScrappie.class)
 @ActiveProfiles("integrationtest")
 @IntegrationTest("server.port:0")
 @WebAppConfiguration
