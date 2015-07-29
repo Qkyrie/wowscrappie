@@ -163,12 +163,12 @@ public class SitemapGenerator {
     private String urlToEntry(String url, ChangeFrequency changeFrequency) {
         return new StringBuilder()
                 .append(url())
-                .append(loc())
-                .append(baseUrl + url)
-                .append(_loc())
-                .append(changefreq())
-                .append(changeFrequency.getName())
-                .append(_changefreq())
+                    .append(loc())
+                        .append(baseUrl).append(url)
+                    .append(_loc())
+                    .append(changefreq())
+                    .append(changeFrequency.getName())
+                    .append(_changefreq())
                 .append(_url())
                 .toString();
     }
