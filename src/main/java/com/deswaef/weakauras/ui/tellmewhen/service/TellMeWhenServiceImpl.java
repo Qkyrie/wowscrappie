@@ -25,6 +25,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -222,6 +223,7 @@ public class TellMeWhenServiceImpl implements TellMeWhenService {
                 if (one.isPresent()) {
                     tellMeWhenRepository.save(
                             one.get()
+                                    .setLastUpdateDate(now())
                                     .setActualValue(dto.getActualValue())
                                     .setName(dto.getCaption())
                                     .setComment(dto.getComments())
@@ -233,6 +235,10 @@ public class TellMeWhenServiceImpl implements TellMeWhenService {
                 throw new IllegalArgumentException("Couldn't edit the macro");
             }
         }
+    }
+
+    private Date now() {
+        return new Date();
     }
 
     @Override

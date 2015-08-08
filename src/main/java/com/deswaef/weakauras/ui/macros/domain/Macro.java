@@ -6,6 +6,7 @@ import com.deswaef.weakauras.usermanagement.domain.ScrappieUser;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -30,6 +31,9 @@ public class Macro {
     @Lob
     @Column(name = "actual_value")
     private String actualValue;
+
+    @Column(name = "last_update_date")
+    private Date lastUpdateDate;
 
     @ManyToOne
     @JoinColumn(name = "uploader_id")
@@ -113,6 +117,15 @@ public class Macro {
 
     public Macro setReports(Set<MacroReport> reports) {
         this.reports = reports;
+        return this;
+    }
+
+    public Date getLastUpdateDate() {
+        return lastUpdateDate;
+    }
+
+    public Macro setLastUpdateDate(Date lastUpdateDate) {
+        this.lastUpdateDate = lastUpdateDate;
         return this;
     }
 }

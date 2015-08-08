@@ -28,6 +28,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Optional;
 
 
@@ -83,6 +84,7 @@ public class ContributionServiceImpl implements ContributionService {
         if (newTellMeWhen != null) {
             TellMeWhen tmw = tellMeWhenService.createTMW(
                     newTellMeWhen
+                            .setLastUpdateDate(now())
                             .setActualValue(command.getActualValue())
                             .setName(command.getCaption())
                             .setComment(command.getComments())
@@ -95,6 +97,10 @@ public class ContributionServiceImpl implements ContributionService {
                         .forEach(ss -> tellMeWhenService.saveScreenshot(ss, tmw));
             }
         }
+    }
+
+    private Date now() {
+        return new Date();
     }
 
     private void contributeWA(ContributionCommand command) {
@@ -116,6 +122,7 @@ public class ContributionServiceImpl implements ContributionService {
         if (newWeakaura != null) {
             WeakAura wa = weakAuraService.createWeakAura(
                     newWeakaura
+                            .setLastUpdateDate(now())
                             .setActualValue(command.getActualValue())
                             .setName(command.getCaption())
                             .setComment(command.getComments())
@@ -149,6 +156,7 @@ public class ContributionServiceImpl implements ContributionService {
         if (newMacro != null) {
             Macro macro = macroService.newMacro(
                     newMacro
+                            .setLastUpdateDate(now())
                             .setActualValue(command.getActualValue())
                             .setName(command.getCaption())
                             .setDescription(command.getComments())

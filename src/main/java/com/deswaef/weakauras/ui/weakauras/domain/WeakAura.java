@@ -16,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -41,6 +42,9 @@ public class WeakAura {
 
     @Column(name = "approved")
     private boolean approved = false;
+
+    @Column(name = "last_update_date")
+    private Date lastUpdateDate;
 
     @ManyToOne
     @JoinColumn(name = "uploader_id")
@@ -120,6 +124,15 @@ public class WeakAura {
 
     public WeakAura setReports(Set<WeakAuraReport> reports) {
         this.reports = reports;
+        return this;
+    }
+
+    public Date getLastUpdateDate() {
+        return lastUpdateDate;
+    }
+
+    public WeakAura setLastUpdateDate(Date lastUpdateDate) {
+        this.lastUpdateDate = lastUpdateDate;
         return this;
     }
 }

@@ -19,6 +19,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -180,6 +181,7 @@ public class MacroServiceImpl implements MacroService {
                 if (one.isPresent()) {
                     macroRepository.save(
                             one.get()
+                                    .setLastUpdateDate(now())
                                     .setActualValue(dto.getActualValue())
                                     .setName(dto.getCaption())
                                     .setDescription(dto.getComments())
@@ -191,6 +193,10 @@ public class MacroServiceImpl implements MacroService {
                 throw new IllegalArgumentException("Couldn't edit the macro");
             }
         }
+    }
+
+    private Date now() {
+        return new Date();
     }
 
     @Override

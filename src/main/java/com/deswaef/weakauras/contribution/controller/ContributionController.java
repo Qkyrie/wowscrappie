@@ -48,8 +48,6 @@ public class ContributionController {
     @Autowired
     private RaidService raidService;
     @Autowired
-    private NotificationService notificationService;
-    @Autowired
     private PersistentNotificationService persistentNotificationService;
     @Autowired
     private MailService mailService;
@@ -130,14 +128,12 @@ public class ContributionController {
                 .stream()
                 .map(userProfileService::findByUser)
                 .filter(UserProfile::isReceiveEmailNotifications)
-                .forEach(userProfile -> {
-                    mailService
-                            .createMail()
-                            .body(content)
-                            .subject(subject)
-                            .to(userProfile.getScrappieUser().getEmail())
-                            .send();
-                });
+                .forEach(userProfile -> mailService
+                        .createMail()
+                        .body(content)
+                        .subject(subject)
+                        .to(userProfile.getScrappieUser().getEmail())
+                        .send());
     }
 
 

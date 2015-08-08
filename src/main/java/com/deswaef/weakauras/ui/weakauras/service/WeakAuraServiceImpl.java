@@ -26,6 +26,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -215,6 +216,7 @@ public class WeakAuraServiceImpl implements WeakAuraService {
                 if (one.isPresent()) {
                     weakAuraRepository.save(
                             one.get()
+                                    .setLastUpdateDate(now())
                                     .setActualValue(dto.getActualValue())
                                     .setName(dto.getCaption())
                                     .setComment(dto.getComments())
@@ -226,6 +228,10 @@ public class WeakAuraServiceImpl implements WeakAuraService {
                 throw new IllegalArgumentException("Couldn't edit the macro");
             }
         }
+    }
+
+    private Date now() {
+        return new Date();
     }
 
     @Override
