@@ -1,5 +1,6 @@
 package com.deswaef.weakauras.ui.tellmewhen.controller;
 
+import com.deswaef.weakauras.expansion.service.PatchCalculator;
 import com.deswaef.weakauras.ui.image.domain.Screenshot;
 import com.deswaef.weakauras.ui.tellmewhen.controller.dto.TellMeWhenDto;
 import com.deswaef.weakauras.ui.tellmewhen.domain.TellMeWhen;
@@ -21,19 +22,26 @@ public class TMWController {
 
     @Autowired
     private TellMeWhenService tellMeWhenService;
+    @Autowired
+    private PatchCalculator patchCalculator;
 
     @RequestMapping("/{id}")
-    public @ResponseBody
+    public
+    @ResponseBody
     TellMeWhenDto byId(@PathVariable("id") Long id) {
         Optional<TellMeWhen> byId = tellMeWhenService.findById(id);
         if (byId.isPresent()) {
             List<Screenshot> screenshots = tellMeWhenService.findScreenshots(byId.get());
             String[] resultArray = new String[screenshots.size()];
-
             return TellMeWhenDto.fromTellMeWhen(byId.get())
+                    .setPatch(
+                            patchCalculator.calculatePatch(
+                                    byId.get().getLastUpdateDate())
+                                    .orElse(null)
+                    )
                     .setImageRefs(screenshots
                             .stream()
-                            .map(x -> x.getReference())
+                            .map(Screenshot::getReference)
                             .collect(Collectors.toList()).toArray(resultArray));
         } else {
             return null;
@@ -42,7 +50,9 @@ public class TMWController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping("/{id}/approve")
-    public @ResponseBody boolean approve(@PathVariable("id") Long id) {
+    public
+    @ResponseBody
+    boolean approve(@PathVariable("id") Long id) {
         try {
             tellMeWhenService.approve(id);
             return true;
@@ -53,7 +63,9 @@ public class TMWController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping("/{id}/delete")
-    public @ResponseBody boolean delete(@PathVariable("id") Long id) {
+    public
+    @ResponseBody
+    boolean delete(@PathVariable("id") Long id) {
         try {
             tellMeWhenService.delete(id);
             return true;
@@ -64,7 +76,9 @@ public class TMWController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping("/{id}/disable")
-    public @ResponseBody boolean disable(@PathVariable("id") Long id) {
+    public
+    @ResponseBody
+    boolean disable(@PathVariable("id") Long id) {
         try {
             tellMeWhenService.disable(id);
             return true;

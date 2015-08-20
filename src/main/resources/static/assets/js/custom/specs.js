@@ -13,6 +13,9 @@
                     if (configModel.imageRefs !== undefined) {
                         configModel.imageRefs(resultValue.imageRefs);
                     }
+                    if(resultValue.patch !== null) {
+                        configModel.activePatch(resultValue.patch.name);
+                    }
                     configModel.activeName(resultValue.name);
                     Mdjs().on($("#commentBox"));
                     configModel.showDetails(true);
@@ -105,6 +108,9 @@ if (configtype !== 0 && configtype !== null && wowspec !== 0 && wowspec !== null
                         configModel.activeComment(resultValue.comment);
                         if (configModel.imageRefs !== undefined) {
                             configModel.imageRefs(resultValue.imageRefs);
+                        }
+                        if(resultValue.patch !== null) {
+                            configModel.activePatch(resultValue.patch.name);
                         }
                         configModel.activeName(resultValue.name);
                         Mdjs().on($("#commentBox"));

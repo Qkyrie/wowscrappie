@@ -1,11 +1,12 @@
 package com.deswaef.weakauras.expansion.domain;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @Table(name = "patch")
-public class Patch {
+public class Patch implements Serializable {
 
     @Id
     @GeneratedValue
@@ -19,8 +20,10 @@ public class Patch {
 
     @Column(name = "start_date")
     private Date startDate;
-    @Column(name = "end_date")
-    private Date endDate;
+
+    @JoinColumn(name = "expansion_id")
+    @ManyToOne
+    private Expansion expansion;
 
     public Long getId() {
         return id;
@@ -58,12 +61,12 @@ public class Patch {
         return this;
     }
 
-    public Date getEndDate() {
-        return endDate;
+    public Expansion getExpansion() {
+        return expansion;
     }
 
-    public Patch setEndDate(Date endDate) {
-        this.endDate = endDate;
+    public Patch setExpansion(Expansion expansion) {
+        this.expansion = expansion;
         return this;
     }
 }

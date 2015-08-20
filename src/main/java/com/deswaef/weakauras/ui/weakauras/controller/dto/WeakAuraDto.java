@@ -1,6 +1,7 @@
 package com.deswaef.weakauras.ui.weakauras.controller.dto;
 
 
+import com.deswaef.weakauras.expansion.domain.Patch;
 import com.deswaef.weakauras.ui.weakauras.domain.WeakAura;
 
 public class WeakAuraDto {
@@ -13,6 +14,7 @@ public class WeakAuraDto {
     private long rating = 0;
     private boolean approved;
     private long uploaderId;
+    private Patch patch;
 
     public static WeakAuraDto fromWeakAura(WeakAura weakAura) {
         return new WeakAuraDto()
@@ -103,6 +105,15 @@ public class WeakAuraDto {
 
     public WeakAuraDto setUploaderId(long uploaderId) {
         this.uploaderId = uploaderId;
+        return this;
+    }
+
+    public Patch getPatch() {
+        return patch;
+    }
+
+    public WeakAuraDto setPatch(Patch patch) {
+        this.patch = patch;
         return this;
     }
 }

@@ -1,5 +1,6 @@
 package com.deswaef.weakauras.ui.macros.controller;
 
+import com.deswaef.weakauras.expansion.service.PatchCalculator;
 import com.deswaef.weakauras.security.CurrentUser;
 import com.deswaef.weakauras.ui.macros.domain.Macro;
 import com.deswaef.weakauras.ui.macros.service.MacroService;
@@ -33,6 +34,8 @@ public class ShareMacroController implements ShareController {
     private MacroService macroService;
     @Autowired
     private ConfigRatingService configRatingService;
+    @Autowired
+    private PatchCalculator patchCalculator;
 
     @RequestMapping("/{id}")
     public String findMacroById(ModelMap modelMap, @PathVariable("id") Long id, @CurrentUser ScrappieUser user) {
@@ -48,6 +51,7 @@ public class ShareMacroController implements ShareController {
                     modelMap.put("personalRating", configRatingService.getPersonalRatingMacro(macro.get().getId(), user));
                 }
                 modelMap.put("isOwn", isOwn(macro.get(), user));
+                modelMap.put("patch", patchCalculator.calculatePatch(macro.get().getLastUpdateDate()).orElse(null));
                 return INDEX_URL;
             } else {
                 return PENDING_APPROVAL_URL;

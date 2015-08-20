@@ -1,5 +1,6 @@
 package com.deswaef.weakauras.ui.weakauras.controller;
 
+import com.deswaef.weakauras.expansion.service.PatchCalculator;
 import com.deswaef.weakauras.security.CurrentUser;
 import com.deswaef.weakauras.ui.mvc.ShareController;
 import com.deswaef.weakauras.ui.rating.domain.ConfigRating;
@@ -33,6 +34,8 @@ public class ShareWeakAuraController implements ShareController {
     private WeakAuraService weakAuraService;
     @Autowired
     private ConfigRatingService configRatingService;
+    @Autowired
+    private PatchCalculator patchCalculator;
 
 
     @RequestMapping("/{id}")
@@ -46,6 +49,7 @@ public class ShareWeakAuraController implements ShareController {
                 modelMap.put("screenshots", weakAuraService.findScreenshots(weakAura.get()));
                 modelMap.put("rating", getRating(configRatingService.findByWeakAura(weakAura.get().getId())));
                 modelMap.put("config", weakAura.get());
+                modelMap.put("patch", patchCalculator.calculatePatch(weakAura.get().getLastUpdateDate()).orElse(null));
                 if (user != null) {
                     modelMap.put("personalRating", configRatingService.getPersonalRatingWA(weakAura.get().getId(), user));
                 }

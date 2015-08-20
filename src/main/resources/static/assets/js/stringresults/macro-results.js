@@ -19,6 +19,7 @@ var MacroModel = function () {
     self.activeComment = ko.observable();
     self.showDetails = ko.observable(false);
     self.activeConfigId = ko.observable();
+    self.activePatch = ko.observable();
     self.view = function (data, event) {
         var clickedElement = $(event.currentTarget);
         var tmw_id = clickedElement.data("macro_id");

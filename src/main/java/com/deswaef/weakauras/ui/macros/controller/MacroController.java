@@ -1,5 +1,6 @@
 package com.deswaef.weakauras.ui.macros.controller;
 
+import com.deswaef.weakauras.expansion.service.PatchCalculator;
 import com.deswaef.weakauras.ui.macros.controller.dto.MacroDto;
 import com.deswaef.weakauras.ui.macros.domain.Macro;
 import com.deswaef.weakauras.ui.macros.service.MacroService;
@@ -18,6 +19,8 @@ public class MacroController {
 
     @Autowired
     private MacroService macroService;
+    @Autowired
+    private PatchCalculator patchCalculator;
 
     @RequestMapping("/{id}")
     public
@@ -25,7 +28,13 @@ public class MacroController {
     MacroDto byId(@PathVariable("id") Long id) {
         Optional<Macro> macro = macroService.byId(id);
         if (macro.isPresent()) {
-            return MacroDto.fromMacro(macro.get());
+            return MacroDto
+                    .fromMacro(macro.get())
+                    .setPatch(
+                            patchCalculator.calculatePatch(
+                                    macro.get().getLastUpdateDate())
+                                    .orElse(null)
+                    );
         } else {
             return null;
         }
@@ -33,7 +42,9 @@ public class MacroController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping("/{id}/approve")
-    public @ResponseBody boolean approve(@PathVariable("id") Long id) {
+    public
+    @ResponseBody
+    boolean approve(@PathVariable("id") Long id) {
         try {
             macroService.approve(id);
             return true;
@@ -44,7 +55,9 @@ public class MacroController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping("/{id}/delete")
-    public @ResponseBody boolean delete(@PathVariable("id") Long id) {
+    public
+    @ResponseBody
+    boolean delete(@PathVariable("id") Long id) {
         try {
             macroService.delete(id);
             return true;
@@ -55,7 +68,9 @@ public class MacroController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping("/{id}/disable")
-    public @ResponseBody boolean disable(@PathVariable("id") Long id) {
+    public
+    @ResponseBody
+    boolean disable(@PathVariable("id") Long id) {
         try {
             macroService.disable(id);
             return true;

@@ -12,7 +12,7 @@
     <div id="page-inner">
         <div class="row">
             <div class="col-md-12">
-                <h2 th:text="${config.name}">Name of the Configuration</h2>
+                <h2><span th:text="${config.name}"></span> <small th:if="${patch != null}">{ Last updated in Patch <span th:text="${patch.name}"></span> }</small></h2>
                 <input type="hidden" th:value="${config.id}" id="configId"/>
             </div>
         </div>

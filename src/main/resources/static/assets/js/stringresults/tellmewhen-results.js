@@ -21,6 +21,7 @@ var tmwVM = function () {
     self.imageRefs = ko.observableArray([]);
     self.activeName = ko.observable();
     self.activeConfigId = ko.observable();
+    self.activePatch = ko.observable();
 
     self.view = function (data, event) {
         var clickedElement = $(event.currentTarget);

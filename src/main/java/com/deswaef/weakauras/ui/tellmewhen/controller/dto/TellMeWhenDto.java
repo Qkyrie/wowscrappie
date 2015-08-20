@@ -1,5 +1,6 @@
 package com.deswaef.weakauras.ui.tellmewhen.controller.dto;
 
+import com.deswaef.weakauras.expansion.domain.Patch;
 import com.deswaef.weakauras.ui.tellmewhen.domain.TellMeWhen;
 
 public class TellMeWhenDto {
@@ -12,6 +13,7 @@ public class TellMeWhenDto {
     private long rating = 0;
     private boolean approved;
     private long uploaderId;
+    private Patch patch;
 
     public static TellMeWhenDto fromTellMeWhen(TellMeWhen tmw) {
         return new TellMeWhenDto()
@@ -102,6 +104,15 @@ public class TellMeWhenDto {
 
     public TellMeWhenDto setUploaderId(long uploaderId) {
         this.uploaderId = uploaderId;
+        return this;
+    }
+
+    public Patch getPatch() {
+        return patch;
+    }
+
+    public TellMeWhenDto setPatch(Patch patch) {
+        this.patch = patch;
         return this;
     }
 }

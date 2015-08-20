@@ -1,5 +1,6 @@
 package com.deswaef.weakauras.ui.weakauras.controller;
 
+import com.deswaef.weakauras.expansion.service.PatchCalculator;
 import com.deswaef.weakauras.ui.image.domain.Screenshot;
 import com.deswaef.weakauras.ui.weakauras.controller.dto.WeakAuraDto;
 import com.deswaef.weakauras.ui.weakauras.domain.WeakAura;
@@ -22,6 +23,8 @@ public class WeakAuraController {
 
     @Autowired
     private WeakAuraService weakAuraService;
+    @Autowired
+    private PatchCalculator patchCalculator;
 
     @RequestMapping("/{id}")
     public
@@ -32,9 +35,14 @@ public class WeakAuraController {
             List<Screenshot> screenshots = weakAuraService.findScreenshots(weakAura.get());
             String[] resultArray = new String[screenshots.size()];
             return WeakAuraDto.fromWeakAura(weakAura.get())
+                    .setPatch(
+                            patchCalculator.calculatePatch(
+                                    weakAura.get().getLastUpdateDate())
+                                    .orElse(null)
+                    )
                     .setImageRefs(screenshots
                             .stream()
-                            .map(x -> x.getReference())
+                            .map(Screenshot::getReference)
                             .collect(Collectors.toList()).toArray(resultArray));
         } else {
             return null;

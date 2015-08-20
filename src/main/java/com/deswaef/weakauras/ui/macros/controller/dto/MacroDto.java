@@ -1,5 +1,6 @@
 package com.deswaef.weakauras.ui.macros.controller.dto;
 
+import com.deswaef.weakauras.expansion.domain.Patch;
 import com.deswaef.weakauras.ui.macros.domain.Macro;
 
 public class MacroDto {
@@ -11,6 +12,7 @@ public class MacroDto {
     private long rating = 0;
     private boolean approved;
     private long uploaderId;
+    private Patch patch;
 
     public static MacroDto fromMacro(Macro macro) {
         return new MacroDto()
@@ -92,6 +94,15 @@ public class MacroDto {
 
     public MacroDto setUploaderId(long uploaderId) {
         this.uploaderId = uploaderId;
+        return this;
+    }
+
+    public Patch getPatch() {
+        return patch;
+    }
+
+    public MacroDto setPatch(Patch patch) {
+        this.patch = patch;
         return this;
     }
 }

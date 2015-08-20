@@ -5,29 +5,25 @@ import com.deswaef.weakauras.classes.domain.WowClass;
 import com.deswaef.weakauras.classes.service.ClassService;
 import com.deswaef.weakauras.classes.service.SpecService;
 import com.deswaef.weakauras.ui.macros.controller.dto.MacroDto;
-import com.deswaef.weakauras.ui.macros.domain.Macro;
 import com.deswaef.weakauras.ui.macros.service.MacroService;
 import com.deswaef.weakauras.ui.rating.domain.ConfigRating;
 import com.deswaef.weakauras.ui.rating.service.ConfigRatingService;
 import com.deswaef.weakauras.ui.tellmewhen.controller.dto.TellMeWhenDto;
-import com.deswaef.weakauras.ui.tellmewhen.domain.TellMeWhen;
-import com.deswaef.weakauras.ui.tellmewhen.domain.TellMeWhenConfigRating;
 import com.deswaef.weakauras.ui.tellmewhen.service.TellMeWhenService;
 import com.deswaef.weakauras.ui.weakauras.controller.dto.WeakAuraDto;
-import com.deswaef.weakauras.ui.weakauras.domain.WeakAura;
 import com.deswaef.weakauras.ui.weakauras.service.WeakAuraService;
-import com.deswaef.weakauras.usermanagement.domain.ScrappieUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 @Controller
 @RequestMapping(value = ClassController.CLASSES)
@@ -38,7 +34,6 @@ public class ClassController {
     public static final String TMW = "tellmewhen";
     public static final String CLASS_SPECIFIC = "class_specific";
     public static final long DEFAULT_RATING = 0;
-    public static final String MAX_RATING = "100%";
     public static final String CLASSES = "/classes";
 
     @Autowired
@@ -72,7 +67,7 @@ public class ClassController {
                             .setWaAmount(weakAuraService.countBySpec(spec)))
                     .collect(Collectors.toSet());
             modelmap.put("specs", specs);
-            modelmap.put("specnames", specs.stream().map(spec -> spec.getName()).collect(Collectors.joining(", ")));
+            modelmap.put("specnames", specs.stream().map(SpecDto::getName).collect(Collectors.joining(", ")));
             return "classes/specs";
         } else {
             return "classes/index";
@@ -117,13 +112,15 @@ public class ClassController {
                     .stream()
                     .map(WeakAuraDto::fromWeakAura)
                     .map(x -> x.setRating(getRating(configRatingService.findByWeakAura(x.getId()))))
-                    .collect(Collectors.toList());
+                    .sorted((wa1, wa2) -> new Long(wa2.getRating() - wa1.getRating()).intValue())
+                    .collect(toList());
         } else {
             return weakAuraService.findBySpec(spec.get())
                     .stream()
                     .map(WeakAuraDto::fromWeakAura)
                     .map(x -> x.setRating(getRating(configRatingService.findByWeakAura(x.getId()))))
-                    .collect(Collectors.toList());
+                    .sorted((wa1, wa2) -> new Long(wa2.getRating() - wa1.getRating()).intValue())
+                    .collect(toList());
         }
     }
 
@@ -133,13 +130,15 @@ public class ClassController {
                     .stream()
                     .map(MacroDto::fromMacro)
                     .map(x -> x.setRating(getRating(configRatingService.findByMacro(x.getId()))))
-                    .collect(Collectors.toList());
+                    .sorted((macro1, macro2) -> new Long(macro2.getRating() - macro1.getRating()).intValue())
+                    .collect(toList());
         } else {
             return macroService.findBySpec(spec.get())
                     .stream()
                     .map(MacroDto::fromMacro)
                     .map(x -> x.setRating(getRating(configRatingService.findByMacro(x.getId()))))
-                    .collect(Collectors.toList());
+                    .sorted((macro1, macro2) -> new Long(macro2.getRating() - macro1.getRating()).intValue())
+                    .collect(toList());
         }
     }
 
@@ -149,13 +148,15 @@ public class ClassController {
                     .stream()
                     .map(TellMeWhenDto::fromTellMeWhen)
                     .map(x -> x.setRating(getRating(configRatingService.findByTellMeWhen(x.getId()))))
-                    .collect(Collectors.toList());
+                    .sorted((tmw1, tmw2) -> new Long(tmw2.getRating() - tmw1.getRating()).intValue())
+                    .collect(toList());
         } else {
             return tellMeWhenService.findBySpec(spec.get())
                     .stream()
                     .map(TellMeWhenDto::fromTellMeWhen)
                     .map(x -> x.setRating(getRating(configRatingService.findByTellMeWhen(x.getId()))))
-                    .collect(Collectors.toList());
+                    .sorted((tmw1, tmw2) -> new Long(tmw2.getRating() - tmw1.getRating()).intValue())
+                    .collect(toList());
         }
     }
 

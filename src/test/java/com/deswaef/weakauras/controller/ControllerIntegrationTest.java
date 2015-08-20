@@ -1,6 +1,6 @@
 package com.deswaef.weakauras.controller;
 
-import com.deswaef.wowscrappie.WowScrappie;
+import com.deswaef.WoWScrappieInitializer;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,7 +22,7 @@ import org.springframework.web.context.WebApplicationContext;
  * @author Quinten De Swaef
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = WowScrappie.class)
+@SpringApplicationConfiguration(classes = WoWScrappieInitializer.class)
 @ActiveProfiles("integrationtest")
 @IntegrationTest("server.port:0")
 @WebAppConfiguration

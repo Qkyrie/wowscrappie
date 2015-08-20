@@ -1,11 +1,12 @@
 package com.deswaef.weakauras.expansion.domain;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @Table(name = "expansion")
-public class Expansion {
+public class Expansion implements Serializable {
 
     @Id
     @GeneratedValue
@@ -14,13 +15,11 @@ public class Expansion {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "name")
+    @Column(name = "slug")
     private String slug;
 
     @Column(name = "start_date")
     private Date startDate;
-    @Column(name = "end_date")
-    private Date endDate;
 
     public Long getId() {
         return id;
@@ -53,17 +52,9 @@ public class Expansion {
         return startDate;
     }
 
-    public Date getEndDate() {
-        return endDate;
-    }
-
     public Expansion setStartDate(Date startDate) {
         this.startDate = startDate;
         return this;
     }
 
-    public Expansion setEndDate(Date endDate) {
-        this.endDate = endDate;
-        return this;
-    }
 }

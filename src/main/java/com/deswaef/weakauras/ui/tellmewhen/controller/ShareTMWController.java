@@ -1,5 +1,6 @@
 package com.deswaef.weakauras.ui.tellmewhen.controller;
 
+import com.deswaef.weakauras.expansion.service.PatchCalculator;
 import com.deswaef.weakauras.security.CurrentUser;
 import com.deswaef.weakauras.ui.mvc.ShareController;
 import com.deswaef.weakauras.ui.rating.domain.Rating;
@@ -32,6 +33,8 @@ public class ShareTMWController implements ShareController {
     private TellMeWhenService tellMeWhenService;
     @Autowired
     private ConfigRatingService configRatingService;
+    @Autowired
+    private PatchCalculator patchCalculator;
 
     @RequestMapping("/{id}")
     public String findTMWById(ModelMap modelMap, @PathVariable("id") Long id, @CurrentUser ScrappieUser user) {
@@ -47,6 +50,7 @@ public class ShareTMWController implements ShareController {
                 }
                 modelMap.put("config", byId.get());
                 modelMap.put("isOwn", isOwn(byId.get(), user));
+                modelMap.put("patch", patchCalculator.calculatePatch(byId.get().getLastUpdateDate()).orElse(null));
             } else {
                 return PENDING_APPROVAL_URL;
             }
