@@ -32,12 +32,12 @@ jar {
     version = '1.4.0-SNAPSHOT'
 }
 
-idea {
-    module {
-        inheritOutputDirs = false
-        outputDir = file("$buildDir/classes/main/")
-    }
-}
+//idea {
+//    module {
+//        inheritOutputDirs = false
+//        outputDir = file("$buildDir/classes/main/")
+//    }
+//}
 
 repositories {
     mavenLocal()
@@ -92,10 +92,6 @@ dependencies {
     testCompile('org.easytesting:fest-assert:1.4')
 }
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '1.11'
-}
-
 task "forceTest" {
     dependsOn "clean", "cleanTest", "test"
 }
@@ -119,3 +115,7 @@ lesscss {
 /*project.gradle.projectsEvaluated {
     applicationDefaultJvmArgs = ["-Dspring.profiles.active=${project.gradle.startParameter.systemPropertiesArgs['spring.profiles.active']}"]
 }*/
+
+bootRun {
+    systemProperties System.properties
+}

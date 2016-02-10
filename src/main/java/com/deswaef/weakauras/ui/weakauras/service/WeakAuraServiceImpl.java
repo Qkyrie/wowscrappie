@@ -6,21 +6,14 @@ import com.deswaef.weakauras.notifications.controller.dto.PersistentNotification
 import com.deswaef.weakauras.notifications.service.PersistentNotificationService;
 import com.deswaef.weakauras.raids.domain.Boss;
 import com.deswaef.weakauras.ui.image.domain.Screenshot;
-import com.deswaef.weakauras.ui.macros.domain.Macro;
 import com.deswaef.weakauras.ui.mvc.dto.EditConfigurationDto;
 import com.deswaef.weakauras.ui.rating.service.ConfigRatingService;
-import com.deswaef.weakauras.ui.tellmewhen.domain.TellMeWhen;
 import com.deswaef.weakauras.ui.weakauras.domain.WeakAura;
 import com.deswaef.weakauras.ui.weakauras.domain.WeakauraScreenshot;
-import com.deswaef.weakauras.ui.weakauras.repository.BossFightWeakAuraRepository;
-import com.deswaef.weakauras.ui.weakauras.repository.SpecWeakAuraRepository;
-import com.deswaef.weakauras.ui.weakauras.repository.WeakAuraRepository;
-import com.deswaef.weakauras.ui.weakauras.repository.WeakAuraScreenshotRepository;
-import com.deswaef.weakauras.ui.weakauras.repository.WowclassWeakAuraRepository;
+import com.deswaef.weakauras.ui.weakauras.repository.*;
 import com.deswaef.weakauras.usermanagement.domain.ScrappieUser;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
-import javafx.stage.Screen;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -150,7 +143,7 @@ public class WeakAuraServiceImpl implements WeakAuraService {
         Optional<WeakAura> one = weakAuraRepository.findOne(id);
         if (one.isPresent()) {
             WeakAura weakAura = one.get();
-            if(!weakAura.isApproved()) {
+            if (!weakAura.isApproved()) {
                 weakAura.setApproved(true);
                 WeakAura savedWeakAura = weakAuraRepository.save(weakAura);
                 persistentNotificationService.createPersistentNotification(
