@@ -8,3 +8,6 @@ gradle/
 gradlew
 gradlew.bat
 application.pid
+application-development.properties
+application-local.properties
+application-production.properties
