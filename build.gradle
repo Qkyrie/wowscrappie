@@ -1,13 +1,12 @@
 buildscript {
     ext {
-        springBootVersion = '1.2.5.RELEASE'
+        springBootVersion = '1.3.2.RELEASE'
     }
     repositories {
         mavenLocal()
         mavenCentral()
         jcenter()
         maven { url "http://repo.spring.io/release" }
-        maven { url "http://repo.spring.io/milestone" }
         maven { url "http://clojars.org/repo" }
     }
     dependencies {
@@ -17,7 +16,6 @@ buildscript {
 }
 
 apply plugin: 'java'
-apply plugin: 'scala'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
 apply plugin: 'checkstyle'
@@ -30,8 +28,8 @@ targetCompatibility = 1.8
 group = 'com.de-swaef.scrappie'
 
 jar {
-	baseName = 'Scrappie'
-	version =  '1.3.15-SNAPSHOT'
+    baseName = 'Scrappie'
+    version = '1.4.0-SNAPSHOT'
 }
 
 idea {
@@ -45,27 +43,7 @@ repositories {
     mavenLocal()
     mavenCentral()
     maven { url "http://clojars.org/repo" }
-    maven { url "http://repo.spring.io/release" }
     maven { url "http://repo.spring.io/milestone" }
-}
-
-sourceSets {
-    test {
-        scala {
-            srcDirs = ['src/test/scala', 'src/test/java']
-        }
-        java {
-            srcDirs = []
-        }
-    }
-    main {
-        scala {
-            srcDirs = ['src/main/scala', 'src/main/java']
-        }
-        java {
-            srcDirs = []
-        }
-    }
 }
 
 dependencies {
@@ -76,28 +54,26 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-cloud-connectors")
     compile("org.springframework.boot:spring-boot-starter-batch")
     compile("org.springframework.boot:spring-boot-starter-security")
-    compile("org.springframework.security:spring-security-web:4.0.1.RELEASE")
-    compile("org.springframework.security:spring-security-config:4.0.1.RELEASE")
-    compile("org.springframework.security:spring-security-messaging:4.0.1.RELEASE")
-    compile("org.springframework.security:spring-security-data:4.0.1.RELEASE")
+    compile("org.springframework.security:spring-security-web")
+    compile("org.springframework.security:spring-security-config")
+    compile("org.springframework.security:spring-security-messaging")
+    compile("org.springframework.security:spring-security-data")
     compile("org.springframework.boot:spring-boot-starter-websocket")
     compile("org.springframework.boot:spring-boot-starter-actuator")
     compile("org.springframework:spring-messaging")
-    compile("org.springframework.social:spring-social-facebook")
     compile("org.springframework.social:spring-social-core:1.1.0.RELEASE")
     compile("org.springframework.social:spring-social-config:1.1.0.RELEASE")
-    compile("org.springframework.social:spring-social-twitter:1.1.0.RELEASE")
-    compile('org.springframework.data:spring-data-redis:1.5.0.RELEASE')
+    compile('org.springframework.data:spring-data-redis')
     compile('redis.clients:jedis:2.6.3')
     compile("redis.embedded:embedded-redis:0.5")
-    compile("org.springframework.session:spring-session:1.0.1.RELEASE")
+    compile("org.springframework.session:spring-session")
     compile 'org.thymeleaf.extras:thymeleaf-extras-springsecurity4:2.1.2.RELEASE'
     compile("org.flywaydb:flyway-core")
     compile("org.apache.commons:commons-lang3:3.0")
     compile('commons-validator:commons-validator:1.4.0')
     compile("commons-io:commons-io:2.4")
     compile("com.fasterxml.jackson.core:jackson-databind")
-    compile 'org.projectlombok:lombok:1.14.8'
+    compile('org.projectlombok:lombok:1.16.6')
     compile("mysql:mysql-connector-java")
     compile('net.sf.opencsv:opencsv:2.3')
     compile("com.jolbox:bonecp:0.8.0.RELEASE")
@@ -111,15 +87,13 @@ dependencies {
     compile('com.icegreen:greenmail:1.4.0')
     compile("javax.mail:mail:1.4.7")
     compile('net.sourceforge.htmlunit:htmlunit:2.16')
-    compile 'org.scala-lang:scala-library:2.11.7'
     testCompile("com.h2database:h2")
     testCompile("org.springframework.boot:spring-boot-starter-test")
     testCompile('org.easytesting:fest-assert:1.4')
-    testCompile('org.scalatest:scalatest_2.11:2.2.4')
 }
 
 task wrapper(type: Wrapper) {
-	gradleVersion = '1.11'
+    gradleVersion = '1.11'
 }
 
 task "forceTest" {
@@ -142,6 +116,6 @@ lesscss {
     compress = true
 }
 
-project.gradle.projectsEvaluated {
+/*project.gradle.projectsEvaluated {
     applicationDefaultJvmArgs = ["-Dspring.profiles.active=${project.gradle.startParameter.systemPropertiesArgs['spring.profiles.active']}"]
-}
+}*/

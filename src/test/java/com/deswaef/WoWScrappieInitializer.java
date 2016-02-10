@@ -1,6 +1,7 @@
 package com.deswaef;
 
-import com.deswaef.wowscrappie.WowScrappie;
 
-public class WoWScrappieInitializer extends WowScrappie{
+import com.deswaef.weakauras.WowScrappie;
+
+public class WoWScrappieInitializer extends WowScrappie {
 }

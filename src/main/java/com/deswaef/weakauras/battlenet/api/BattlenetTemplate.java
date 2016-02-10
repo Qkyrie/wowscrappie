@@ -1,6 +1,5 @@
 package com.deswaef.weakauras.battlenet.api;
 
-import com.deswaef.weakauras.battlenet.api.domain.WowItem;
 import com.deswaef.weakauras.battlenet.api.impl.CharacterProfileTemplate;
 import com.deswaef.weakauras.battlenet.api.impl.ItemTemplate;
 import com.deswaef.weakauras.battlenet.api.impl.UserTemplate;
@@ -9,9 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import org.springframework.http.client.ClientHttpRequestFactory;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.social.UncategorizedApiException;
-import org.springframework.social.facebook.api.impl.json.FacebookModule;
 import org.springframework.social.oauth2.AbstractOAuth2ApiBinding;
 import org.springframework.social.oauth2.TokenStrategy;
 import org.springframework.social.support.ClientHttpRequestFactorySelector;
@@ -91,7 +88,7 @@ public class BattlenetTemplate extends AbstractOAuth2ApiBinding implements Battl
 
     private String join(String[] strings) {
         StringBuilder builder = new StringBuilder();
-        if(strings.length > 0) {
+        if (strings.length > 0) {
             builder.append(strings[0]);
             for (int i = 1; i < strings.length; i++) {
                 builder.append("," + strings[i]);

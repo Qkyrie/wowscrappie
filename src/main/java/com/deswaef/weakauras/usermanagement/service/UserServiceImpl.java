@@ -14,7 +14,6 @@ import com.deswaef.weakauras.usermanagement.domain.RoleEnum;
 import com.deswaef.weakauras.usermanagement.domain.ScrappieUser;
 import com.deswaef.weakauras.usermanagement.repository.RoleRepository;
 import com.deswaef.weakauras.usermanagement.repository.UserRepository;
-import com.deswaef.weakauras.usermanagement.util.FacebookUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -66,18 +65,6 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     public Optional<ScrappieUser> findByFacebookId(String facebookId) {
         return userRepository.findByFacebookId(facebookId);
-    }
-
-    @Override
-    public ScrappieUser createNewFacebookuser(FacebookUser facebookUser) {
-        ScrappieUser user = new ScrappieUser()
-                .setAuthorities(getDefaultAuthorities())
-                .setEnabled(true)
-                .setFacebookId(facebookUser.getFacebookId())
-                .setUsername(facebookUser.getUsername())
-                .setEmail(facebookUser.getEmail())
-                .setGeneratedUsername(true);
-        return userRepository.save(user);
     }
 
     @Override
@@ -142,12 +129,12 @@ public class UserServiceImpl implements UserService {
         } else {
             try {
                 return userRepository.save(new ScrappieUser()
-                                .setEmail(createInvitationDto.getEmail())
-                                .setEnabled(true)
-                                .setActivationCode(standardPasswordEncoder.encode(String.valueOf(System.currentTimeMillis())).substring(0, 39))
-                                .setAuthorities(getDefaultAuthorities())
-                                .setUsername(String.format("tbd%d", System.currentTimeMillis()))
-                                .setGeneratedUsername(true)
+                        .setEmail(createInvitationDto.getEmail())
+                        .setEnabled(true)
+                        .setActivationCode(standardPasswordEncoder.encode(String.valueOf(System.currentTimeMillis())).substring(0, 39))
+                        .setAuthorities(getDefaultAuthorities())
+                        .setUsername(String.format("tbd%d", System.currentTimeMillis()))
+                        .setGeneratedUsername(true)
                 );
             } catch (Exception ex) {
                 throw new IllegalArgumentException("Something went wrong, and we don't even know what :(");
