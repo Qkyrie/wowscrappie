@@ -15,7 +15,6 @@ import java.util.Properties;
 
 @Configuration
 @Profile({"local", "default"})
-@PropertySource(value = "classpath:persistence.properties")
 public class DatabaseConfiguration {
 
     @Value("${db.driver}")

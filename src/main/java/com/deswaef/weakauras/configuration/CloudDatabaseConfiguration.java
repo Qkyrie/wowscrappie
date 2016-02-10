@@ -15,7 +15,6 @@ import java.util.Properties;
 
 @Configuration
 @Profile({"production"})
-@PropertySource(value = "classpath:cloudpersistence.properties")
 public class CloudDatabaseConfiguration {
 
     @Value("${db.driver}")
