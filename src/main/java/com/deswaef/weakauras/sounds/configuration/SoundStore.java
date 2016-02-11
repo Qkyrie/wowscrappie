@@ -17,10 +17,6 @@ public class SoundStore {
     @Value("${com.deswaef.scrappie.soundstore}")
     private String destinationLocation;
 
-    public Optional<File> getRandomFile() {
-        return getRandomFile(SoundRepositoryEnum.DEFAULT);
-    }
-
     public Optional<File> getRandomFile(SoundRepositoryEnum soundRepo) {
         try {
             File parentFile = new File(destinationLocation + File.separator + soundRepo.getStoreValue());
