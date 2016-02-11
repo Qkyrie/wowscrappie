@@ -25,19 +25,32 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 
+allprojects {
+    apply plugin: 'java'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    repositories {
+        mavenCentral()
+    }
+
+    tasks.withType(JavaCompile) {
+        options.incremental = true
+    }
+}
+
+subprojects {
+    group = 'com.de-swaef.scrappie'
+}
+
+
 group = 'com.de-swaef.scrappie'
 
 jar {
     baseName = 'Scrappie'
     version = '1.4.0-SNAPSHOT'
 }
-
-//idea {
-//    module {
-//        inheritOutputDirs = false
-//        outputDir = file("$buildDir/classes/main/")
-//    }
-//}
 
 repositories {
     mavenLocal()
@@ -47,6 +60,9 @@ repositories {
 }
 
 dependencies {
+
+    compile project(":heureka")
+
     compile("org.springframework.boot:spring-boot-starter")
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
@@ -111,10 +127,6 @@ lesscss {
     dest = 'src/main/resources/static/assets/css'
     compress = true
 }
-
-/*project.gradle.projectsEvaluated {
-    applicationDefaultJvmArgs = ["-Dspring.profiles.active=${project.gradle.startParameter.systemPropertiesArgs['spring.profiles.active']}"]
-}*/
 
 bootRun {
     systemProperties System.properties
