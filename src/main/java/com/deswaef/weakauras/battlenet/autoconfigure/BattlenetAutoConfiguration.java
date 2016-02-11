@@ -28,7 +28,6 @@ import org.springframework.social.connect.web.GenericConnectionStatusView;
 import org.springframework.web.servlet.View;
 
 import javax.sql.DataSource;
-import java.math.BigInteger;
 
 @Configuration
 @ConditionalOnClass({SocialConfigurerAdapter.class, BattlenetConnectionFactory.class})
@@ -57,9 +56,9 @@ public class BattlenetAutoConfiguration {
             return connection != null ? connection.getApi() : new BattlenetTemplate();
         }
 
-        @Bean(name = { "connect/battlenet/callback", "connect/battlenet" })
+        @Bean(name = {"connect/battlenet/callback", "connect/battlenet"})
         @ConditionalOnProperty(prefix = "spring.social", name = "auto-connection-views")
-        public View facebookConnectView() {
+        public View battlenetConnectView() {
             return new GenericConnectionStatusView("battlenet", "Battlenet");
         }
 
@@ -80,8 +79,5 @@ public class BattlenetAutoConfiguration {
             return new JdbcUsersConnectionRepository(dataSource, connectionFactoryLocator, Encryptors.noOpText());
         }
 
-        public String toHex(String arg) {
-            return String.format("%040x", new BigInteger(1, arg.getBytes(/*YOUR_CHARSET?*/)));
-        }
     }
 }
