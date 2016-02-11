@@ -3,7 +3,7 @@
 [![Build Status](https://development.de-swaef.eu/jenkins/buildStatus/icon?job=WoWScrappie-Dev)](https://development.de-swaef.eu/jenkins/buildStatus/icon?job=WoWScrappie-Dev)
 ###History
 
-From the start on, when I wrote the first code and laid out the first bricks of wowscrappie, it has always been the goal to create be fully open source. 
+From the start on, when I wrote the first code and laid out the first bricks of wowscrappie, it has always been the goal to create it to be fully open source.
 Somehow, somewhere along the way, we were too focused on creating features. Features that put aside the core of this project. 
 
 Instead of open sourcing it, we were stuck with a design that didn't allow us to quickly open up the code to the public, because
