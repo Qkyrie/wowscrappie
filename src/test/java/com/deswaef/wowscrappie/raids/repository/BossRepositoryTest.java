@@ -20,12 +20,11 @@ public class BossRepositoryTest extends RepositoryIntegrationTest {
     private BossRepository bossRepository;
 
     @Before
-    public void setUp()
-    {
+    public void setUp() {
         Boss rukhmar = new WorldBoss()
-                        .setId(RUKHMAR_ID)
-                        .setName(RUKHMAR)
-                        .setSlug("rukhmar");
+                .setId(RUKHMAR_ID)
+                .setName(RUKHMAR)
+                .setSlug("rukhmar");
         bossRepository.deleteAll();
         bossRepository.save(rukhmar);
     }
@@ -34,10 +33,10 @@ public class BossRepositoryTest extends RepositoryIntegrationTest {
     public void autowireable() {
         assertThat(bossRepository).isNotNull();
     }
-    
+
     @Test
     @Transactional
-    public void rukhmarExists(){
+    public void rukhmarExists() {
         Optional<Boss> optionalRukhmar = bossRepository.findOne(RUKHMAR_ID);
         assertThat(optionalRukhmar.isPresent()).isTrue();
         assertThat(optionalRukhmar.get().getName()).isEqualTo(RUKHMAR);
