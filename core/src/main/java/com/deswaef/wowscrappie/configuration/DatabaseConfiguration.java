@@ -1,6 +1,5 @@
 package com.deswaef.wowscrappie.configuration;
 
-import com.jolbox.bonecp.BoneCPDataSource;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Value;

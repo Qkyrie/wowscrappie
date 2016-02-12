@@ -23,7 +23,6 @@ dependencies {
     compile("javax.validation:validation-api:1.1.0.Final")
 
     compile("com.github.kstyrc:embedded-redis:0.6")
-    compile("com.jolbox:bonecp:0.8.0.RELEASE")
     compile("com.zaxxer:HikariCP:2.4.3")
 
 
