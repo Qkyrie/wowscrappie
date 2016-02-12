@@ -29,7 +29,7 @@ public class ContactPageController {
     public
     @ResponseBody
     ContactRequestDto doRequest(@RequestBody ContactRequestDto contactRequestDto) {
-        if(Strings.isNullOrEmpty(contactRequestDto.getTitle())) {
+        if (Strings.isNullOrEmpty(contactRequestDto.getTitle())) {
             return contactRequestDto
                     .setHasErrors(true)
                     .setErrorMessage("Please fill in a title");
@@ -53,7 +53,7 @@ public class ContactPageController {
     public
     @ResponseBody
     ContactRequestDto doRequestToUser(@RequestBody ContactRequestDto contactRequestDto, @PathVariable("userId") Long userId) {
-        if(Strings.isNullOrEmpty(contactRequestDto.getTitle())) {
+        if (Strings.isNullOrEmpty(contactRequestDto.getTitle())) {
             return contactRequestDto
                     .setHasErrors(true)
                     .setErrorMessage("Please fill in a title");
@@ -61,12 +61,11 @@ public class ContactPageController {
             return contactRequestDto
                     .setHasErrors(true)
                     .setErrorMessage("Please fill in your message");
-        } else if(!contactRequestDto.getToUserId().equals(userId)) {
+        } else if (!contactRequestDto.getToUserId().equals(userId)) {
             return contactRequestDto
                     .setHasErrors(true)
                     .setErrorMessage("Bad request, are you tampering with data? :O");
-        }
-        else {
+        } else {
             try {
                 privateMessageService.sendtoUser(contactRequestDto);
                 return contactRequestDto;
