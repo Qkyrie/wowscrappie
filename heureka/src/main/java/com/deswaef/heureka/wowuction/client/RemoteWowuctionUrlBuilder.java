@@ -3,6 +3,7 @@ package com.deswaef.heureka.wowuction.client;
 import com.deswaef.wowscrappie.realm.domain.Realm;
 import com.deswaef.wowscrappie.realm.service.RealmService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
@@ -12,8 +13,11 @@ import java.util.Optional;
 @Profile("!integrationtest")
 public class RemoteWowuctionUrlBuilder implements WowuctionUrlBuilder {
 
-    private static String baseUrl = "http://www.wowuction.com/%s/%s/alliance/Tools/RealmDataExportGetFileStatic?token=%s";
-    private static final String token = "gS-aRrCqjWs43TwaDPdvVQ2";
+    @Value("${com.deswaef.wowscrappie.wowuction.baseurl}")
+    private String baseUrl;
+
+    @Value("${com.deswaef.wowscrappie.wowuction.secret}")
+    private String token;
 
     @Autowired
     private RealmService realmService;
