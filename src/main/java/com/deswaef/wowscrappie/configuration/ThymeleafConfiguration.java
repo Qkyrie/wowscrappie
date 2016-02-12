@@ -33,10 +33,6 @@ public class ThymeleafConfiguration {
         SpringTemplateEngine engine = new SpringTemplateEngine();
         this.templateResolvers.forEach(engine::addTemplateResolver);
         this.dialects.forEach(engine::addDialect);
-       // engine.addDialect(new SpringSecurityDialect());
-        /*
-            EDIT: added the additional spring security dialect to the template resolver
-         */
         return engine;
     }
 

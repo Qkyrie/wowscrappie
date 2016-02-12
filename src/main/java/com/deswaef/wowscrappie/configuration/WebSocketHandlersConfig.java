@@ -18,11 +18,11 @@ public class WebSocketHandlersConfig<S extends ExpiringSession> {
 
     @Bean
     public WebSocketConnectHandler<S> webSocketConnectHandler(SimpMessageSendingOperations messagingTemplate, ActiveWebSocketUserRepository repository) {
-        return new WebSocketConnectHandler<S>(messagingTemplate, repository);
+        return new WebSocketConnectHandler<>(messagingTemplate, repository);
     }
 
     @Bean
     public WebSocketDisconnectHandler<S> webSocketDisconnectHandler(SimpMessageSendingOperations messagingTemplate, ActiveWebSocketUserRepository repository) {
-        return new WebSocketDisconnectHandler<S>(messagingTemplate, repository);
+        return new WebSocketDisconnectHandler<>(messagingTemplate, repository);
     }
 }

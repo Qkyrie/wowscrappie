@@ -50,8 +50,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .userDetailsService(userDetailsService).passwordEncoder(new StandardPasswordEncoder());
+        auth.userDetailsService(userDetailsService).passwordEncoder(new StandardPasswordEncoder());
     }
 
 }
