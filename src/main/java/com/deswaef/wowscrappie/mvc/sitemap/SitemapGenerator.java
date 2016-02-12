@@ -162,14 +162,14 @@ public class SitemapGenerator {
 
     private String urlToEntry(String url, ChangeFrequency changeFrequency) {
         return new StringBuilder()
-                .append(url())
-                    .append(loc())
+                .append(startUrl())
+                    .append(startLoq())
                         .append(baseUrl).append(url)
-                    .append(_loc())
-                    .append(changefreq())
+                    .append(endLoq())
+                    .append(startChangeFreq())
                     .append(changeFrequency.getName())
-                    .append(_changefreq())
-                .append(_url())
+                    .append(endChangeFreq())
+                .append(endUrl())
                 .toString();
     }
 
