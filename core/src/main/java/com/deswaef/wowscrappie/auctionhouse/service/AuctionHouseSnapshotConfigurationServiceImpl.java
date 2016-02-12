@@ -18,4 +18,14 @@ public class AuctionHouseSnapshotConfigurationServiceImpl implements AuctionHous
     public Observable<AuctionHouseSnapshotConfiguration> findAll() {
         return Observable.from(auctionHouseSnapshotRepository.findAll());
     }
+
+    @Override
+    @Transactional
+    public void requestUpdate(long configurationId) {
+        auctionHouseSnapshotRepository.findOne(configurationId)
+                .filter(element -> !element.isNeedsUpdate())
+                .ifPresent(element -> {
+                    auctionHouseSnapshotRepository.save(element.setNeedsUpdate(true));
+                });
+    }
 }

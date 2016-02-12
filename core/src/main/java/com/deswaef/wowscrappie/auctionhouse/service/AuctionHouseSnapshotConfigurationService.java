@@ -7,4 +7,6 @@ public interface AuctionHouseSnapshotConfigurationService {
 
     Observable<AuctionHouseSnapshotConfiguration> findAll();
 
+    void requestUpdate(long configurationId);
+
 }
