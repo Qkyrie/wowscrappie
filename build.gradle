@@ -39,10 +39,17 @@ allprojects {
     tasks.withType(JavaCompile) {
         options.incremental = true
     }
+
+
+    checkstyle {
+        ignoreFailures = true
+        configFile = configFile = rootProject.file('config/checkstyle/checkstyle.xml')
+    }
 }
 
 subprojects {
     group = 'com.de-swaef.scrappie'
+
 }
 
 
@@ -103,10 +110,6 @@ task "forceTest" {
 
 task "fullBuild" {
     dependsOn "clean", "cleanTest", "test", "check", "build"
-}
-
-checkstyle {
-    ignoreFailures = true
 }
 
 lesscss {
