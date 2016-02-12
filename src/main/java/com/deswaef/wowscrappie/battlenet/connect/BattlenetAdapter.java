@@ -8,7 +8,7 @@ import org.springframework.social.connect.ConnectionValues;
 import org.springframework.social.connect.UserProfile;
 import org.springframework.social.connect.UserProfileBuilder;
 
-public class BattlenetAdapter implements ApiAdapter<Battlenet>{
+public class BattlenetAdapter implements ApiAdapter<Battlenet> {
     @Override
     public boolean test(Battlenet api) {
         try {
@@ -38,6 +38,5 @@ public class BattlenetAdapter implements ApiAdapter<Battlenet>{
 
     @Override
     public void updateStatus(Battlenet api, String message) {
-        //we don't update statuses in battlenet
     }
 }
