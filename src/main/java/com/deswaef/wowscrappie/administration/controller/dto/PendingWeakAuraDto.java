@@ -31,7 +31,7 @@ public class PendingWeakAuraDto {
 
     private static String extractWhatFor(WeakAura weakAura) {
         if (weakAura instanceof SpecWeakAura) {
-            return String.format("%s %s", ((SpecWeakAura) weakAura).getSpec().getName(),((SpecWeakAura) weakAura).getSpec().getWowClass().getName());
+            return String.format("%s %s", ((SpecWeakAura) weakAura).getSpec().getName(), ((SpecWeakAura) weakAura).getSpec().getWowClass().getName());
         } else if (weakAura instanceof WowClassWeakAura) {
             return ((WowClassWeakAura) weakAura).getWowClass().getName();
         } else if (weakAura instanceof BossFightWeakAura) {

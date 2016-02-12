@@ -26,7 +26,7 @@ public class CrawlingFilterConfiguration {
         return new CrawlServlet();
     }
 
-    public class CrawlServlet implements Filter{
+    public class CrawlServlet implements Filter {
         public String getFullURL(HttpServletRequest request) {
             StringBuffer requestURL = request.getRequestURL();
             String queryString = request.getQueryString();
@@ -54,9 +54,9 @@ public class CrawlingFilterConfiguration {
 
             if ((fullURLQueryString != null) && (fullURLQueryString.contains("?_escaped_fragment_="))) {
                 // remember to unescape any %XX characters
-                fullURLQueryString=URLDecoder.decode(fullURLQueryString,"UTF-8");
+                fullURLQueryString = URLDecoder.decode(fullURLQueryString, "UTF-8");
                 // rewrite the URL back to the original #! version
-                String ajaxPage=fullURLQueryString.replace("?_escaped_fragment_=", "");
+                String ajaxPage = fullURLQueryString.replace("?_escaped_fragment_=", "");
 
 
                 final WebClient webClient = new WebClient(BrowserVersion.CHROME);

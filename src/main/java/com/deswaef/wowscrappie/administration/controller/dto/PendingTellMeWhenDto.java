@@ -44,7 +44,7 @@ public class PendingTellMeWhenDto {
 
     private static String extractWhatFor(TellMeWhen tellMeWhen) {
         if (tellMeWhen instanceof SpecTellMeWhen) {
-            return String.format("%s %s", ((SpecTellMeWhen) tellMeWhen).getSpec().getName(),((SpecTellMeWhen) tellMeWhen).getSpec().getWowClass().getName());
+            return String.format("%s %s", ((SpecTellMeWhen) tellMeWhen).getSpec().getName(), ((SpecTellMeWhen) tellMeWhen).getSpec().getWowClass().getName());
         } else if (tellMeWhen instanceof WowClassTellMeWhen) {
             return ((WowClassTellMeWhen) tellMeWhen).getWowClass().getName();
         } else if (tellMeWhen instanceof BossFightTellMeWhen) {
