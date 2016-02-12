@@ -26,9 +26,8 @@ public class ContactPageController {
     }
 
     @RequestMapping(method = POST)
-    public
     @ResponseBody
-    ContactRequestDto doRequest(@RequestBody ContactRequestDto contactRequestDto) {
+    public ContactRequestDto doRequest(@RequestBody ContactRequestDto contactRequestDto) {
         if (Strings.isNullOrEmpty(contactRequestDto.getTitle())) {
             return contactRequestDto
                     .setHasErrors(true)
@@ -50,9 +49,8 @@ public class ContactPageController {
     }
 
     @RequestMapping(method = POST, value = "/{userId}")
-    public
     @ResponseBody
-    ContactRequestDto doRequestToUser(@RequestBody ContactRequestDto contactRequestDto, @PathVariable("userId") Long userId) {
+    public ContactRequestDto doRequestToUser(@RequestBody ContactRequestDto contactRequestDto, @PathVariable("userId") Long userId) {
         if (Strings.isNullOrEmpty(contactRequestDto.getTitle())) {
             return contactRequestDto
                     .setHasErrors(true)

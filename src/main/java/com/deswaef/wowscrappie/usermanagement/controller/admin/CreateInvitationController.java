@@ -1,8 +1,8 @@
 package com.deswaef.wowscrappie.usermanagement.controller.admin;
 
-import com.deswaef.wowscrappie.usermanagement.service.dto.CreateInvitationDto;
 import com.deswaef.wowscrappie.usermanagement.domain.ScrappieUser;
 import com.deswaef.wowscrappie.usermanagement.service.UserService;
+import com.deswaef.wowscrappie.usermanagement.service.dto.CreateInvitationDto;
 import com.google.common.base.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -28,11 +28,12 @@ public class CreateInvitationController {
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @ResponseBody
     @RequestMapping(method = POST)
-    public @ResponseBody CreateInvitationDto createInvitation(@RequestBody CreateInvitationDto invitationDto) {
-        if(Strings.isNullOrEmpty(invitationDto.getEmail())) {
+    public CreateInvitationDto createInvitation(@RequestBody CreateInvitationDto invitationDto) {
+        if (Strings.isNullOrEmpty(invitationDto.getEmail())) {
             return invitationDto.setHasError(true).setErrorMessage("Email cannot be empty.").setInvitationcode("");
-        } else if(invitationDto.getEmail().equals("quintendeswaef@gmail.com")) {
+        } else if (invitationDto.getEmail().equals("quintendeswaef@gmail.com")) {
             return invitationDto.setHasError(true).setErrorMessage("Email address already in use.").setInvitationcode("");
         } else {
             try {

@@ -22,7 +22,8 @@ public class ImageController {
     private ImageStore imageStore;
 
     @RequestMapping(value = "/{reference:.+}", method = RequestMethod.GET)
-    public @ResponseBody byte[] getImage(@PathVariable("reference") String reference) {
+    @ResponseBody
+    public byte[] getImage(@PathVariable("reference") String reference) {
         Optional<File> imageByName = imageStore.getImageByName(reference);
         if (imageByName.isPresent()) {
             try {
@@ -34,7 +35,6 @@ public class ImageController {
             return null;
         }
     }
-
 
 
 }

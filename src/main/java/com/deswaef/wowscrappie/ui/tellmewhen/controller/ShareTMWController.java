@@ -36,7 +36,7 @@ public class ShareTMWController implements ShareController {
     public String findTMWById(ModelMap modelMap, @PathVariable("id") Long id, @CurrentUser ScrappieUser user) {
         Optional<TellMeWhen> byId = tellMeWhenService.findById(id);
         if (byId.isPresent()) {
-            if(isAdmin() || byId.get().isApproved()) {
+            if (isAdmin() || byId.get().isApproved()) {
                 modelMap.put("screenshots", tellMeWhenService.findScreenshots(byId.get()));
                 modelMap.put("configType", CONFIG_TYPE);
                 modelMap.put("configId", id);
@@ -61,8 +61,8 @@ public class ShareTMWController implements ShareController {
     }
 
     @RequestMapping(value = "/{id}/positive", method = POST)
-    public @ResponseBody
-    HttpStatus positiveVote(@CurrentUser ScrappieUser currentUser, @PathVariable("id") Long id) {
+    @ResponseBody
+    public HttpStatus positiveVote(@CurrentUser ScrappieUser currentUser, @PathVariable("id") Long id) {
         if (currentUser != null) {
             configRatingService.voteTMW(id, Rating.POSITIVE, currentUser);
             return HttpStatus.OK;
@@ -72,9 +72,8 @@ public class ShareTMWController implements ShareController {
     }
 
     @RequestMapping(value = "/{id}/negative", method = POST)
-    public
     @ResponseBody
-    HttpStatus negativeVote(@CurrentUser ScrappieUser currentUser, @PathVariable("id") Long id) {
+    public HttpStatus negativeVote(@CurrentUser ScrappieUser currentUser, @PathVariable("id") Long id) {
         if (currentUser != null) {
             configRatingService.voteTMW(id, Rating.NEGATIVE, currentUser);
             return HttpStatus.OK;

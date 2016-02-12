@@ -24,7 +24,8 @@ public class RegistrationUsernameController {
     private UserService userService;
 
     @RequestMapping(value = "/available", method = POST)
-    public @ResponseBody boolean usernameAvaible(@RequestBody NameChangeDto requestedUsername) {
+    @ResponseBody
+    public boolean usernameAvaible(@RequestBody NameChangeDto requestedUsername) {
         try {
             String decoded = URLDecoder.decode(requestedUsername.getNewName(), "UTF-8");
             Optional<ScrappieUser> byUsername = userService.findByUsername(decoded);
@@ -35,10 +36,9 @@ public class RegistrationUsernameController {
     }
 
     @RequestMapping(value = "/changeit", method = POST)
-    public
     @ResponseBody
-    boolean changeIt(@RequestBody NameChangeDto requestedUsername) {
-        if(SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof ScrappieUser) {
+    public boolean changeIt(@RequestBody NameChangeDto requestedUsername) {
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof ScrappieUser) {
             try {
                 userService.changeUsername((ScrappieUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal(), requestedUsername.getNewName());
                 return true;
@@ -51,9 +51,8 @@ public class RegistrationUsernameController {
     }
 
     @RequestMapping(value = "/leaveit", method = GET)
-    public
     @ResponseBody
-    boolean leaveit() {
+    public boolean leaveit() {
         return changeIt(new NameChangeDto().setNewName(""));
     }
 

@@ -38,7 +38,7 @@ public class ShareMacroController implements ShareController {
     public String findMacroById(ModelMap modelMap, @PathVariable("id") Long id, @CurrentUser ScrappieUser user) {
         Optional<Macro> macro = macroService.byId(id);
         if (macro.isPresent()) {
-            if(isAdmin() || macro.get().isApproved()) {
+            if (isAdmin() || macro.get().isApproved()) {
                 modelMap.put("screenshots", new ArrayList<>());
                 modelMap.put("configType", CONFIG_TYPE);
                 modelMap.put("configId", id);
@@ -64,8 +64,8 @@ public class ShareMacroController implements ShareController {
     }
 
     @RequestMapping(value = "/{id}/positive", method = POST)
-    public @ResponseBody
-    HttpStatus positiveVote(@CurrentUser ScrappieUser currentUser, @PathVariable("id") Long id) {
+    @ResponseBody
+    public HttpStatus positiveVote(@CurrentUser ScrappieUser currentUser, @PathVariable("id") Long id) {
         if (currentUser != null) {
             configRatingService.voteMacro(id, Rating.POSITIVE, currentUser);
             return HttpStatus.OK;
@@ -75,9 +75,8 @@ public class ShareMacroController implements ShareController {
     }
 
     @RequestMapping(value = "/{id}/negative", method = POST)
-    public
     @ResponseBody
-    HttpStatus negativeVote(@CurrentUser ScrappieUser currentUser, @PathVariable("id") Long id) {
+    public HttpStatus negativeVote(@CurrentUser ScrappieUser currentUser, @PathVariable("id") Long id) {
         if (currentUser != null) {
             configRatingService.voteMacro(id, Rating.NEGATIVE, currentUser);
             return HttpStatus.OK;

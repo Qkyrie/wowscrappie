@@ -42,9 +42,8 @@ public class UserManagementController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/{id}/disable", method = GET)
-    public
     @ResponseBody
-    boolean disableUser(@PathVariable("id") Long id) {
+    public boolean disableUser(@PathVariable("id") Long id) {
         try {
             userService.setEnabled(id, false);
             return true;
@@ -55,9 +54,8 @@ public class UserManagementController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/{id}/enable", method = GET)
-    public
     @ResponseBody
-    boolean enableUser(@PathVariable("id") Long id) {
+    public boolean enableUser(@PathVariable("id") Long id) {
         try {
             userService.setEnabled(id, true);
             return true;

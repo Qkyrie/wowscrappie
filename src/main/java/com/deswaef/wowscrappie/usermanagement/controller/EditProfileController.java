@@ -4,11 +4,11 @@ import com.deswaef.wowscrappie.battlenet.api.Battlenet;
 import com.deswaef.wowscrappie.battlenet.api.domain.WowProfile;
 import com.deswaef.wowscrappie.security.SecurityUtility;
 import com.deswaef.wowscrappie.sounds.domain.SoundRepositoryEnum;
-import com.deswaef.wowscrappie.usermanagement.service.dto.UserProfileDto;
 import com.deswaef.wowscrappie.usermanagement.domain.ScrappieUser;
 import com.deswaef.wowscrappie.usermanagement.domain.UserProfile;
 import com.deswaef.wowscrappie.usermanagement.service.UserProfileService;
 import com.deswaef.wowscrappie.usermanagement.service.UserService;
+import com.deswaef.wowscrappie.usermanagement.service.dto.UserProfileDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.social.connect.Connection;
@@ -52,7 +52,7 @@ public class EditProfileController {
 
                 Connection<Battlenet> primaryConnection = connectionRepository.createConnectionRepository(scrappieUser.get().getUsername())
                         .findPrimaryConnection(Battlenet.class);
-                if(primaryConnection != null) {
+                if (primaryConnection != null) {
                     modelMap.put("hasBattleNet", true);
                     modelMap.put("battlenetName", primaryConnection.getDisplayName());
                     try {
@@ -77,9 +77,8 @@ public class EditProfileController {
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @RequestMapping(method = POST)
-    public
     @ResponseBody
-    String doEdit(@RequestBody UserProfileDto userProfileDto) {
+    public String doEdit(@RequestBody UserProfileDto userProfileDto) {
         Optional<ScrappieUser> currentUser = securityUtility.currentUser();
         if (currentUser.isPresent()) {
             userProfileService.update(userProfileDto, currentUser.get());

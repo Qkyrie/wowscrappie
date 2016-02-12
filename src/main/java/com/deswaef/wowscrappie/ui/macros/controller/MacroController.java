@@ -23,9 +23,8 @@ public class MacroController {
     private PatchCalculator patchCalculator;
 
     @RequestMapping("/{id}")
-    public
     @ResponseBody
-    MacroDto byId(@PathVariable("id") Long id) {
+    public MacroDto byId(@PathVariable("id") Long id) {
         Optional<Macro> macro = macroService.byId(id);
         if (macro.isPresent()) {
             return MacroDto
@@ -42,9 +41,8 @@ public class MacroController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping("/{id}/approve")
-    public
     @ResponseBody
-    boolean approve(@PathVariable("id") Long id) {
+    public boolean approve(@PathVariable("id") Long id) {
         try {
             macroService.approve(id);
             return true;
@@ -55,9 +53,8 @@ public class MacroController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping("/{id}/delete")
-    public
     @ResponseBody
-    boolean delete(@PathVariable("id") Long id) {
+    public boolean delete(@PathVariable("id") Long id) {
         try {
             macroService.delete(id);
             return true;
@@ -68,9 +65,8 @@ public class MacroController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping("/{id}/disable")
-    public
     @ResponseBody
-    boolean disable(@PathVariable("id") Long id) {
+    public boolean disable(@PathVariable("id") Long id) {
         try {
             macroService.disable(id);
             return true;

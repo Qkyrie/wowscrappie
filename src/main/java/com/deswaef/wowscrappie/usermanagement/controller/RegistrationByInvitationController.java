@@ -39,9 +39,8 @@ public class RegistrationByInvitationController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public
     @ResponseBody
-    RegistrationByInvitationDto acceptInvite(@RequestBody RegistrationByInvitationDto registrationByInvitationDto) {
+    public RegistrationByInvitationDto acceptInvite(@RequestBody RegistrationByInvitationDto registrationByInvitationDto) {
         Optional<ScrappieUser> byInvitationCode = userService.findByInvitationCode(registrationByInvitationDto.getInvitationcode());
         if (byInvitationCode.isPresent()) {
             ScrappieUser scrappieUser = byInvitationCode.get();

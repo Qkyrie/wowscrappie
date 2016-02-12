@@ -64,8 +64,8 @@ public class ShareWeakAuraController implements ShareController {
     }
 
     @RequestMapping(value = "/{id}/positive", method = POST)
-    public @ResponseBody
-    HttpStatus positiveVote(@CurrentUser ScrappieUser currentUser, @PathVariable("id") Long id) {
+    @ResponseBody
+    public HttpStatus positiveVote(@CurrentUser ScrappieUser currentUser, @PathVariable("id") Long id) {
         if (currentUser != null) {
             configRatingService.voteWA(id, Rating.POSITIVE, currentUser);
             return HttpStatus.OK;
@@ -75,9 +75,8 @@ public class ShareWeakAuraController implements ShareController {
     }
 
     @RequestMapping(value = "/{id}/negative", method = POST)
-    public
     @ResponseBody
-    HttpStatus negativeVote(@CurrentUser ScrappieUser currentUser, @PathVariable("id") Long id) {
+    public HttpStatus negativeVote(@CurrentUser ScrappieUser currentUser, @PathVariable("id") Long id) {
         if (currentUser != null) {
             configRatingService.voteWA(id, Rating.NEGATIVE, currentUser);
             return HttpStatus.OK;

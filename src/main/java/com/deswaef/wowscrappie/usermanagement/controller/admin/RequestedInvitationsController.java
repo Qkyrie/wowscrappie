@@ -27,7 +27,8 @@ public class RequestedInvitationsController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/{id}", method = GET)
-    public @ResponseBody boolean deleted(@PathVariable("id") Long id) {
+    @ResponseBody
+    public boolean deleted(@PathVariable("id") Long id) {
         try {
             invitationRequestService.delete(id);
             return true;

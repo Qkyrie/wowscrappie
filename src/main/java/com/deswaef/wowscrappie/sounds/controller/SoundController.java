@@ -27,9 +27,8 @@ public class SoundController {
     private UserProfileService userProfileService;
 
     @RequestMapping(value = "/notification", method = RequestMethod.GET)
-    public
     @ResponseBody
-    byte[] getNotificationSound(@CurrentUser ScrappieUser scrappieUser) {
+    public byte[] getNotificationSound(@CurrentUser ScrappieUser scrappieUser) {
         try {
             SoundRepositoryEnum soundRepo = getSoundRepo(scrappieUser);
             Optional<File> randomFile = soundStore.getRandomFile(soundRepo);
