@@ -26,6 +26,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -131,9 +132,9 @@ public class UserServiceImpl implements UserService {
                 return userRepository.save(new ScrappieUser()
                         .setEmail(createInvitationDto.getEmail())
                         .setEnabled(true)
-                        .setActivationCode(standardPasswordEncoder.encode(String.valueOf(System.currentTimeMillis())).substring(0, 39))
+                        .setActivationCode(encode(String.valueOf(System.currentTimeMillis()) + getRandomlyGeneratedUUID()).substring(0, 39))
                         .setAuthorities(getDefaultAuthorities())
-                        .setUsername(String.format("tbd%d", System.currentTimeMillis()))
+                        .setUsername(String.format("tbd%s", encode(String.valueOf(System.currentTimeMillis()))))
                         .setGeneratedUsername(true)
                 );
             } catch (Exception ex) {
@@ -141,6 +142,14 @@ public class UserServiceImpl implements UserService {
             }
 
         }
+    }
+
+    private String getRandomlyGeneratedUUID() {
+        return UUID.randomUUID().toString();
+    }
+
+    private String encode(String toEncode) {
+        return standardPasswordEncoder.encode(toEncode);
     }
 
     @Override
