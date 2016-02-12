@@ -1,13 +1,8 @@
 package com.deswaef.wowscrappie.contribution.controller.dto;
 
+import com.deswaef.wowscrappie.contribution.service.dto.ContributionDto;
+
 public class ContributionCommand {
-
-    public static final String OPTION_CLASSSPEC = "classspec";
-    public static final String OPTION_BOSSFIGHT = "bossfight";
-    public static final String CATEGORY_TMW = "TMW";
-    public static final String CATEGORY_WA = "WA";
-    public static final String CATEGORY_MACRO = "MACRO";
-
 
     private String wowClass;
     private String spec;
@@ -21,6 +16,20 @@ public class ContributionCommand {
     private String chooseOption;
     private String actualValue;
     private String[] screenshots;
+
+    public ContributionDto map() {
+        return new ContributionDto()
+                .wowClass(getWowClass())
+                .spec(getSpec())
+                .raidId(getRaidId())
+                .bossId(getBossId())
+                .caption(getCaption())
+                .comments(getComments())
+                .category(getCategory())
+                .chooseOption(getChooseOption())
+                .actualValue(getActualValue())
+                .screenshots(getScreenshots());
+    }
 
     public String getWowClass() {
         return wowClass;

@@ -1,6 +1,7 @@
 package com.deswaef.wowscrappie.requests.controller.dto;
 
 import com.deswaef.wowscrappie.requests.domain.ConfigRequest;
+import com.deswaef.wowscrappie.requests.dto.QuestionResponseDto;
 import org.ocpsoft.prettytime.PrettyTime;
 
 import java.util.ArrayList;

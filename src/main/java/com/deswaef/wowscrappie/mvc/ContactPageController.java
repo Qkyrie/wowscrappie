@@ -1,7 +1,7 @@
 package com.deswaef.wowscrappie.mvc;
 
 import com.deswaef.wowscrappie.messaging.service.PrivateMessageService;
-import com.deswaef.wowscrappie.mvc.dto.ContactRequestDto;
+import com.deswaef.wowscrappie.messaging.service.dto.ContactRequestDto;
 import com.google.common.base.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

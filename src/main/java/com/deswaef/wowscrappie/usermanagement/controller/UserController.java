@@ -9,7 +9,7 @@ import com.deswaef.wowscrappie.ui.rating.domain.ConfigRating;
 import com.deswaef.wowscrappie.ui.rating.service.ConfigRatingService;
 import com.deswaef.wowscrappie.ui.tellmewhen.service.TellMeWhenService;
 import com.deswaef.wowscrappie.ui.weakauras.service.WeakAuraService;
-import com.deswaef.wowscrappie.usermanagement.controller.dto.UserProfileDto;
+import com.deswaef.wowscrappie.usermanagement.service.dto.UserProfileDto;
 import com.deswaef.wowscrappie.usermanagement.domain.ScrappieUser;
 import com.deswaef.wowscrappie.usermanagement.domain.UserProfile;
 import com.deswaef.wowscrappie.usermanagement.service.UserProfileService;
@@ -32,7 +32,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.deswaef.wowscrappie.usermanagement.controller.dto.UserProfileDto.create;
+import static com.deswaef.wowscrappie.usermanagement.service.dto.UserProfileDto.create;
 
 @Controller
 @RequestMapping("/users")

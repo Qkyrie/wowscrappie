@@ -4,7 +4,7 @@ import com.deswaef.wowscrappie.battlenet.api.Battlenet;
 import com.deswaef.wowscrappie.battlenet.api.domain.WowProfile;
 import com.deswaef.wowscrappie.security.SecurityUtility;
 import com.deswaef.wowscrappie.sounds.domain.SoundRepositoryEnum;
-import com.deswaef.wowscrappie.usermanagement.controller.dto.UserProfileDto;
+import com.deswaef.wowscrappie.usermanagement.service.dto.UserProfileDto;
 import com.deswaef.wowscrappie.usermanagement.domain.ScrappieUser;
 import com.deswaef.wowscrappie.usermanagement.domain.UserProfile;
 import com.deswaef.wowscrappie.usermanagement.service.UserProfileService;
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Optional;
 
-import static com.deswaef.wowscrappie.usermanagement.controller.dto.UserProfileDto.create;
+import static com.deswaef.wowscrappie.usermanagement.service.dto.UserProfileDto.create;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 

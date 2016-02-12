@@ -1,6 +1,6 @@
 package com.deswaef.wowscrappie.ui.reports.controller;
 
-import com.deswaef.wowscrappie.ui.reports.controller.dto.CreateInterfaceReportDto;
+import com.deswaef.wowscrappie.ui.reports.service.dto.CreateInterfaceReportDto;
 import com.deswaef.wowscrappie.ui.reports.controller.dto.InterfaceReportListDto;
 import com.deswaef.wowscrappie.ui.reports.service.InterfaceReportService;
 import org.springframework.beans.factory.annotation.Autowired;

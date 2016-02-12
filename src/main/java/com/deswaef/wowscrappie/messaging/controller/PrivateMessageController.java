@@ -2,7 +2,7 @@ package com.deswaef.wowscrappie.messaging.controller;
 
 import com.deswaef.wowscrappie.messaging.controller.dto.PrivateMessageDetailsDto;
 import com.deswaef.wowscrappie.messaging.controller.dto.PrivateMessageListDto;
-import com.deswaef.wowscrappie.messaging.controller.dto.PrivateMessageReplyDto;
+import com.deswaef.wowscrappie.messaging.service.dto.PrivateMessageReplyDto;
 import com.deswaef.wowscrappie.messaging.domain.PrivateMessage;
 import com.deswaef.wowscrappie.messaging.service.PrivateMessageService;
 import com.deswaef.wowscrappie.usermanagement.domain.ScrappieUser;

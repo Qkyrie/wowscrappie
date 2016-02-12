@@ -1,6 +1,6 @@
 package com.deswaef.wowscrappie.notifications.controller;
 
-import com.deswaef.wowscrappie.notifications.controller.dto.PersistentNotificationDto;
+import com.deswaef.wowscrappie.notifications.service.dto.PersistentNotificationDto;
 import com.deswaef.wowscrappie.notifications.domain.PersistentNotification;
 import com.deswaef.wowscrappie.notifications.service.PersistentNotificationService;
 import com.deswaef.wowscrappie.security.CurrentUser;

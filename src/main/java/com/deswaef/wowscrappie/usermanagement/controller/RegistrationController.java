@@ -1,6 +1,6 @@
 package com.deswaef.wowscrappie.usermanagement.controller;
 
-import com.deswaef.wowscrappie.usermanagement.controller.dto.RegistrationDto;
+import com.deswaef.wowscrappie.usermanagement.service.dto.RegistrationDto;
 import com.deswaef.wowscrappie.usermanagement.service.InvitationRequestService;
 import com.google.common.base.Strings;
 import org.apache.commons.validator.routines.EmailValidator;

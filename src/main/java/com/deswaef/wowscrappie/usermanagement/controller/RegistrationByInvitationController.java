@@ -1,6 +1,6 @@
 package com.deswaef.wowscrappie.usermanagement.controller;
 
-import com.deswaef.wowscrappie.usermanagement.controller.dto.RegistrationByInvitationDto;
+import com.deswaef.wowscrappie.usermanagement.service.dto.RegistrationByInvitationDto;
 import com.deswaef.wowscrappie.usermanagement.domain.ScrappieUser;
 import com.deswaef.wowscrappie.usermanagement.service.UserService;
 import com.google.common.base.Strings;

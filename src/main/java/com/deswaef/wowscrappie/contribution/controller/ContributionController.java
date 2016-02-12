@@ -6,7 +6,7 @@ import com.deswaef.wowscrappie.contribution.controller.dto.ContributionCommand;
 import com.deswaef.wowscrappie.contribution.controller.dto.SelectSpecDto;
 import com.deswaef.wowscrappie.contribution.service.ContributionService;
 import com.deswaef.wowscrappie.infrastructure.service.MailService;
-import com.deswaef.wowscrappie.notifications.controller.dto.PersistentNotificationDto;
+import com.deswaef.wowscrappie.notifications.service.dto.PersistentNotificationDto;
 import com.deswaef.wowscrappie.notifications.service.PersistentNotificationService;
 import com.deswaef.wowscrappie.raids.controller.dto.RaidDto;
 import com.deswaef.wowscrappie.raids.service.RaidService;
@@ -111,7 +111,7 @@ public class ContributionController {
     public
     @ResponseBody
     String doUpload(@RequestBody ContributionCommand command, @CurrentUser ScrappieUser scrappieUser) {
-        contributionService.contribute(command);
+        contributionService.contribute(command.map());
         persistentNotificationService.notifyAdmins(PersistentNotificationDto.create()
                 .setContent(String.format("%s just made a contribution", scrappieUser.getUsername()))
                 .setTitle("New Contribution!")

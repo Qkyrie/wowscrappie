@@ -14,9 +14,6 @@ public class ActiveWebSocketUserRepository {
 
     @Autowired
     private RedisTemplate<String, ActiveWebSocketUser> redisTemplate;
-/*
-    @Resource(name = "redisTemplate")
-    private SetOperations<String, ActiveWebSocketUser> setOps;*/
 
     public void save(String sessionid, ActiveWebSocketUser activeWebSocketUser) {
         redisTemplate.boundHashOps(ACTIVE_USERS_CACHE).put(sessionid, activeWebSocketUser);

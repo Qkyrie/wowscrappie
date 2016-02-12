@@ -1,7 +1,7 @@
 package com.deswaef.wowscrappie.requests.controller;
 
-import com.deswaef.wowscrappie.requests.controller.dto.CreateQuestionDto;
-import com.deswaef.wowscrappie.requests.controller.dto.CreateResponseDto;
+import com.deswaef.wowscrappie.requests.dto.CreateQuestionDto;
+import com.deswaef.wowscrappie.requests.dto.CreateResponseDto;
 import com.deswaef.wowscrappie.requests.controller.dto.QuestionListDto;
 import com.deswaef.wowscrappie.requests.controller.dto.SpecificQuestionDto;
 import com.deswaef.wowscrappie.requests.domain.ConfigRequest;

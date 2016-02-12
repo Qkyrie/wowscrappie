@@ -3,7 +3,7 @@ package com.deswaef.wowscrappie.ui.mvc;
 import com.deswaef.wowscrappie.ui.macros.domain.Macro;
 import com.deswaef.wowscrappie.ui.macros.domain.MacroConfigRating;
 import com.deswaef.wowscrappie.ui.macros.service.MacroService;
-import com.deswaef.wowscrappie.ui.mvc.dto.EditConfigurationDto;
+import com.deswaef.wowscrappie.ui.dto.EditConfigurationDto;
 import com.deswaef.wowscrappie.ui.rating.service.ConfigRatingService;
 import com.deswaef.wowscrappie.ui.tellmewhen.domain.TellMeWhen;
 import com.deswaef.wowscrappie.ui.tellmewhen.domain.TellMeWhenConfigRating;
@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Optional;
 
-import static com.deswaef.wowscrappie.ui.mvc.dto.EditConfigurationDto.create;
+import static com.deswaef.wowscrappie.ui.dto.EditConfigurationDto.create;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 

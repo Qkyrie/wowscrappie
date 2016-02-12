@@ -7,6 +7,7 @@ import com.deswaef.wowscrappie.raids.domain.Boss;
 import com.deswaef.wowscrappie.raids.service.BossService;
 import com.deswaef.wowscrappie.realm.service.RealmService;
 import com.deswaef.wowscrappie.warcraftlogs.WarcraftlogsAPIException;
+import com.deswaef.wowscrappie.warcraftlogs.controller.dto.CharacterRankingResultDto;
 import com.deswaef.wowscrappie.warcraftlogs.domain.DifficultyEnum;
 import com.deswaef.wowscrappie.warcraftlogs.domain.rankings.CharacterRanking;
 import com.deswaef.wowscrappie.warcraftlogs.service.RankingsFetcher;
