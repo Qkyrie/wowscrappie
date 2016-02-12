@@ -1,0 +1,165 @@
+﻿<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      layout:decorator="decorator/wa-decorator">
+
+<div layout:fragment="header">
+    <link th:href="@{/assets/js/dataTables/dataTables.bootstrap.css}" rel="stylesheet"/>
+    <title>Active Users - Scrappie</title>
+</div>
+
+<div layout:fragment="main-content">
+    <div id="page-inner">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <h3>User Management</h3>
+
+                    <table class="table table-striped table-bordered table-hover" id="myTable">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Username</th>
+                            <th>activationCode</th>
+                            <th>Email</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="user, iterStat : ${users}"
+                            th:class="${iterStat.odd}? 'gradeA' : 'gradeC'">
+                            <td th:text="${user.id}">1</td>
+                            <td th:text="${user.username}">Name</td>
+                            <td th:text="${user.activationCode}">1123154</td>
+                            <td th:text="${user.email}">Pikachu</td>
+                            <td>
+                                <span th:attr="data-user_id=${user.id}"
+                                      class=" view-user btn btn-primary">view</span>
+                                <span th:if="${user.enabled}" th:attr="data-user_id=${user.id}"
+                                      class="disable-user btn btn-warning">disable</span>
+                                <span th:if="${user.enabled == false}" th:attr="data-user_id=${user.id}"
+                                        class="enable-user btn btn-primary">enable</span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <hr/>
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1" id="details">
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /. PAGE INNER  -->
+</div>
+<!-- /. layout fragment -->
+
+<div layout:fragment="footer-content">
+    <script th:src="@{/assets/js/dataTables/jquery.dataTables.js}"></script>
+    <script th:src="@{/assets/js/dataTables/dataTables.bootstrap.js}"></script>
+    <script th:src="@{/assets/js/history.js}"></script>
+    <script type="application/javascript">
+        /*<![CDATA[*/
+
+        $.urlParam = function(name){
+            var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+            if (results==null){
+                return null;
+            }
+            else{
+                return results[1] || 0;
+            }
+        };
+
+        (function(window,undefined){
+
+            // Bind to StateChange Event
+            function fetchUserInformation(userId) {
+                $.get('/admin/users/' + userId, function (data) {
+                    $('#details').html(data);
+                });
+            }
+
+            History.Adapter.bind(window,'statechange',function(){ // Note: We are using statechange instead of popstate
+                var State = History.getState(); // Note: We are using History.getState() instead of event.state
+                fetchUserInformation(State.data.userId);
+            });
+
+            var userid = $.urlParam("userid");
+            if(userid !== null && userid !== null) {
+                fetchUserInformation(userid);
+            }
+        })(window);
+
+
+        $(".view-user").click(function() {
+            var thisId = $(this).data('user_id');
+            History.pushState({userId: thisId}, "Active Users - Scrappie", "?userid=" + thisId);
+        });
+
+        var doEnable = function() {
+            var self = $(this);
+            $.get('/admin/users/' + $(this).data('user_id') + "/enable", function (data) {
+                if(data) {
+                    self.removeClass('btn-primary');
+                    self.removeClass('enable-user');
+                    self.addClass('disable-user');
+                    self.addClass('btn-warning');
+                    self.html('disable');
+                    self.unbind('click', doEnable);
+                    self.click(doDisable);
+                } else {
+                    self.removeClass('btn-primary');
+                    self.addClass('btn-danger');
+                    self.removeClass('enable-user');
+                    self.html('enable failed');
+                }
+            });
+        };
+
+        var doDisable = function () {
+            var self = $(this);
+            $.get('/admin/users/' + $(this).data('user_id') + "/disable", function (data) {
+                if (data) {
+                    self.removeClass('btn-warning');
+                    self.removeClass('disable-user');
+                    self.addClass('enable-user');
+                    self.addClass('btn-primary');
+                    self.html('enable');
+                    self.unbind('click', doDisable);
+                    self.click(doEnable);
+                } else {
+                    self.removeClass('btn-warning');
+                    self.addClass('btn-danger');
+                    self.removeClass('disable-user');
+                    self.html('disable failed');
+                }
+            });
+        };
+
+        $(".enable-user").click(doEnable);
+        $(".disable-user").click(doDisable);
+
+        $('#myTable').dataTable();
+        /*]]>*/
+    </script>
+</div>
+
+
+<div th:fragment="detail">
+    <h3>Details of <span th:text="${user.username}"></span></h3>
+
+    <div class="alert alert-info">I dont even if it's useful to show anything here atm :P</div>
+</div>
+
+<div th:fragment="notfound">
+    <h3>The specified user was not found :(</h3>
+</div>
+
+</html>

@@ -85,6 +85,7 @@ dependencies {
     compile("org.springframework.security:spring-security-data")
     compile("org.springframework.boot:spring-boot-starter-websocket")
     compile("org.springframework.boot:spring-boot-starter-actuator")
+    compile("org.springframework.security:spring-security-test")
     compile("org.springframework:spring-messaging")
     compile("org.springframework.social:spring-social-core:1.1.0.RELEASE")
     compile("org.springframework.social:spring-social-config:1.1.0.RELEASE")

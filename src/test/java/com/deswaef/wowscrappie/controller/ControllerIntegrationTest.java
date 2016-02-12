@@ -42,5 +42,9 @@ public class ControllerIntegrationTest {
     public void setupEnvironment() {
         //just setup the environment to see if everything runs
     }
+
+    public MockMvc mockMvc() {
+        return mockMvc;
+    }
 }
 
