@@ -1,7 +1,7 @@
-package com.deswaef.wowscrappie.warcraftlogs.service.searchcriteria;
+package com.deswaef.heureka.warcraftlogs.service.searchcriteria;
 
 import com.deswaef.wowscrappie.realm.domain.Realm;
-import com.deswaef.wowscrappie.warcraftlogs.domain.metrics.MetricEnum;
+import com.deswaef.heureka.warcraftlogs.domain.metrics.MetricEnum;
 
 public class SearchCharacterRankingDto {
     private String characterName;
