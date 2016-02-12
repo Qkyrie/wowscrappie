@@ -18,7 +18,7 @@ package com.deswaef.wowscrappie.websockets;
 import java.util.Arrays;
 import java.util.Optional;
 
-import com.deswaef.wowscrappie.websockets.users.data.ActiveWebSocketUser;
+import com.deswaef.wowscrappie.websockets.users.domain.CurrentWebSocketUser;
 import com.deswaef.wowscrappie.websockets.users.repository.ActiveWebSocketUserRepository;
 import org.springframework.context.ApplicationListener;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
@@ -40,7 +40,7 @@ public class WebSocketDisconnectHandler<S> implements ApplicationListener<Sessio
         if(id == null) {
             return;
         }
-        Optional<ActiveWebSocketUser> one = repository.findOne(id);
+        Optional<CurrentWebSocketUser> one = repository.findOne(id);
         if(!one.isPresent()) {
             return;
         }

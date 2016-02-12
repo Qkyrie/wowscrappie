@@ -1,6 +1,6 @@
 package com.deswaef.wowscrappie.configuration;
 
-import com.deswaef.wowscrappie.websockets.users.data.ActiveWebSocketUser;
+import com.deswaef.wowscrappie.websockets.users.domain.CurrentWebSocketUser;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
@@ -18,8 +18,8 @@ public class RedisSessionConfiguration {
     }
 
     @Bean
-    public RedisTemplate<String, ActiveWebSocketUser> activeUserCache() {
-        final RedisTemplate<String, ActiveWebSocketUser> activeUserCache = new RedisTemplate<>();
+    public RedisTemplate<String, CurrentWebSocketUser> activeUserCache() {
+        final RedisTemplate<String, CurrentWebSocketUser> activeUserCache = new RedisTemplate<>();
         activeUserCache.setConnectionFactory(connectionFactory());
         activeUserCache.setKeySerializer(new StringRedisSerializer());
         activeUserCache.setHashKeySerializer(new StringRedisSerializer());

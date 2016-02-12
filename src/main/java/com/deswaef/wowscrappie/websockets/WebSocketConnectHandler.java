@@ -19,7 +19,7 @@ import java.security.Principal;
 import java.util.Arrays;
 import java.util.Calendar;
 
-import com.deswaef.wowscrappie.websockets.users.data.ActiveWebSocketUser;
+import com.deswaef.wowscrappie.websockets.users.domain.CurrentWebSocketUser;
 import com.deswaef.wowscrappie.websockets.users.repository.ActiveWebSocketUserRepository;
 import org.springframework.context.ApplicationListener;
 import org.springframework.messaging.MessageHeaders;
@@ -44,7 +44,7 @@ public class WebSocketConnectHandler<S> implements ApplicationListener<SessionCo
             return;
         }
         String id = SimpMessageHeaderAccessor.getSessionId(headers);
-        repository.save(id, new ActiveWebSocketUser(id, user.getName(), Calendar.getInstance()));
+        repository.save(id, new CurrentWebSocketUser(id, user.getName(), Calendar.getInstance()));
         messagingTemplate.convertAndSend("/topic/users/signin", Arrays.asList(user.getName()));
     }
 }
