@@ -1,6 +1,6 @@
-package com.deswaef.wowscrappie.warcraftlogs.domain.rankings;
+package com.deswaef.heureka.warcraftlogs.domain.rankings;
 
-import com.deswaef.wowscrappie.warcraftlogs.WarcraftlogsConversionException;
+import com.deswaef.heureka.warcraftlogs.WarcraftlogsConversionException;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 

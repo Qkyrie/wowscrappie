@@ -1,4 +1,4 @@
-package com.deswaef.wowscrappie.warcraftlogs;
+package com.deswaef.heureka.warcraftlogs;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

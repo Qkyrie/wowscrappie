@@ -1,9 +1,9 @@
-package com.deswaef.wowscrappie.warcraftlogs.domain;
+package com.deswaef.heureka.warcraftlogs.domain;
 
 import com.deswaef.wowscrappie.util.AbstractDtoTest;
-import com.deswaef.wowscrappie.warcraftlogs.WarcraftlogsConversionException;
-import com.deswaef.wowscrappie.warcraftlogs.domain.zones.Zone;
-import com.deswaef.wowscrappie.warcraftlogs.domain.zones.Zones;
+import com.deswaef.heureka.warcraftlogs.WarcraftlogsConversionException;
+import com.deswaef.heureka.warcraftlogs.domain.zones.Zone;
+import com.deswaef.heureka.warcraftlogs.domain.zones.Zones;
 import org.junit.Test;
 
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package com.deswaef.wowscrappie.warcraftlogs.domain.metrics;
+package com.deswaef.heureka.warcraftlogs.domain.metrics;
 
 public enum MetricEnum {
     DPS("dps"), HPS("hps"), TANKHPS("tankhps"), KRSI("krsi");

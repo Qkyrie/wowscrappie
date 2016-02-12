@@ -1,6 +1,6 @@
-package com.deswaef.wowscrappie.warcraftlogs.domain.zones;
+package com.deswaef.heureka.warcraftlogs.domain.zones;
 
-import com.deswaef.wowscrappie.warcraftlogs.WarcraftlogsConversionException;
+import com.deswaef.heureka.warcraftlogs.WarcraftlogsConversionException;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 

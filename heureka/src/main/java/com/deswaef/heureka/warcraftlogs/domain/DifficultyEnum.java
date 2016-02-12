@@ -1,4 +1,4 @@
-package com.deswaef.wowscrappie.warcraftlogs.domain;
+package com.deswaef.heureka.warcraftlogs.domain;
 
 import java.util.Arrays;
 

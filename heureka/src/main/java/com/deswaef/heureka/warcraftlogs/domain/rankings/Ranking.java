@@ -1,4 +1,4 @@
-package com.deswaef.wowscrappie.warcraftlogs.domain.rankings;
+package com.deswaef.heureka.warcraftlogs.domain.rankings;
 
 import com.google.gson.annotations.SerializedName;
 

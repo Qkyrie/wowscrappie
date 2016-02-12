@@ -1,4 +1,4 @@
-package com.deswaef.wowscrappie.warcraftlogs.domain.zones;
+package com.deswaef.heureka.warcraftlogs.domain.zones;
 
 public class Bracket {
     private Long id;

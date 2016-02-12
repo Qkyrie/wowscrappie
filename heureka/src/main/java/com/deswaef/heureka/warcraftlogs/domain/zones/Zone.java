@@ -1,4 +1,4 @@
-package com.deswaef.wowscrappie.warcraftlogs.domain.zones;
+package com.deswaef.heureka.warcraftlogs.domain.zones;
 
 import java.util.List;
 

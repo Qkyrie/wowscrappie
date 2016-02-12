@@ -1,4 +1,4 @@
-package com.deswaef.wowscrappie.warcraftlogs;
+package com.deswaef.heureka.warcraftlogs;
 
 public class WarcraftlogsAPIException extends Exception {
 

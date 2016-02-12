@@ -1,7 +1,7 @@
-package com.deswaef.wowscrappie.warcraftlogs.domain.rankings;
+package com.deswaef.heureka.warcraftlogs.domain.rankings;
 
 import com.deswaef.wowscrappie.util.AbstractDtoTest;
-import com.deswaef.wowscrappie.warcraftlogs.WarcraftlogsConversionException;
+import com.deswaef.heureka.warcraftlogs.WarcraftlogsConversionException;
 import org.junit.Test;
 
 import java.io.IOException;

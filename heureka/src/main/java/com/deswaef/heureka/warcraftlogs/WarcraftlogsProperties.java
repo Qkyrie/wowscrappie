@@ -1,4 +1,4 @@
-package com.deswaef.wowscrappie.warcraftlogs;
+package com.deswaef.heureka.warcraftlogs;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;

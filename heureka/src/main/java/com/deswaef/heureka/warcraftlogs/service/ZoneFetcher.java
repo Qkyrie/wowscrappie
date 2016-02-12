@@ -1,9 +1,9 @@
-package com.deswaef.wowscrappie.warcraftlogs.service;
+package com.deswaef.heureka.warcraftlogs.service;
 
-import com.deswaef.wowscrappie.warcraftlogs.WarcraftlogsAPIClient;
-import com.deswaef.wowscrappie.warcraftlogs.WarcraftlogsAPIException;
-import com.deswaef.wowscrappie.warcraftlogs.domain.zones.Zone;
-import com.deswaef.wowscrappie.warcraftlogs.domain.zones.Zones;
+import com.deswaef.heureka.warcraftlogs.WarcraftlogsAPIClient;
+import com.deswaef.heureka.warcraftlogs.WarcraftlogsAPIException;
+import com.deswaef.heureka.warcraftlogs.domain.zones.Zone;
+import com.deswaef.heureka.warcraftlogs.domain.zones.Zones;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
