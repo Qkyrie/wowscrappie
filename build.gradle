@@ -95,7 +95,6 @@ dependencies {
     compile('commons-validator:commons-validator:1.4.0')
     compile('org.projectlombok:lombok:1.16.6')
     compile("mysql:mysql-connector-java")
-    compile('net.sf.opencsv:opencsv:2.3')
 
     compile "com.mangofactory:swagger-springmvc:0.9.4"
     compile('net.sourceforge.htmlunit:htmlunit:2.16')
