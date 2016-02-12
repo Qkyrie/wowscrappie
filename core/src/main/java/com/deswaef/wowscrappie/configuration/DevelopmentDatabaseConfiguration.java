@@ -15,7 +15,6 @@ import java.util.Properties;
 
 @Configuration
 @Profile({"development"})
-@PropertySource(value = "classpath:developmentpersistence.properties")
 public class DevelopmentDatabaseConfiguration {
 
     @Value("${db.driver}")
