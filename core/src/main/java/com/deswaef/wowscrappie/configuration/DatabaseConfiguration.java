@@ -1,6 +1,8 @@
 package com.deswaef.wowscrappie.configuration;
 
 import com.jolbox.bonecp.BoneCPDataSource;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -35,12 +37,14 @@ public class DatabaseConfiguration {
 
     @Bean
     public DataSource dataSource() {
-        BoneCPDataSource dataSource = new BoneCPDataSource();
-        dataSource.setDriverClass(databaseDriver);
-        dataSource.setJdbcUrl(databaseUrl);
-        dataSource.setUsername(databaseUsername);
-        dataSource.setPassword(databasePassword);
-        return dataSource;
+        HikariConfig config = new HikariConfig();
+        config.setConnectionTestQuery("select 1 from dual");
+        config.setUsername(databaseUsername);
+        config.setPassword(databasePassword);
+        config.setDriverClassName(databaseDriver);
+        config.setJdbcUrl(databaseUrl);
+        config.setMaximumPoolSize(20);
+        return new HikariDataSource(config);
     }
 
 

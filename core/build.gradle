@@ -24,6 +24,7 @@ dependencies {
 
     compile("com.github.kstyrc:embedded-redis:0.6")
     compile("com.jolbox:bonecp:0.8.0.RELEASE")
+    compile("com.zaxxer:HikariCP:2.4.3")
 
 
     compile("org.imgscalr:imgscalr-lib:4.2")

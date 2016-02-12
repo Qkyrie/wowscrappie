@@ -42,7 +42,7 @@ public class NotificationController {
         return "notifications/index";
     }
 
-    @RequestMapping("/unread")
+    @RequestMapping(value = "/unread", method = GET)
     @PreAuthorize("hasRole('ROLE_USER')")
     public String getUnreadNotificationFragment(ModelMap modelMap) {
         modelMap.put("notifications", unreadNotifications());
