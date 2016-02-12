@@ -167,7 +167,7 @@ public class Entry {
         return dailyAveragePosted;
     }
 
-    public Entry setDailyAveragePosted(Double dailyAveragePosted) {
+    public Entry dailyAveragePosted(Double dailyAveragePosted) {
         this.dailyAveragePosted = dailyAveragePosted;
         return this;
     }
