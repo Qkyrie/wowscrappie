@@ -7,6 +7,7 @@ import com.deswaef.wowscrappie.realm.repository.RealmRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import rx.Observable;
 
 import java.util.List;
 import java.util.Optional;
@@ -46,8 +47,8 @@ public class RealmServiceImpl implements RealmService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Realm> findAll() {
-        return realmRepository.findAll();
+    public Observable<Realm> findAll() {
+        return Observable.from(realmRepository.findAll());
     }
 
 }

@@ -9,4 +9,6 @@ public interface AuctionHouseSnapshotConfigurationService {
 
     void requestUpdate(long configurationId);
 
+    void create(long realmId);
+
 }
