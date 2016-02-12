@@ -13,7 +13,7 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
-@Profile({"local", "default"})
+@Profile("!integrationtest")
 public class DatabaseConfiguration {
 
     @Value("${db.driver}")
@@ -74,4 +74,3 @@ public class DatabaseConfiguration {
         return entityManagerFactoryBean;
     }
 }
-
