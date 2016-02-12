@@ -11,20 +11,20 @@ import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 @Configuration
 @EnableScheduling
 @EnableWebSocketMessageBroker
-public class WebSocketConfiguration extends AbstractSessionWebSocketMessageBrokerConfigurer<ExpiringSession>{
+public class WebSocketConfiguration extends AbstractSessionWebSocketMessageBrokerConfigurer<ExpiringSession> {
 
     protected void configureStompEndpoints(StompEndpointRegistry registry) { // <2>
         registry.addEndpoint("/messages")
                 .setAllowedOrigins("http://localhost:8090",
-                                    "http://localhost:8080",
-                                    "http://localhost",
-                                    "http://wowscrappie.com",
-                                    "https://wowscrappie.com",
-                                    "http://www.wowscrappie.com",
-                                    "https://www.wowscrappie.com",
-                                    "http://127.0.0.1",
-                                    "http://127.0.0.1:8090",
-                                    "http://127.0.0.1:8080")
+                        "http://localhost:8080",
+                        "http://localhost",
+                        "http://wowscrappie.com",
+                        "https://wowscrappie.com",
+                        "http://www.wowscrappie.com",
+                        "https://www.wowscrappie.com",
+                        "http://127.0.0.1",
+                        "http://127.0.0.1:8090",
+                        "http://127.0.0.1:8080")
                 .withSockJS();
     }
 
