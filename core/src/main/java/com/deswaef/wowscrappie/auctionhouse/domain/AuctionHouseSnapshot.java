@@ -3,15 +3,7 @@ package com.deswaef.wowscrappie.auctionhouse.domain;
 import com.deswaef.wowscrappie.item.domain.Item;
 import com.deswaef.wowscrappie.realm.domain.Realm;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -26,7 +18,7 @@ public class AuctionHouseSnapshot {
     @JoinColumn(name = "realm_id")
     private Realm realm;
 
-    @ManyToOne
+    @ManyToOne(cascade= CascadeType.ALL)
     @JoinColumn(name = "item_id")
     private Item item;
 

@@ -4,10 +4,13 @@ import com.deswaef.wowscrappie.auctionhouse.domain.AuctionHouseSnapshotConfigura
 import com.deswaef.wowscrappie.infrastructure.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface AuctionHouseSnapshotConfigurationRepository extends JpaRepository<AuctionHouseSnapshotConfiguration, Long> {
 
     Optional<AuctionHouseSnapshotConfiguration> findByRealmId(@Param("id") Long realmId);
+
+    List<AuctionHouseSnapshotConfiguration> findByNeedsUpdate(@Param("needsUpdate") boolean needsUpdate);
 
 }

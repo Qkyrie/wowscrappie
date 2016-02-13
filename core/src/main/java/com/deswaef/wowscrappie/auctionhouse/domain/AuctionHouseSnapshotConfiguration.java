@@ -65,4 +65,13 @@ public class AuctionHouseSnapshotConfiguration {
         return this;
     }
 
+    @Override
+    public String toString() {
+        return "AuctionHouseSnapshotConfiguration{" +
+                "id=" + id +
+                ", realm=" + realm +
+                ", needsUpdate=" + needsUpdate +
+                ", lastUpdate=" + lastUpdate +
+                '}';
+    }
 }

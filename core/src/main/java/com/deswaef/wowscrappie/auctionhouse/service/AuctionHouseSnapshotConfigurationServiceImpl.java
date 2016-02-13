@@ -23,6 +23,11 @@ public class AuctionHouseSnapshotConfigurationServiceImpl implements AuctionHous
     }
 
     @Override
+    public Observable<AuctionHouseSnapshotConfiguration> findUpdatable() {
+        return Observable.from(auctionHouseSnapshotRepository.findByNeedsUpdate(true));
+    }
+
+    @Override
     @Transactional
     public void requestUpdate(long configurationId) {
         auctionHouseSnapshotRepository.findOne(configurationId)

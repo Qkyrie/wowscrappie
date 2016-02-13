@@ -7,6 +7,8 @@ public interface AuctionHouseSnapshotConfigurationService {
 
     Observable<AuctionHouseSnapshotConfiguration> findAll();
 
+    Observable<AuctionHouseSnapshotConfiguration> findUpdatable();
+
     void requestUpdate(long configurationId);
 
     void create(long realmId);
