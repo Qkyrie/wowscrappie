@@ -5,6 +5,7 @@ import com.deswaef.wowscrappie.auctionhouse.service.AuctionHouseSnapshotConfigur
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import rx.Observable;
@@ -13,6 +14,7 @@ import javax.annotation.PostConstruct;
 
 
 @Component
+@Profile("!integrationtest")
 public class AuctionsImportScheduler {
 
     private Log LOG = LogFactory.getLog(this.getClass());
