@@ -11,7 +11,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "macro")
-@DiscriminatorColumn(name="macro_type")
+@DiscriminatorColumn(name = "macro_type")
 public class Macro {
 
     @Id

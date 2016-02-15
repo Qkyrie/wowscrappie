@@ -18,7 +18,7 @@ public class AuctionHouseSnapshot {
     @JoinColumn(name = "realm_id")
     private Realm realm;
 
-    @ManyToOne(cascade= CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "item_id")
     private Item item;
 

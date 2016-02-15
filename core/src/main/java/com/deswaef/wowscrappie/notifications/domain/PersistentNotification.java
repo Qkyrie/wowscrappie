@@ -2,7 +2,14 @@ package com.deswaef.wowscrappie.notifications.domain;
 
 import com.deswaef.wowscrappie.usermanagement.domain.ScrappieUser;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.util.Date;
 
 @Entity
@@ -14,7 +21,7 @@ public class PersistentNotification {
     private Long id;
     @Column(name = "title")
     private String title;
-    @Column(name= "url")
+    @Column(name = "url")
     private String url;
     @Lob
     @Column(name = "content")

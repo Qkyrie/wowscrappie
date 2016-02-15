@@ -4,7 +4,15 @@ package com.deswaef.wowscrappie.usermanagement.domain;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -52,7 +60,7 @@ public class ScrappieUser implements UserDetails {
     private boolean enabled = true;
 
     @Column(name = "generated_username", nullable = false,
-        columnDefinition = "boolean default true")
+            columnDefinition = "boolean default true")
     private boolean generatedUsername;
 
     @Column(name = "email")

@@ -1,10 +1,16 @@
 package com.deswaef.wowscrappie.ui.image.domain;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "screenshot")
-@DiscriminatorColumn(name="ss_type")
+@DiscriminatorColumn(name = "ss_type")
 public class Screenshot {
 
     @Id

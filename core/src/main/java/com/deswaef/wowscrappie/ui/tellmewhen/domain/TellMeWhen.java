@@ -11,7 +11,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "tell_me_when")
-@DiscriminatorColumn(name="tmw_type")
+@DiscriminatorColumn(name = "tmw_type")
 public class TellMeWhen {
 
     @Id
@@ -27,7 +27,7 @@ public class TellMeWhen {
     private String comment;
 
     @Lob
-    @Column(name= "actual_value")
+    @Column(name = "actual_value")
     private String actualValue;
 
     @Column(name = "last_update_date")

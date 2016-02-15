@@ -2,7 +2,15 @@ package com.deswaef.wowscrappie.ui.rating.domain;
 
 import com.deswaef.wowscrappie.usermanagement.domain.ScrappieUser;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "rating_by_user")
