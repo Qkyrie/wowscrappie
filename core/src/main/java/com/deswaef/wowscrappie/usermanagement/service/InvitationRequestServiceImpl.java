@@ -30,10 +30,12 @@ public class InvitationRequestServiceImpl implements InvitationRequestService {
 
     @Autowired
     private InvitationRequestRepository invitationRequestRepository;
+
     @Override
     public List<InvitationRequest> findAll() {
         return invitationRequestRepository.findAll();
     }
+
     @Autowired
     private NotificationService notificationService;
     @Autowired
@@ -53,7 +55,7 @@ public class InvitationRequestServiceImpl implements InvitationRequestService {
         Optional<ScrappieUser> byEmail = userRepository.findByEmail(registrationDto.getEmail());
         if (byEmail.isPresent()) {
             try {
-                if(!StringUtils.isEmpty(byEmail.get().getActivationCode())) {
+                if (!StringUtils.isEmpty(byEmail.get().getActivationCode())) {
                     mailInvitationcode(byEmail.get());
                     return registrationDto
                             .setHasErrors(true)
@@ -70,7 +72,7 @@ public class InvitationRequestServiceImpl implements InvitationRequestService {
             }
         } else {
             try {
-                 ScrappieUser invitation = userService.createInvitation(new CreateInvitationDto()
+                ScrappieUser invitation = userService.createInvitation(new CreateInvitationDto()
                         .setEmail(registrationDto.getEmail()));
                 mailInvitationcode(invitation);
                 notificationService.putOnAdminQueue(Notification.create(String.format("%s has registered!", registrationDto.getEmail())));
@@ -87,8 +89,8 @@ public class InvitationRequestServiceImpl implements InvitationRequestService {
         mailService
                 .createMail()
                 .htmlBody(readFromEmails("testemail.html")
-                                .replace("FULL_BASE_URL", fullBaseUrl)
-                                .replace("REGISTRATION_CODE", invitation.getActivationCode())
+                        .replace("FULL_BASE_URL", fullBaseUrl)
+                        .replace("REGISTRATION_CODE", invitation.getActivationCode())
                 )
                 .to(invitation.getEmail())
                 .subject("WowScrappie - Activate your Registration")
@@ -111,8 +113,7 @@ public class InvitationRequestServiceImpl implements InvitationRequestService {
     }
 
     public static String readFile(String path, Charset encoding)
-            throws IOException
-    {
+            throws IOException {
         byte[] encoded = Files.readAllBytes(Paths.get(path));
         return encoding.decode(ByteBuffer.wrap(encoded)).toString();
     }
