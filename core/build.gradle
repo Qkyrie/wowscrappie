@@ -1,0 +1,36 @@
+apply plugin: 'spring-boot'
+
+dependencies {
+
+    compile("org.springframework.boot:spring-boot-starter")
+    compile("org.springframework.boot:spring-boot-starter-mail")
+    compile("org.springframework.security:spring-security-messaging")
+
+    compile("org.springframework.boot:spring-boot-starter-data-jpa")
+    compile("org.springframework.boot:spring-boot-starter-redis")
+    compile("org.springframework.boot:spring-boot-starter-data-elasticsearch")
+    compile("org.springframework.boot:spring-boot-starter-security")
+
+    compile("commons-io:commons-io:2.4")
+    compile("org.apache.commons:commons-lang3:3.0")
+    compile("org.hibernate:hibernate-validator:5.2.3.Final")
+
+    compile("com.fasterxml.jackson.core:jackson-databind:2.7.1")
+    compile("com.fasterxml.jackson.core:jackson-core:2.7.1")
+    compile("com.fasterxml.jackson.core:jackson-annotations:2.7.1")
+
+
+    compile("javax.validation:validation-api:1.1.0.Final")
+
+    compile("com.github.kstyrc:embedded-redis:0.6")
+    compile("com.zaxxer:HikariCP:2.4.3")
+
+
+    compile("io.reactivex:rxjava:1.1.0")
+    compile("org.imgscalr:imgscalr-lib:4.2")
+    compile('com.icegreen:greenmail:1.4.0')
+    compile("org.ocpsoft.prettytime:prettytime:4.0.0.Final")
+
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+    testCompile('org.assertj:assertj-core:3.3.0')
+}

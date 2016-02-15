@@ -25,19 +25,40 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'checkstyle'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    repositories {
+        mavenCentral()
+    }
+
+    tasks.withType(JavaCompile) {
+        options.incremental = true
+    }
+
+
+    checkstyle {
+        ignoreFailures = true
+        configFile = configFile = rootProject.file('config/checkstyle/checkstyle.xml')
+    }
+}
+
+subprojects {
+    group = 'com.de-swaef.scrappie'
+
+}
+
+
 group = 'com.de-swaef.scrappie'
 
 jar {
     baseName = 'Scrappie'
     version = '1.4.0-SNAPSHOT'
 }
-
-//idea {
-//    module {
-//        inheritOutputDirs = false
-//        outputDir = file("$buildDir/classes/main/")
-//    }
-//}
 
 repositories {
     mavenLocal()
@@ -47,6 +68,10 @@ repositories {
 }
 
 dependencies {
+
+    compile project(":heureka")
+    compile project(":core")
+
     compile("org.springframework.boot:spring-boot-starter")
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
@@ -60,32 +85,19 @@ dependencies {
     compile("org.springframework.security:spring-security-data")
     compile("org.springframework.boot:spring-boot-starter-websocket")
     compile("org.springframework.boot:spring-boot-starter-actuator")
+    compile("org.springframework.security:spring-security-test")
     compile("org.springframework:spring-messaging")
     compile("org.springframework.social:spring-social-core:1.1.0.RELEASE")
     compile("org.springframework.social:spring-social-config:1.1.0.RELEASE")
     compile('org.springframework.data:spring-data-redis')
-    compile('redis.clients:jedis:2.6.3')
-    compile("redis.embedded:embedded-redis:0.5")
     compile("org.springframework.session:spring-session")
     compile 'org.thymeleaf.extras:thymeleaf-extras-springsecurity4:2.1.2.RELEASE'
     compile("org.flywaydb:flyway-core")
-    compile("org.apache.commons:commons-lang3:3.0")
     compile('commons-validator:commons-validator:1.4.0')
-    compile("commons-io:commons-io:2.4")
-    compile("com.fasterxml.jackson.core:jackson-databind")
     compile('org.projectlombok:lombok:1.16.6')
     compile("mysql:mysql-connector-java")
-    compile('net.sf.opencsv:opencsv:2.3')
-    compile("com.jolbox:bonecp:0.8.0.RELEASE")
-    compile("com.fasterxml.jackson.core:jackson-databind:2.2.3")
-    compile("org.codehaus.jackson:jackson-mapper-asl:1.9.13")
-    compile("org.codehaus.jackson:jackson-core-asl:1.9.13")
+
     compile "com.mangofactory:swagger-springmvc:0.9.4"
-    compile("com.google.code.gson:gson:2.3.1")
-    compile("org.imgscalr:imgscalr-lib:4.2")
-    compile("org.ocpsoft.prettytime:prettytime:4.0.0.Final")
-    compile('com.icegreen:greenmail:1.4.0')
-    compile("javax.mail:mail:1.4.7")
     compile('net.sourceforge.htmlunit:htmlunit:2.16')
     testCompile("com.h2database:h2")
     testCompile("org.springframework.boot:spring-boot-starter-test")
@@ -100,10 +112,6 @@ task "fullBuild" {
     dependsOn "clean", "cleanTest", "test", "check", "build"
 }
 
-checkstyle {
-    ignoreFailures = true
-}
-
 lesscss {
     source = fileTree('src/main/resources/static/assets/less') {
         include 'sb-admin-2.less'
@@ -111,10 +119,6 @@ lesscss {
     dest = 'src/main/resources/static/assets/css'
     compress = true
 }
-
-/*project.gradle.projectsEvaluated {
-    applicationDefaultJvmArgs = ["-Dspring.profiles.active=${project.gradle.startParameter.systemPropertiesArgs['spring.profiles.active']}"]
-}*/
 
 bootRun {
     systemProperties System.properties

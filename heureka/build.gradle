@@ -1,0 +1,17 @@
+apply plugin: 'spring-boot'
+
+dependencies {
+
+    compile project(":core")
+
+    compile("org.springframework.boot:spring-boot-starter")
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.springframework.boot:spring-boot-starter-batch")
+
+    compile("com.google.code.gson:gson:2.3.1")
+
+    compile('net.sf.opencsv:opencsv:2.3')
+
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+    testCompile('org.assertj:assertj-core:3.3.0')
+}

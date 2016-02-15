@@ -92,14 +92,14 @@
 
                     <span th:if="${!isOwn}" id="canVote">
                              <button id="votePositive"
-                                     th:disabled="${personalRating == T(com.deswaef.weakauras.ui.rating.domain.Rating).POSITIVE}"
-                                     th:classappend="${personalRating == T(com.deswaef.weakauras.ui.rating.domain.Rating).NEGATIVE} ? 'btn-flat' : ''"
+                                     th:disabled="${personalRating == T(com.deswaef.wowscrappie.ui.rating.domain.Rating).POSITIVE}"
+                                     th:classappend="${personalRating == T(com.deswaef.wowscrappie.ui.rating.domain.Rating).NEGATIVE} ? 'btn-flat' : ''"
                                      class="btn btn-primary" sec:authorize="hasRole('ROLE_USER')">
                                  <i class=" fa fa-thumbs-o-up "></i> Upvote
                              </button>
                             <button id="voteNegative"
-                                    th:disabled="${personalRating == T(com.deswaef.weakauras.ui.rating.domain.Rating).NEGATIVE}"
-                                    th:classappend="${personalRating == T(com.deswaef.weakauras.ui.rating.domain.Rating).POSITIVE} ? 'btn-flat' : ''"
+                                    th:disabled="${personalRating == T(com.deswaef.wowscrappie.ui.rating.domain.Rating).NEGATIVE}"
+                                    th:classappend="${personalRating == T(com.deswaef.wowscrappie.ui.rating.domain.Rating).POSITIVE} ? 'btn-flat' : ''"
                                     class="btn btn-danger" sec:authorize="hasRole('ROLE_USER')">
                                 <i class=" fa fa-thumbs-o-down "></i> Downvote
                             </button>
