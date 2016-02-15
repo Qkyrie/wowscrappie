@@ -18,7 +18,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class BossServiceImplTest {
 
-    public static final long RAid_BOSS_ID = 1L;
+    public static final long RAID_BOSS_ID = 1L;
     @InjectMocks
     private BossServiceImpl bossService;
 
@@ -40,17 +40,17 @@ public class BossServiceImplTest {
 
     @Test
     public void findByIdAndNotExists() {
-        when(raidBossRepository.findOne(RAid_BOSS_ID))
+        when(raidBossRepository.findOne(RAID_BOSS_ID))
                 .thenReturn(Optional.empty());
-        assertThat(bossService.findById(RAid_BOSS_ID).isPresent())
+        assertThat(bossService.findById(RAID_BOSS_ID).isPresent())
                 .isFalse();
     }
 
     @Test
     public void findByIdAndExists(){
-        when(raidBossRepository.findOne(RAid_BOSS_ID))
+        when(raidBossRepository.findOne(RAID_BOSS_ID))
                 .thenReturn(Optional.of(raidBoss));
-        assertThat(bossService.findById(RAid_BOSS_ID).get())
+        assertThat(bossService.findById(RAID_BOSS_ID).get())
                 .isEqualTo(raidBoss);
     }
 

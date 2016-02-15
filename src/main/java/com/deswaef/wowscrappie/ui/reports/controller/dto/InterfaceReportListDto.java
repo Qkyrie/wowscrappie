@@ -11,7 +11,7 @@ import java.util.Locale;
 
 public class InterfaceReportListDto {
 
-    private static final PrettyTime pt = new PrettyTime(Locale.ENGLISH);
+    private static final PrettyTime PT = new PrettyTime(Locale.ENGLISH);
     public static final String ANONYMOUS = "anonymous";
 
     private Long id;
@@ -25,7 +25,7 @@ public class InterfaceReportListDto {
         return new InterfaceReportListDto()
                 .setId(interfaceReport.getId())
                 .setHandled(interfaceReport.isHandled())
-                .setPostDate(pt.format(interfaceReport.getPostDate()))
+                .setPostDate(PT.format(interfaceReport.getPostDate()))
                 .setReporter(extractReporter(interfaceReport.getReporter()))
                 .setWhatfor(extractWhatFor(interfaceReport))
                 .setComments(interfaceReport.getComment());

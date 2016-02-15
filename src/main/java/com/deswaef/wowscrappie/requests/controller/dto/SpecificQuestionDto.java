@@ -8,16 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-/**
- * User: Quinten
- * Date: 2-6-2015
- * Time: 00:06
- *
- * @author Quinten De Swaef
- */
 public class SpecificQuestionDto {
 
-    private static final PrettyTime prettyTime = new PrettyTime(Locale.ENGLISH);
+    private static final PrettyTime PT = new PrettyTime(Locale.ENGLISH);
 
 
     private Long id;
@@ -39,8 +32,8 @@ public class SpecificQuestionDto {
                 .setId(configRequest.getId())
                 .setPosterId(configRequest.getPoster().getId())
                 .setPosterName(configRequest.getPoster().getUsername())
-                .setLastEditDate(prettyTime.format(configRequest.getLastEditDate()))
-                .setPostDate(prettyTime.format(configRequest.getOriginalPostDate()));
+                .setLastEditDate(PT.format(configRequest.getLastEditDate()))
+                .setPostDate(PT.format(configRequest.getOriginalPostDate()));
     }
 
     public Long getId() {

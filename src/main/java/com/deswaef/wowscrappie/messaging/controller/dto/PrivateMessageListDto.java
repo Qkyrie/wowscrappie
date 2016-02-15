@@ -8,7 +8,7 @@ import java.util.Locale;
 
 public class PrivateMessageListDto {
 
-    private static final PrettyTime prettyTime = new PrettyTime(Locale.ENGLISH);
+    private static final PrettyTime PT = new PrettyTime(Locale.ENGLISH);
 
     private Long id;
     private String when;
@@ -23,7 +23,7 @@ public class PrivateMessageListDto {
                 .setId(privateMessage.getId())
                 .setFromId(privateMessage.getFromUser().getId())
                 .setTitle(privateMessage.getTitle())
-                .setWhen(prettyTime.format(privateMessage.getDateOfPosting()))
+                .setWhen(PT.format(privateMessage.getDateOfPosting()))
                 .setActualDate(privateMessage.getDateOfPosting());
     }
 

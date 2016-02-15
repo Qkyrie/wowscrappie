@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.Locale;
 
 public class QuestionListDto {
-    private static final PrettyTime prettyTime = new PrettyTime(Locale.ENGLISH);
+    private static final PrettyTime PT = new PrettyTime(Locale.ENGLISH);
 
     private Long id;
     private String title;
@@ -22,7 +22,7 @@ public class QuestionListDto {
         return new QuestionListDto()
                 .setId(configRequest.getId())
                 .setOriginalPostDate(configRequest.getOriginalPostDate())
-                .setOriginalPostDatePretty(prettyTime.format(configRequest.getOriginalPostDate()))
+                .setOriginalPostDatePretty(PT.format(configRequest.getOriginalPostDate()))
                 .setPoster(configRequest.getPoster().getUsername())
                 .setPosterId(configRequest.getPoster().getId())
                 .setTitle(configRequest.getTitle())
@@ -75,8 +75,8 @@ public class QuestionListDto {
         return this;
     }
 
-    public static PrettyTime getPrettyTime() {
-        return prettyTime;
+    public static PrettyTime getPt() {
+        return PT;
     }
 
     public String getOriginalPostDatePretty() {
