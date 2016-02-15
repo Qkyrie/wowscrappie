@@ -8,10 +8,10 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface PersistentNotificationRepository extends JpaRepository<PersistentNotification, Long>{
+public interface PersistentNotificationRepository extends JpaRepository<PersistentNotification, Long> {
 
     List<PersistentNotification> findAllByForUserOrderByDateOfPostingDesc(@Param("forUser") ScrappieUser scrappieUser);
 
     @Query("select count(noti) from PersistentNotification noti where readStatus = false and forUser = :forUser")
-    long countUnreadForUser(@Param("forUser")ScrappieUser scrappieUser);
+    long countUnreadForUser(@Param("forUser") ScrappieUser scrappieUser);
 }

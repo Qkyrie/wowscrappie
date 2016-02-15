@@ -8,6 +8,6 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface WeakAuraScreenshotRepository extends JpaRepository<WeakauraScreenshot, Long>{
+public interface WeakAuraScreenshotRepository extends JpaRepository<WeakauraScreenshot, Long> {
     List<Screenshot> findByWeakAura(@Param("weakAura") WeakAura weakAura);
 }

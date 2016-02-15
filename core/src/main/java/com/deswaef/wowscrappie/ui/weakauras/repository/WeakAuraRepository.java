@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface WeakAuraRepository extends JpaRepository<WeakAura, Long>{
+public interface WeakAuraRepository extends JpaRepository<WeakAura, Long> {
     @Query("select count(wa) from WeakAura wa where wa.approved = :approved")
     long countApproved(@Param("approved") boolean approved);
 

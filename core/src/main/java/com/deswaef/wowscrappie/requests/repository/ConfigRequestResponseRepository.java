@@ -7,7 +7,8 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface ConfigRequestResponseRepository extends JpaRepository<ConfigRequestResponse, Long>{
+public interface ConfigRequestResponseRepository extends JpaRepository<ConfigRequestResponse, Long> {
     List<ConfigRequestResponse> findByConfigRequest(@Param("configRequest") ConfigRequest configRequest);
+
     List<ConfigRequestResponse> findByInResponseTo(@Param("configRequest") ConfigRequest configRequest);
 }

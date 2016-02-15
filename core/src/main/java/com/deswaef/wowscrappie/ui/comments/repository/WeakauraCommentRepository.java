@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface WeakauraCommentRepository extends JpaRepository<WeakAuraComment, Long>{
+public interface WeakauraCommentRepository extends JpaRepository<WeakAuraComment, Long> {
 
     List<WeakAuraComment> findByWeakAura(@Param("weakAura") WeakAura weakAura);
 

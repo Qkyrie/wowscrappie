@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface SpecWeakAuraRepository extends JpaRepository<SpecWeakAura, Long>{
+public interface SpecWeakAuraRepository extends JpaRepository<SpecWeakAura, Long> {
     List<WeakAura> findBySpec(@Param("spec") Spec spec);
 
     @Query("select wa from SpecWeakAura wa where wa.spec = :spec and approved = true")

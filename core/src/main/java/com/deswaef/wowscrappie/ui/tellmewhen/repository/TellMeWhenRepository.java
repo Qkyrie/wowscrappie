@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface TellMeWhenRepository extends JpaRepository<TellMeWhen, Long>{
+public interface TellMeWhenRepository extends JpaRepository<TellMeWhen, Long> {
     @Query("select count(tmw) from TellMeWhen tmw where approved = :approved")
     long countApproved(@Param("approved") boolean approved);
 

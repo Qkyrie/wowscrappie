@@ -7,6 +7,6 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface RaidBossRepository extends JpaRepository<RaidBoss, Long>{
+public interface RaidBossRepository extends JpaRepository<RaidBoss, Long> {
     List<RaidBoss> findByRaid(@Param("raid") Raid raid);
 }

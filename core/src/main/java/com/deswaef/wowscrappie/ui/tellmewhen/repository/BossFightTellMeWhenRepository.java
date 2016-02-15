@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface BossFightTellMeWhenRepository extends JpaRepository<BossFightTellMeWhen, Long>{
+public interface BossFightTellMeWhenRepository extends JpaRepository<BossFightTellMeWhen, Long> {
     List<TellMeWhen> findByBoss(@Param("boss") Boss boss);
 
     @Query("select tmw from BossFightTellMeWhen tmw where tmw.boss = :boss and approved = true")

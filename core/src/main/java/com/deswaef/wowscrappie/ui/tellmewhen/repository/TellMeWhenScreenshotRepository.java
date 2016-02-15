@@ -9,6 +9,6 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface TellMeWhenScreenshotRepository extends JpaRepository<TellMeWhenScreenshot, Long>{
+public interface TellMeWhenScreenshotRepository extends JpaRepository<TellMeWhenScreenshot, Long> {
     List<Screenshot> findByTellMeWhen(@Param("tellMeWhen") TellMeWhen tellMeWhen);
 }

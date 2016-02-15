@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface WowClassMacroRepository extends JpaRepository<WowClassMacro, Long>{
+public interface WowClassMacroRepository extends JpaRepository<WowClassMacro, Long> {
     List<Macro> findByWowClass(@Param("wowClass") WowClass wowClass);
 
     @Query("select m from WowClassMacro m where m.wowClass = :wowClass and approved = true")

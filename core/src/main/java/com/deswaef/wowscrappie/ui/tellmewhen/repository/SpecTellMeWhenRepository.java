@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface SpecTellMeWhenRepository extends JpaRepository<SpecTellMeWhen, Long>{
+public interface SpecTellMeWhenRepository extends JpaRepository<SpecTellMeWhen, Long> {
     List<TellMeWhen> findBySpec(@Param("spec") Spec spec);
 
     @Query("select tmw from SpecTellMeWhen tmw where tmw.spec = :spec and approved = true")

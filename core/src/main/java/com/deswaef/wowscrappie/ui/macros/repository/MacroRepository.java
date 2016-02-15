@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface MacroRepository extends JpaRepository<Macro, Long>{
+public interface MacroRepository extends JpaRepository<Macro, Long> {
     @Query("select count(m) from Macro m where m.approved = :approved")
     long countApproved(@Param("approved") boolean approved);
 

@@ -6,6 +6,6 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
-public interface ScreenshotRepository extends JpaRepository<Screenshot, Long>{
+public interface ScreenshotRepository extends JpaRepository<Screenshot, Long> {
     Optional<Screenshot> findByReference(@Param("reference") String reference);
 }

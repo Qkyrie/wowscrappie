@@ -7,6 +7,6 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface MacroCommentRepository extends JpaRepository<MacroComment, Long>{
+public interface MacroCommentRepository extends JpaRepository<MacroComment, Long> {
     List<MacroComment> findByMacro(@Param("macro") Macro macro);
 }

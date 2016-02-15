@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface WowclassWeakAuraRepository extends JpaRepository<WowClassWeakAura, Long>{
+public interface WowclassWeakAuraRepository extends JpaRepository<WowClassWeakAura, Long> {
     List<WeakAura> findByWowClass(@Param("wowClass") WowClass wowClass);
 
     @Query("select wa from WowClassWeakAura wa where wa.wowClass = :wowClass and approved = true")
