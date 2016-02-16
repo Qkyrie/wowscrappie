@@ -1,6 +1,6 @@
 package com.deswaef.wowscrappie.util;
 
-import static org.fest.assertions.Fail.fail;
+import static org.aspectj.bridge.MessageUtil.fail;
 
 /**
  * User: Quinten
