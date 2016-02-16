@@ -12,3 +12,4 @@ application-development.properties
 application-local.properties
 application-production.properties
 application-integrationtest.properties
+scrappie-startup.sh
