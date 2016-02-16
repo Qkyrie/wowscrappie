@@ -1,4 +1,4 @@
-package com.deswaef.wowscrappie.util;
+package com.deswaef.heureka.util;
 
 import java.io.File;
 import java.io.IOException;
