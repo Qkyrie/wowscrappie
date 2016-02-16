@@ -25,8 +25,9 @@
     <link rel="stylesheet" th:href="@{/assets/fancybox/jquery.fancybox.css?v=2.1.5}" type="text/css" media="screen"/>
 
     <link th:href="@{/assets/material_design/css/roboto.min.css}" rel="stylesheet"/>
-    <link th:href="@{/assets/material_design/css/material.min.css}" rel="stylesheet"/>
-    <link th:href="@{/assets/material_design/css/ripples.min.css}" rel="stylesheet"/>
+
+    <link th:href="@{//cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.8/css/bootstrap-material-design.min.css}" rel="stylesheet"/>
+    <link th:href="@{//cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.8/css/ripples.min.css}" rel="stylesheet"/>
     <link th:href="@{/assets/snackbar/snackbar.min.css}" rel="stylesheet"/>
     <link th:href="@{/assets/snackbar/snackbar-material.min.css}" rel="stylesheet"/>
     <div layout:fragment="header"></div>
@@ -276,11 +277,11 @@
 <!-- CUSTOM SCRIPTS -->
 <script th:src="@{/assets/js/custom.js}"></script>
 <script th:src="@{/assets/js/knockout.js}"></script>
-<script th:src="@{/assets/js/analytics.js}"/>
+<script th:src="@{/assets/js/analytics.js}"></script>
 
 
-<script th:src="@{/assets/material_design/js/ripples.min.js}"></script>
-<script th:src="@{/assets/material_design/js/material.min.js}"></script>
+<script th:src="@{//cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.8/js/ripples.min.js}"></script>
+<script th:src="@{//cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.8/js/material.min.js}"></script>
 <script th:src="@{/assets/snackbar/snackbar.min.js}"></script>
 <script>
     $(document).ready(function () {

@@ -80,7 +80,7 @@
 
                             </i>  share link</span>
                               <span data-bind="click: report" th:attr="data-tmw_id=${uielement.id}"
-                                    class="btn btn-material-blue-grey"> report</span>
+                                    class="btn btn-material-blue-grey btn-xs"> report</span>
 
                             <span th:attr="data-tmw_id=${uielement.id}" th:if="${uielement.approved == false}"
                                   class="approveButton btn btn-info btn-sm"
@@ -210,7 +210,7 @@
                             <i
                                 class="mdi-social-share"></i> share link</span>
                         <span data-bind="click: report" th:attr="data-wa_id=${uielement.id}"
-                              class="btn btn-material-blue-grey"> report</span>
+                              class="btn btn-material-blue-grey btn-xs"> report</span>
                         <span th:attr="data-wa_id=${uielement.id}"
                               th:if="${uielement.approved == false}"
                               class="approveButton btn btn-info btn-sm"
@@ -335,7 +335,7 @@
                             <i
                                 class="mdi-social-share"></i> share link</span>
                            <span data-bind="click: report" th:attr="data-macro_id=${uielement.id}"
-                                 class="btn btn-material-blue-grey"> report</span>
+                                 class="btn btn-material-blue-grey btn-xs"> report</span>
                         <span th:attr="data-macro_id=${uielement.id}" th:if="${uielement.approved == false}"
                               class="approveButton btn btn-info btn-sm"
                               sec:authorize="hasRole('ROLE_ADMIN')"> <i class="mdi-action-done"></i> approve</span>
