@@ -8,13 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
     <meta name="_disqusname" th:content="${@environment.getProperty('com.deswaef.scrappie.disqusname')}"/>
-    <!--    <meta name="description" content="wowscrappie provides you with a commonplace to share your weakauras, tellmewhens and macros, created by and for the community." />
-        <meta name="keywords" content="weakauras, weakaura, weakaura strings, class, tellmewhen, macro, macros, spec,
-                                        hunter, druid, warlock, paladin, shaman,
-                                        death knight, mage, monk, priest, rogue, warrior" />-->
 
     <!-- BOOTSTRAP STYLES-->
-    <link th:href="@{/assets/css/bootstrap.css}" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css}" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous" />
     <!-- FONTAWESOME STYLES-->
     <link th:href="@{/assets/css/font-awesome.css}" rel="stylesheet"/>
     <!-- MORRIS CHART STYLES-->
@@ -274,7 +270,7 @@
 <!-- JQUERY SCRIPTS -->
 <!-- BOOTSTRAP SCRIPTS -->
 <script th:src="@{/assets/js/jquery-1.11.3.min.js}"></script>
-<script th:src="@{/assets/js/bootstrap.min.js}"></script>
+<script th:src="@{//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js}" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 <!-- METISMENU SCRIPTS -->
 <script th:src="@{/assets/js/jquery.metisMenu.js}"></script>
 <!-- CUSTOM SCRIPTS -->
