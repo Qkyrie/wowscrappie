@@ -15,4 +15,6 @@ public interface RealmService {
     Long count();
     List<Realm> findAllByLocality(Locality locality);
     Observable<Realm> findAll();
+
+    Observable<Realm> queryRealms(String query);
 }

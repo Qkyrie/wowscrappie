@@ -10,4 +10,6 @@ public interface ItemService {
     long count();
 
     Observable<Item> findAll();
+
+    Observable<Item> findByNameQuery(String query);
 }

@@ -1,0 +1,55 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:data-bind="http://www.w3.org/1999/xhtml"
+      layout:decorator="decorator/wa-decorator">
+
+<div layout:fragment="header">
+    <meta name="description" content="Warcraft Logs - Character Ranking - Scrappie"/>
+    <meta name="keywords" content="weakauras, weakaura, weakaura strings, class, tellmewhen, macro, macros,
+                                   Scrappie, WowScrappie, T18, delegation, tier, tier 18, tier distribution, tier delegation, dps gain, dps"/>
+    <title>Auctionhouse - Overview</title>
+    <link th:href="@{/assets/dynatable/jquery.dynatable.css}" rel="stylesheet"/>
+    <link th:href="@{/assets/js/c3/c3.min.css}" rel="stylesheet"/>
+</div>
+
+<div layout:fragment="main-content">
+    <div id="page-inner">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Search Current Information for an item on a realm.</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Item</label>
+                    <div id="item">
+                        <input id="itemSelect" class="form-control typeahead" type="text" placeholder="Search for Item" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Realm</label>
+                    <div id="realm">
+                        <input id="realmSelect" class="form-control typeahead" type="text" placeholder="Pick a realm" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <button id="searchButton" value="search">Search</button>
+            </div>
+        </div>
+
+
+    </div>
+    <!-- /. PAGE INNER  -->
+</div>
+<!-- /. layout fragment -->
+<div layout:fragment="footer-content">
+    <script th:src="@{/assets/dynatable/jquery.dynatable.js}"></script>
+    <script th:src="@{//cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js}" charset="utf-8"></script>
+    <script th:src="@{/assets/js/c3/c3.min.js}"></script>
+    <script th:src="@{/assets/js/typeahead.js}"></script>
+    <script th:src="@{/assets/js/custom/auctionhouse/overview.js}"></script>
+</div>
+
+</html>

@@ -51,4 +51,10 @@ public class RealmServiceImpl implements RealmService {
         return Observable.from(realmRepository.findAll());
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public Observable<Realm> queryRealms(String query) {
+        return Observable.from(realmRepository.findByNameContainingIgnoreCase(query));
+    }
+
 }

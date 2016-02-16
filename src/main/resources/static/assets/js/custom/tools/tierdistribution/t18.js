@@ -692,8 +692,6 @@ var Tier18LootDistribution = function () {
     table.bind('dynatable:afterProcess', function (e, dynatable) {
         reloadCharts();
     });
-
-
 };
 
 
