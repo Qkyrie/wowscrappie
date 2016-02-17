@@ -35,11 +35,17 @@
                             <td th:text="${user.email}">Pikachu</td>
                             <td>
                                 <span th:attr="data-user_id=${user.id}"
-                                      class=" view-user btn btn-primary">view</span>
+                                      class="view-user btn btn-primary btn-xs">
+                                    <i class="material-icons">search</i>
+                                </span>
                                 <span th:if="${user.enabled}" th:attr="data-user_id=${user.id}"
-                                      class="disable-user btn btn-warning">disable</span>
+                                      class="disable-user btn btn-warning btn-xs">
+                                    <i class="material-icons">lock</i>
+                                </span>
                                 <span th:if="${user.enabled == false}" th:attr="data-user_id=${user.id}"
-                                        class="enable-user btn btn-primary">enable</span>
+                                        class="enable-user btn btn-success btn-xs">
+                                    <i class="material-icons">done</i>
+                                </span>
                             </td>
                         </tr>
                         </tbody>
