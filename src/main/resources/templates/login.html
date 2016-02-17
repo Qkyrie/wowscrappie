@@ -25,9 +25,8 @@
                             <p th:if="${param.logout}" class="alert alert-success">You have been logged out</p>
                             <p th:if="${param.error}" class="alert alert-danger">There was an error, please try again</p>
                             <form role="form" th:action="@{/login-do}" action="/login" method="POST">
-                                <p><b>Good news everyone!</b></p>
-                                <p>We've turned away from the invitation-only model. Everyone can now register on wowscrappie!</p>
-                                <a th:href="@{/registration}" class="btn btn-success btn-raised">Register!</a>
+                                <p>Want to contribute and don't have an account yet? Register for free!</p>
+                                <a th:href="@{/registration}" class="btn btn-success btn-raised btn-block">Register!</a>
                                 <fieldset>
 
                                     <div class="form-group">

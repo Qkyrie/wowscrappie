@@ -34,18 +34,28 @@
                         <td th:text="${uielement.whatFor}">whatFor</td>
                         <td>
                             <span data-bind="click: view" th:attr="data-tmw_id=${uielement.id}"
-                                  class="btn btn-success btn-sm"> <i class="mdi-maps-local-library"></i> view</span>
+                                  class="btn btn-success btn-sm">
+                                <i class="material-icons">search</i>
+                            </span>
                             <span th:attr="data-tmw_id=${uielement.id}, data-share-url=${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/shared/tmw/} + ${uielement.id}"
-                                  class="shareButton btn btn-success btn-sm"> <i class="mdi-social-share"></i> share link</span>
+                                  class="shareButton btn btn-primary btn-sm">
+                                <i class="material-icons">share</i>
+                            </span>
                             <span th:attr="data-tmw_id=${uielement.id}" th:if="${uielement.approved == false}"
-                                  class="approveButton btn btn-info btn-sm"
-                                  sec:authorize="hasRole('ROLE_ADMIN')"> <i class="mdi-action-done"></i> approve</span>
+                                  class="approveButton btn btn-info btn-xs"
+                                  sec:authorize="hasRole('ROLE_ADMIN')">
+                                <i class="material-icons">done</i>
+                            </span>
                             <span th:attr="data-tmw_id=${uielement.id}"
                                   th:if="${uielement.approved == true}"
-                                  class="disableButton btn btn-warning btn-sm"
-                                  sec:authorize="hasRole('ROLE_ADMIN')"> <i class="mdi-action-lock"></i> disable</span>
-                            <span th:attr="data-tmw_id=${uielement.id}" class="deleteButton btn btn-danger btn-sm"
-                                  sec:authorize="hasRole('ROLE_ADMIN')"> <i class="mdi-av-not-interested"></i> delete</span>
+                                  class="disableButton btn btn-warning btn-xs"
+                                  sec:authorize="hasRole('ROLE_ADMIN')">
+                                <i class="material-icons">lock</i>
+                            </span>
+                            <span th:attr="data-tmw_id=${uielement.id}" class="deleteButton btn btn-danger btn-xs"
+                                  sec:authorize="hasRole('ROLE_ADMIN')">
+                                <i class="material-icons">delete</i>
+                            </span>
                         </td>
                     </tr>
                     </tbody>
@@ -53,7 +63,7 @@
             </div>
         </div>
         <div class="row" data-bind="visible: showDetails">
-            <hr />
+            <hr/>
             <h3 data-bind="text: activeName"></h3>
             <div class="form-group">
                 <label>Comments</label>
@@ -63,7 +73,7 @@
             <label>TellMeWhen-String</label>
             <textarea data-bind="value: activeString" class="form-control" rows="3"></textarea>
 
-            <hr />
+            <hr/>
 
             <div id="images" data-bind="foreach: imageRefs">
                 <a class="fancybox" rel="group" data-bind="attr: { href: '/shared/image/' + $data }">
@@ -81,8 +91,8 @@
     <script type="text/javascript" th:src="@{/assets/js/md-v1.2.0.js}"/>
     <script type="application/javascript">
 
-        $('.shareButton').each(function() {
-            $(this).click(function() {
+        $('.shareButton').each(function () {
+            $(this).click(function () {
                 window.open($(this).data('share-url'), '_blank');
             });
         });
@@ -109,7 +119,7 @@
                         self.activeName(resultValue.name);
                         Mdjs().on($("#commentBox"));
                         self.showDetails(true);
-                        $("html, body").animate({ scrollTop: $(document).height() }, 1000);
+                        $("html, body").animate({scrollTop: $(document).height()}, 1000);
                         $(".fancybox").fancybox();
                     }
                 });
@@ -119,7 +129,7 @@
         var tmwModel = new tmwVM();
         ko.applyBindings(tmwModel, $("#tmw-wrapper")[0]);
 
-        $(".deleteButton").click(function() {
+        $(".deleteButton").click(function () {
             var self = $(this);
             $.get('/interface/tellmewhen/' + self.data('tmw_id') + '/delete', function (data) {
                 if (data == true) {
@@ -148,7 +158,7 @@
             });
         });
 
-        $(".disableButton").click(function() {
+        $(".disableButton").click(function () {
             var self = $(this);
             $.get('/interface/tellmewhen/' + self.data('tmw_id') + '/disable', function (data) {
                 if (data == true) {
@@ -191,20 +201,30 @@
                     </td>
                     <td th:text="${uielement.whatFor}">whatFor</td>
                     <td>
-                    <span data-bind="click: view" th:attr="data-wa_id=${uielement.id}"
-                          class="btn btn-success btn-sm"><i class="mdi-maps-local-library"></i> view</span>
+                        <span data-bind="click: view" th:attr="data-wa_id=${uielement.id}"
+                              class="btn btn-success btn-xs">
+                            <i class="material-icons">search</i>
+                        </span>
                         <span th:attr="data-wa_id=${uielement.id}, data-share-url=${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/shared/wa/} + ${uielement.id}"
-                              class="shareButton btn btn-success btn-sm"> <i class="mdi-social-share"></i>share link</span>
+                              class="shareButton btn btn-success btn-xs">
+                            <i class="material-icons">share</i>
+                        </span>
                         <span th:attr="data-wa_id=${uielement.id}"
                               th:if="${uielement.approved == false}"
-                              class="approveButton btn btn-info btn-sm"
-                              sec:authorize="hasRole('ROLE_ADMIN')"> <i class="mdi-action-done"></i> approve</span>
+                              class="approveButton btn btn-info btn-xs"
+                              sec:authorize="hasRole('ROLE_ADMIN')">
+                            <i class="material-icons">done</i>
+                        </span>
                         <span th:if="${uielement.approved == true}"
                               th:attr="data-wa_id=${uielement.id}"
-                              class="disableButton btn btn-warning btn-sm"
-                              sec:authorize="hasRole('ROLE_ADMIN')"> <i class="mdi-action-lock"></i> disable</span>
-                        <span th:attr="data-wa_id=${uielement.id}" class="deleteButton btn btn-danger btn-sm"
-                              sec:authorize="hasRole('ROLE_ADMIN')"> <i class="mdi-av-not-interested"></i> delete</span>
+                              class="disableButton btn btn-warning btn-xs"
+                              sec:authorize="hasRole('ROLE_ADMIN')">
+                            <i class="material-icons">lock</i>
+                        </span>
+                        <span th:attr="data-wa_id=${uielement.id}" class="deleteButton btn btn-danger btn-xs"
+                              sec:authorize="hasRole('ROLE_ADMIN')">
+                            <i class="material-icons">delete</i>
+                        </span>
                     </td>
                 </tr>
                 </tbody>
@@ -213,7 +233,7 @@
 
 
         <div class="row" data-bind="visible: showDetails">
-            <hr />
+            <hr/>
             <h3 data-bind="text: activeName"></h3>
             <div class="form-group">
                 <label>Comments</label>
@@ -222,7 +242,7 @@
 
             <label>WeakAura-String</label>
             <textarea data-bind="value: activeString" class="form-control" rows="3"></textarea>
-            <hr />
+            <hr/>
 
             <div id="images" data-bind="foreach: imageRefs">
                 <a class="fancybox" rel="group" data-bind="attr: { href: '/shared/image/' + $data }">
@@ -233,8 +253,8 @@
     </div>
     <script type="text/javascript" th:src="@{/assets/js/md-v1.2.0.js}"/>
     <script type="application/javascript">
-        $('.shareButton').each(function() {
-            $(this).click(function() {
+        $('.shareButton').each(function () {
+            $(this).click(function () {
                 window.open($(this).data('share-url'), '_blank');
             });
         });
@@ -261,7 +281,7 @@
                         self.activeName(resultValue.name);
                         Mdjs().on($("#commentBox"));
                         self.showDetails(true);
-                        $("html, body").animate({ scrollTop: $(document).height() }, 1000);
+                        $("html, body").animate({scrollTop: $(document).height()}, 1000);
                         $(".fancybox").fancybox();
                     }
                 });
@@ -272,7 +292,7 @@
         ko.applyBindings(waModel, $("#wa-wrapper")[0]);
 
 
-        $(".deleteButton").click(function() {
+        $(".deleteButton").click(function () {
             var self = $(this);
             $.get('/interface/weakaura/' + self.data('wa_id') + '/delete', function (data) {
                 if (data == true) {
@@ -301,7 +321,7 @@
             });
         });
 
-        $(".disableButton").click(function() {
+        $(".disableButton").click(function () {
             var self = $(this);
             $.get('/interface/weakaura/' + self.data('wa_id') + '/disable', function (data) {
                 if (data == true) {
@@ -343,19 +363,29 @@
                     </td>
                     <td th:text="${uielement.whatFor}">whatFor</td>
                     <td>
-                    <span data-bind="click: view" th:attr="data-macro_id=${uielement.id}"
-                          class="btn btn-success btn-sm"> <i class="mdi-maps-local-library"></i> view</span>
+                        <span data-bind="click: view" th:attr="data-macro_id=${uielement.id}"
+                              class="btn btn-success btn-sm">
+                            <i class="material-icons">search</i>
+                        </span>
                         <span th:attr="data-macro_id=${uielement.id}, data-share-url=${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/shared/macro/} + ${uielement.id}"
-                              class="shareButton btn btn-success btn-sm"> <i class="mdi-social-share"></i> share link</span>
+                              class="shareButton btn btn-success btn-sm">
+                            <i class="material-icons">share</i>
+                        </span>
                         <span th:attr="data-macro_id=${uielement.id}" th:if="${uielement.approved == false}"
-                              class="approveButton btn btn-info btn-sm"
-                              sec:authorize="hasRole('ROLE_ADMIN')"> <i class="mdi-action-done"></i> approve</span>
+                              class="approveButton btn btn-info btn-xs"
+                              sec:authorize="hasRole('ROLE_ADMIN')">
+                            <i class="material-icons">done</i>
+                        </span>
                         <span th:if="${uielement.approved == true}"
-                              class="disableButton btn btn-warning btn-sm"
+                              class="disableButton btn btn-warning btn-xs"
                               th:attr="data-macro_id=${uielement.id}"
-                              sec:authorize="hasRole('ROLE_ADMIN')"> <i class="mdi-action-lock"></i> disable</span>
-                         <span th:attr="data-macro_id=${uielement.id}" class="deleteButton btn btn-danger btn-sm"
-                               sec:authorize="hasRole('ROLE_ADMIN')"> <i class="mdi-av-not-interested"></i> delete</span>
+                              sec:authorize="hasRole('ROLE_ADMIN')">
+                            <i class="material-icons">lock</i>
+                        </span>
+                         <span th:attr="data-macro_id=${uielement.id}" class="deleteButton btn btn-danger btn-xs"
+                               sec:authorize="hasRole('ROLE_ADMIN')">
+                             <i class="material-icons">delete</i>
+                         </span>
 
                     </td>
 
@@ -364,7 +394,7 @@
             </table>
         </div>
         <div class="row" data-bind="visible: showDetails">
-            <hr />
+            <hr/>
             <h3 data-bind="text: activeName"></h3>
             <div class="form-group">
                 <label>Comments</label>
@@ -378,8 +408,8 @@
     <script type="text/javascript" th:src="@{/assets/js/md-v1.2.0.js}"/>
     <script type="application/javascript">
 
-        $('.shareButton').each(function() {
-            $(this).click(function() {
+        $('.shareButton').each(function () {
+            $(this).click(function () {
                 window.open($(this).data('share-url'), '_blank');
             });
         });
@@ -402,7 +432,7 @@
                         self.activeName(resultValue.name);
                         self.activeComment(resultValue.comment);
                         Mdjs().on($("#commentBox"));
-                        $("html, body").animate({ scrollTop: $(document).height() }, 1000);
+                        $("html, body").animate({scrollTop: $(document).height()}, 1000);
                         self.showDetails(true);
                     }
                 });
@@ -412,7 +442,7 @@
         var macroModel = new MacroModel();
         ko.applyBindings(macroModel, $("#macro-stuff")[0]);
 
-        $(".deleteButton").click(function() {
+        $(".deleteButton").click(function () {
             var self = $(this);
             $.get('/interface/macro/' + self.data('macro_id') + '/delete', function (data) {
                 if (data == true) {
@@ -441,7 +471,7 @@
             });
         });
 
-        $(".disableButton").click(function() {
+        $(".disableButton").click(function () {
             var self = $(this);
             $.get('/interface/macro/' + self.data('macro_id') + '/disable', function (data) {
                 if (data == true) {
