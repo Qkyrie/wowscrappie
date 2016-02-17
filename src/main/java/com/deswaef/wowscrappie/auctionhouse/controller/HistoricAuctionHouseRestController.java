@@ -1,6 +1,6 @@
 package com.deswaef.wowscrappie.auctionhouse.controller;
 
-import com.deswaef.wowscrappie.auctionhouse.domain.AuctionHouseSnapshot;
+import com.deswaef.wowscrappie.auctionhouse.controller.dto.AuctionHouseSnapshotDto;
 import com.deswaef.wowscrappie.auctionhouse.domain.HistoricAuctionHouseSnapshot;
 import com.deswaef.wowscrappie.auctionhouse.service.AuctionHouseSnapshotService;
 import com.deswaef.wowscrappie.auctionhouse.service.HistoricAuctionHouseDataService;
@@ -25,7 +25,7 @@ public class HistoricAuctionHouseRestController {
     @Autowired
     private AuctionHouseSnapshotService auctionHouseSnapshotService;
 
-    @ResponseStatus(value= HttpStatus.NOT_FOUND, reason="Not Found")
+    @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "Not Found")
     @ExceptionHandler(WowscrappieException.class)
     public void notFound() {
     }
@@ -42,9 +42,10 @@ public class HistoricAuctionHouseRestController {
 
 
     @RequestMapping("/latest/item/{item}/realm/{realm}")
-    public DeferredResult<AuctionHouseSnapshot> byItemAndRealm(@PathVariable("item") long item, @PathVariable("realm") long realm) {
-        DeferredResult<AuctionHouseSnapshot> returnValue = new DeferredResult<>();
+    public DeferredResult<AuctionHouseSnapshotDto> byItemAndRealm(@PathVariable("item") long item, @PathVariable("realm") long realm) {
+        DeferredResult<AuctionHouseSnapshotDto> returnValue = new DeferredResult<>();
         auctionHouseSnapshotService.findByItemIdAndRealm(item, realm)
+                .map(AuctionHouseSnapshotDto::from)
                 .subscribe(returnValue::setResult,
                         returnValue::setErrorResult);
         return returnValue;
