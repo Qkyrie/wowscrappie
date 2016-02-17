@@ -4,7 +4,7 @@ var ViewModel = function () {
     self.realm = ko.observable({id: null, name: ''});
     self.realmname = ko.observable('');
     self.charname = ko.observable('');
-    self.ranks = ko.observableArray([])
+    self.ranks = ko.observableArray([]);
 
     self.explainIsVisible = function () {
         return self.realm().id !== null && self.charname() !== '';
@@ -15,7 +15,6 @@ var ViewModel = function () {
             $("#resultRow").show();
             $("#resultTable").dataTable();
             $(".viewdetails").click(function () {
-                console.log("opening that new window now");
                 window.open('https://www.warcraftlogs.com/reports/' + $(this).data('report_id') + '#fight=' + $(this).data('fight_id'), '_blank');
             });
         } else {
