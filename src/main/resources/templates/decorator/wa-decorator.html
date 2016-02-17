@@ -10,7 +10,11 @@
     <meta name="_disqusname" th:content="${@environment.getProperty('com.deswaef.scrappie.disqusname')}"/>
 
     <!-- BOOTSTRAP STYLES-->
-    <link rel="stylesheet" th:href="@{//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css}" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700"/>
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons"/>
+
+    <link rel="stylesheet" th:href="@{//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css}"
+          integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"/>
     <!-- FONTAWESOME STYLES-->
     <link th:href="@{/assets/css/font-awesome.css}" rel="stylesheet"/>
     <!-- MORRIS CHART STYLES-->
@@ -26,8 +30,10 @@
 
     <link th:href="@{/assets/material_design/css/roboto.min.css}" rel="stylesheet"/>
 
-    <link th:href="@{//cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.8/css/bootstrap-material-design.min.css}" rel="stylesheet"/>
-    <link th:href="@{//cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.8/css/ripples.min.css}" rel="stylesheet"/>
+    <link th:href="@{//cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.8/css/bootstrap-material-design.min.css}"
+          rel="stylesheet"/>
+    <link th:href="@{//cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.8/css/ripples.min.css}"
+          rel="stylesheet"/>
     <link th:href="@{/assets/snackbar/snackbar.min.css}" rel="stylesheet"/>
     <link th:href="@{/assets/snackbar/snackbar-material.min.css}" rel="stylesheet"/>
     <div layout:fragment="header"></div>
@@ -62,7 +68,7 @@
                     <!-- settings start -->
                     <li class="dropdown" sec:authorize="isAuthenticated()">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
-                            <i class="fa fa-tasks"></i>
+                            <i class="material-icons">notifications</i>
                             <span class="badge bg-theme" id="notificationCount"></span>
                         </a>
                         <ul id="dropdown-menu-frag" class="dropdown-menu extended tasks-bar">
@@ -112,9 +118,9 @@
                     </ul>
                 </li>
 
-<!--                <li sec:authorize="hasRole('ROLE_ADMIN')">
-                    <a th:href="@{/questions}"><i class="fa fa-question-circle fa-2x"></i> Questions!</a>
-                </li>-->
+                <!--                <li sec:authorize="hasRole('ROLE_ADMIN')">
+                                    <a th:href="@{/questions}"><i class="fa fa-question-circle fa-2x"></i> Questions!</a>
+                                </li>-->
 
                 <li sec:authorize="hasRole('ROLE_ADMIN')">
                     <a href="#"><i class="fa fa-question-circle fa-2x"></i> Questions<span
@@ -157,7 +163,7 @@
                             </a>
                         </li>
                         <li>
-                            <a th:href="@{/raids/3}"> <span class="label label-success">[new]</span> Hellfire Citadel
+                            <a th:href="@{/raids/3}"> Hellfire Citadel
                             </a>
                         </li>
                     </ul>
@@ -271,7 +277,9 @@
 <!-- JQUERY SCRIPTS -->
 <!-- BOOTSTRAP SCRIPTS -->
 <script th:src="@{/assets/js/jquery-1.11.3.min.js}"></script>
-<script th:src="@{//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js}" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+<script th:src="@{//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js}"
+        integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+        crossorigin="anonymous"></script>
 <!-- METISMENU SCRIPTS -->
 <script th:src="@{/assets/js/jquery.metisMenu.js}"></script>
 <!-- CUSTOM SCRIPTS -->
