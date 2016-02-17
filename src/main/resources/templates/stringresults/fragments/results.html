@@ -70,31 +70,40 @@
                         <td th:text="${uielement.rating}"></td>
                         <td>
                             <span data-bind="click: view" th:attr="data-tmw_id=${uielement.id}"
-                                  class="btn btn-success btn-sm"> <i class="mdi-maps-local-library"></i> view</span>
-
+                                  class="btn btn-success btn-sm">
+                                <i class="material-icons">search</i>
+                            </span>
                             <span th:attr="data-tmw_id=${uielement.id},
                             data-share-url=${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/shared/tmw/} + ${uielement.id}"
-                                  class="shareButton btn btn-success btn-sm">
-                                 <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/shared/tmw/} + ${uielement.id}" style="display: none;"></a>
-                                <i class="mdi-social-share">
-
-                            </i>  share link</span>
+                                  class="shareButton btn btn-success btn-xs">
+                                 <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/shared/tmw/} + ${uielement.id}"
+                                    style="display: none;"></a>
+                                 <i class="material-icons">share</i>
+                            </span>
                               <span data-bind="click: report" th:attr="data-tmw_id=${uielement.id}"
-                                    class="btn btn-material-blue-grey btn-xs"> report</span>
-
+                                    class="btn btn-default btn-xs">
+                                <i class="material-icons">report</i>
+                            </span>
                             <span th:attr="data-tmw_id=${uielement.id}" th:if="${uielement.approved == false}"
                                   class="approveButton btn btn-info btn-sm"
-                                  sec:authorize="hasRole('ROLE_ADMIN')"><i class="mdi-action-done"></i> approve</span>
+                                  sec:authorize="hasRole('ROLE_ADMIN')">
+                                <i class="material-icons">done</i>
+                            </span>
                             <span th:attr="data-edit-url=${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/personal/edit/tmw/} + ${uielement.id}"
-                                  class="editButton btn btn-default btn-raised btn-sm"
-                                  sec:authorize="hasRole('ROLE_ADMIN')"><i class="mdi-image-edit"></i> Edit</span>
+                                  class="editButton btn btn-default btn-xs"
+                                  sec:authorize="hasRole('ROLE_ADMIN')">
+                                <i class="material-icons">edit</i>
+                            </span>
                             <span th:attr="data-tmw_id=${uielement.id}"
                                   th:if="${uielement.approved == true}"
-                                  class="disableButton btn btn-warning btn-sm"
-                                  sec:authorize="hasRole('ROLE_ADMIN')"><i class="mdi-action-lock"></i> disable</span>
-                            <span th:attr="data-tmw_id=${uielement.id}" class="deleteButton btn btn-danger btn-sm"
-                                  sec:authorize="hasRole('ROLE_ADMIN')"><i
-                                    class="mdi-av-not-interested"></i> delete</span>
+                                  class="disableButton btn btn-warning btn-xs"
+                                  sec:authorize="hasRole('ROLE_ADMIN')">
+                                <i class="material-icons">lock</i>
+                            </span>
+                            <span th:attr="data-tmw_id=${uielement.id}" class="deleteButton btn btn-danger btn-xs"
+                                  sec:authorize="hasRole('ROLE_ADMIN')">
+                                  <i class="material-icons">delete</i>
+                            </span>
                         </td>
                     </tr>
                     </tbody>
@@ -104,7 +113,9 @@
         </div>
         <div class="row" data-bind="visible: showDetails">
             <div id="details">
-                <h3><span data-bind="text: activeName"></span> <small>{ Last updated in Patch <span data-bind="text: activePatch"></span> }</small></h3>
+                <h3><span data-bind="text: activeName"></span>
+                    <small>{ Last updated in Patch <span data-bind="text: activePatch"></span> }</small>
+                </h3>
 
                 <div class="form-group">
                     <label>Comments</label>
@@ -200,30 +211,41 @@
                     </td>
                     <td th:text="${uielement.rating}"></td>
                     <td>
-                    <span data-bind="click: view" th:attr="data-wa_id=${uielement.id}"
-                          class="btn btn-success btn-sm"> <i class="mdi-maps-local-library"></i> view</span>
-
+                        <span data-bind="click: view" th:attr="data-wa_id=${uielement.id}"
+                              class="btn btn-success btn-xs">
+                                <i class="material-icons">search</i>
+                        </span>
                         <span th:attr="data-wa_id=${uielement.id}, data-share-url=${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/shared/wa/} + ${uielement.id}"
-                              class="shareButton btn btn-success btn-sm">
+                              class="shareButton btn btn-success btn-xs">
                         <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/shared/wa/} + ${uielement.id}"
                            style="display: none;"></a>
-                            <i
-                                class="mdi-social-share"></i> share link</span>
-                        <span data-bind="click: report" th:attr="data-wa_id=${uielement.id}"
-                              class="btn btn-material-blue-grey btn-xs"> report</span>
+                            <i class="material-icons">share</i>
+                        </span>
+                        <span data-bind="click: report" class="btn btn-default btn-xs"
+                              th:attr="data-wa_id=${uielement.id}">
+                            <i class="material-icons">report</i>
+                        </span>
                         <span th:attr="data-wa_id=${uielement.id}"
                               th:if="${uielement.approved == false}"
-                              class="approveButton btn btn-info btn-sm"
-                              sec:authorize="hasRole('ROLE_ADMIN')"><i class="mdi-action-done"></i> approve</span>
+                              class="approveButton btn btn-info btn-xs"
+                              sec:authorize="hasRole('ROLE_ADMIN')">
+                                 <i class="material-icons">done</i>
+                        </span>
                          <span th:attr="data-edit-url=${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/personal/edit/wa/} + ${uielement.id}"
-                               class="editButton btn btn-default btn-raised btn-sm"
-                               sec:authorize="hasRole('ROLE_ADMIN')"><i class="mdi-image-edit"></i> Edit</span>
+                               class="editButton btn btn-default btn-xs"
+                               sec:authorize="hasRole('ROLE_ADMIN')">
+                                 <i class="material-icons">edit</i>
+                        </span>
                         <span th:if="${uielement.approved == true}"
                               th:attr="data-wa_id=${uielement.id}"
-                              class="disableButton btn btn-warning btn-sm"
-                              sec:authorize="hasRole('ROLE_ADMIN')"><i class="mdi-action-lock"></i> disable</span>
-                        <span th:attr="data-wa_id=${uielement.id}" class="deleteButton btn btn-danger btn-sm"
-                              sec:authorize="hasRole('ROLE_ADMIN')"><i class="mdi-av-not-interested"></i> delete</span>
+                              class="disableButton btn btn-warning btn-xs"
+                              sec:authorize="hasRole('ROLE_ADMIN')">
+                                 <i class="material-icons">lock</i>
+                        </span>
+                        <span th:attr="data-wa_id=${uielement.id}" class="deleteButton btn btn-danger btn-xs"
+                              sec:authorize="hasRole('ROLE_ADMIN')">
+                            <i class="material-icons">delete</i>
+                        </span>
                     </td>
                 </tr>
                 </tbody>
@@ -235,7 +257,9 @@
         <div class="row" data-bind="visible: showDetails">
 
             <div id="details">
-                <h3><span data-bind="text: activeName"></span> <small>{ Last updated in Patch <span data-bind="text: activePatch"></span> }</small></h3>
+                <h3><span data-bind="text: activeName"></span>
+                    <small>{ Last updated in Patch <span data-bind="text: activePatch"></span> }</small>
+                </h3>
 
                 <div class="form-group">
                     <label>Comments</label>
@@ -327,28 +351,40 @@
                     </td>
                     <td th:text="${uielement.rating}"></td>
                     <td>
-                    <span data-bind="click: view" th:attr="data-macro_id=${uielement.id}"
-                          class="btn btn-success btn-sm"><i class="mdi-maps-local-library"></i> view</span>
+                        <span data-bind="click: view" th:attr="data-macro_id=${uielement.id}"
+                              class="btn btn-success btn-sm">
+                            <i class="material-icons">search</i>
+                        </span>
                         <span th:attr="data-macro_id=${uielement.id}, data-share-url=${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/shared/macro/} + ${uielement.id}"
-                              class="shareButton btn btn-success btn-sm">
-                            <a style="display: none;" th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/shared/macro/} + ${uielement.id}"></a>
-                            <i
-                                class="mdi-social-share"></i> share link</span>
-                           <span data-bind="click: report" th:attr="data-macro_id=${uielement.id}"
-                                 class="btn btn-material-blue-grey btn-xs"> report</span>
+                              class="shareButton btn btn-success btn-xs">
+                            <a style="display: none;"
+                               th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/shared/macro/} + ${uielement.id}"></a>
+                           <i class="material-icons">share</i>
+                        </span>
+                        <span data-bind="click: report" th:attr="data-macro_id=${uielement.id}"
+                              class="btn btn-default btn-xs">
+                           <i class="material-icons">report</i>
+                        </span>
                         <span th:attr="data-macro_id=${uielement.id}" th:if="${uielement.approved == false}"
-                              class="approveButton btn btn-info btn-sm"
-                              sec:authorize="hasRole('ROLE_ADMIN')"> <i class="mdi-action-done"></i> approve</span>
+                              class="approveButton btn btn-info btn-xs"
+                              sec:authorize="hasRole('ROLE_ADMIN')">
+                            <i class="material-icons">done</i>
+                        </span>
                            <span th:attr="data-edit-url=${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/personal/edit/macro/} + ${uielement.id}"
-                                 class="editButton btn btn-default btn-raised btn-sm"
-                                 sec:authorize="hasRole('ROLE_ADMIN')"><i class="mdi-image-edit"></i> Edit</span>
+                                 class="editButton btn btn-default btn-xs"
+                                 sec:authorize="hasRole('ROLE_ADMIN')">
+                              <i class="material-icons">edit</i>
+                           </span>
                         <span th:if="${uielement.approved == true}"
-                              class="disableButton btn btn-warning btn-sm"
+                              class="disableButton btn btn-warning btn-xs"
                               th:attr="data-macro_id=${uielement.id}"
-                              sec:authorize="hasRole('ROLE_ADMIN')"> <i class="mdi-action-lock"></i> disable</span>
+                              sec:authorize="hasRole('ROLE_ADMIN')">
+                           <i class="material-icons">lock</i>
+                        </span>
                          <span th:attr="data-macro_id=${uielement.id}" class="deleteButton btn btn-danger btn-sm"
-                               sec:authorize="hasRole('ROLE_ADMIN')"> <i
-                                 class="mdi-av-not-interested"></i> delete</span>
+                               sec:authorize="hasRole('ROLE_ADMIN')">
+                             <i class="material-icons">delete</i>
+                         </span>
                     </td>
 
                 </tr>
@@ -358,7 +394,9 @@
         </div>
         <div class="row" data-bind="visible: showDetails">
             <div id="details">
-                <h3><span data-bind="text: activeName"></span> <small>{ Last updated in Patch <span data-bind="text: activePatch"></span> }</small></h3>
+                <h3><span data-bind="text: activeName"></span>
+                    <small>{ Last updated in Patch <span data-bind="text: activePatch"></span> }</small>
+                </h3>
 
                 <div class="form-group">
                     <label>Comments</label>
