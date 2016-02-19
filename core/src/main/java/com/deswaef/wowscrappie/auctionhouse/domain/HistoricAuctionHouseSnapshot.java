@@ -42,7 +42,7 @@ public class HistoricAuctionHouseSnapshot {
     private Double averageBid;
     @Field(type = FieldType.Double)
     private Double averageBuyout;
-    @Field(type = FieldType.Date, format = org.springframework.data.elasticsearch.annotations.DateFormat.custom, pattern = "dd.MM.yyyy hh:mm")
+    @Field(type = FieldType.Date, format = org.springframework.data.elasticsearch.annotations.DateFormat.basic_date_time)
     private Date exportTime;
 
     public String getId() {

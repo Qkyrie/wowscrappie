@@ -1,6 +1,7 @@
 package com.deswaef.wowscrappie.auctionhouse.domain;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.DateFormat;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldIndex;
@@ -25,7 +26,7 @@ public class AuctionItem {
     private long buyout;
     @Field(type = FieldType.Integer, index = FieldIndex.not_analyzed, store = true)
     private int quantity;
-    @Field(type = FieldType.Date, format = org.springframework.data.elasticsearch.annotations.DateFormat.custom, pattern = "dd.MM.yyyy hh:mm", store = true)
+    @Field(type = FieldType.Date, format = DateFormat.basic_date_time, store = true)
     private Date exportTime;
     @Field(type = FieldType.String, index = FieldIndex.not_analyzed, store = true)
     private String timeLeft;
