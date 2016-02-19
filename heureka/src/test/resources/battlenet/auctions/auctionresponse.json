@@ -1,1 +1,8 @@
-{"files":[{"url":"http://auction-api-eu.worldofwarcraft.com/auction-data/7ade86ea7297cd60b95c506eca5aee9d/auctions.json","lastModified":1455296990000}]}
+{
+  "files": [
+    {
+      "url": "http://auction-api-eu.worldofwarcraft.com/auction-data/7ade86ea7297cd60b95c506eca5aee9d/auctions.json",
+      "lastModified": 1455296990000
+    }
+  ]
+}

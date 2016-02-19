@@ -59,7 +59,7 @@ public class BattlenetAuctionsImporterImpl implements BattlenetAuctionsImporter 
                 if (needsUpdate(realm, files)) {
                     AuctionResponse.AuctionResponseFile responseFile = files.get(0);
                     AuctionSnapshot latestSnapshot = auctionFetcher.getLatestSnapshot(responseFile.getUrl());
-                    List<AuctionHouseSnapshot> converted = convert(realm, latestSnapshot.getAuctions(), responseFile);
+                    List<AuctionHouseSnapshot> converted = convert(realm, latestSnapshot.auctions(), responseFile);
                     save(converted);
                     updateSnapshotConfiguration(realm, responseFile);
                 }
@@ -103,7 +103,7 @@ public class BattlenetAuctionsImporterImpl implements BattlenetAuctionsImporter 
     private List<AuctionHouseSnapshot> convert(Realm realm, List<AuctionItem> auctionItems, AuctionResponse.AuctionResponseFile responseFile) {
         Map<Long, List<AuctionItem>> mapPerItem = auctionItems
                 .stream()
-                .collect(Collectors.groupingBy(AuctionItem::getItem));
+                .collect(Collectors.groupingBy(AuctionItem::item));
         List<AuctionHouseSnapshot> generatedSnapshots = new ArrayList<>();
         for (Map.Entry<Long, List<AuctionItem>> auctionsPerItem : mapPerItem.entrySet()) {
             Optional<AuctionHouseSnapshot> generatedAuctionHouseSnapshot = snapshotFromEntry(realm, responseFile, auctionsPerItem);
@@ -122,12 +122,12 @@ public class BattlenetAuctionsImporterImpl implements BattlenetAuctionsImporter 
 
             DoubleSummaryStatistics bidStatistics = auctionsPerItem.getValue()
                     .stream()
-                    .mapToDouble(a -> a.getBid() / a.getQuantity())
+                    .mapToDouble(a -> a.bid() / a.quantity())
                     .summaryStatistics();
 
             DoubleSummaryStatistics buyoutStatistics = auctionsPerItem.getValue()
                     .stream()
-                    .mapToDouble(a -> a.getBuyout() / a.getQuantity())
+                    .mapToDouble(a -> a.buyout() / a.quantity())
                     .summaryStatistics();
 
             return Optional.ofNullable(new AuctionHouseSnapshot()
@@ -140,7 +140,7 @@ public class BattlenetAuctionsImporterImpl implements BattlenetAuctionsImporter 
                     .setAverageBuyout(buyoutStatistics.getAverage())
                     .setQuantity(auctionsPerItem.getValue()
                             .stream()
-                            .mapToLong(AuctionItem::getQuantity)
+                            .mapToLong(AuctionItem::quantity)
                             .count()
                     )
                     .setExportTime(new Date(responseFile.getLastModified()))
