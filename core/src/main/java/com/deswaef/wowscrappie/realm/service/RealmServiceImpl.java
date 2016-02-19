@@ -47,6 +47,12 @@ public class RealmServiceImpl implements RealmService {
 
     @Override
     @Transactional(readOnly = true)
+    public Optional<Realm> findBySlugAndLocality(String slug, Locality locality) {
+        return realmRepository.findBySlugAndLocality(slug, locality);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public Observable<Realm> findAll() {
         return Observable.from(realmRepository.findAll());
     }

@@ -3,6 +3,7 @@ package com.deswaef.heureka.battlenet.wow.continuous;
 import com.deswaef.heureka.battlenet.wow.AuctionFetcher;
 import com.deswaef.heureka.battlenet.wow.auctions.client.domain.AuctionItem;
 import com.deswaef.heureka.battlenet.wow.auctions.client.domain.AuctionResponse;
+import com.deswaef.heureka.battlenet.wow.auctions.client.domain.RealmItem;
 import com.deswaef.heureka.battlenet.wow.domain.AuctionSnapshot;
 import com.deswaef.heureka.infrastructure.exception.HeurekaException;
 import com.deswaef.heureka.wowhead.client.ItemFetchingService;
@@ -10,28 +11,34 @@ import com.deswaef.wowscrappie.auctionhouse.domain.AuctionHouseSnapshot;
 import com.deswaef.wowscrappie.auctionhouse.domain.AuctionHouseSnapshotConfiguration;
 import com.deswaef.wowscrappie.auctionhouse.repository.AuctionHouseSnapshotConfigurationRepository;
 import com.deswaef.wowscrappie.auctionhouse.repository.AuctionHouseSnapshotRepository;
+import com.deswaef.wowscrappie.auctionhouse.repository.AuctionItemRepository;
 import com.deswaef.wowscrappie.item.domain.Item;
 import com.deswaef.wowscrappie.item.repository.ItemRepository;
+import com.deswaef.wowscrappie.realm.domain.Locality;
 import com.deswaef.wowscrappie.realm.domain.Realm;
 import com.deswaef.wowscrappie.realm.repository.RealmRepository;
+import com.deswaef.wowscrappie.realm.service.RealmService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
-import java.util.DoubleSummaryStatistics;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static com.deswaef.heureka.battlenet.wow.auctions.client.domain.AuctionItem.convert;
+
 @Service
 public class BattlenetAuctionsImporterImpl implements BattlenetAuctionsImporter {
 
-    private Log logger = LogFactory.getLog(this.getClass());
+    private Log LOG = LogFactory.getLog(this.getClass());
 
     @Autowired
     private AuctionFetcher auctionFetcher;
@@ -45,6 +52,10 @@ public class BattlenetAuctionsImporterImpl implements BattlenetAuctionsImporter 
     private ItemFetchingService itemFetchingService;
     @Autowired
     private RealmRepository realmRepository;
+    @Autowired
+    private RealmService realmService;
+    @Autowired
+    private AuctionItemRepository auctionItemRepository;
 
     @Transactional
     public void importAuctions(long l) {
@@ -53,40 +64,73 @@ public class BattlenetAuctionsImporterImpl implements BattlenetAuctionsImporter 
 
     private void importAuctions(Realm realm) {
         try {
-            AuctionResponse latestAuctionInformation = auctionFetcher.getLatestAuctionInformation(realm);
-            List<AuctionResponse.AuctionResponseFile> files = latestAuctionInformation.getFiles();
-            if (!files.isEmpty()) {
-                if (needsUpdate(realm, files)) {
-                    AuctionResponse.AuctionResponseFile responseFile = files.get(0);
-                    AuctionSnapshot latestSnapshot = auctionFetcher.getLatestSnapshot(responseFile.getUrl());
-                    List<AuctionHouseSnapshot> converted = convert(realm, latestSnapshot.auctions(), responseFile);
-                    save(converted);
-                    updateSnapshotConfiguration(realm, responseFile);
-                }
+            List<AuctionResponse.AuctionResponseFile> files = auctionFetcher.getLatestAuctionInformation(realm).getFiles();
+            if (!files.isEmpty() && needsUpdate(realm, files)) {
+                files
+                        .stream()
+                        .forEach(responseFile -> {
+                            AuctionSnapshot latestSnapshot = auctionFetcher.getLatestSnapshot(responseFile.getUrl());
+
+
+                            saveStatisticsToDatabase(
+                                    convertToStatistics(realm, latestSnapshot.auctions(), responseFile)
+                            );
+
+                            saveAuctionsToElasticSearch(
+                                    realm.getLocality().getLocalityName(),
+                                    latestSnapshot.auctions(),
+                                    responseFile.getLastModified()
+                            );
+
+                            updateSnapshotConfiguration(realm.getLocality(), responseFile, latestSnapshot.realms());
+                        });
+            } else {
+                LOG.debug(String.format("Either there were no files, or we didn't need to update %s-%s yet", realm.getLocality().getLocalityName(), realm.getName()));
             }
-        } catch (HeurekaException e) {
-            throw new HeurekaException(String.format("unable to import auctions for realm %s", realm.getName()), e);
+        } catch (Exception e) {
+            throw new HeurekaException(String.format("unable to import auctions for realm %s-%s", realm.getLocality().getLocalityName(), realm.getName()), e);
         }
     }
 
-    private void updateSnapshotConfiguration(Realm realm, AuctionResponse.AuctionResponseFile auctionSnapshot) {
-        Optional<AuctionHouseSnapshotConfiguration> byRealmId = auctionHouseSnapshotConfigurationRepository.findByRealmId(realm.getId());
-        if (byRealmId.isPresent()) {
-            AuctionHouseSnapshotConfiguration generatedSnapshotRealmConfiguration = byRealmId.get();
-            generatedSnapshotRealmConfiguration
-                    .setLastUpdate(new Date(auctionSnapshot.getLastModified()))
-                    .setNeedsUpdate(false);
-            auctionHouseSnapshotConfigurationRepository.save(generatedSnapshotRealmConfiguration);
-        } else {
-            AuctionHouseSnapshotConfiguration generatedSnapshotRealmConfiguration = new AuctionHouseSnapshotConfiguration()
-                    .setLastUpdate(new Date(auctionSnapshot.getLastModified()))
-                    .setNeedsUpdate(false)
-                    .setRealm(realm);
-            auctionHouseSnapshotConfigurationRepository.save(generatedSnapshotRealmConfiguration);
-        }
+    private void saveAuctionsToElasticSearch(String localityName, List<AuctionItem> auctions, Long lastModified) {
+        Date exportTime = new Date(lastModified);
+        auctionItemRepository
+                .save(
+                        auctions
+                                .parallelStream()
+                                .map(auction -> convert.apply(auction))
+                                .map(auction -> auction.setExportTime(exportTime).setLocality(localityName))
+                                .collect(Collectors.toList())
+                );
     }
 
-    private void save(List<AuctionHouseSnapshot> converted) {
+    private void updateSnapshotConfiguration(Locality locality, AuctionResponse.AuctionResponseFile auctionSnapshot, List<RealmItem> realms) {
+        realms
+                .stream()
+                .forEach(
+                        realm -> {
+                            Optional<Realm> bySlugAndLocality = realmService.findBySlugAndLocality(realm.slug(), locality);
+                            bySlugAndLocality.ifPresent(x -> {
+                                Optional<AuctionHouseSnapshotConfiguration> byRealmId = auctionHouseSnapshotConfigurationRepository.findByRealmId(x.getId());
+                                if (byRealmId.isPresent()) {
+                                    AuctionHouseSnapshotConfiguration generatedSnapshotRealmConfiguration = byRealmId.get();
+                                    generatedSnapshotRealmConfiguration
+                                            .setLastUpdate(new Date(auctionSnapshot.getLastModified()))
+                                            .setNeedsUpdate(false);
+                                    auctionHouseSnapshotConfigurationRepository.save(generatedSnapshotRealmConfiguration);
+                                } else {
+                                    AuctionHouseSnapshotConfiguration generatedSnapshotRealmConfiguration = new AuctionHouseSnapshotConfiguration()
+                                            .setLastUpdate(new Date(auctionSnapshot.getLastModified()))
+                                            .setNeedsUpdate(false)
+                                            .setRealm(x);
+                                    auctionHouseSnapshotConfigurationRepository.save(generatedSnapshotRealmConfiguration);
+                                }
+                            });
+                        }
+                );
+    }
+
+    private void saveStatisticsToDatabase(List<AuctionHouseSnapshot> converted) {
         converted
                 .stream()
                 .forEach(convert -> {
@@ -95,12 +139,12 @@ public class BattlenetAuctionsImporterImpl implements BattlenetAuctionsImporter 
                                 convert.setItem(getItemOrFetchFromWowhead(convert.getItem().getId()))
                         );
                     } catch (Exception ex) {
-                        logger.error("unable to save an auction", ex);
+                        LOG.error("unable to save an auction", ex);
                     }
                 });
     }
 
-    private List<AuctionHouseSnapshot> convert(Realm realm, List<AuctionItem> auctionItems, AuctionResponse.AuctionResponseFile responseFile) {
+    private List<AuctionHouseSnapshot> convertToStatistics(Realm realm, List<AuctionItem> auctionItems, AuctionResponse.AuctionResponseFile responseFile) {
         Map<Long, List<AuctionItem>> mapPerItem = auctionItems
                 .stream()
                 .collect(Collectors.groupingBy(AuctionItem::item));
@@ -118,36 +162,59 @@ public class BattlenetAuctionsImporterImpl implements BattlenetAuctionsImporter 
 
     private Optional<AuctionHouseSnapshot> snapshotFromEntry(Realm realm, AuctionResponse.AuctionResponseFile responseFile, Map.Entry<Long, List<AuctionItem>> auctionsPerItem) {
         try {
-
-
-            DoubleSummaryStatistics bidStatistics = auctionsPerItem.getValue()
+            //calculate total count for items
+            long totalQuantity = auctionsPerItem
+                    .getValue()
                     .stream()
-                    .mapToDouble(a -> a.bid() / a.quantity())
-                    .summaryStatistics();
+                    .mapToLong(AuctionItem::quantity)
+                    .sum();
 
-            DoubleSummaryStatistics buyoutStatistics = auctionsPerItem.getValue()
+            DescriptiveStatistics bidStatistics = new DescriptiveStatistics();
+
+            auctionsPerItem
+                    .getValue()
                     .stream()
-                    .mapToDouble(a -> a.buyout() / a.quantity())
-                    .summaryStatistics();
+                    .map(value -> {
+                        List<Double> bidList = new ArrayList<>();
+                        for (int i = 0; i < value.quantity(); i++) {
+                            bidList.add((double) (value.bid() / value.quantity()));
+                        }
+                        return bidList;
+                    })
+                    .flatMap(Collection::stream)
+                    .forEach(bidStatistics::addValue);
 
+            DescriptiveStatistics buyoutStatistics = new DescriptiveStatistics();
+
+            auctionsPerItem
+                    .getValue()
+                    .stream()
+                    .map(value -> {
+                        List<Double> buyoutList = new ArrayList<>();
+                        for (int i = 0; i < value.quantity(); i++) {
+                            buyoutList.add((double) (value.buyout() / value.quantity()));
+                        }
+                        return buyoutList;
+                    })
+                    .flatMap(Collection::stream)
+                    .forEach(buyoutStatistics::addValue);
             return Optional.ofNullable(new AuctionHouseSnapshot()
                     .setRealm(realm)
                     .setMinimumBid(bidStatistics.getMin())
                     .setMaximumBid(bidStatistics.getMax())
-                    .setAverageBid(bidStatistics.getAverage())
+                    .setAverageBid(bidStatistics.getMean())
+                    .setMedianBid(bidStatistics.getPercentile(50))
+                    .setStdevBid(bidStatistics.getStandardDeviation())
                     .setMinimumBuyout(buyoutStatistics.getMin())
                     .setMaximumBuyout(buyoutStatistics.getMax())
-                    .setAverageBuyout(buyoutStatistics.getAverage())
-                    .setQuantity(auctionsPerItem.getValue()
-                            .stream()
-                            .mapToLong(AuctionItem::quantity)
-                            .count()
-                    )
+                    .setAverageBuyout(buyoutStatistics.getMean())
+                    .setMedianBuyout(buyoutStatistics.getPercentile(50))
+                    .setQuantity(totalQuantity)
                     .setExportTime(new Date(responseFile.getLastModified()))
                     .setItem(getOrUpdateItem(auctionsPerItem.getKey()))
             );
         } catch (HeurekaException e) {
-            logger.info(String.format("Item could not be fetched from wowhead, should try again later: %s", e.getMessage()));
+            LOG.info(String.format("Item could not be fetched from wowhead, should try again later: %s", e.getMessage()));
             return Optional.empty();
         }
     }

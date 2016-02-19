@@ -1,23 +1,23 @@
 package com.deswaef.heureka.battlenet.wow.auctions.client.domain;
 
 public class ModifierDto {
-    private long type;
-    private long value;
+    private int type;
+    private int value;
 
-    public long type() {
+    public int type() {
         return type;
     }
 
-    public ModifierDto type(long type) {
+    public ModifierDto type(int type) {
         this.type = type;
         return this;
     }
 
-    public long value() {
+    public int value() {
         return value;
     }
 
-    public ModifierDto value(long value) {
+    public ModifierDto value(int value) {
         this.value = value;
         return this;
     }

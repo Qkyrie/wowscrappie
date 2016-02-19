@@ -27,6 +27,7 @@ public class AuctionsImportScheduler {
     @PostConstruct
     @Scheduled(fixedDelay = 60_000)
     public void importJob() {
+        LOG.debug("Starting importJob");
         findConfigurationsThatNeedUpdates()
                 .forEach(
                         element -> {
@@ -35,6 +36,7 @@ public class AuctionsImportScheduler {
                             LOG.debug(String.format("started running for configuration %s", element));
                         }
                 );
+        LOG.debug("End of ImportJob");
     }
 
 

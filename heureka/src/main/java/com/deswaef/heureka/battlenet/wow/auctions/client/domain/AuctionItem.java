@@ -1,11 +1,50 @@
 package com.deswaef.heureka.battlenet.wow.auctions.client.domain;
 
+import com.deswaef.wowscrappie.auctionhouse.domain.AuctionItemBonusList;
+import com.deswaef.wowscrappie.auctionhouse.domain.AuctionItemModifier;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class AuctionItem {
-    private Long auc;
-    private Long item;
+
+    public static Function<AuctionItem, com.deswaef.wowscrappie.auctionhouse.domain.AuctionItem> convert = auctionItem -> {
+        com.deswaef.wowscrappie.auctionhouse.domain.AuctionItem returnItem = new com.deswaef.wowscrappie.auctionhouse.domain.AuctionItem()
+                .setId(auctionItem.auc())
+                .setItem(auctionItem.item())
+                .setOwner(auctionItem.owner())
+                .setBid(auctionItem.bid())
+                .setBuyout(auctionItem.buyout())
+                .setQuantity(auctionItem.quantity())
+                .setTimeLeft(auctionItem.timeLeft())
+                .setOwnerRealm(auctionItem.ownerRealm())
+                .setContext(auctionItem.context())
+                .setPetSpeciesId(auctionItem.petSpeciesId())
+                .setPetBreedId(auctionItem.petBreedId())
+                .setPetLevel(auctionItem.petLevel())
+                .setPetQualityId(auctionItem.petQualityId());
+
+        returnItem
+                .setBonusLists(
+                        auctionItem.bonusLists()
+                                .stream()
+                                .map(x -> new AuctionItemBonusList().setBonusListId(x.bonusListId()))
+                                .collect(Collectors.toList())
+                );
+        returnItem
+                .setModifiers(
+                        auctionItem.modifiers()
+                                .stream()
+                                .map(x -> new AuctionItemModifier().setType(x.type()).setValue(x.value()))
+                                .collect(Collectors.toList())
+                );
+        return returnItem;
+    };
+
+    private long auc;
+    private long item;
     private String owner;
     private Long bid;
     private Long buyout;

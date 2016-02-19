@@ -36,6 +36,14 @@ public class AuctionHouseSnapshot {
     private Double averageBid;
     @Column(name = "average_buyout")
     private Double averageBuyout;
+    @Column(name = "median_bid")
+    private Double medianBid;
+    @Column(name = "median_buyout")
+    private Double medianBuyout;
+    @Column(name = "stdev_bid")
+    private Double stdevBid;
+    @Column(name = "stdev_buyout")
+    private Double stdevBuyout;
     @Column(name = "exportTime")
     @Temporal(TemporalType.TIMESTAMP)
     private Date exportTime;
@@ -139,4 +147,39 @@ public class AuctionHouseSnapshot {
         return this;
     }
 
+    public Double getMedianBid() {
+        return medianBid;
+    }
+
+    public AuctionHouseSnapshot setMedianBid(Double medianBid) {
+        this.medianBid = medianBid;
+        return this;
+    }
+
+    public Double getMedianBuyout() {
+        return medianBuyout;
+    }
+
+    public AuctionHouseSnapshot setMedianBuyout(Double medianBuyout) {
+        this.medianBuyout = medianBuyout;
+        return this;
+    }
+
+    public Double getStdevBid() {
+        return stdevBid;
+    }
+
+    public AuctionHouseSnapshot setStdevBid(Double stdevBid) {
+        this.stdevBid = stdevBid;
+        return this;
+    }
+
+    public Double getStdevBuyout() {
+        return stdevBuyout;
+    }
+
+    public AuctionHouseSnapshot setStdevBuyout(Double stdevBuyout) {
+        this.stdevBuyout = stdevBuyout;
+        return this;
+    }
 }

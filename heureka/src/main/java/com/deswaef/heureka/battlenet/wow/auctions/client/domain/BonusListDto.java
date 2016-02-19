@@ -1,13 +1,13 @@
 package com.deswaef.heureka.battlenet.wow.auctions.client.domain;
 
 public class BonusListDto {
-    private long bonusListId;
+    private int bonusListId;
 
-    public long bonusListId() {
+    public int bonusListId() {
         return bonusListId;
     }
 
-    public BonusListDto bonusListId(long bonusListId) {
+    public BonusListDto bonusListId(int bonusListId) {
         this.bonusListId = bonusListId;
         return this;
     }
