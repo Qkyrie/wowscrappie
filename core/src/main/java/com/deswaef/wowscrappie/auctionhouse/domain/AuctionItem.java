@@ -37,6 +37,7 @@ public class AuctionItem {
     private long context;
     @Field(type = FieldType.Nested)
     private List<AuctionItemModifier> modifiers = new ArrayList<>();
+    @Field(type = FieldType.Nested)
     private List<AuctionItemBonusList> bonusLists = new ArrayList<>();
 
     @Field(type = FieldType.Long, index = FieldIndex.not_analyzed, store = true)

@@ -24,7 +24,6 @@ public class AuctionsImportScheduler {
     @Autowired
     private BattlenetAuctionsImporter importer;
 
-    @PostConstruct
     @Scheduled(fixedDelay = 60_000)
     public void importJob() {
         LOG.debug("Starting importJob");
