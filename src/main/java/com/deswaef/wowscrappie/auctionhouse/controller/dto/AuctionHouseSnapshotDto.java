@@ -62,7 +62,9 @@ public class AuctionHouseSnapshotDto implements Serializable {
         return this;
     }
 
-    public GoldDto setMaximumBidCoppers() {
+
+
+    public GoldDto getMaximumBidCoppers() {
         return maximumBidCoppers;
     }
 
