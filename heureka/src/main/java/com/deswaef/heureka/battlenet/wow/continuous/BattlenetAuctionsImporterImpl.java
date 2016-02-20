@@ -34,10 +34,12 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.deswaef.heureka.battlenet.wow.auctions.client.domain.AuctionItem.convert;
+import static java.lang.Double.NaN;
 
 @Service
 public class BattlenetAuctionsImporterImpl implements BattlenetAuctionsImporter {
 
+    public static final double EMPTY = 0.00;
     private Log LOG = LogFactory.getLog(this.getClass());
 
     @Autowired
@@ -177,7 +179,9 @@ public class BattlenetAuctionsImporterImpl implements BattlenetAuctionsImporter 
                     .map(value -> {
                         List<Double> bidList = new ArrayList<>();
                         for (int i = 0; i < value.quantity(); i++) {
-                            bidList.add((double) (value.bid() / value.quantity()));
+                            if (value.bid() != null && value.bid() > 0) {
+                                bidList.add((double) (value.bid() / value.quantity()));
+                            }
                         }
                         return bidList;
                     })
@@ -192,12 +196,15 @@ public class BattlenetAuctionsImporterImpl implements BattlenetAuctionsImporter 
                     .map(value -> {
                         List<Double> buyoutList = new ArrayList<>();
                         for (int i = 0; i < value.quantity(); i++) {
-                            buyoutList.add((double) (value.buyout() / value.quantity()));
+                            if (value.buyout() != null && value.buyout() > 0) {
+                                buyoutList.add((double) (value.buyout() / value.quantity()));
+                            }
                         }
                         return buyoutList;
                     })
                     .flatMap(Collection::stream)
                     .forEach(buyoutStatistics::addValue);
+
             return Optional.ofNullable(new AuctionHouseSnapshot()
                     .setRealm(realm)
                     .setMinimumBid(bidStatistics.getMin())
@@ -205,10 +212,11 @@ public class BattlenetAuctionsImporterImpl implements BattlenetAuctionsImporter 
                     .setAverageBid(bidStatistics.getMean())
                     .setMedianBid(bidStatistics.getPercentile(50))
                     .setStdevBid(bidStatistics.getStandardDeviation())
-                    .setMinimumBuyout(buyoutStatistics.getMin())
-                    .setMaximumBuyout(buyoutStatistics.getMax())
-                    .setAverageBuyout(buyoutStatistics.getMean())
-                    .setMedianBuyout(buyoutStatistics.getPercentile(50))
+                    .setStdevBuyout(Double.compare(buyoutStatistics.getStandardDeviation(), NaN) == 0 ? EMPTY : buyoutStatistics.getStandardDeviation())
+                    .setMinimumBuyout(Double.compare(buyoutStatistics.getMin(), NaN) == 0 ? EMPTY : buyoutStatistics.getMin())
+                    .setMaximumBuyout(Double.compare(buyoutStatistics.getMax(), NaN) == 0 ? EMPTY : buyoutStatistics.getMax())
+                    .setAverageBuyout(Double.compare(buyoutStatistics.getMean(), NaN) == 0 ? EMPTY : buyoutStatistics.getMean())
+                    .setMedianBuyout(Double.compare(buyoutStatistics.getPercentile(50), NaN) == 0  ? EMPTY : buyoutStatistics.getPercentile(50))
                     .setQuantity(totalQuantity)
                     .setExportTime(new Date(responseFile.getLastModified()))
                     .setItem(getOrUpdateItem(auctionsPerItem.getKey()))

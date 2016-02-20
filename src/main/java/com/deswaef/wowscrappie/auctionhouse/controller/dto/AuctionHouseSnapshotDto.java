@@ -9,21 +9,23 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import static com.deswaef.wowscrappie.auctionhouse.controller.dto.GoldDto.fromDouble;
-
 public class AuctionHouseSnapshotDto implements Serializable {
 
     private static final PrettyTime PRETTY_TIME = new PrettyTime(Locale.ENGLISH);
     private static final DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:ss");
 
 
-    private GoldDto minimumBidCoppers;
-    private GoldDto maximumBidCoppers;
-    private GoldDto minimumBuyoutCoppers;
-    private GoldDto maximumBuyoutCoppers;
+    private double minimumBidCoppers;
+    private double maximumBidCoppers;
+    private double minimumBuyoutCoppers;
+    private double maximumBuyoutCoppers;
+    private double medianBidCoppers;
+    private double medianBuyoutCoppers;
+    private double stdevBidCoppers;
+    private double stdevBuyoutCoppers;
     private long quantity;
-    private GoldDto averageBidCoppers;
-    private GoldDto averageBuyoutCoppers;
+    private double averageBidCoppers;
+    private double averageBuyoutCoppers;
     private String exportTimePretty;
     private String actualExportTime;
     private Date exportTime;
@@ -37,12 +39,16 @@ public class AuctionHouseSnapshotDto implements Serializable {
 
     public static AuctionHouseSnapshotDto from(AuctionHouseSnapshot auctionHouseSnapshot) {
         return new AuctionHouseSnapshotDto()
-                .setMinimumBidCoppers(fromDouble(auctionHouseSnapshot.getMinimumBid()))
-                .setMaximumBidCoppers(fromDouble(auctionHouseSnapshot.getMaximumBid()))
-                .setMinimumBuyoutCoppers(fromDouble(auctionHouseSnapshot.getMinimumBuyout()))
-                .setMaximumBuyoutCoppers(fromDouble(auctionHouseSnapshot.getMaximumBuyout()))
-                .setAverageBidCoppers(fromDouble(auctionHouseSnapshot.getAverageBid()))
-                .setAverageBuyoutCoppers(fromDouble(auctionHouseSnapshot.getAverageBuyout()))
+                .setMinimumBidCoppers(auctionHouseSnapshot.getMinimumBid())
+                .setMaximumBidCoppers((auctionHouseSnapshot.getMaximumBid()))
+                .setMinimumBuyoutCoppers(auctionHouseSnapshot.getMinimumBuyout())
+                .setMaximumBuyoutCoppers((auctionHouseSnapshot.getMaximumBuyout()))
+                .setAverageBidCoppers((auctionHouseSnapshot.getAverageBid()))
+                .setAverageBuyoutCoppers((auctionHouseSnapshot.getAverageBuyout()))
+                .setMedianBuyoutCoppers(auctionHouseSnapshot.getMedianBuyout())
+                .setMedianBidCoppers(auctionHouseSnapshot.getMedianBid())
+                .setStdevBidCoppers(auctionHouseSnapshot.getStdevBid())
+                .setStdevBuyoutCoppers(auctionHouseSnapshot.getStdevBuyout())
                 .setQuantity(auctionHouseSnapshot.getQuantity())
                 .setItemId(auctionHouseSnapshot.getItem().getId())
                 .setItemName(auctionHouseSnapshot.getItem().getName())
@@ -53,41 +59,75 @@ public class AuctionHouseSnapshotDto implements Serializable {
                 .setActualExportTime(dateFormat.format(auctionHouseSnapshot.getExportTime()));
     }
 
-    public GoldDto getMinimumBidCoppers() {
+    public double getMinimumBidCoppers() {
         return minimumBidCoppers;
     }
 
-    public AuctionHouseSnapshotDto setMinimumBidCoppers(GoldDto minimumBidCoppers) {
+    public AuctionHouseSnapshotDto setMinimumBidCoppers(double minimumBidCoppers) {
         this.minimumBidCoppers = minimumBidCoppers;
         return this;
     }
 
-
-
-    public GoldDto getMaximumBidCoppers() {
+    public double getMaximumBidCoppers() {
         return maximumBidCoppers;
     }
 
-    public AuctionHouseSnapshotDto setMaximumBidCoppers(GoldDto maximumBidCoppers) {
+    public AuctionHouseSnapshotDto setMaximumBidCoppers(double maximumBidCoppers) {
         this.maximumBidCoppers = maximumBidCoppers;
         return this;
     }
 
-    public GoldDto getMinimumBuyoutCoppers() {
+    public double getMinimumBuyoutCoppers() {
         return minimumBuyoutCoppers;
     }
 
-    public AuctionHouseSnapshotDto setMinimumBuyoutCoppers(GoldDto minimumBuyoutCoppers) {
+    public AuctionHouseSnapshotDto setMinimumBuyoutCoppers(double minimumBuyoutCoppers) {
         this.minimumBuyoutCoppers = minimumBuyoutCoppers;
         return this;
     }
 
-    public GoldDto getMaximumBuyoutCoppers() {
+    public double getMaximumBuyoutCoppers() {
         return maximumBuyoutCoppers;
     }
 
-    public AuctionHouseSnapshotDto setMaximumBuyoutCoppers(GoldDto maximumBuyoutCoppers) {
+    public AuctionHouseSnapshotDto setMaximumBuyoutCoppers(double maximumBuyoutCoppers) {
         this.maximumBuyoutCoppers = maximumBuyoutCoppers;
+        return this;
+    }
+
+    public double getMedianBidCoppers() {
+        return medianBidCoppers;
+    }
+
+    public AuctionHouseSnapshotDto setMedianBidCoppers(double medianBidCoppers) {
+        this.medianBidCoppers = medianBidCoppers;
+        return this;
+    }
+
+    public double getMedianBuyoutCoppers() {
+        return medianBuyoutCoppers;
+    }
+
+    public AuctionHouseSnapshotDto setMedianBuyoutCoppers(double medianBuyoutCoppers) {
+        this.medianBuyoutCoppers = medianBuyoutCoppers;
+        return this;
+    }
+
+    public double getStdevBidCoppers() {
+        return stdevBidCoppers;
+    }
+
+    public AuctionHouseSnapshotDto setStdevBidCoppers(double stdevBidCoppers) {
+        this.stdevBidCoppers = stdevBidCoppers;
+        return this;
+    }
+
+    public double getStdevBuyoutCoppers() {
+        return stdevBuyoutCoppers;
+    }
+
+    public AuctionHouseSnapshotDto setStdevBuyoutCoppers(double stdevBuyoutCoppers) {
+        this.stdevBuyoutCoppers = stdevBuyoutCoppers;
         return this;
     }
 
@@ -100,20 +140,20 @@ public class AuctionHouseSnapshotDto implements Serializable {
         return this;
     }
 
-    public GoldDto getAverageBidCoppers() {
+    public double getAverageBidCoppers() {
         return averageBidCoppers;
     }
 
-    public AuctionHouseSnapshotDto setAverageBidCoppers(GoldDto averageBidCoppers) {
+    public AuctionHouseSnapshotDto setAverageBidCoppers(double averageBidCoppers) {
         this.averageBidCoppers = averageBidCoppers;
         return this;
     }
 
-    public GoldDto getAverageBuyoutCoppers() {
+    public double getAverageBuyoutCoppers() {
         return averageBuyoutCoppers;
     }
 
-    public AuctionHouseSnapshotDto setAverageBuyoutCoppers(GoldDto averageBuyoutCoppers) {
+    public AuctionHouseSnapshotDto setAverageBuyoutCoppers(double averageBuyoutCoppers) {
         this.averageBuyoutCoppers = averageBuyoutCoppers;
         return this;
     }

@@ -74,8 +74,8 @@ var SingleItemSearchModel = function () {
                     bindto: '#resultChartSingle',
                     data: {
                         columns: [
-                            ['item', data.minimumBidCoppers.fullCoppers, data.averageBidCoppers.fullCoppers, data.maximumBidCoppers.fullCoppers,
-                                data.minimumBuyoutCoppers.fullCoppers, data.averageBuyoutCoppers.fullCoppers, data.maximumBuyoutCoppers.fullCoppers]
+                            ['item', data.minimumBidCoppers, data.averageBidCoppers, data.maximumBidCoppers,
+                                data.minimumBuyoutCoppers, data.averageBuyoutCoppers, data.maximumBuyoutCoppers]
                         ],
                         type: 'bar',
                         color: function (color, d) {
@@ -104,8 +104,8 @@ var SingleItemSearchModel = function () {
             } else {
                 self.chart.load({
                     columns: [
-                        ['item', data.minimumBidCoppers.fullCoppers, data.averageBidCoppers.fullCoppers, data.maximumBidCoppers.fullCoppers,
-                            data.minimumBuyoutCoppers.fullCoppers, data.averageBuyoutCoppers.fullCoppers, data.maximumBuyoutCoppers.fullCoppers]
+                        ['item', data.minimumBidCoppers, data.averageBidCoppers, data.maximumBidCoppers,
+                            data.minimumBuyoutCoppers, data.averageBuyoutCoppers, data.maximumBuyoutCoppers]
                     ]
                 });
             }
@@ -188,8 +188,8 @@ var CompareItemSearchModel = function() {
                     bindto: '#resultChartCompare',
                     data: {
                         columns: [
-                            [data.itemName + '-' + data.realmName, data.minimumBidCoppers.fullCoppers, data.averageBidCoppers.fullCoppers, data.maximumBidCoppers.fullCoppers,
-                                data.minimumBuyoutCoppers.fullCoppers, data.averageBuyoutCoppers.fullCoppers, data.maximumBuyoutCoppers.fullCoppers]
+                            [data.itemName + '-' + data.realmName, data.minimumBidCoppers, data.averageBidCoppers, data.maximumBidCoppers,
+                                data.minimumBuyoutCoppers, data.averageBuyoutCoppers, data.maximumBuyoutCoppers]
                         ],
                         type: 'bar',
                         labels: {
@@ -214,8 +214,8 @@ var CompareItemSearchModel = function() {
             } else {
                 self.chart.load({
                     columns: [
-                        [data.itemName + '-' + data.realmName, data.minimumBidCoppers.fullCoppers, data.averageBidCoppers.fullCoppers, data.maximumBidCoppers.fullCoppers,
-                            data.minimumBuyoutCoppers.fullCoppers, data.averageBuyoutCoppers.fullCoppers, data.maximumBuyoutCoppers.fullCoppers]
+                        [data.itemName + '-' + data.realmName, data.minimumBidCoppers, data.averageBidCoppers, data.maximumBidCoppers,
+                            data.minimumBuyoutCoppers, data.averageBuyoutCoppers, data.maximumBuyoutCoppers]
                     ]
                 });
             }
