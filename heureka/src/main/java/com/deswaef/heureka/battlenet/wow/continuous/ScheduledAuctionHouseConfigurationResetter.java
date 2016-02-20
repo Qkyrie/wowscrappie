@@ -14,7 +14,7 @@ public class ScheduledAuctionHouseConfigurationResetter {
     @Autowired
     private AuctionHouseSnapshotConfigurationService auctionHouseSnapshotConfigurationService;
 
-    @Scheduled(cron = "0 0 0,12 * * *")
+    @Scheduled(cron = "0 0 */1 * * *")
     public void resetSchedule() {
         auctionHouseSnapshotConfigurationService
                 .findAll()

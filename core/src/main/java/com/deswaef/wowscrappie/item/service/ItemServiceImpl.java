@@ -26,7 +26,14 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Observable<Item> findAll() {
         return Observable.from(itemRepository.findAll());
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Observable<Item> findByNameQuery(String query) {
+        return Observable.from(itemRepository.findTop20ByNameContainingIgnoreCase(query));
     }
 }

@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
@@ -41,10 +42,11 @@ public class HistoricAuctionsToElasticSearchExporter implements AuctionsExporter
     private void exportForOldDate(Date element, Realm realm) {
         List<AuctionHouseSnapshot> auctionsnapshots = auctionHouseSnapshotRepository.findByExportTimeBeforeAndRealm(element, realm);
         if (!auctionsnapshots.isEmpty()) {
-            auctionsnapshots
+            historicAuctionHouseSnapshotRepository.save(auctionsnapshots
                     .stream()
                     .map(HistoricAuctionHouseSnapshot::from)
-                    .forEach(historicAuctionHouseSnapshotRepository::save);
+                    .collect(Collectors.toList())
+            );
         }
         auctionHouseSnapshotRepository.delete(auctionsnapshots);
     }

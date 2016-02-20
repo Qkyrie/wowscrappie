@@ -17,14 +17,17 @@
                     <h2>Your Inbox</h2>
 
                     <div class="alert alert-warning" th:if="${inbox.size() == 0}">
-                        Unfortunately, there are no messages in your inbox. We'll be implementing the feature to message other people later.
-                        In the meantime, if anything is up, admins might contact you. If you wish to do so, you can always contact an Admin on our
-                        <br />
+                        Unfortunately, there are no messages in your inbox. We'll be implementing the feature to message
+                        other people later.
+                        In the meantime, if anything is up, admins might contact you. If you wish to do so, you can
+                        always contact an Admin on our
+                        <br/>
                         <a th:href="@{/contact}" class="btn btn-raised btn-primary">Contact Page</a>
                     </div>
 
                     <div sec:authorize="hasRole('ROLE_ADMIN')" class="alert alert-success" th:if="${inbox.size() == 0}">
-                        Oh hey there :). I didn't see you actually were an admin, you may always send someone a message! :3.
+                        Oh hey there :). I didn't see you actually were an admin, you may always send someone a message!
+                        :3.
                         But not now, still not finished implementing :P
                     </div>
 
@@ -46,7 +49,9 @@
                                 <td th:text="${inboxElement.title}">whatFor</td>
                                 <td>
                             <span th:attr="data-root_message_id=${inboxElement.id}"
-                                  class="viewButton btn btn-success btn-sm"> <i class="mdi-maps-local-library"></i> view</span>
+                                  class="viewButton btn btn-success btn-xs">
+                                <i class="material-icons">search</i>
+                            </span>
                                 </td>
                             </tr>
                             </tbody>
@@ -78,15 +83,15 @@
             "aaSorting": []
         });
 
-        var InboxVM  = function() {
+        var InboxVM = function () {
             var self = this;
         }
 
         var inboxVM = new InboxVM;
         ko.applyBindings(inboxVM);
 
-        $(".viewButton").click(function() {
-            $.get("/personal/inbox/message/" + $(this).data("root_message_id"), function(data) {
+        $(".viewButton").click(function () {
+            $.get("/personal/inbox/message/" + $(this).data("root_message_id"), function (data) {
                 $("#resultPane").html(data);
             });
         });
@@ -99,9 +104,9 @@
 </div>
 
 <div th:fragment="message-details">
-    <br />
-    <br />
-    <hr />
+    <br/>
+    <br/>
+    <hr/>
     <div class="alert alert-warning" th:if="${allMessages.size() == 0}">Unfortunately, the message was not found</div>
 
     <div class="chat-panel panel panel-default chat-boder chat-panel-head" th:if="${allMessages.size() > 0}">
@@ -113,8 +118,9 @@
 
         <div class="panel-body">
             <ul class="chat-box">
-                <li th:each="singleMessage : ${allMessages}" th:class="${!singleMessage.inward}? 'left clearfix' : 'right clearfix'">
-                     <span th:class="${singleMessage.inward}? 'pull-left chat-img' : 'pull-right chat-img'" >
+                <li th:each="singleMessage : ${allMessages}"
+                    th:class="${!singleMessage.inward}? 'left clearfix' : 'right clearfix'">
+                     <span th:class="${singleMessage.inward}? 'pull-left chat-img' : 'pull-right chat-img'">
 
                      </span>
                     <div class="chat-body">
@@ -124,7 +130,8 @@
                         </small>
                         <strong th:text="${singleMessage.sender}"></strong>
                         <p th:text="${singleMessage.content}">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor,
+                            quis ullamcorper ligula sodales.
                         </p>
                     </div>
 
@@ -135,10 +142,10 @@
 
         <div class="panel-footer">
             <div class="input-group">
-                <input id="btn-input" type="text" class="form-control input-sm" placeholder="reply to the message" />
+                <input id="btn-input" type="text" class="form-control input-sm" placeholder="reply to the message"/>
                                 <span class="input-group-btn">
-                                    <button id="btnSend" class="btn btn-warning btn-sm">
-                                        Send
+                                    <button id="btnSend" class="btn btn-primary btn-raised btn-sm">
+                                        <i class="material-icons">mail_outline</i>
                                     </button>
                                 </span>
             </div>
@@ -149,7 +156,7 @@
 
     <div class="scripts">
         <script type="application/javascript">
-            $("#btnSend").click(function() {
+            $("#btnSend").click(function () {
                 var originalPmId = $("#originalPmId").val();
                 var content = $("#btn-input").val();
                 var command = {};
@@ -160,7 +167,7 @@
 
                 var stringyfiedCommand = JSON.stringify(command);
 
-                if(doPost) {
+                if (doPost) {
                     var request = $.ajax({
                         url: '/personal/inbox/reply',
                         type: "POST",
@@ -172,7 +179,7 @@
                             $("#resultPane").html(resposeJsonObject);
                         }
                     });
-                    request.fail(function(jqXHR, textStatus) {
+                    request.fail(function (jqXHR, textStatus) {
                         $("#btn-input").val('');
                         console.log("something went wrong yo");
                     });

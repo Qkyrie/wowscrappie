@@ -17,14 +17,15 @@
             <div class="col-md-10 col-md-offset-1">
                 <h2>Warcraftlogs Character Rankings</h2>
                 <p>At this moment, only dps rankings are possible, but we're working on implementing other rankings too.</p>
-                <div class="form-group">
-                    <label>Enter the Character name</label>
-                    <input data-bind="value: charname" id="characterName" class="form-control floating-label"
-                           placeholder="Character name"/>
+                <div class="form-group label-floating">
 
-                    <label>Server?</label>
-                    <input id="serverName" class="form-control floating-label"
-                           placeholder="Server name"/>
+                    <label class="control-label" for="characterName">Choose Character</label>
+                    <input data-bind="value: charname" id="characterName" class="form-control input-lg"/>
+
+                </div>
+                <div class="form-group label-floating">
+                    <label class="control-label" for="serverName">Realm</label>
+                    <input id="serverName" type="text" class="form-control input-lg"/>
                 </div>
             </div>
         </div>
@@ -34,7 +35,7 @@
                     <span data-bind="text: realmname"></span></h3>
             </div>
             <div class="col-md-2">
-                <button id="searchButton" class="btn btn-success"
+                <button id="searchButton" class="btn btn-raised btn-success"
                         data-bind="visible: explainIsVisible(), click: doSearch" style="display: none;">Search!
                 </button>
             </div>
@@ -72,7 +73,9 @@
                             <td data-bind="text: classAndSpec"></td>
                             <td data-bind="text: itemLevel"></td>
                             <td><button data-bind="attr: { 'data-report_id': reportID, 'data-fight_id': fightID }"
-                                        class="btn btn-info viewdetails">view details</button> </td>
+                                        class="btn btn-info viewdetails">
+                                <i class="material-icons">search</i>
+                            </button> </td>
                         </tr>
                     </tbody>
                 </table>
@@ -87,8 +90,8 @@
     <script th:src="@{/assets/js/dataTables/dataTables.bootstrap.js}"></script>
     <script th:src="@{/assets/js/jquery.autocomplete.min.js}"></script>
     <script th:src="@{/assets/js/wcl/charactersearch.js}"></script>
-    <script th:src="@{/assets/js/morris/raphael-2.1.0.min.js}"></script>
-    <script th:src="@{/assets/js/morris/morris.js}"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
 </div>
 
 </html>

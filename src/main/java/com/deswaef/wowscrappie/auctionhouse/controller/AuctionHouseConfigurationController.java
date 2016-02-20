@@ -26,12 +26,14 @@ public class AuctionHouseConfigurationController {
     @Autowired
     private RealmService realmService;
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(method = GET)
     public String index(ModelMap modelMap) {
         modelMap.put("configurations", auctionHouseSnapshotConfigurationService.findAll().toList().toBlocking().single());
         return "admin/auctionhouse/configuration";
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(method = POST, value = "/{configurationId}/requestupdate")
     @ResponseBody
     public ResponseEntity<String> requestUpdate(@PathVariable("configurationId") long configurationId) {

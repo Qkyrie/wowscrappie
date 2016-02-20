@@ -1,0 +1,366 @@
+[
+  {
+    "id": 3,
+    "name": "Challenge Modes",
+    "frozen": false,
+    "encounters": [
+      {
+        "id": 11182,
+        "name": "Auchindoun"
+      },
+      {
+        "id": 11175,
+        "name": "Bloodmaul Slag Mines"
+      },
+      {
+        "id": 11279,
+        "name": "The Everbloom"
+      },
+      {
+        "id": 11208,
+        "name": "Grimrail Depot"
+      },
+      {
+        "id": 11195,
+        "name": "Iron Docks"
+      },
+      {
+        "id": 11176,
+        "name": "Shadowmoon Burial Grounds"
+      },
+      {
+        "id": 11209,
+        "name": "Skyreach"
+      },
+      {
+        "id": 11358,
+        "name": "Upper Blackrock Spire"
+      }
+    ],
+    "brackets": [
+      {
+        "id": 1,
+        "name": "6.0 Patch"
+      },
+      {
+        "id": 2,
+        "name": "6.1 Patch"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Throne of Thunder",
+    "frozen": true,
+    "encounters": [
+      {
+        "id": 1577,
+        "name": "Jin'rokh the Breaker"
+      },
+      {
+        "id": 1575,
+        "name": "Horridon"
+      },
+      {
+        "id": 1570,
+        "name": "Council of Elders"
+      },
+      {
+        "id": 1565,
+        "name": "Tortos"
+      },
+      {
+        "id": 1578,
+        "name": "Megaera"
+      },
+      {
+        "id": 1573,
+        "name": "Ji-kun"
+      },
+      {
+        "id": 1572,
+        "name": "Durumu the Forgotten"
+      },
+      {
+        "id": 1574,
+        "name": "Primordius"
+      },
+      {
+        "id": 1576,
+        "name": "Dark Animus"
+      },
+      {
+        "id": 1559,
+        "name": "Iron Qon"
+      },
+      {
+        "id": 1560,
+        "name": "Twin Consorts"
+      },
+      {
+        "id": 1579,
+        "name": "Lei Shen"
+      },
+      {
+        "id": 1580,
+        "name": "Ra-den"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "Siege of Orgrimmar",
+    "frozen": true,
+    "encounters": [
+      {
+        "id": 1602,
+        "name": "Immerseus"
+      },
+      {
+        "id": 1598,
+        "name": "The Fallen Protectors"
+      },
+      {
+        "id": 1624,
+        "name": "Norushen"
+      },
+      {
+        "id": 1604,
+        "name": "Sha of Pride"
+      },
+      {
+        "id": 1622,
+        "name": "Galakras"
+      },
+      {
+        "id": 1600,
+        "name": "Iron Juggernaut"
+      },
+      {
+        "id": 1606,
+        "name": "Kor'kron Dark Shaman"
+      },
+      {
+        "id": 1603,
+        "name": "General Nazgrim"
+      },
+      {
+        "id": 1595,
+        "name": "Malkorok"
+      },
+      {
+        "id": 1594,
+        "name": "Spoils of Pandaria"
+      },
+      {
+        "id": 1599,
+        "name": "Thok the Bloodthirsty"
+      },
+      {
+        "id": 1601,
+        "name": "Siegecrafter Blackfuse"
+      },
+      {
+        "id": 1593,
+        "name": "Paragons of the Klaxxi"
+      },
+      {
+        "id": 1623,
+        "name": "Garrosh Hellscream"
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "name": "Highmaul",
+    "frozen": false,
+    "encounters": [
+      {
+        "id": 1721,
+        "name": "Kargath Bladefist"
+      },
+      {
+        "id": 1706,
+        "name": "The Butcher"
+      },
+      {
+        "id": 1722,
+        "name": "Tectus, The Living Mountain"
+      },
+      {
+        "id": 1720,
+        "name": "Brackenspore"
+      },
+      {
+        "id": 1719,
+        "name": "Twin Ogron"
+      },
+      {
+        "id": 1723,
+        "name": "Ko'ragh"
+      },
+      {
+        "id": 1705,
+        "name": "Imperator Mar'gok"
+      }
+    ],
+    "brackets": [
+      {
+        "id": 1,
+        "name": "0-647 Item Level"
+      },
+      {
+        "id": 2,
+        "name": "648-662 Item Level"
+      },
+      {
+        "id": 3,
+        "name": "663-677 Item Level"
+      },
+      {
+        "id": 4,
+        "name": "678-692 Item Level"
+      },
+      {
+        "id": 5,
+        "name": "693+ Item Level"
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "name": "Blackrock Foundry",
+    "frozen": false,
+    "encounters": [
+      {
+        "id": 1691,
+        "name": "Gruul"
+      },
+      {
+        "id": 1696,
+        "name": "Oregorger"
+      },
+      {
+        "id": 1690,
+        "name": "Blast Furnace"
+      },
+      {
+        "id": 1693,
+        "name": "Hans'gar and Franzok"
+      },
+      {
+        "id": 1689,
+        "name": "Flamebender Ka'graz"
+      },
+      {
+        "id": 1713,
+        "name": "Kromog"
+      },
+      {
+        "id": 1694,
+        "name": "Beastlord Darmac"
+      },
+      {
+        "id": 1692,
+        "name": "Operator Thogar"
+      },
+      {
+        "id": 1695,
+        "name": "The Iron Maidens"
+      },
+      {
+        "id": 1704,
+        "name": "Blackhand"
+      }
+    ],
+    "brackets": [
+      {
+        "id": 1,
+        "name": "0-657 Item Level"
+      },
+      {
+        "id": 2,
+        "name": "658-664 Item Level"
+      },
+      {
+        "id": 3,
+        "name": "665-672 Item Level"
+      },
+      {
+        "id": 4,
+        "name": "673-679 Item Level"
+      },
+      {
+        "id": 5,
+        "name": "680-687 Item Level"
+      },
+      {
+        "id": 6,
+        "name": "688-694 Item Level"
+      },
+      {
+        "id": 7,
+        "name": "695+ Item Level"
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "name": "Hellfire Citadel",
+    "frozen": true,
+    "encounters": [
+      {
+        "id": 1778,
+        "name": "Hellfire Assault"
+      },
+      {
+        "id": 1785,
+        "name": "Iron Reaver"
+      },
+      {
+        "id": 1787,
+        "name": "Kormrok"
+      },
+      {
+        "id": 1798,
+        "name": "Hellfire High Council"
+      },
+      {
+        "id": 1786,
+        "name": "Kilrogg Deadeye"
+      },
+      {
+        "id": 1783,
+        "name": "Gorefiend"
+      },
+      {
+        "id": 1788,
+        "name": "Shadow-Lord Iskar"
+      },
+      {
+        "id": 1777,
+        "name": "Fel Lord Zakuun"
+      },
+      {
+        "id": 1800,
+        "name": "Xhul'horac"
+      },
+      {
+        "id": 1794,
+        "name": "Socrethar the Eternal"
+      },
+      {
+        "id": 1784,
+        "name": "Tyrant Velhari"
+      },
+      {
+        "id": 1795,
+        "name": "Mannoroth"
+      },
+      {
+        "id": 1799,
+        "name": "Archimonde"
+      }
+    ]
+  }
+]

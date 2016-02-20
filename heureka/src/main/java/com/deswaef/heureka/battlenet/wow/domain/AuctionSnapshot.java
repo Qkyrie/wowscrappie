@@ -1,5 +1,6 @@
 package com.deswaef.heureka.battlenet.wow.domain;
 
+import com.deswaef.heureka.battlenet.wow.auctions.client.domain.RealmItem;
 import com.deswaef.heureka.battlenet.wow.client.BattlenetConverter;
 import com.deswaef.heureka.battlenet.wow.auctions.client.domain.AuctionItem;
 
@@ -7,14 +8,25 @@ import java.util.List;
 
 public class AuctionSnapshot extends AbstractBattlenetDto {
 
+    private List<RealmItem> realms;
     private List<AuctionItem> auctions;
 
-    public List<AuctionItem> getAuctions() {
+    public List<RealmItem> realms() {
+        return realms;
+    }
+
+    public AuctionSnapshot realms(List<RealmItem> realms) {
+        this.realms = realms;
+        return this;
+    }
+
+    public List<AuctionItem> auctions() {
         return auctions;
     }
 
-    public void setAuctions(List<AuctionItem> auctions) {
+    public AuctionSnapshot auctions(List<AuctionItem> auctions) {
         this.auctions = auctions;
+        return this;
     }
 
     public static AuctionSnapshot fromJson(String json) {

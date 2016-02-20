@@ -18,15 +18,15 @@ public class HistoricAuctionHouseSnapshot {
 
     @Id
     private String id;
-    @Field(type = FieldType.Long)
+    @Field(type = FieldType.Long, index = FieldIndex.not_analyzed)
     private Long itemId;
     @Field(type = FieldType.String, index = FieldIndex.not_analyzed)
     private String itemName;
-    @Field(index = FieldIndex.not_analyzed)
+    @Field(type = FieldType.Long, index = FieldIndex.not_analyzed)
     private Long realmId;
     @Field(type = FieldType.String, index = FieldIndex.not_analyzed)
-    private String locale;
-    @Field(index = FieldIndex.not_analyzed)
+    private String locality;
+    @Field(type = FieldType.String, index = FieldIndex.not_analyzed)
     private String realmName;
     @Field(type = FieldType.Double)
     private Double minimumBid;
@@ -42,21 +42,19 @@ public class HistoricAuctionHouseSnapshot {
     private Double averageBid;
     @Field(type = FieldType.Double)
     private Double averageBuyout;
-    @Field(type = FieldType.Date,
-            store = true,
-            format = org.springframework.data.elasticsearch.annotations.DateFormat.basic_date_time, pattern = "dd.MM.yyyy hh:mm")
+    @Field(type = FieldType.Date, format = org.springframework.data.elasticsearch.annotations.DateFormat.basic_date_time)
     private Date exportTime;
 
     public String getId() {
         return id;
     }
 
-    public String getLocale() {
-        return locale;
+    public String getLocality() {
+        return locality;
     }
 
-    public HistoricAuctionHouseSnapshot setLocale(String locale) {
-        this.locale = locale;
+    public HistoricAuctionHouseSnapshot setLocality(String locality) {
+        this.locality = locality;
         return this;
     }
 
@@ -187,7 +185,7 @@ public class HistoricAuctionHouseSnapshot {
                 .setMinimumBid(auctionHouseSnapshot.getMinimumBid())
                 .setMinimumBuyout(auctionHouseSnapshot.getMinimumBuyout())
                 .setQuantity(auctionHouseSnapshot.getQuantity())
-                .setLocale(auctionHouseSnapshot.getRealm().getLocality().getLocalityName())
+                .setLocality(auctionHouseSnapshot.getRealm().getLocality().getLocalityName())
                 .setId(
                         auctionHouseSnapshot.getItem().getName()
                                 + "-" + auctionHouseSnapshot.getRealm().getLocality().getLocalityName()

@@ -47,11 +47,17 @@
                             <td th:text="${report.reporter}"></td>
                             <td>
                                 <span th:attr="data-report_id=${report.id}"
-                                      class="viewButton btn btn-primary btn-sm">view!</span>
+                                      class="viewButton btn btn-primary btn-xs">
+                                    <i class="material-icons">search</i>
+                                </span>
                                 <span th:attr="data-report_id=${report.id}" th:if="${report.handled == false}"
-                                      class="handleButton btn btn-primary btn-sm">handled!</span>
+                                      class="handleButton btn btn-primary btn-xs">
+                                    <i class="material-icons">done</i>
+                                </span>
                                 <span th:attr="data-report_id=${report.id}"
-                                      class="deleteButton btn btn-primary btn-sm">delete</span>
+                                      class="deleteButton btn btn-primary btn-xs">
+                                    <i class="material-icons">delete</i>
+                                </span>
                             </td>
                         </tr>
                         </tbody>

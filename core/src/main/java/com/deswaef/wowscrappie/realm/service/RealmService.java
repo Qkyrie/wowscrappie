@@ -14,5 +14,10 @@ public interface RealmService {
     void save(List<Realm> resultedRealms);
     Long count();
     List<Realm> findAllByLocality(Locality locality);
+
+    Optional<Realm> findBySlugAndLocality(String slug, Locality locality);
+
     Observable<Realm> findAll();
+
+    Observable<Realm> queryRealms(String query);
 }

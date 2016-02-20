@@ -8,17 +8,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
     <meta name="_disqusname" th:content="${@environment.getProperty('com.deswaef.scrappie.disqusname')}"/>
-    <!--    <meta name="description" content="wowscrappie provides you with a commonplace to share your weakauras, tellmewhens and macros, created by and for the community." />
-        <meta name="keywords" content="weakauras, weakaura, weakaura strings, class, tellmewhen, macro, macros, spec,
-                                        hunter, druid, warlock, paladin, shaman,
-                                        death knight, mage, monk, priest, rogue, warrior" />-->
 
     <!-- BOOTSTRAP STYLES-->
-    <link th:href="@{/assets/css/bootstrap.css}" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700"/>
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons"/>
+
+    <link rel="stylesheet" th:href="@{//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css}"
+          integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"/>
     <!-- FONTAWESOME STYLES-->
     <link th:href="@{/assets/css/font-awesome.css}" rel="stylesheet"/>
     <!-- MORRIS CHART STYLES-->
-    <link th:href="@{/assets/js/morris/morris-0.4.3.min.css}" rel="stylesheet"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css" />
     <!-- CUSTOM STYLES-->
     <link th:href="@{/assets/css/custom.css}" rel="stylesheet"/>
 
@@ -29,8 +29,11 @@
     <link rel="stylesheet" th:href="@{/assets/fancybox/jquery.fancybox.css?v=2.1.5}" type="text/css" media="screen"/>
 
     <link th:href="@{/assets/material_design/css/roboto.min.css}" rel="stylesheet"/>
-    <link th:href="@{/assets/material_design/css/material.min.css}" rel="stylesheet"/>
-    <link th:href="@{/assets/material_design/css/ripples.min.css}" rel="stylesheet"/>
+
+    <link th:href="@{//cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.8/css/bootstrap-material-design.min.css}"
+          rel="stylesheet"/>
+    <link th:href="@{//cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.8/css/ripples.min.css}"
+          rel="stylesheet"/>
     <link th:href="@{/assets/snackbar/snackbar.min.css}" rel="stylesheet"/>
     <link th:href="@{/assets/snackbar/snackbar-material.min.css}" rel="stylesheet"/>
     <div layout:fragment="header"></div>
@@ -65,7 +68,7 @@
                     <!-- settings start -->
                     <li class="dropdown" sec:authorize="isAuthenticated()">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
-                            <i class="fa fa-tasks"></i>
+                            <i class="material-icons">notifications</i>
                             <span class="badge bg-theme" id="notificationCount"></span>
                         </a>
                         <ul id="dropdown-menu-frag" class="dropdown-menu extended tasks-bar">
@@ -86,11 +89,11 @@
 
 
                 <li>
-                    <a class="active-menu" th:href="@{/}"><i class="fa fa-dashboard fa-2x"></i> News</a>
+                    <a class="active-menu" th:href="@{/}"><i class="material-icons">whatshot</i> News</a>
                 </li>
 
                 <li sec:authorize="hasRole('ROLE_ADMIN')">
-                    <a href="#"><i class="fa fa-th fa-2x"></i> Administration<span
+                    <a href="#"><i class="material-icons">perm_data_setting</i> Administration<span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
 
@@ -115,25 +118,33 @@
                     </ul>
                 </li>
 
-<!--                <li sec:authorize="hasRole('ROLE_ADMIN')">
-                    <a th:href="@{/questions}"><i class="fa fa-question-circle fa-2x"></i> Questions!</a>
-                </li>-->
-
+                <li sec:authorize="hasRole('ROLE_ADMIN')">
+                    <a href="#"> <i class="material-icons">gavel</i> Auction House<span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a th:href="@{/auctionhouse/configuration}"><i class="material-icons">perm_data_settings</i>Configuration</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/auctionhouse/overview}"><i class="material-icons">attach_money</i>Overview</a>
+                        </li>
+                    </ul>
+                </li>
                 <li sec:authorize="hasRole('ROLE_ADMIN')">
                     <a href="#"><i class="fa fa-question-circle fa-2x"></i> Questions<span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a th:href="@{/questions}"> Questions</a>
+                            <a th:href="@{/questions}"><i class="material-icons">list</i>Questions</a>
                         </li>
                         <li>
-                            <a th:href="@{/questions/new}"> New Question</a>
+                            <a th:href="@{/questions/new}"><i class="material-icons">add</i> New Question</a>
                         </li>
                     </ul>
                 </li>
 
                 <li sec:authorize="hasRole('ROLE_USER')">
-                    <a href="#"><i class="fa fa-user fa-2x"></i> Personal<span
+                    <a href="#"><i class="material-icons">face</i> Personal<span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
@@ -160,14 +171,14 @@
                             </a>
                         </li>
                         <li>
-                            <a th:href="@{/raids/3}"> <span class="label label-success">[new]</span> Hellfire Citadel
+                            <a th:href="@{/raids/3}"> Hellfire Citadel
                             </a>
                         </li>
                     </ul>
                 </li>
 
                 <li>
-                    <a href="#"><i class="fa fa-wrench fa-2x"></i> <span>Classes</span><span
+                    <a href="#"><i class="material-icons">games</i> Classes<span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
 
@@ -255,7 +266,7 @@
                     <a th:href="@{/contribute}"><i class="fa fa-laptop fa-2x"></i> Contribute!</a>
                 </li>
                 <li sec:authorize="isAuthenticated()">
-                    <a th:href="@{/logout}"><i class="fa fa-sign-out fa-2x"></i> Logout!</a>
+                    <a th:href="@{/logout}"> <i class="material-icons">exit_to_app</i> Logout!</a>
                 </li>
             </ul>
 
@@ -274,17 +285,19 @@
 <!-- JQUERY SCRIPTS -->
 <!-- BOOTSTRAP SCRIPTS -->
 <script th:src="@{/assets/js/jquery-1.11.3.min.js}"></script>
-<script th:src="@{/assets/js/bootstrap.min.js}"></script>
+<script th:src="@{//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js}"
+        integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+        crossorigin="anonymous"></script>
 <!-- METISMENU SCRIPTS -->
 <script th:src="@{/assets/js/jquery.metisMenu.js}"></script>
 <!-- CUSTOM SCRIPTS -->
 <script th:src="@{/assets/js/custom.js}"></script>
 <script th:src="@{/assets/js/knockout.js}"></script>
-<script th:src="@{/assets/js/analytics.js}"/>
+<script th:src="@{/assets/js/analytics.js}"></script>
 
 
-<script th:src="@{/assets/material_design/js/ripples.min.js}"></script>
-<script th:src="@{/assets/material_design/js/material.min.js}"></script>
+<script th:src="@{//cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.8/js/ripples.min.js}"></script>
+<script th:src="@{//cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.8/js/material.min.js}"></script>
 <script th:src="@{/assets/snackbar/snackbar.min.js}"></script>
 <script>
     $(document).ready(function () {
