@@ -7,8 +7,9 @@
     <meta name="description" content="Warcraft Logs - Character Ranking - Scrappie"/>
     <meta name="keywords" content="weakauras, weakaura, weakaura strings, class, tellmewhen, macro, macros,
                                    Scrappie, WowScrappie, T18, delegation, tier, tier 18, tier distribution, tier delegation, dps gain, dps"/>
+
     <title>Auctionhouse - Overview</title>
-    <link th:href="@{/assets/js/c3/c3.min.css}" rel="stylesheet"/>
+    <link type="text/css" th:href="@{/assets/node_modules/c3/c3.min.css}"/>
     <style type="text/css">
         .twitter-typeahead, .tt-hint, .tt-input, .tt-menu {
             width: 100%;
@@ -17,105 +18,23 @@
 </div>
 
 <div layout:fragment="main-content">
-    <div id="page-inner">
-
-        <div class="row">
-            <div class="col-md-12">
-                <ul class="nav nav-pills" role="tablist">
-                    <li role="presentation" id="homeTab" class="active"><a href="#singleItemSearch" aria-controls="home"
-                                                                           role="tab" data-toggle="tab">Single Item
-                        Search</a></li>
-                    <li role="presentation" id="compareTab"><a href="#compareItemSearch" aria-controls="profile"
-                                                               role="tab"
-                                                               data-toggle="tab">Item Compare</a></li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="tab-content">
-            <div role="tabpanel" class="tab-pane fade in active" id="singleItemSearch">
-                <single-search></single-search>
-            </div>
-            <div role="tabpanel" class="tab-pane fade in" id="compareItemSearch">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h1>Compare information about items on a realm or across different realms.</h1>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-8 col-md-offset-2">
-                        <div class="col-md-5 col-md-offset-1">
-                            <div class="form-group label-floating">
-                                <label class="control-label" for="itemSelectSingle">Item</label>
-                                <div id="itemCompare">
-                                    <input id="itemSelectCompare" class="form-control input-lg typeahead" type="text"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-5">
-                            <div class="form-group label-floating">
-                                <label class="control-label" for="realmSelectSingle">Realm</label>
-                                <div id="realmCompare">
-                                    <input id="realmSelectCompare" class="form-control input-lg typeahead" type="text"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-1">
-                        <span class="btn btn-primary btn-lg" id="searchButtonCompare">
-                            <i class="material-icons">search</i>
-                        </span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-6 col-md-offset-3">
-                        <h2>Looking for <span data-bind="text: selectedItemName"></span> on <span
-                                data-bind="text: selectedRealmName"></span></h2>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-6 col-md-offset-3">
-                        <div id="chooseItemOptionCompare" class="alert alert-warning collapse" role="alert">
-                            <strong>Warning!</strong> Please enter an item you want to look up
-                        </div>
-                        <div id="chooseRealmOptionCompare" class="alert alert-warning collapse" role="alert">
-                            <strong>Warning!</strong> Please enter a realm you want to look up
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-10 col-md-offset-1">
-                        <div id="resultChartCompare"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
+    <auctionhouse-search></auctionhouse-search>
     <!-- /. PAGE INNER  -->
 </div>
 <!-- /. layout fragment -->
 <div layout:fragment="footer-content">
-    <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
-    <script th:src="@{/assets/js/c3/c3.min.js}"></script>
-    <!-- 1. Load libraries -->
-    <script th:src="@{/assets/js//typeahead.js}"></script>
 
     <!-- IE required polyfills, in this exact order -->
     <script th:src="@{/assets/node_modules/es6-shim/es6-shim.min.js}"></script>
     <script th:src="@{/assets/node_modules/systemjs/dist/system-polyfills.js}"></script>
-
+    <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script th:src="@{/assets/js/c3/c3.min.js}"></script>
+    <script th:src="@{/assets/js/typeahead.js}"></script>
     <script th:src="@{/assets/node_modules/angular2/bundles/angular2-polyfills.js}"></script>
     <script th:src="@{/assets/node_modules/systemjs/dist/system.src.js}"></script>
     <script th:src="@{/assets/node_modules/rxjs/bundles/Rx.js}"></script>
     <script th:src="@{/assets/node_modules/angular2/bundles/angular2.dev.js}"></script>
     <script th:src="@{/assets/node_modules/angular2/bundles/http.dev.js}"></script>
-
-
 
     <script>
         System.config({
@@ -127,7 +46,7 @@
             }
         });
 
-        System.import('/assets/components/pages.auctionhouse.overview')
+        System.import('/assets/components/auctionhouse/pages/overview')
                 .then(null, console.error.bind(console));
     </script>
 

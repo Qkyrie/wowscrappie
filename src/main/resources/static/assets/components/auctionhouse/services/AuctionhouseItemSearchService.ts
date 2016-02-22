@@ -15,6 +15,7 @@ export class AuctionHouseItemSearchService {
             })
             .map((element: Object) => {
                 if(element) {
+                    console.log("raw return element:");
                     console.log(element);
                     return new AuctionHouseSnapshot(
                         element.minimumBidCoppers,
@@ -26,7 +27,7 @@ export class AuctionHouseItemSearchService {
                         element.stdevBidCoppers,
                         element.stdevBuyoutCoppers,
                         element.quantity,
-                        element.averageBidCopeprs,
+                        element.averageBidCoppers,
                         element.averageBuyoutCoppers,
                         element.exportTimePretty,
                         element.actualExportTime,

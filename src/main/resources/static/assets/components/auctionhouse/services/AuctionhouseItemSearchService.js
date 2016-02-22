@@ -34,8 +34,9 @@ System.register(['rxjs/add/operator/map', 'angular2/core', 'angular2/http', '../
                     })
                         .map(function (element) {
                         if (element) {
+                            console.log("raw return element:");
                             console.log(element);
-                            return new auctionhousesnapshot_1.AuctionHouseSnapshot(element.minimumBidCoppers, element.maximumBidCoppers, element.minimumBuyoutCoppers, element.maximumBuyoutCoppers, element.medianBidCoppers, element.medianBuyoutCoppers, element.stdevBidCoppers, element.stdevBuyoutCoppers, element.quantity, element.averageBidCopeprs, element.averageBuyoutCoppers, element.exportTimePretty, element.actualExportTime, element.itemName, element.itemId, element.realmName, element.realmId);
+                            return new auctionhousesnapshot_1.AuctionHouseSnapshot(element.minimumBidCoppers, element.maximumBidCoppers, element.minimumBuyoutCoppers, element.maximumBuyoutCoppers, element.medianBidCoppers, element.medianBuyoutCoppers, element.stdevBidCoppers, element.stdevBuyoutCoppers, element.quantity, element.averageBidCoppers, element.averageBuyoutCoppers, element.exportTimePretty, element.actualExportTime, element.itemName, element.itemId, element.realmName, element.realmId);
                         }
                     });
                 };
