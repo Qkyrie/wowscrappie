@@ -57,7 +57,7 @@ group = 'com.de-swaef.scrappie'
 
 jar {
     baseName = 'Scrappie'
-    version = '2.1.0'
+    version = '2.2.0-SNAPSHOT'
 }
 
 repositories {
@@ -96,6 +96,9 @@ dependencies {
     compile('commons-validator:commons-validator:1.4.0')
     compile('org.projectlombok:lombok:1.16.6')
     compile("mysql:mysql-connector-java")
+
+    compile('org.webjars:angularjs:1.5.0')
+
 
     compile "com.mangofactory:swagger-springmvc:0.9.4"
     compile('net.sourceforge.htmlunit:htmlunit:2.16')

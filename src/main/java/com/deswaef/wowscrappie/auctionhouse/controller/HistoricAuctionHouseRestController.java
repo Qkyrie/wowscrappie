@@ -31,9 +31,10 @@ public class HistoricAuctionHouseRestController {
     }
 
     @RequestMapping("/historic/item/{item}/realm/{realm}")
-    public DeferredResult<List<HistoricAuctionHouseSnapshot>> historicByItemAndRealm(@PathVariable("item") long item, @PathVariable("realm") long realm) {
-        DeferredResult<List<HistoricAuctionHouseSnapshot>> returnValue = new DeferredResult<>();
+    public DeferredResult<List<AuctionHouseSnapshotDto>> historicByItemAndRealm(@PathVariable("item") long item, @PathVariable("realm") long realm) {
+        DeferredResult<List<AuctionHouseSnapshotDto>> returnValue = new DeferredResult<>();
         historicAuctionHouseDataService.findByItemIdAndRealm(item, realm)
+                .map(AuctionHouseSnapshotDto::from)
                 .toList()
                 .subscribe(returnValue::setResult,
                         returnValue::setErrorResult);
@@ -46,6 +47,7 @@ public class HistoricAuctionHouseRestController {
         DeferredResult<AuctionHouseSnapshotDto> returnValue = new DeferredResult<>();
         auctionHouseSnapshotService.findByItemIdAndRealm(item, realm)
                 .map(AuctionHouseSnapshotDto::from)
+                .first()
                 .subscribe(returnValue::setResult,
                         returnValue::setErrorResult);
         return returnValue;
