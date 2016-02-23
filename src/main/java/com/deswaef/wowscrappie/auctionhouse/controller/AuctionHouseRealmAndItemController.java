@@ -15,10 +15,4 @@ public class AuctionHouseRealmAndItemController {
         return "auctionhouse/overview";
     }
 
-    @RequestMapping(value = "/angular", method = RequestMethod.GET)
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public String withAngular() {
-        return "auctionhouse/overview-angular";
-    }
-
 }
