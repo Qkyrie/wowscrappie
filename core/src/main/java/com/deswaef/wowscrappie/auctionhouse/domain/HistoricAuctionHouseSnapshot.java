@@ -18,31 +18,39 @@ public class HistoricAuctionHouseSnapshot {
 
     @Id
     private String id;
-    @Field(type = FieldType.Long, index = FieldIndex.not_analyzed)
+    @Field(type = FieldType.Long, index = FieldIndex.not_analyzed, store = true)
     private Long itemId;
-    @Field(type = FieldType.String, index = FieldIndex.not_analyzed)
+    @Field(type = FieldType.String, index = FieldIndex.not_analyzed, store = true)
     private String itemName;
-    @Field(type = FieldType.Long, index = FieldIndex.not_analyzed)
+    @Field(type = FieldType.Long, index = FieldIndex.not_analyzed, store = true)
     private Long realmId;
-    @Field(type = FieldType.String, index = FieldIndex.not_analyzed)
+    @Field(type = FieldType.String, index = FieldIndex.not_analyzed, store = true)
     private String locality;
-    @Field(type = FieldType.String, index = FieldIndex.not_analyzed)
+    @Field(type = FieldType.String, index = FieldIndex.not_analyzed, store = true)
     private String realmName;
-    @Field(type = FieldType.Double)
+    @Field(type = FieldType.Double, index = FieldIndex.not_analyzed, store = true)
     private Double minimumBid;
-    @Field(type = FieldType.Double)
+    @Field(type = FieldType.Double, index = FieldIndex.not_analyzed, store = true)
     private Double minimumBuyout;
-    @Field(type = FieldType.Double)
+    @Field(type = FieldType.Double, index = FieldIndex.not_analyzed, store = true)
     private Double maximumBid;
-    @Field(type = FieldType.Double)
+    @Field(type = FieldType.Double, index = FieldIndex.not_analyzed, store = true)
     private Double maximumBuyout;
-    @Field(type = FieldType.Long)
+    @Field(type = FieldType.Long, index = FieldIndex.not_analyzed, store = true)
     private Long quantity;
-    @Field(type = FieldType.Double)
+    @Field(type = FieldType.Double, index = FieldIndex.not_analyzed, store = true)
     private Double averageBid;
-    @Field(type = FieldType.Double)
+    @Field(type = FieldType.Double, index = FieldIndex.not_analyzed, store = true)
     private Double averageBuyout;
-    @Field(type = FieldType.Date, format = org.springframework.data.elasticsearch.annotations.DateFormat.basic_date_time)
+    @Field(type = FieldType.Double, index = FieldIndex.not_analyzed, store = true)
+    private Double stdevBid;
+    @Field(type = FieldType.Double, index = FieldIndex.not_analyzed, store = true)
+    private Double stdevBuyout;
+    @Field(type = FieldType.Double, index = FieldIndex.not_analyzed, store = true)
+    private Double medianBid;
+    @Field(type = FieldType.Double, index = FieldIndex.not_analyzed, store = true)
+    private Double medianBuyout;
+    @Field(type = FieldType.Date, format = org.springframework.data.elasticsearch.annotations.DateFormat.basic_date_time, index = FieldIndex.not_analyzed, store = true)
     private Date exportTime;
 
     public String getId() {
@@ -171,6 +179,42 @@ public class HistoricAuctionHouseSnapshot {
         return this;
     }
 
+    public Double getMedianBuyout() {
+        return medianBuyout;
+    }
+
+    public HistoricAuctionHouseSnapshot setMedianBuyout(Double medianBuyout) {
+        this.medianBuyout = medianBuyout;
+        return this;
+    }
+
+    public Double getMedianBid() {
+        return medianBid;
+    }
+
+    public HistoricAuctionHouseSnapshot setMedianBid(Double medianBid) {
+        this.medianBid = medianBid;
+        return this;
+    }
+
+    public Double getStdevBuyout() {
+        return stdevBuyout;
+    }
+
+    public HistoricAuctionHouseSnapshot setStdevBuyout(Double stdevBuyout) {
+        this.stdevBuyout = stdevBuyout;
+        return this;
+    }
+
+    public Double getStdevBid() {
+        return stdevBid;
+    }
+
+    public HistoricAuctionHouseSnapshot setStdevBid(Double stdevBid) {
+        this.stdevBid = stdevBid;
+        return this;
+    }
+
     public static HistoricAuctionHouseSnapshot from(AuctionHouseSnapshot auctionHouseSnapshot) {
         return new HistoricAuctionHouseSnapshot()
                 .setAverageBid(auctionHouseSnapshot.getAverageBid())
@@ -186,6 +230,10 @@ public class HistoricAuctionHouseSnapshot {
                 .setMinimumBuyout(auctionHouseSnapshot.getMinimumBuyout())
                 .setQuantity(auctionHouseSnapshot.getQuantity())
                 .setLocality(auctionHouseSnapshot.getRealm().getLocality().getLocalityName())
+                .setStdevBid(auctionHouseSnapshot.getStdevBid())
+                .setStdevBuyout(auctionHouseSnapshot.getStdevBuyout())
+                .setMedianBid(auctionHouseSnapshot.getMedianBid())
+                .setMedianBuyout(auctionHouseSnapshot.getMedianBuyout())
                 .setId(
                         auctionHouseSnapshot.getItem().getName()
                                 + "-" + auctionHouseSnapshot.getRealm().getLocality().getLocalityName()

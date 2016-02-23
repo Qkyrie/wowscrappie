@@ -12,7 +12,7 @@ public class AuctionItem {
 
     public static Function<AuctionItem, com.deswaef.wowscrappie.auctionhouse.domain.AuctionItem> convert = auctionItem -> {
         com.deswaef.wowscrappie.auctionhouse.domain.AuctionItem returnItem = new com.deswaef.wowscrappie.auctionhouse.domain.AuctionItem()
-                .setId(auctionItem.auc())
+                .setAuctionId(auctionItem.auc())
                 .setItem(auctionItem.item())
                 .setOwner(auctionItem.owner())
                 .setBid(auctionItem.bid())
