@@ -1,0 +1,172 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="decorator/wa-decorator">
+
+<div layout:fragment="header">
+    <meta name="description" content="Choose Default Realm - Scrappie"/>
+    <meta name="keywords" content="weakauras, weakaura, weakaura strings, class, tellmewhen, macro, macros,
+                                   Scrappie, WowScrappie, auctionhouse, items, prices, averages, bids, buyouts, buyout, bid, statistics"/>
+    <title>Auctionhouse - Overview</title>
+    <link th:href="@{/assets/js/c3/c3.min.css}" rel="stylesheet"/>
+    <style type="text/css">
+        .twitter-typeahead, .tt-hint, .tt-input, .tt-menu {
+            width: 100%;
+        }
+    </style>
+</div>
+
+<div layout:fragment="main-content">
+    <div id="page-inner">
+
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="nav nav-pills" role="tablist">
+                    <li role="presentation" id="homeTab" class="active"><a href="#singleItemSearch" aria-controls="home"
+                                                                           role="tab" data-toggle="tab">Single Item
+                        Search</a></li>
+                    <li role="presentation" id="compareTab"><a href="#compareItemSearch" aria-controls="profile"
+                                                               role="tab"
+                                                               data-toggle="tab">Item Compare</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade in active" id="singleItemSearch">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1>Search information about item on a realm.</h1>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <div class="col-md-5 col-md-offset-1">
+                            <div class="form-group label-floating">
+                                <label class="control-label" for="itemSelectSingle">Item</label>
+                                <div id="itemSingle">
+                                    <input id="itemSelectSingle" class="form-control input-lg typeahead" type="text"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group label-floating">
+                                <label class="control-label" for="realmSelectSingle">Realm</label>
+                                <div id="realmSingle">
+                                    <input id="realmSelectSingle" class="form-control input-lg typeahead" type="text"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                        <span class="btn btn-primary btn-lg" id="searchButtonSingle">
+                            <i class="material-icons">search</i>
+                        </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3">
+                        <h2>Looking for <span data-bind="text: selectedItemName"></span> on <span
+                                data-bind="text: selectedRealmName"></span></h2>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3">
+                        <div id="chooseItemOptionSingle" class="alert alert-warning collapse" role="alert">
+                            <strong>Warning!</strong> Please enter an item you want to look up
+                        </div>
+                        <div id="chooseRealmOptionSingle" class="alert alert-warning collapse" role="alert">
+                            <strong>Warning!</strong> Please enter a realm you want to look up
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1">
+                        <div id="resultChartSingle"></div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1">
+                        <h3 data-bind="visible: lastUpdateDate() != null">Last update date for <span
+                                data-bind="text: selectedRealmName"> </span>: <span
+                                data-bind="text: lastUpdateDate"></span> (<span
+                                data-bind="text: lastUpdateDatePretty"></span>)</h3>
+                    </div>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane fade in" id="compareItemSearch">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1>Compare information about items on a realm or across different realms.</h1>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <div class="col-md-5 col-md-offset-1">
+                            <div class="form-group label-floating">
+                                <label class="control-label" for="itemSelectSingle">Item</label>
+                                <div id="itemCompare">
+                                    <input id="itemSelectCompare" class="form-control input-lg typeahead" type="text"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group label-floating">
+                                <label class="control-label" for="realmSelectSingle">Realm</label>
+                                <div id="realmCompare">
+                                    <input id="realmSelectCompare" class="form-control input-lg typeahead" type="text"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                        <span class="btn btn-primary btn-lg" id="searchButtonCompare">
+                            <i class="material-icons">search</i>
+                        </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3">
+                        <h2>Looking for <span data-bind="text: selectedItemName"></span> on <span
+                                data-bind="text: selectedRealmName"></span></h2>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3">
+                        <div id="chooseItemOptionCompare" class="alert alert-warning collapse" role="alert">
+                            <strong>Warning!</strong> Please enter an item you want to look up
+                        </div>
+                        <div id="chooseRealmOptionCompare" class="alert alert-warning collapse" role="alert">
+                            <strong>Warning!</strong> Please enter a realm you want to look up
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1">
+                        <div id="resultChartCompare"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /. PAGE INNER  -->
+</div>
+<!-- /. layout fragment -->
+<div layout:fragment="footer-content">
+    <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script th:src="@{/assets/js/c3/c3.min.js}"></script>
+    <script th:src="@{/assets/js/typeahead.js}"></script>
+    <script th:src="@{/assets/js/custom/auctionhouse/overview.js}"></script>
+</div>
+
+</html>
