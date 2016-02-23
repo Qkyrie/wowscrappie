@@ -179,7 +179,7 @@ public class BattlenetAuctionsImporterImpl implements BattlenetAuctionsImporter 
                         .setAverageBid(auctionHouseSnapshot.getAverageBid())
                         .setAverageBuyout(auctionHouseSnapshot.getAverageBuyout())
                         .setMinimumBid(auctionHouseSnapshot.getMinimumBid())
-                        .setMinimumBuyout(auctionHouseSnapshot.getMaximumBuyout())
+                        .setMinimumBuyout(auctionHouseSnapshot.getMinimumBuyout())
                         .setMaximumBid(auctionHouseSnapshot.getMaximumBid())
                         .setMaximumBuyout(auctionHouseSnapshot.getMaximumBuyout())
                         .setItem(auctionHouseSnapshot.getItem())
