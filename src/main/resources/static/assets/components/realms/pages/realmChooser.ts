@@ -49,7 +49,6 @@ export class RealmChooser {
     constructor(public realmService:RealmService) {
         realmService.findAll()
             .subscribe(realm => {
-                console.log(realm);
                 realm.forEach((element) => {
                         this.realms.push(element);
                         this.filteredRealms.push(element);

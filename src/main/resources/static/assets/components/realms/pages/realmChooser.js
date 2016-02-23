@@ -29,7 +29,6 @@ System.register(['rxjs/add/operator/map', 'angular2/core', '../services/RealmSer
                     this.realms = [];
                     realmService.findAll()
                         .subscribe(function (realm) {
-                        console.log(realm);
                         realm.forEach(function (element) {
                             _this.realms.push(element);
                             _this.filteredRealms.push(element);

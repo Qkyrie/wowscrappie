@@ -2,6 +2,7 @@ import 'rxjs/add/operator/map';
 import { Injectable } from 'angular2/core';
 import { Http, Response, Request } from 'angular2/http';
 import { AuctionHouseSnapshot } from '../entity/auctionhousesnapshot';
+import {Observable} from "rxjs/Observable";
 
 @Injectable()
 export class AuctionHouseItemSearchService {
@@ -15,8 +16,6 @@ export class AuctionHouseItemSearchService {
             })
             .map((element: Object) => {
                 if(element) {
-                    console.log("raw return element:");
-                    console.log(element);
                     return new AuctionHouseSnapshot(
                         element.minimumBidCoppers,
                         element.maximumBidCoppers,
@@ -37,6 +36,9 @@ export class AuctionHouseItemSearchService {
                         element.realmId
                     );
                 }
+            })
+            .catch((error) => {
+                return Observable.empty<any>();
             });
     }
 

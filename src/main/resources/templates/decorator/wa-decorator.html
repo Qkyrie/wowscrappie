@@ -18,7 +18,7 @@
     <!-- FONTAWESOME STYLES-->
     <link th:href="@{/assets/css/font-awesome.css}" rel="stylesheet"/>
     <!-- MORRIS CHART STYLES-->
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css"/>
     <!-- CUSTOM STYLES-->
     <link th:href="@{/assets/css/custom.css}" rel="stylesheet"/>
 
@@ -59,10 +59,19 @@
                 <!--  notification start -->
                 <ul class="nav top-menu">
                     <li>
+                        <div style="color: white;
+        padding: 0px 15px 5px 50px;
+        font-size: 16px;" class="pull-right">  &nbsp;
+                            <a style="display: none;" th:href="@{/realm/choose}" id="realmSelectButton" class="btn btn-success btn-raised">No
+                                Realm Selected</a>
+                        </div>
+
+                    </li>
+                    <li>
                         <div id="logoutBinder" sec:authorize="!isAuthenticated()" style="color: white;
         padding: 0px 15px 5px 50px;
         font-size: 16px;" class="pull-right">  &nbsp;
-                            <a th:href="@{/login}" class="btn btn-success square-btn-adjust">Login</a>
+                            <a th:href="@{/login}" class="btn btn-success">Login</a>
                         </div>
                     </li>
                     <!-- settings start -->
@@ -118,15 +127,16 @@
                     </ul>
                 </li>
 
-                <li sec:authorize="hasRole('ROLE_ADMIN')">
+                <li>
                     <a href="#"> <i class="material-icons">gavel</i> Auction House<span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li>
+                        <li sec:authorize="hasRole('ROLE_ADMIN')">
                             <a th:href="@{/auctionhouse/configuration}"><i class="material-icons">perm_data_settings</i>Configuration</a>
                         </li>
                         <li>
-                            <a th:href="@{/auctionhouse/overview}"><i class="material-icons">attach_money</i>Overview</a>
+                            <a th:href="@{/auctionhouse/overview}"><i
+                                    class="material-icons">attach_money</i>Overview</a>
                         </li>
                     </ul>
                 </li>
@@ -293,6 +303,7 @@
 <!-- CUSTOM SCRIPTS -->
 <script th:src="@{/assets/js/custom.js}"></script>
 <script th:src="@{/assets/js/knockout.js}"></script>
+<script th:src="@{/assets/components/decorator/decorator.js}"></script>
 <script th:src="@{/assets/js/analytics.js}"></script>
 
 

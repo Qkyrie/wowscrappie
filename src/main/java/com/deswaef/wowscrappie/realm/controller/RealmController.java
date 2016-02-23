@@ -1,5 +1,6 @@
 package com.deswaef.wowscrappie.realm.controller;
 
+import com.deswaef.wowscrappie.auctionhouse.service.AuctionHouseSnapshotConfigurationService;
 import com.deswaef.wowscrappie.infrastructure.mvc.HttpServletRequestProxy;
 import com.deswaef.wowscrappie.realm.domain.Realm;
 import com.deswaef.wowscrappie.realm.service.RealmService;
@@ -23,6 +24,8 @@ public class RealmController {
     private HttpServletRequestProxy requestProxy;
     @Autowired
     private RealmService realmService;
+    @Autowired
+    private AuctionHouseSnapshotConfigurationService auctionHouseSnapshotConfigurationService;
 
 
     @RequestMapping(value = "/choose", method = GET)
@@ -56,6 +59,7 @@ public class RealmController {
     private void chooseRealm(Realm realm) {
         requestProxy.getHttpServletRequest().getSession(true)
                 .setAttribute("com.wowscrappie.default-realm", realm);
+        auctionHouseSnapshotConfigurationService.create(realm.getId());
     }
 
     private Optional<Realm> currentlyChosenRealm() {

@@ -4,21 +4,22 @@ import {Component, AfterViewChecked, ElementRef} from 'angular2/core';
 /// <reference path="../../../typings/c3/c3.d.ts" />
 import { AuctionHouseItemSearchService } from '../services/AuctionhouseItemSearchService';
 import { RealmService } from '../../realms/services/RealmService';
+import { Realm } from '../../realms/entity/Realm';
 import {AuctionHouseSnapshot} from "../entity/auctionhousesnapshot";
 
 @Component({
     selector: 'single-search',
     providers: [AuctionHouseItemSearchService, RealmService],
     template: `
-                <div class="row">
+                <div *ngIf="itemName != null" class="row">
                     <div class="col-md-12">
-                        <h1>Search information about {{itemName}} on a {{realmName}}.</h1>
+                        <h1>Search information about {{itemName}} on {{myRealm?.locality}}-{{myRealm?.name}}.</h1>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2">
-                        <div class="col-md-5 col-md-offset-1">
+                        <div class="col-md-8 col-md-offset-2">
                             <div class="form-group label-floating">
                                 <label class="control-label" for="itemSelectSingle">Item</label>
                                 <div id="itemSingle">
@@ -26,15 +27,7 @@ import {AuctionHouseSnapshot} from "../entity/auctionhousesnapshot";
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-5">
-                            <div class="form-group label-floating">
-                                <label class="control-label" for="realmSelectSingle">Realm</label>
-                                <div id="realmSingle">
-                                    <input id="realmSelectSingle" class="form-control input-lg typeahead" type="text"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-1">
+                        <div *ngIf="itemName != null" class="col-md-1">
                         <span (click)="doSearch()" class="btn btn-primary btn-lg" id="searchButtonSingle">
                             <i class="material-icons">search</i>
                         </span>
@@ -42,9 +35,13 @@ import {AuctionHouseSnapshot} from "../entity/auctionhousesnapshot";
                     </div>
                 </div>
 
-                <div  *ngIf="lastSearchTerm != null" class="row">
+                <div *ngIf="noInfoFoundWarning" class="alert alert-warning">
+                    No Info was found for {{itemName}}
+                </div>
+
+                <div *ngIf="lastSearchTerm != null" class="row">
                     <div class="col-md-10 col-md-offset-1">
-                        <h3>Last update date for {{itemName}} on {{realmName}}: {{lastSearchTerm?.exportTimePretty}}</h3>
+                        <h3>Last update date for {{itemName}} on {{myRealm?.locality}}-{{myRealm?.name}}: {{lastSearchTerm?.exportTimePretty}}</h3>
                     </div>
                 </div>
 
@@ -56,13 +53,15 @@ import {AuctionHouseSnapshot} from "../entity/auctionhousesnapshot";
     `
 })
 export class SingleItemSearch {
-    itemName:string = "item";
-    realmName:string = "a realm";
+    itemName:string;
     itemId:number;
-    realmId:number;
+
+    myRealm:Realm;
 
     items = Bloodhound;
     realms = Bloodhound;
+
+    noInfoFoundWarning = false;
 
     myObject = this;
     typeaheadBound = false;
@@ -81,22 +80,7 @@ export class SingleItemSearch {
             }
         });
 
-        this.realms = new Bloodhound({
-            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-            queryTokenizer: Bloodhound.tokenizers.whitespace,
-            remote: {
-                url: '/rest/realms/query?search=%QUERY',
-                wildcard: '%QUERY'
-            }
-        });
-
         var currentObject = this;
-
-        $('#realmSingle .typeahead').typeahead(null, {
-            name: 'items',
-            display: 'fullName',
-            source: currentObject.realms
-        });
 
         $('#itemSingle .typeahead').typeahead(null, {
             name: 'items',
@@ -109,11 +93,6 @@ export class SingleItemSearch {
             currentObject.itemName = datum.name;
         });
 
-        $('#realmSelectSingle').bind('typeahead:selected', function (obj, datum, name) {
-            currentObject.realmId = datum.id;
-            currentObject.realmName = datum.name;
-        });
-
         return true;
     }
 
@@ -121,8 +100,7 @@ export class SingleItemSearch {
                 public realmService:RealmService) {
         realmService.findCurrent()
             .subscribe((currentRealm) => {
-                this.realmId = currentRealm.id;
-                this.realmName = currentRealm.locality + "-" + currentRealm.name;
+                this.myRealm = currentRealm;
             }, (error) => {
             });
     }
@@ -196,11 +174,16 @@ export class SingleItemSearch {
     }
 
     doSearch() {
-        this.ahSearchService.doSearch(this.itemId, this.realmId)
+        this.noInfoFoundWarning = true;
+        this.ahSearchService.doSearch(this.itemId, this.myRealm.id)
             .subscribe(searchResult => {
                 this.lastSearchTerm = searchResult;
-                console.log("generating or loading");
                 this.generateOrLoadChart();
-            });
+            },
+                (err)=> {
+                    this.noInfoFoundWarning = true;
+                },
+                ()=>console.log("Done")
+            );
     }
 }

@@ -1,4 +1,4 @@
-System.register(['rxjs/add/operator/map', 'angular2/core', 'angular2/http', '../entity/auctionhousesnapshot'], function(exports_1) {
+System.register(['rxjs/add/operator/map', 'angular2/core', 'angular2/http', '../entity/auctionhousesnapshot', "rxjs/Observable"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,7 +8,7 @@ System.register(['rxjs/add/operator/map', 'angular2/core', 'angular2/http', '../
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, http_1, auctionhousesnapshot_1;
+    var core_1, http_1, auctionhousesnapshot_1, Observable_1;
     var AuctionHouseItemSearchService;
     return {
         setters:[
@@ -21,6 +21,9 @@ System.register(['rxjs/add/operator/map', 'angular2/core', 'angular2/http', '../
             },
             function (auctionhousesnapshot_1_1) {
                 auctionhousesnapshot_1 = auctionhousesnapshot_1_1;
+            },
+            function (Observable_1_1) {
+                Observable_1 = Observable_1_1;
             }],
         execute: function() {
             AuctionHouseItemSearchService = (function () {
@@ -34,10 +37,11 @@ System.register(['rxjs/add/operator/map', 'angular2/core', 'angular2/http', '../
                     })
                         .map(function (element) {
                         if (element) {
-                            console.log("raw return element:");
-                            console.log(element);
                             return new auctionhousesnapshot_1.AuctionHouseSnapshot(element.minimumBidCoppers, element.maximumBidCoppers, element.minimumBuyoutCoppers, element.maximumBuyoutCoppers, element.medianBidCoppers, element.medianBuyoutCoppers, element.stdevBidCoppers, element.stdevBuyoutCoppers, element.quantity, element.averageBidCoppers, element.averageBuyoutCoppers, element.exportTimePretty, element.actualExportTime, element.itemName, element.itemId, element.realmName, element.realmId);
                         }
+                    })
+                        .catch(function (error) {
+                        return Observable_1.Observable.empty();
                     });
                 };
                 AuctionHouseItemSearchService = __decorate([

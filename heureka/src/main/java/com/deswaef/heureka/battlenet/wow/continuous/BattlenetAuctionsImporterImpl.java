@@ -174,12 +174,14 @@ public class BattlenetAuctionsImporterImpl implements BattlenetAuctionsImporter 
 
     private List<AuctionHouseSnapshot> from(AuctionHouseSnapshot auctionHouseSnapshot, List<Realm> realms) {
         return realms
-                .stream()
+                .parallelStream()
                 .map(realm -> new AuctionHouseSnapshot()
                         .setAverageBid(auctionHouseSnapshot.getAverageBid())
                         .setAverageBuyout(auctionHouseSnapshot.getAverageBuyout())
                         .setMinimumBid(auctionHouseSnapshot.getMinimumBid())
                         .setMinimumBuyout(auctionHouseSnapshot.getMaximumBuyout())
+                        .setMaximumBid(auctionHouseSnapshot.getMaximumBid())
+                        .setMaximumBuyout(auctionHouseSnapshot.getMaximumBuyout())
                         .setItem(auctionHouseSnapshot.getItem())
                         .setQuantity(auctionHouseSnapshot.getQuantity())
                         .setStdevBid(auctionHouseSnapshot.getStdevBid())
@@ -187,8 +189,8 @@ public class BattlenetAuctionsImporterImpl implements BattlenetAuctionsImporter 
                         .setMedianBid(auctionHouseSnapshot.getMedianBid())
                         .setMedianBuyout(auctionHouseSnapshot.getMedianBuyout())
                         .setRealm(realm)
-                        .setExportTime(auctionHouseSnapshot.getExportTime())).collect(Collectors.toList()
-                );
+                        .setExportTime(auctionHouseSnapshot.getExportTime()))
+                .collect(Collectors.toList());
     }
 
     private Optional<AuctionHouseSnapshot> snapshotFromEntry(AuctionResponse.AuctionResponseFile responseFile, Map.Entry<Long, List<AuctionItem>> auctionsPerItem) {
@@ -204,7 +206,7 @@ public class BattlenetAuctionsImporterImpl implements BattlenetAuctionsImporter 
 
             auctionsPerItem
                     .getValue()
-                    .stream()
+                    .parallelStream()
                     .map(value -> {
                         List<Double> bidList = new ArrayList<>();
                         for (int i = 0; i < value.quantity(); i++) {
@@ -221,7 +223,7 @@ public class BattlenetAuctionsImporterImpl implements BattlenetAuctionsImporter 
 
             auctionsPerItem
                     .getValue()
-                    .stream()
+                    .parallelStream()
                     .map(value -> {
                         List<Double> buyoutList = new ArrayList<>();
                         for (int i = 0; i < value.quantity(); i++) {

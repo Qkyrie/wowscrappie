@@ -27,16 +27,14 @@ System.register(['angular2/core', '../services/AuctionhouseItemSearchService', '
                     var _this = this;
                     this.ahSearchService = ahSearchService;
                     this.realmService = realmService;
-                    this.itemName = "item";
-                    this.realmName = "a realm";
                     this.items = Bloodhound;
                     this.realms = Bloodhound;
+                    this.noInfoFoundWarning = false;
                     this.myObject = this;
                     this.typeaheadBound = false;
                     realmService.findCurrent()
                         .subscribe(function (currentRealm) {
-                        _this.realmId = currentRealm.id;
-                        _this.realmName = currentRealm.locality + "-" + currentRealm.name;
+                        _this.myRealm = currentRealm;
                     }, function (error) {
                     });
                 }
@@ -49,20 +47,7 @@ System.register(['angular2/core', '../services/AuctionhouseItemSearchService', '
                             wildcard: '%QUERY'
                         }
                     });
-                    this.realms = new Bloodhound({
-                        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-                        queryTokenizer: Bloodhound.tokenizers.whitespace,
-                        remote: {
-                            url: '/rest/realms/query?search=%QUERY',
-                            wildcard: '%QUERY'
-                        }
-                    });
                     var currentObject = this;
-                    $('#realmSingle .typeahead').typeahead(null, {
-                        name: 'items',
-                        display: 'fullName',
-                        source: currentObject.realms
-                    });
                     $('#itemSingle .typeahead').typeahead(null, {
                         name: 'items',
                         display: 'name',
@@ -71,10 +56,6 @@ System.register(['angular2/core', '../services/AuctionhouseItemSearchService', '
                     $('#itemSelectSingle').bind('typeahead:selected', function (obj, datum, name) {
                         currentObject.itemId = datum.id;
                         currentObject.itemName = datum.name;
-                    });
-                    $('#realmSelectSingle').bind('typeahead:selected', function (obj, datum, name) {
-                        currentObject.realmId = datum.id;
-                        currentObject.realmName = datum.name;
                     });
                     return true;
                 };
@@ -144,18 +125,20 @@ System.register(['angular2/core', '../services/AuctionhouseItemSearchService', '
                 };
                 SingleItemSearch.prototype.doSearch = function () {
                     var _this = this;
-                    this.ahSearchService.doSearch(this.itemId, this.realmId)
+                    this.noInfoFoundWarning = true;
+                    this.ahSearchService.doSearch(this.itemId, this.myRealm.id)
                         .subscribe(function (searchResult) {
                         _this.lastSearchTerm = searchResult;
-                        console.log("generating or loading");
                         _this.generateOrLoadChart();
-                    });
+                    }, function (err) {
+                        _this.noInfoFoundWarning = true;
+                    }, function () { return console.log("Done"); });
                 };
                 SingleItemSearch = __decorate([
                     core_1.Component({
                         selector: 'single-search',
                         providers: [AuctionhouseItemSearchService_1.AuctionHouseItemSearchService, RealmService_1.RealmService],
-                        template: "\n                <div class=\"row\">\n                    <div class=\"col-md-12\">\n                        <h1>Search information about {{itemName}} on a {{realmName}}.</h1>\n                    </div>\n                </div>\n\n                <div class=\"row\">\n                    <div class=\"col-md-8 col-md-offset-2\">\n                        <div class=\"col-md-5 col-md-offset-1\">\n                            <div class=\"form-group label-floating\">\n                                <label class=\"control-label\" for=\"itemSelectSingle\">Item</label>\n                                <div id=\"itemSingle\">\n                                    <input id=\"itemSelectSingle\" class=\"form-control input-lg typeahead\" type=\"text\"/>\n                                </div>\n                            </div>\n                        </div>\n                        <div class=\"col-md-5\">\n                            <div class=\"form-group label-floating\">\n                                <label class=\"control-label\" for=\"realmSelectSingle\">Realm</label>\n                                <div id=\"realmSingle\">\n                                    <input id=\"realmSelectSingle\" class=\"form-control input-lg typeahead\" type=\"text\"/>\n                                </div>\n                            </div>\n                        </div>\n                        <div class=\"col-md-1\">\n                        <span (click)=\"doSearch()\" class=\"btn btn-primary btn-lg\" id=\"searchButtonSingle\">\n                            <i class=\"material-icons\">search</i>\n                        </span>\n                        </div>\n                    </div>\n                </div>\n\n                <div  *ngIf=\"lastSearchTerm != null\" class=\"row\">\n                    <div class=\"col-md-10 col-md-offset-1\">\n                        <h3>Last update date for {{itemName}} on {{realmName}}: {{lastSearchTerm?.exportTimePretty}}</h3>\n                    </div>\n                </div>\n\n                <div class=\"row\">\n                    <div class=\"col-md-10 col-md-offset-1\">\n                        <div id=\"resultChartSingle\"></div>\n                    </div>\n                </div>\n    "
+                        template: "\n                <div *ngIf=\"itemName != null\" class=\"row\">\n                    <div class=\"col-md-12\">\n                        <h1>Search information about {{itemName}} on {{myRealm?.locality}}-{{myRealm?.name}}.</h1>\n                    </div>\n                </div>\n\n                <div class=\"row\">\n                    <div class=\"col-md-8 col-md-offset-2\">\n                        <div class=\"col-md-8 col-md-offset-2\">\n                            <div class=\"form-group label-floating\">\n                                <label class=\"control-label\" for=\"itemSelectSingle\">Item</label>\n                                <div id=\"itemSingle\">\n                                    <input id=\"itemSelectSingle\" class=\"form-control input-lg typeahead\" type=\"text\"/>\n                                </div>\n                            </div>\n                        </div>\n                        <div *ngIf=\"itemName != null\" class=\"col-md-1\">\n                        <span (click)=\"doSearch()\" class=\"btn btn-primary btn-lg\" id=\"searchButtonSingle\">\n                            <i class=\"material-icons\">search</i>\n                        </span>\n                        </div>\n                    </div>\n                </div>\n\n                <div *ngIf=\"noInfoFoundWarning\" class=\"alert alert-warning\">\n                    No Info was found for {{itemName}}\n                </div>\n\n                <div *ngIf=\"lastSearchTerm != null\" class=\"row\">\n                    <div class=\"col-md-10 col-md-offset-1\">\n                        <h3>Last update date for {{itemName}} on {{myRealm?.locality}}-{{myRealm?.name}}: {{lastSearchTerm?.exportTimePretty}}</h3>\n                    </div>\n                </div>\n\n                <div class=\"row\">\n                    <div class=\"col-md-10 col-md-offset-1\">\n                        <div id=\"resultChartSingle\"></div>\n                    </div>\n                </div>\n    "
                     }), 
                     __metadata('design:paramtypes', [AuctionhouseItemSearchService_1.AuctionHouseItemSearchService, RealmService_1.RealmService])
                 ], SingleItemSearch);
