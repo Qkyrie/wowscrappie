@@ -3,11 +3,12 @@ import {Component, AfterViewChecked, ElementRef} from 'angular2/core';
 /// <reference path="../../../typings/typeahead/typeahead.d.ts" />
 /// <reference path="../../../typings/c3/c3.d.ts" />
 import { AuctionHouseItemSearchService } from '../services/AuctionhouseItemSearchService';
+import { RealmService } from '../../realms/services/RealmService';
 import {AuctionHouseSnapshot} from "../entity/auctionhousesnapshot";
 
 @Component({
     selector: 'single-search',
-    providers: [AuctionHouseItemSearchService],
+    providers: [AuctionHouseItemSearchService, RealmService],
     template: `
                 <div class="row">
                     <div class="col-md-12">
@@ -57,8 +58,8 @@ import {AuctionHouseSnapshot} from "../entity/auctionhousesnapshot";
 export class SingleItemSearch {
     itemName:string = "item";
     realmName:string = "a realm";
-    itemId: number;
-    realmId: number;
+    itemId:number;
+    realmId:number;
 
     items = Bloodhound;
     realms = Bloodhound;
@@ -104,13 +105,11 @@ export class SingleItemSearch {
         });
 
         $('#itemSelectSingle').bind('typeahead:selected', function (obj, datum, name) {
-            console.log(datum);
             currentObject.itemId = datum.id;
             currentObject.itemName = datum.name;
         });
 
         $('#realmSelectSingle').bind('typeahead:selected', function (obj, datum, name) {
-            console.log(datum);
             currentObject.realmId = datum.id;
             currentObject.realmName = datum.name;
         });
@@ -118,20 +117,25 @@ export class SingleItemSearch {
         return true;
     }
 
-    constructor(public ahSearchService:AuctionHouseItemSearchService) {
-
+    constructor(public ahSearchService:AuctionHouseItemSearchService,
+                public realmService:RealmService) {
+        realmService.findCurrent()
+            .subscribe((currentRealm) => {
+                this.realmId = currentRealm.id;
+                this.realmName = currentRealm.locality + "-" + currentRealm.name;
+            }, (error) => {
+            });
     }
 
     generateOrLoadChart() {
-        if(this.currentSnapshotChart) {
+        if (this.currentSnapshotChart) {
             this.loadIntoChart();
         } else {
             this.generateChart();
         }
     }
 
-    loadIntoChart(){
-        console.log("loading into existing chart");
+    loadIntoChart() {
         this.currentSnapshotChart.load({
             columns: [
                 ['item',
@@ -146,8 +150,6 @@ export class SingleItemSearch {
     }
 
     generateChart() {
-        console.log("generating chart from");
-        console.log(this.lastSearchTerm);
         this.currentSnapshotChart = c3.generate({
             bindto: '#resultChartSingle',
             data: {
@@ -175,7 +177,7 @@ export class SingleItemSearch {
             },
             tooltip: {
                 contents: function (d, defaultTitleFormat, defaultValueFormat, color) {
-                    var coppers: string = d[0].value;
+                    var coppers:string = d[0].value;
                     var actualCoppers = Math.floor(+coppers % 100);
                     var silverAndCoppers = Math.floor(+coppers / 100);
                     var silvers = Math.floor(silverAndCoppers % 100);
@@ -187,8 +189,8 @@ export class SingleItemSearch {
         });
     }
 
-    public ngAfterViewChecked(): void {
-        if(!this.typeaheadBound) {
+    public ngAfterViewChecked():void {
+        if (!this.typeaheadBound) {
             this.typeaheadBound = this.initTypeAhead();
         }
     }

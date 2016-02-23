@@ -6,10 +6,11 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "realm")
-public class Realm {
+public class Realm implements Serializable{
     @Id
     @GeneratedValue
     private Long id;
