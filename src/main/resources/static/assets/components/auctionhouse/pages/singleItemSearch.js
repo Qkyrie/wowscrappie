@@ -28,7 +28,6 @@ System.register(['angular2/core', '../services/AuctionhouseItemSearchService', '
                     this.ahSearchService = ahSearchService;
                     this.realmService = realmService;
                     this.items = Bloodhound;
-                    this.realms = Bloodhound;
                     this.noInfoFoundWarning = false;
                     this.myObject = this;
                     this.typeaheadBound = false;
@@ -125,7 +124,7 @@ System.register(['angular2/core', '../services/AuctionhouseItemSearchService', '
                 };
                 SingleItemSearch.prototype.doSearch = function () {
                     var _this = this;
-                    this.noInfoFoundWarning = true;
+                    this.noInfoFoundWarning = false;
                     this.ahSearchService.doSearch(this.itemId, this.myRealm.id)
                         .subscribe(function (searchResult) {
                         _this.lastSearchTerm = searchResult;

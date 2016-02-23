@@ -1,4 +1,4 @@
-System.register(['angular2/core', '../services/AuctionhouseItemSearchService'], function(exports_1) {
+System.register(['angular2/core', '../services/AuctionhouseItemSearchService', '../../realms/services/RealmService'], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,7 +8,7 @@ System.register(['angular2/core', '../services/AuctionhouseItemSearchService'], 
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, AuctionhouseItemSearchService_1;
+    var core_1, AuctionhouseItemSearchService_1, RealmService_1;
     var MultiItemSearch;
     return {
         setters:[
@@ -17,17 +17,26 @@ System.register(['angular2/core', '../services/AuctionhouseItemSearchService'], 
             },
             function (AuctionhouseItemSearchService_1_1) {
                 AuctionhouseItemSearchService_1 = AuctionhouseItemSearchService_1_1;
+            },
+            function (RealmService_1_1) {
+                RealmService_1 = RealmService_1_1;
             }],
         execute: function() {
             MultiItemSearch = (function () {
-                function MultiItemSearch(ahSearchService) {
+                function MultiItemSearch(ahSearchService, realmService) {
+                    var _this = this;
                     this.ahSearchService = ahSearchService;
+                    this.realmService = realmService;
                     this.itemName = "item";
-                    this.realmName = "a realm";
                     this.items = Bloodhound;
-                    this.realms = Bloodhound;
+                    this.noInfoFoundWarning = false;
                     this.myObject = this;
                     this.typeaheadBound = false;
+                    realmService.findCurrent()
+                        .subscribe(function (currentRealm) {
+                        _this.myRealm = currentRealm;
+                    }, function (error) {
+                    });
                 }
                 MultiItemSearch.prototype.initTypeAhead = function () {
                     this.items = new Bloodhound({
@@ -38,20 +47,7 @@ System.register(['angular2/core', '../services/AuctionhouseItemSearchService'], 
                             wildcard: '%QUERY'
                         }
                     });
-                    this.realms = new Bloodhound({
-                        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-                        queryTokenizer: Bloodhound.tokenizers.whitespace,
-                        remote: {
-                            url: '/rest/realms/query?search=%QUERY',
-                            wildcard: '%QUERY'
-                        }
-                    });
                     var currentObject = this;
-                    $('#realmMulti .typeahead').typeahead(null, {
-                        name: 'items',
-                        display: 'fullName',
-                        source: currentObject.realms
-                    });
                     $('#itemMulti .typeahead').typeahead(null, {
                         name: 'items',
                         display: 'name',
@@ -61,11 +57,6 @@ System.register(['angular2/core', '../services/AuctionhouseItemSearchService'], 
                         console.log(datum);
                         currentObject.itemId = datum.id;
                         currentObject.itemName = datum.name;
-                    });
-                    $('#realmSelectMulti').bind('typeahead:selected', function (obj, datum, name) {
-                        console.log(datum);
-                        currentObject.realmId = datum.id;
-                        currentObject.realmName = datum.name;
                     });
                     return true;
                 };
@@ -78,7 +69,6 @@ System.register(['angular2/core', '../services/AuctionhouseItemSearchService'], 
                     }
                 };
                 MultiItemSearch.prototype.loadIntoChart = function () {
-                    console.log("loading into existing chart");
                     this.currentSnapshotChart.load({
                         columns: [
                             [this.lastSearchTerm.itemName,
@@ -92,8 +82,6 @@ System.register(['angular2/core', '../services/AuctionhouseItemSearchService'], 
                     });
                 };
                 MultiItemSearch.prototype.generateChart = function () {
-                    console.log("generating chart from");
-                    console.log(this.lastSearchTerm);
                     this.currentSnapshotChart = c3.generate({
                         bindto: '#resultChartMulti',
                         data: {
@@ -135,20 +123,22 @@ System.register(['angular2/core', '../services/AuctionhouseItemSearchService'], 
                 };
                 MultiItemSearch.prototype.doSearch = function () {
                     var _this = this;
-                    this.ahSearchService.doSearch(this.itemId, this.realmId)
+                    this.noInfoFoundWarning = false;
+                    this.ahSearchService.doSearch(this.itemId, this.myRealm.id)
                         .subscribe(function (searchResult) {
                         _this.lastSearchTerm = searchResult;
-                        console.log("generating or loading");
                         _this.generateOrLoadChart();
-                    });
+                    }, function (err) {
+                        _this.noInfoFoundWarning = true;
+                    }, function () { });
                 };
                 MultiItemSearch = __decorate([
                     core_1.Component({
                         selector: 'multi-search',
-                        providers: [AuctionhouseItemSearchService_1.AuctionHouseItemSearchService],
-                        template: "\n                <div class=\"row\">\n                    <div class=\"col-md-12\">\n                        <h1>Search for multiple items on multiple realms.</h1>\n                    </div>\n                </div>\n\n                <div class=\"row\">\n                    <div class=\"col-md-8 col-md-offset-2\">\n                        <div class=\"col-md-5 col-md-offset-1\">\n                            <div class=\"form-group label-floating\">\n                                <label class=\"control-label\" for=\"itemSelectMulti\">Item</label>\n                                <div id=\"itemMulti\">\n                                    <input id=\"itemSelectMulti\" class=\"form-control input-lg typeahead\" type=\"text\"/>\n                                </div>\n                            </div>\n                        </div>\n                        <div class=\"col-md-5\">\n                            <div class=\"form-group label-floating\">\n                                <label class=\"control-label\" for=\"realmSelectMulti\">Realm</label>\n                                <div id=\"realmMulti\">\n                                    <input id=\"realmSelectMulti\" class=\"form-control input-lg typeahead\" type=\"text\"/>\n                                </div>\n                            </div>\n                        </div>\n                        <div class=\"col-md-1\">\n                        <span (click)=\"doSearch()\" class=\"btn btn-primary btn-lg\" id=\"searchButtonMulti\">\n                            <i class=\"material-icons\">search</i>\n                        </span>\n                        </div>\n                    </div>\n                </div>\n\n                <div  *ngIf=\"lastSearchTerm != null\" class=\"row\">\n                    <div class=\"col-md-10 col-md-offset-1\">\n                        <h3>Last update date for {{itemName}} on {{realmName}}: {{lastSearchTerm?.exportTimePretty}}</h3>\n                    </div>\n                </div>\n\n                <div class=\"row\">\n                    <div class=\"col-md-10 col-md-offset-1\">\n                        <div id=\"resultChartMulti\"></div>\n                    </div>\n                </div>\n    "
+                        providers: [AuctionhouseItemSearchService_1.AuctionHouseItemSearchService, RealmService_1.RealmService],
+                        template: "\n                <div class=\"row\">\n                    <div class=\"col-md-12\">\n                        <h1>Search for multiple items on {{myRealm?.locality}}-{{myRealm?.name}}.</h1>\n                    </div>\n                </div>\n\n                <div class=\"row\">\n                    <div class=\"col-md-8 col-md-offset-2\">\n                        <div class=\"col-md-8 col-md-offset-2\">\n                            <div class=\"form-group label-floating\">\n                                <label class=\"control-label\" for=\"itemSelectMulti\">Item</label>\n                                <div id=\"itemMulti\">\n                                    <input id=\"itemSelectMulti\" class=\"form-control input-lg typeahead\" type=\"text\"/>\n                                </div>\n                            </div>\n                        </div>\n\n                        <div *ngIf=\"itemName != null\" class=\"col-md-1\">\n                        <span (click)=\"doSearch()\" class=\"btn btn-primary btn-lg\" id=\"searchButtonMulti\">\n                            <i class=\"material-icons\">search</i>\n                        </span>\n                        </div>\n                    </div>\n                </div>\n\n                <div *ngIf=\"noInfoFoundWarning\" class=\"alert alert-warning\">\n                    No Info was found for {{itemName}}\n                </div>\n\n                <div  *ngIf=\"lastSearchTerm != null\" class=\"row\">\n                    <div class=\"col-md-10 col-md-offset-1\">\n                        <h3>Last update date for  {{myRealm?.locality}}-{{myRealm?.name}}: {{lastSearchTerm?.exportTimePretty}}</h3>\n                    </div>\n                </div>\n\n                <div class=\"row\">\n                    <div class=\"col-md-10 col-md-offset-1\">\n                        <div id=\"resultChartMulti\"></div>\n                    </div>\n                </div>\n    "
                     }), 
-                    __metadata('design:paramtypes', [AuctionhouseItemSearchService_1.AuctionHouseItemSearchService])
+                    __metadata('design:paramtypes', [AuctionhouseItemSearchService_1.AuctionHouseItemSearchService, RealmService_1.RealmService])
                 ], MultiItemSearch);
                 return MultiItemSearch;
             })();

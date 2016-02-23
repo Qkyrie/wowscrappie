@@ -59,7 +59,6 @@ export class SingleItemSearch {
     myRealm:Realm;
 
     items = Bloodhound;
-    realms = Bloodhound;
 
     noInfoFoundWarning = false;
 
@@ -174,7 +173,7 @@ export class SingleItemSearch {
     }
 
     doSearch() {
-        this.noInfoFoundWarning = true;
+        this.noInfoFoundWarning = false;
         this.ahSearchService.doSearch(this.itemId, this.myRealm.id)
             .subscribe(searchResult => {
                 this.lastSearchTerm = searchResult;

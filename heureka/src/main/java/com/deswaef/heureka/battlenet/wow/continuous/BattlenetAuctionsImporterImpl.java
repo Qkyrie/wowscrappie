@@ -198,7 +198,7 @@ public class BattlenetAuctionsImporterImpl implements BattlenetAuctionsImporter 
             //calculate total count for items
             long totalQuantity = auctionsPerItem
                     .getValue()
-                    .stream()
+                    .parallelStream()
                     .mapToLong(AuctionItem::quantity)
                     .sum();
 
