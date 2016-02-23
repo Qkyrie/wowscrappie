@@ -15,7 +15,9 @@ import java.util.List;
 public class AuctionItem {
 
     @Id
-    private long id;
+    private String id;
+    @Field(type = FieldType.Long, index = FieldIndex.not_analyzed, store = true)
+    private long auctionId;
     @Field(type = FieldType.Long, index = FieldIndex.not_analyzed, store = true)
     private long item;
     @Field(type = FieldType.String, index = FieldIndex.not_analyzed, store = true)
@@ -40,6 +42,12 @@ public class AuctionItem {
     private List<AuctionItemModifier> modifiers = new ArrayList<>();
     @Field(type = FieldType.Nested)
     private List<AuctionItemBonusList> bonusLists = new ArrayList<>();
+    @Field(type = FieldType.String, index = FieldIndex.not_analyzed, store = true)
+    private String realmSlug;
+    @Field(type = FieldType.String, index = FieldIndex.not_analyzed, store = true)
+    private String realmName;
+    @Field(type = FieldType.Long, index = FieldIndex.not_analyzed, store = true)
+    private long realmId;
 
     @Field(type = FieldType.Long, index = FieldIndex.not_analyzed, store = true)
     private long petSpeciesId;
@@ -50,11 +58,11 @@ public class AuctionItem {
     @Field(type = FieldType.Integer, index = FieldIndex.not_analyzed, store = true)
     private int petQualityId;
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public AuctionItem setId(long id) {
+    public AuctionItem setId(String id) {
         this.id = id;
         return this;
     }
@@ -200,6 +208,42 @@ public class AuctionItem {
 
     public AuctionItem setPetQualityId(int petQualityId) {
         this.petQualityId = petQualityId;
+        return this;
+    }
+
+    public String getRealmSlug() {
+        return realmSlug;
+    }
+
+    public AuctionItem setRealmSlug(String realmSlug) {
+        this.realmSlug = realmSlug;
+        return this;
+    }
+
+    public String getRealmName() {
+        return realmName;
+    }
+
+    public AuctionItem setRealmName(String realmName) {
+        this.realmName = realmName;
+        return this;
+    }
+
+    public long getRealmId() {
+        return realmId;
+    }
+
+    public AuctionItem setRealmId(long realmId) {
+        this.realmId = realmId;
+        return this;
+    }
+
+    public long getAuctionId() {
+        return auctionId;
+    }
+
+    public AuctionItem setAuctionId(long auctionId) {
+        this.auctionId = auctionId;
         return this;
     }
 }
