@@ -121,10 +121,10 @@ export class MultiItemSearch {
                 [   this.lastSearchTerm.itemName,
                     this.lastSearchTerm.minimumBidCoppers,
                     this.lastSearchTerm.averageBidCoppers,
-                    this.lastSearchTerm.maximumBidCoppers,
+                    this.lastSearchTerm.medianBidCoppers,
                     this.lastSearchTerm.minimumBuyoutCoppers,
                     this.lastSearchTerm.averageBuyoutCoppers,
-                    this.lastSearchTerm.maximumBuyoutCoppers]
+                    this.lastSearchTerm.medianBuyoutCoppers]
             ]
         });
     }
@@ -137,10 +137,10 @@ export class MultiItemSearch {
                     [   this.lastSearchTerm.itemName,
                         this.lastSearchTerm.minimumBidCoppers,
                         this.lastSearchTerm.averageBidCoppers,
-                        this.lastSearchTerm.maximumBidCoppers,
+                        this.lastSearchTerm.medianBidCoppers,
                         this.lastSearchTerm.minimumBuyoutCoppers,
                         this.lastSearchTerm.averageBuyoutCoppers,
-                        this.lastSearchTerm.maximumBuyoutCoppers
+                        this.lastSearchTerm.medianBuyoutCoppers
                     ]
                 ],
                 type: 'bar'
@@ -148,8 +148,8 @@ export class MultiItemSearch {
             axis: {
                 x: {
                     type: 'category',
-                    categories: ['Minimum Bid', 'Average Bid', 'Maximum Bid',
-                        'Minimum Buyout', 'Average Buyout', 'Maximum Buyout']
+                    categories: ['Minimum Bid', 'Average Bid', 'Median Bid',
+                        'Minimum Buyout', 'Average Buyout', 'Median Buyout']
                 }
             },
             tooltip: {
