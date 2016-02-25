@@ -32,6 +32,7 @@ System.register(['angular2/core', '../services/AuctionhouseItemSearchService', '
                     this.noInfoFoundWarning = false;
                     this.myObject = this;
                     this.typeaheadBound = false;
+                    this.allSearchTerms = [];
                     realmService.findCurrent()
                         .subscribe(function (currentRealm) {
                         _this.myRealm = currentRealm;
@@ -72,10 +73,8 @@ System.register(['angular2/core', '../services/AuctionhouseItemSearchService', '
                     this.currentSnapshotChart.load({
                         columns: [
                             [this.lastSearchTerm.itemName,
-                                this.lastSearchTerm.minimumBidCoppers,
                                 this.lastSearchTerm.averageBidCoppers,
                                 this.lastSearchTerm.medianBidCoppers,
-                                this.lastSearchTerm.minimumBuyoutCoppers,
                                 this.lastSearchTerm.averageBuyoutCoppers,
                                 this.lastSearchTerm.medianBuyoutCoppers]
                         ]
@@ -87,32 +86,33 @@ System.register(['angular2/core', '../services/AuctionhouseItemSearchService', '
                         data: {
                             columns: [
                                 [this.lastSearchTerm.itemName,
-                                    this.lastSearchTerm.minimumBidCoppers,
                                     this.lastSearchTerm.averageBidCoppers,
                                     this.lastSearchTerm.medianBidCoppers,
-                                    this.lastSearchTerm.minimumBuyoutCoppers,
                                     this.lastSearchTerm.averageBuyoutCoppers,
                                     this.lastSearchTerm.medianBuyoutCoppers
                                 ]
                             ],
-                            type: 'bar'
+                            type: 'bar',
+                            labels: {
+                                format: function (v, id, i, j) {
+                                    var coppers = v;
+                                    var actualCoppers = Math.floor(+coppers % 100);
+                                    var silverAndCoppers = Math.floor(+coppers / 100);
+                                    var silvers = Math.floor(silverAndCoppers % 100);
+                                    var gold = Math.floor(silverAndCoppers / 100);
+                                    return gold + 'g ' + silvers + 's ' + actualCoppers + 'c';
+                                }
+                            },
                         },
                         axis: {
                             x: {
                                 type: 'category',
-                                categories: ['Minimum Bid', 'Average Bid', 'Median Bid',
-                                    'Minimum Buyout', 'Average Buyout', 'Median Buyout']
+                                categories: ['Average Bid', 'Median Bid',
+                                    'Average Buyout', 'Median Buyout']
                             }
                         },
                         tooltip: {
-                            contents: function (d, defaultTitleFormat, defaultValueFormat, color) {
-                                var coppers = d[0].value;
-                                var actualCoppers = Math.floor(+coppers % 100);
-                                var silverAndCoppers = Math.floor(+coppers / 100);
-                                var silvers = Math.floor(silverAndCoppers % 100);
-                                var gold = Math.floor(silverAndCoppers / 100);
-                                return gold + 'g ' + silvers + 's ' + actualCoppers + 'c';
-                            }
+                            show: false
                         }
                     });
                 };
@@ -121,22 +121,32 @@ System.register(['angular2/core', '../services/AuctionhouseItemSearchService', '
                         this.typeaheadBound = this.initTypeAhead();
                     }
                 };
+                MultiItemSearch.prototype.transformPretty = function (amount) {
+                    var actualCoppers = Math.floor(+amount % 100);
+                    var silverAndCoppers = Math.floor(+amount / 100);
+                    var silvers = Math.floor(silverAndCoppers % 100);
+                    var gold = Math.floor(silverAndCoppers / 100);
+                    return gold + 'g ' + silvers + 's ' + actualCoppers + 'c';
+                };
                 MultiItemSearch.prototype.doSearch = function () {
                     var _this = this;
                     this.noInfoFoundWarning = false;
                     this.ahSearchService.searchForItemAndRealm(this.itemId, this.myRealm.id)
                         .subscribe(function (searchResult) {
                         _this.lastSearchTerm = searchResult;
+                        _this.allSearchTerms.push(searchResult);
                         _this.generateOrLoadChart();
                     }, function (err) {
                         _this.noInfoFoundWarning = true;
-                    }, function () { });
+                        console.log(err);
+                    }, function () {
+                    });
                 };
                 MultiItemSearch = __decorate([
                     core_1.Component({
                         selector: 'multi-search',
                         providers: [AuctionhouseItemSearchService_1.AuctionHouseItemSearchService, RealmService_1.RealmService],
-                        template: "\n                <div class=\"row\">\n                    <div class=\"col-md-12\">\n                        <h1>Search for multiple items on {{myRealm?.locality}}-{{myRealm?.name}}.</h1>\n                    </div>\n                </div>\n\n                <div class=\"row\">\n                    <div class=\"col-md-8 col-md-offset-2\">\n                        <div class=\"col-md-8 col-md-offset-2\">\n                            <div class=\"form-group label-floating\">\n                                <label class=\"control-label\" for=\"itemSelectMulti\">Item</label>\n                                <div id=\"itemMulti\">\n                                    <input id=\"itemSelectMulti\" class=\"form-control input-lg typeahead\" type=\"text\"/>\n                                </div>\n                            </div>\n                        </div>\n\n                        <div *ngIf=\"itemName != null\" class=\"col-md-1\">\n                        <span (click)=\"doSearch()\" class=\"btn btn-primary btn-lg\" id=\"searchButtonMulti\">\n                            <i class=\"material-icons\">search</i>\n                        </span>\n                        </div>\n                    </div>\n                </div>\n\n                <div *ngIf=\"noInfoFoundWarning\" class=\"alert alert-warning\">\n                    No Info was found for {{itemName}}\n                </div>\n\n                <div  *ngIf=\"lastSearchTerm != null\" class=\"row\">\n                    <div class=\"col-md-10 col-md-offset-1\">\n                        <h3>Last update date for  {{myRealm?.locality}}-{{myRealm?.name}}: {{lastSearchTerm?.exportTimePretty}}</h3>\n                    </div>\n                </div>\n\n                <div class=\"row\">\n                    <div class=\"col-md-10 col-md-offset-1\">\n                        <div id=\"resultChartMulti\"></div>\n                    </div>\n                </div>\n    "
+                        template: "\n                <div class=\"row\">\n                    <div class=\"col-md-12\">\n                        <h1>Search for multiple items on {{myRealm?.locality}}-{{myRealm?.name}}.</h1>\n                    </div>\n                </div>\n\n                <div class=\"row\">\n                    <div class=\"col-md-8 col-md-offset-2\">\n                        <div class=\"col-md-8 col-md-offset-2\">\n                            <div class=\"form-group label-floating\">\n                                <label class=\"control-label\" for=\"itemSelectMulti\">Item</label>\n                                <div id=\"itemMulti\">\n                                    <input id=\"itemSelectMulti\" class=\"form-control input-lg typeahead\" type=\"text\"/>\n                                </div>\n                            </div>\n                        </div>\n\n                        <div *ngIf=\"itemName != null\" class=\"col-md-1\">\n                        <span (click)=\"doSearch()\" class=\"btn btn-primary btn-lg\" id=\"searchButtonMulti\">\n                            <i class=\"material-icons\">search</i>\n                        </span>\n                        </div>\n                    </div>\n                </div>\n\n                <div *ngIf=\"noInfoFoundWarning\" class=\"alert alert-warning\">\n                    No Info was found for {{itemName}}\n                </div>\n\n\n\n\n                <div class=\"row\">\n                    <div class=\"col-md-10 col-md-offset-1\">\n                        <div id=\"resultChartMulti\"></div>\n                    </div>\n                </div>\n\n                <div *ngIf=\"lastSearchTerm != null\"  class=\"row\">\n                 <div *ngFor=\"#searchTerm of allSearchTerms\" class=\"col-md-4\">\n                     <h4>{{searchTerm.itemName}} statistics</h4>\n                         <table class=\"table table-striped table-hover \">\n                         <tbody>\n                         <tr>\n                         <td>Last Seen</td>\n                         <td>{{searchTerm?.exportTimePretty}}</td>\n                         </tr>\n                         <tr>\n                         <td>Quantity</td>\n                         <td>{{searchTerm?.quantity}}</td>\n                         </tr>\n                         <tr>\n                         <td>Median Price</td>\n                         <td>{{transformPretty(searchTerm?.medianBuyoutCoppers)}}</td>\n                         </tr>\n                         <tr>\n                         <td>Mean Price</td>\n                         <td>{{transformPretty(searchTerm?.averageBuyoutCoppers)}}</td>\n                         </tr>\n                         <tr>\n                         <td>Standard Deviation</td>\n                         <td>{{transformPretty(searchTerm?.stdevBuyoutCoppers)}}</td>\n                         </tr>\n                         </tbody>\n                         </table>\n                     </div>\n                 </div>\n    "
                     }), 
                     __metadata('design:paramtypes', [AuctionhouseItemSearchService_1.AuctionHouseItemSearchService, RealmService_1.RealmService])
                 ], MultiItemSearch);

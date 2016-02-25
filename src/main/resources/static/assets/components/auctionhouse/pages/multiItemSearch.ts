@@ -40,22 +40,49 @@ import { Realm } from '../../realms/entity/Realm';
                     No Info was found for {{itemName}}
                 </div>
 
-                <div  *ngIf="lastSearchTerm != null" class="row">
-                    <div class="col-md-10 col-md-offset-1">
-                        <h3>Last update date for  {{myRealm?.locality}}-{{myRealm?.name}}: {{lastSearchTerm?.exportTimePretty}}</h3>
-                    </div>
-                </div>
+
+
 
                 <div class="row">
                     <div class="col-md-10 col-md-offset-1">
                         <div id="resultChartMulti"></div>
                     </div>
                 </div>
+
+                <div *ngIf="lastSearchTerm != null"  class="row">
+                 <div *ngFor="#searchTerm of allSearchTerms" class="col-md-4">
+                     <h4>{{searchTerm.itemName}} statistics</h4>
+                         <table class="table table-striped table-hover ">
+                         <tbody>
+                         <tr>
+                         <td>Last Seen</td>
+                         <td>{{searchTerm?.exportTimePretty}}</td>
+                         </tr>
+                         <tr>
+                         <td>Quantity</td>
+                         <td>{{searchTerm?.quantity}}</td>
+                         </tr>
+                         <tr>
+                         <td>Median Price</td>
+                         <td>{{transformPretty(searchTerm?.medianBuyoutCoppers)}}</td>
+                         </tr>
+                         <tr>
+                         <td>Mean Price</td>
+                         <td>{{transformPretty(searchTerm?.averageBuyoutCoppers)}}</td>
+                         </tr>
+                         <tr>
+                         <td>Standard Deviation</td>
+                         <td>{{transformPretty(searchTerm?.stdevBuyoutCoppers)}}</td>
+                         </tr>
+                         </tbody>
+                         </table>
+                     </div>
+                 </div>
     `
 })
 export class MultiItemSearch {
     itemName:string = "item";
-    itemId: number;
+    itemId:number;
 
     items = Bloodhound;
 
@@ -69,6 +96,7 @@ export class MultiItemSearch {
     currentSnapshotChart:ChartAPI;
 
     lastSearchTerm:AuctionHouseSnapshot;
+    allSearchTerms:AuctionHouseSnapshot[] = [];
 
     initTypeAhead() {
         this.items = new Bloodhound({
@@ -108,21 +136,19 @@ export class MultiItemSearch {
     }
 
     generateOrLoadChart() {
-        if(this.currentSnapshotChart) {
+        if (this.currentSnapshotChart) {
             this.loadIntoChart();
         } else {
             this.generateChart();
         }
     }
 
-    loadIntoChart(){
+    loadIntoChart() {
         this.currentSnapshotChart.load({
             columns: [
-                [   this.lastSearchTerm.itemName,
-                    this.lastSearchTerm.minimumBidCoppers,
+                [this.lastSearchTerm.itemName,
                     this.lastSearchTerm.averageBidCoppers,
                     this.lastSearchTerm.medianBidCoppers,
-                    this.lastSearchTerm.minimumBuyoutCoppers,
                     this.lastSearchTerm.averageBuyoutCoppers,
                     this.lastSearchTerm.medianBuyoutCoppers]
             ]
@@ -134,55 +160,67 @@ export class MultiItemSearch {
             bindto: '#resultChartMulti',
             data: {
                 columns: [
-                    [   this.lastSearchTerm.itemName,
-                        this.lastSearchTerm.minimumBidCoppers,
+                    [this.lastSearchTerm.itemName,
                         this.lastSearchTerm.averageBidCoppers,
                         this.lastSearchTerm.medianBidCoppers,
-                        this.lastSearchTerm.minimumBuyoutCoppers,
                         this.lastSearchTerm.averageBuyoutCoppers,
                         this.lastSearchTerm.medianBuyoutCoppers
                     ]
                 ],
-                type: 'bar'
+                type: 'bar',
+                labels: {
+                    format: function (v, id, i, j) {
+                        var coppers:number = v;
+                        var actualCoppers = Math.floor(+coppers % 100);
+                        var silverAndCoppers = Math.floor(+coppers / 100);
+                        var silvers = Math.floor(silverAndCoppers % 100);
+                        var gold = Math.floor(silverAndCoppers / 100);
+                        return gold + 'g ' + silvers + 's ' + actualCoppers + 'c';
+                    }
+                },
             },
             axis: {
                 x: {
                     type: 'category',
-                    categories: ['Minimum Bid', 'Average Bid', 'Median Bid',
-                        'Minimum Buyout', 'Average Buyout', 'Median Buyout']
+                    categories: ['Average Bid', 'Median Bid',
+                        'Average Buyout', 'Median Buyout']
                 }
             },
             tooltip: {
-                contents: function (d, defaultTitleFormat, defaultValueFormat, color) {
-                    var coppers: string = d[0].value;
-                    var actualCoppers = Math.floor(+coppers % 100);
-                    var silverAndCoppers = Math.floor(+coppers / 100);
-                    var silvers = Math.floor(silverAndCoppers % 100);
-                    var gold = Math.floor(silverAndCoppers / 100);
-
-                    return gold + 'g ' + silvers + 's ' + actualCoppers + 'c';
-                }
+                show: false
             }
+
         });
     }
 
-    public ngAfterViewChecked(): void {
-        if(!this.typeaheadBound) {
+    public ngAfterViewChecked():void {
+        if (!this.typeaheadBound) {
             this.typeaheadBound = this.initTypeAhead();
         }
+    }
+
+    transformPretty(amount) {
+        var actualCoppers = Math.floor(+amount % 100);
+        var silverAndCoppers = Math.floor(+amount / 100);
+        var silvers = Math.floor(silverAndCoppers % 100);
+        var gold = Math.floor(silverAndCoppers / 100);
+        return gold + 'g ' + silvers + 's ' + actualCoppers + 'c';
     }
 
     doSearch() {
         this.noInfoFoundWarning = false;
         this.ahSearchService.searchForItemAndRealm(this.itemId, this.myRealm.id)
             .subscribe(searchResult => {
-                this.lastSearchTerm = searchResult;
-                this.generateOrLoadChart();
-            },
+                    this.lastSearchTerm = searchResult;
+                    this.allSearchTerms.push(searchResult);
+                    this.generateOrLoadChart();
+                },
                 (err)=> {
                     this.noInfoFoundWarning = true;
+                    console.log(err);
                 },
-                ()=> {}
+                ()=> {
+                }
             );
     }
 }
