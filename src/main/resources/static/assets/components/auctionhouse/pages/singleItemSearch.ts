@@ -6,6 +6,7 @@ import { AuctionHouseItemSearchService } from '../services/AuctionhouseItemSearc
 import { RealmService } from '../../realms/services/RealmService';
 import { Realm } from '../../realms/entity/Realm';
 import {AuctionHouseSnapshot} from "../entity/auctionhousesnapshot";
+import {AuctionHouseRegionSnapshotStatistic} from "../entity/auctionhouseregionstatistic";
 
 @Component({
     selector: 'single-search',
@@ -39,16 +40,66 @@ import {AuctionHouseSnapshot} from "../entity/auctionhousesnapshot";
                     No Info was found for {{itemName}}
                 </div>
 
-                <div *ngIf="lastSearchTerm != null" class="row">
-                    <div class="col-md-10 col-md-offset-1">
-                        <h3>Last update date for {{itemName}} on {{myRealm?.locality}}-{{myRealm?.name}}: {{lastSearchTerm?.exportTimePretty}}</h3>
-                    </div>
-                </div>
 
                 <div class="row">
                     <div class="col-md-10 col-md-offset-1">
                         <div id="resultChartSingle"></div>
                     </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5 col-md-offset-1">
+                        <h3 *ngIf="lastSearchTerm != null">{{lastSearchTerm?.itemName}} @ {{lastSearchTerm?.realmName}}</h3>
+                    </div>
+                    <div class="col-md-5">
+                        <h3 *ngIf="lastRegionSearchTerm != null">{{lastRegionSearchTerm?.item?.name}} @ {{lastRegionSearchTerm?.locality}} servers</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div *ngIf="lastSearchTerm != null" class="col-md-5 col-md-offset-1">
+                        <table class="table table-striped table-hover ">
+                          <tbody>
+                              <tr>
+                                <td>Last Seen</td>
+                                <td>{{lastSearchTerm?.exportTimePretty}}</td>
+                              </tr>
+                               <tr>
+                                <td>Quantity</td>
+                                <td>{{lastSearchTerm?.quantity}}</td>
+                              </tr>
+                                  <tr>
+                                <td>Median Price</td>
+                                <td>{{transformPretty(lastSearchTerm?.medianBuyoutCoppers)}}</td>
+                              </tr>
+                              <tr>
+                                <td>Mean Price</td>
+                                <td>{{transformPretty(lastSearchTerm?.averageBuyoutCoppers)}}</td>
+                              </tr>
+                              <tr>
+                                <td>Standard Deviation</td>
+                                <td>{{transformPretty(lastSearchTerm?.stdevBuyoutCoppers)}}</td>
+                              </tr>
+                          </tbody>
+                        </table>
+                    </div>
+                    <div *ngIf="lastRegionSearchTerm != null" class="col-md-5">
+                      <table class="table table-striped table-hover ">
+                        <tbody>
+                            <tr>
+                              <td>EU Quantity</td>
+                              <td>{{lastRegionSearchTerm?.totalQuantity}}</td>
+                            </tr>
+                            <tr>
+                              <td>EU Median Price</td>
+                              <td>{{transformPretty(lastRegionSearchTerm?.medianBuyout)}}</td>
+                            </tr>
+                            <tr>
+                              <td>EU Mean Price</td>
+                              <td>{{transformPretty(lastRegionSearchTerm?.averageBuyout)}}</td>
+                            </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="col-md-1"></div>
                 </div>
     `
 })
@@ -68,6 +119,7 @@ export class SingleItemSearch {
     currentSnapshotChart:ChartAPI;
 
     lastSearchTerm:AuctionHouseSnapshot;
+    lastRegionSearchTerm:AuctionHouseRegionSnapshotStatistic;
 
     initTypeAhead() {
         this.items = new Bloodhound({
@@ -104,66 +156,56 @@ export class SingleItemSearch {
             });
     }
 
-    generateOrLoadChart() {
+    generateOrLoadChart(data, type) {
         if (this.currentSnapshotChart) {
-            this.loadIntoChart();
+            this.loadIntoChart(data, type);
         } else {
-            this.generateChart();
+            this.generateChart(data, type);
         }
     }
 
-    loadIntoChart() {
+    loadIntoChart(data, type) {
         this.currentSnapshotChart.load({
-            columns: [
-                ['item',
-                    this.lastSearchTerm.minimumBidCoppers,
-                    this.lastSearchTerm.averageBidCoppers,
-                    this.lastSearchTerm.medianBidCoppers,
-                    this.lastSearchTerm.minimumBuyoutCoppers,
-                    this.lastSearchTerm.averageBuyoutCoppers,
-                    this.lastSearchTerm.medianBuyoutCoppers]
-            ]
+            columns: data,
+            unload: this.currentSnapshotChart.columns
         });
     }
 
-    generateChart() {
+    generateChart(columns, type) {
         this.currentSnapshotChart = c3.generate({
             bindto: '#resultChartSingle',
             data: {
-                columns: [
-                    ['item',
-                        this.lastSearchTerm.minimumBidCoppers,
-                        this.lastSearchTerm.averageBidCoppers,
-                        this.lastSearchTerm.medianBidCoppers,
-                        this.lastSearchTerm.minimumBuyoutCoppers,
-                        this.lastSearchTerm.averageBuyoutCoppers,
-                        this.lastSearchTerm.medianBuyoutCoppers
-                    ]
-                ],
-                type: 'bar',
-                color: function (color, d) {
-                    return '#009688';
+                columns: columns,
+                type: type,
+                labels: {
+                    format: function (v, id, i, j) {
+                        var coppers:number = v;
+                        var actualCoppers = Math.floor(+coppers % 100);
+                        var silverAndCoppers = Math.floor(+coppers / 100);
+                        var silvers = Math.floor(silverAndCoppers % 100);
+                        var gold = Math.floor(silverAndCoppers / 100);
+                        return gold + 'g ' + silvers + 's ' + actualCoppers + 'c';
+                    }
                 }
+            },
+            tooltip: {
+                show: false
             },
             axis: {
                 x: {
                     type: 'category',
-                    categories: ['Minimum Bid', 'Average Bid', 'Median Bid',
-                        'Minimum Buyout', 'Average Buyout', 'Median Buyout']
-                }
-            },
-            tooltip: {
-                contents: function (d, defaultTitleFormat, defaultValueFormat, color) {
-                    var coppers:string = d[0].value;
-                    var actualCoppers = Math.floor(+coppers % 100);
-                    var silverAndCoppers = Math.floor(+coppers / 100);
-                    var silvers = Math.floor(silverAndCoppers % 100);
-                    var gold = Math.floor(silverAndCoppers / 100);
-
-                    return gold + 'g ' + silvers + 's ' + actualCoppers + 'c';
+                    categories: ['Average Bid', 'Median Bid', 'Average Buyout', 'Median Buyout']
                 }
             }
         });
+    }
+
+    transformPretty(amount  ) {
+        var actualCoppers = Math.floor(+amount % 100);
+        var silverAndCoppers = Math.floor(+amount / 100);
+        var silvers = Math.floor(silverAndCoppers % 100);
+        var gold = Math.floor(silverAndCoppers / 100);
+        return gold + 'g ' + silvers + 's ' + actualCoppers + 'c';
     }
 
     public ngAfterViewChecked():void {
@@ -174,11 +216,34 @@ export class SingleItemSearch {
 
     doSearch() {
         this.noInfoFoundWarning = false;
-        this.ahSearchService.doSearch(this.itemId, this.myRealm.id)
+        this.ahSearchService.searchForItemAndRealm(this.itemId, this.myRealm.id)
             .subscribe(searchResult => {
-                this.lastSearchTerm = searchResult;
-                this.generateOrLoadChart();
-            },
+                    this.lastSearchTerm = searchResult;
+                    this.ahSearchService.searchForItemAndLocality(this.itemId, this.myRealm.locality)
+                        .subscribe(result => {
+                                this.lastRegionSearchTerm = result;
+                                this.generateOrLoadChart([
+                                    [this.lastSearchTerm.itemName,
+                                        this.lastSearchTerm.averageBidCoppers,
+                                        this.lastSearchTerm.medianBidCoppers,
+                                        this.lastSearchTerm.averageBuyoutCoppers,
+                                        this.lastSearchTerm.medianBuyoutCoppers
+                                    ],
+                                    [this.lastRegionSearchTerm.item.name + ' (' + this.lastRegionSearchTerm.locality + ')',
+                                        this.lastRegionSearchTerm.averageBid,
+                                        this.lastRegionSearchTerm.medianBid,
+                                        this.lastRegionSearchTerm.averageBuyout,
+                                        this.lastRegionSearchTerm.medianBuyout
+                                    ]
+                                ], 'bar');
+                            },
+                            (err)=> {
+                                console.log(err);
+                            },
+                            ()=> {
+                            }
+                        );
+                },
                 (err)=> {
                     this.noInfoFoundWarning = true;
                 },

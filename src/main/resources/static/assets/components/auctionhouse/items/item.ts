@@ -1,4 +1,3 @@
 export class Item {
-    name =  '';
-    id = 0;
+    constructor(public name:string, public id:number){}
 }

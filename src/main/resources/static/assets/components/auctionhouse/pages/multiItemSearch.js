@@ -124,7 +124,7 @@ System.register(['angular2/core', '../services/AuctionhouseItemSearchService', '
                 MultiItemSearch.prototype.doSearch = function () {
                     var _this = this;
                     this.noInfoFoundWarning = false;
-                    this.ahSearchService.doSearch(this.itemId, this.myRealm.id)
+                    this.ahSearchService.searchForItemAndRealm(this.itemId, this.myRealm.id)
                         .subscribe(function (searchResult) {
                         _this.lastSearchTerm = searchResult;
                         _this.generateOrLoadChart();

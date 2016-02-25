@@ -4,9 +4,10 @@ System.register([], function(exports_1) {
         setters:[],
         execute: function() {
             Realm = (function () {
-                function Realm() {
-                    this.id = 0;
-                    this.name = '';
+                function Realm(id, name, locality) {
+                    this.id = id;
+                    this.name = name;
+                    this.locality = locality;
                 }
                 return Realm;
             })();

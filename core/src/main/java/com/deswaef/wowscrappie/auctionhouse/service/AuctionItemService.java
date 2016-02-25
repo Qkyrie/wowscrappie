@@ -5,6 +5,10 @@ import com.deswaef.wowscrappie.item.domain.Item;
 import com.deswaef.wowscrappie.realm.domain.Realm;
 import rx.Observable;
 
+import java.util.Date;
+
 public interface AuctionItemService {
     Observable<AuctionItem> findAllByItemAndRealm(Item item, Realm realm);
+
+    Observable<AuctionItem> findAllBetweenDates(Date startDate, Date endDate);
 }

@@ -3,6 +3,7 @@ package com.deswaef.wowscrappie.auctionhouse.repository;
 import com.deswaef.wowscrappie.auctionhouse.domain.AuctionHouseSnapshot;
 import com.deswaef.wowscrappie.infrastructure.repository.JpaRepository;
 import com.deswaef.wowscrappie.item.domain.Item;
+import com.deswaef.wowscrappie.realm.domain.Locality;
 import com.deswaef.wowscrappie.realm.domain.Realm;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -20,4 +21,5 @@ public interface AuctionHouseSnapshotRepository extends JpaRepository<AuctionHou
 
     Optional<AuctionHouseSnapshot> findFirstByItemAndRealm(@Param("item")Item item, @Param("realm") Realm realm);
 
+    List<AuctionHouseSnapshot> findByItemAndRealmLocality(@Param("item") Item item, @Param("locality") Locality locality);
 }

@@ -12,7 +12,7 @@ public class RealmDto {
         return new RealmDto()
                 .setId(realm.getId())
                 .setName(realm.getName())
-                .setLocality(realm.getLocality().getLocalityName())
+                .setLocality(realm.getLocality().name())
                 .setFullName(realm.getLocality().getLocalityName() + "-" + realm.getName());
     }
 

@@ -11,7 +11,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-@Document(indexName = "historic_auction_snapshot", type = "historic_auction_snapshot", shards = 1, replicas = 0)
+@Document(indexName = "timestamped_auction_snapshot", type = "timestamped_auction_snapshot", shards = 1, replicas = 0)
 public class HistoricAuctionHouseSnapshot {
 
     private static DateFormat format = new SimpleDateFormat("dd.MM.yyyy hh:mm");

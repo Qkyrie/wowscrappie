@@ -4,9 +4,9 @@ System.register([], function(exports_1) {
         setters:[],
         execute: function() {
             Item = (function () {
-                function Item() {
-                    this.name = '';
-                    this.id = 0;
+                function Item(name, id) {
+                    this.name = name;
+                    this.id = id;
                 }
                 return Item;
             })();

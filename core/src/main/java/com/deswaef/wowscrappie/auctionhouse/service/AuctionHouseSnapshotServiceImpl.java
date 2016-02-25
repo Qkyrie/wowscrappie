@@ -5,6 +5,7 @@ import com.deswaef.wowscrappie.auctionhouse.repository.AuctionHouseSnapshotRepos
 import com.deswaef.wowscrappie.infrastructure.exception.WowscrappieException;
 import com.deswaef.wowscrappie.item.domain.Item;
 import com.deswaef.wowscrappie.item.repository.ItemRepository;
+import com.deswaef.wowscrappie.realm.domain.Locality;
 import com.deswaef.wowscrappie.realm.domain.Realm;
 import com.deswaef.wowscrappie.realm.repository.RealmRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +40,21 @@ public class AuctionHouseSnapshotServiceImpl implements AuctionHouseSnapshotServ
                 return Observable.error(new WowscrappieException("That realm is not yet indexed or does not exist"));
             }
         } else {
-            return Observable.error(new WowscrappieException("That is not yet indexed or does not exist"));
+            return Observable.error(new WowscrappieException("That item is not yet indexed or does not exist"));
         }
 
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Observable<AuctionHouseSnapshot> findByItemIdAndLocality(long itemId, Locality locality) {
+        Optional<Item> optionalItem = itemRepository.findOne(itemId);
+        if (optionalItem.isPresent()) {
+            return Observable.from(
+                    auctionHouseSnapshotRepository.findByItemAndRealmLocality(optionalItem.get(), locality)
+            );
+        } else {
+            return Observable.error(new WowscrappieException("That item is not yet indexed or does not exist"));
+        }
     }
 }

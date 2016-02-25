@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import rx.Observable;
 
+import java.util.Date;
+
 
 @Service
 public class AuctionItemServiceImpl implements AuctionItemService {
@@ -20,6 +22,12 @@ public class AuctionItemServiceImpl implements AuctionItemService {
     @Override
     public Observable<AuctionItem> findAllByItemAndRealm(Item item, Realm realm) {
         return Observable.from(auctionItemRepository.findAllByItemAndRealmId(item.getId(), realm.getId()));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Observable<AuctionItem> findAllBetweenDates(Date startDate, Date endDate) {
+        return Observable.from(auctionItemRepository.findAllByExportTimeBetween(startDate.getTime(), endDate.getTime())::iterator);
     }
 
 }

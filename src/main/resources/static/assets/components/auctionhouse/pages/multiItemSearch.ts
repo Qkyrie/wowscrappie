@@ -174,7 +174,7 @@ export class MultiItemSearch {
 
     doSearch() {
         this.noInfoFoundWarning = false;
-        this.ahSearchService.doSearch(this.itemId, this.myRealm.id)
+        this.ahSearchService.searchForItemAndRealm(this.itemId, this.myRealm.id)
             .subscribe(searchResult => {
                 this.lastSearchTerm = searchResult;
                 this.generateOrLoadChart();

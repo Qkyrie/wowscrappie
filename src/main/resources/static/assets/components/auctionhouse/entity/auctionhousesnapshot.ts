@@ -37,4 +37,6 @@ export class AuctionHouseSnapshot {
         this.realmName = realmName;
         this.realmId = realmId;
     }
+
+
 }

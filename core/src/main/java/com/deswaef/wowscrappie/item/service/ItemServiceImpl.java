@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import rx.Observable;
 
+import java.util.Optional;
+
 @Service
 public class ItemServiceImpl implements ItemService {
 
@@ -36,4 +38,11 @@ public class ItemServiceImpl implements ItemService {
     public Observable<Item> findByNameQuery(String query) {
         return Observable.from(itemRepository.findTop20ByNameContainingIgnoreCase(query));
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<Item> findOne(long id) {
+        return itemRepository.findOne(id);
+    }
+
 }
