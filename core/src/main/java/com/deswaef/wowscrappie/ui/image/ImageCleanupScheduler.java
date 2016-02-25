@@ -1,7 +1,7 @@
 package com.deswaef.wowscrappie.ui.image;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import com.deswaef.wowscrappie.applicationevent.ApplicationEventTypeEnum;
+import com.deswaef.wowscrappie.applicationevent.service.ApplicationEventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -9,19 +9,23 @@ import org.springframework.stereotype.Component;
 @Component
 public class ImageCleanupScheduler {
 
-    private Log LOG = LogFactory.getLog(ImageCleanupScheduler.class);
-
-    public static final long HOURS = 2L;
-    public static final long MINUTES = 60L;
-    public static final long SECONDS = 60L;
-    private final static Long DELETION_DELAY = HOURS * MINUTES * SECONDS;
+    @Autowired
+    private ApplicationEventService applicationEventService;
 
     @Autowired
     private ImageStore imageStore;
 
     @Scheduled(fixedDelay = 7200000)
     public void cleanupOldImages() {
+        applicationEventService.create(
+                ApplicationEventTypeEnum.JOB_STARTED,
+                "cleanup of old images started"
+        );
         imageStore.deleteOldEntries();
+        applicationEventService.create(
+                ApplicationEventTypeEnum.JOB_ENDED,
+                "cleanup of old images ended"
+        );
     }
 
 }

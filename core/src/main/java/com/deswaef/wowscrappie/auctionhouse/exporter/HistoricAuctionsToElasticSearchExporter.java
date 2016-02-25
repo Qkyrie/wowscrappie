@@ -1,5 +1,7 @@
 package com.deswaef.wowscrappie.auctionhouse.exporter;
 
+import com.deswaef.wowscrappie.applicationevent.ApplicationEventTypeEnum;
+import com.deswaef.wowscrappie.applicationevent.service.ApplicationEventService;
 import com.deswaef.wowscrappie.auctionhouse.domain.AuctionHouseSnapshot;
 import com.deswaef.wowscrappie.auctionhouse.domain.HistoricAuctionHouseSnapshot;
 import com.deswaef.wowscrappie.auctionhouse.repository.AuctionHouseSnapshotRepository;
@@ -21,14 +23,21 @@ public class HistoricAuctionsToElasticSearchExporter implements AuctionsExporter
     private AuctionHouseSnapshotRepository auctionHouseSnapshotRepository;
     @Autowired
     private HistoricAuctionHouseSnapshotRepository historicAuctionHouseSnapshotRepository;
-
+    @Autowired
+    private ApplicationEventService applicationEventService;
 
     @Override
     @Transactional
     public void exportFor(Realm realm) {
         List<Date> distinctExportTimeByRealm = auctionHouseSnapshotRepository.findDistinctExportTimeByRealm(realm);
         if (distinctExportTimeByRealm != null && !distinctExportTimeByRealm.isEmpty() && distinctExportTimeByRealm.size() > 1) {
+            applicationEventService.create(
+                    ApplicationEventTypeEnum.JOB_STARTED, "historic auctions exporter for " + realm.getLocality() + "-" + realm.getName() + " started"
+            );
             exportOldDates(distinctExportTimeByRealm, realm);
+            applicationEventService.create(
+                    ApplicationEventTypeEnum.JOB_ENDED, "historic auctions exporter for " + realm.getLocality() + "-" + realm.getName() + " ended"
+            );
         }
     }
 

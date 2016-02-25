@@ -6,6 +6,8 @@ import com.deswaef.heureka.battlenet.wow.auctions.client.domain.AuctionResponse;
 import com.deswaef.heureka.battlenet.wow.domain.AuctionSnapshot;
 import com.deswaef.heureka.infrastructure.exception.HeurekaException;
 import com.deswaef.heureka.wowhead.client.ItemFetchingService;
+import com.deswaef.wowscrappie.applicationevent.ApplicationEventTypeEnum;
+import com.deswaef.wowscrappie.applicationevent.service.ApplicationEventService;
 import com.deswaef.wowscrappie.auctionhouse.domain.AuctionHouseSnapshot;
 import com.deswaef.wowscrappie.auctionhouse.domain.AuctionHouseSnapshotConfiguration;
 import com.deswaef.wowscrappie.auctionhouse.repository.AuctionHouseSnapshotConfigurationRepository;
@@ -56,6 +58,8 @@ public class BattlenetAuctionsImporterImpl implements BattlenetAuctionsImporter 
     private RealmService realmService;
     @Autowired
     private AuctionItemRepository auctionItemRepository;
+    @Autowired
+    private ApplicationEventService applicationEventService;
 
     @Transactional
     public void importAuctions(long l) {
@@ -66,6 +70,10 @@ public class BattlenetAuctionsImporterImpl implements BattlenetAuctionsImporter 
         try {
             List<AuctionResponse.AuctionResponseFile> files = auctionFetcher.getLatestAuctionInformation(realm).getFiles();
             if (!files.isEmpty() && needsUpdate(realm, files)) {
+                applicationEventService.create(
+                        ApplicationEventTypeEnum.JOB_STARTED,
+                        "started import of fresh auctions for realm: " + realm.getId()
+                );
                 files
                         .stream()
                         .forEach(responseFile -> {
@@ -92,6 +100,10 @@ public class BattlenetAuctionsImporterImpl implements BattlenetAuctionsImporter 
 
                             updateSnapshotConfiguration(realms, responseFile);
                         });
+                applicationEventService.create(
+                        ApplicationEventTypeEnum.JOB_ENDED,
+                        "ended import of fresh auctions for realm: " + realm.getId()
+                );
             } else {
                 LOG.debug(String.format("Either there were no files, or we didn't need to update %s-%s yet", realm.getLocality().getLocalityName(), realm.getName()));
             }
