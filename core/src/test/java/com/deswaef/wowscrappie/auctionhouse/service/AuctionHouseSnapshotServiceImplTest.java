@@ -62,7 +62,7 @@ public class AuctionHouseSnapshotServiceImplTest {
                 () -> auctionHouseSnapshotService.findByItemIdAndRealm(ITEM_ID, REALM_ID).toBlocking().single()
         );
 
-        assertThat(throwable.getMessage()).isEqualTo("That is not yet indexed or does not exist");
+        assertThat(throwable.getMessage()).isEqualTo("That item is not yet indexed or does not exist");
     }
 
     @Test
