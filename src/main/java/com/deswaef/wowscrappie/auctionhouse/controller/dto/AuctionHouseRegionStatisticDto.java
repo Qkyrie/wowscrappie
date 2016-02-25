@@ -1,6 +1,6 @@
 package com.deswaef.wowscrappie.auctionhouse.controller.dto;
 
-import com.deswaef.wowscrappie.auctionhouse.domain.AuctionHouseSnapshotRegionStatistic;
+import com.deswaef.wowscrappie.auctionhouse.domain.AuctionHouseSnapshotRegionStatistics;
 import com.deswaef.wowscrappie.item.domain.Item;
 import com.deswaef.wowscrappie.realm.domain.Locality;
 
@@ -18,7 +18,7 @@ public class AuctionHouseRegionStatisticDto implements Serializable {
     private double averageBid;
     private double averageBuyout;
 
-    public static AuctionHouseRegionStatisticDto from(AuctionHouseSnapshotRegionStatistic stat) {
+    public static AuctionHouseRegionStatisticDto from(AuctionHouseSnapshotRegionStatistics stat) {
         return new AuctionHouseRegionStatisticDto()
                 .setItem(stat.item())
                 .setLocality(stat.locality())

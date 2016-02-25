@@ -1,7 +1,7 @@
 package com.deswaef.wowscrappie.auctionhouse.service;
 
 import com.deswaef.wowscrappie.auctionhouse.domain.AuctionHouseSnapshot;
-import com.deswaef.wowscrappie.auctionhouse.domain.AuctionHouseSnapshotRegionStatistic;
+import com.deswaef.wowscrappie.auctionhouse.domain.AuctionHouseSnapshotRegionStatistics;
 import com.deswaef.wowscrappie.infrastructure.exception.WowscrappieException;
 import com.deswaef.wowscrappie.item.domain.Item;
 import com.deswaef.wowscrappie.item.service.ItemService;
@@ -26,7 +26,7 @@ public class AuctionHouseSnapshotRegionStatisticsServiceImpl implements AuctionH
 
     @Override
     @Transactional(readOnly = true)
-    public AuctionHouseSnapshotRegionStatistic getStatisticsForRegion(long itemId, Locality locality) {
+    public AuctionHouseSnapshotRegionStatistics getStatisticsForRegion(long itemId, Locality locality) {
 
         Optional<Item> item = itemService.findOne(itemId);
         if (!item.isPresent()) {
@@ -59,7 +59,7 @@ public class AuctionHouseSnapshotRegionStatisticsServiceImpl implements AuctionH
                             });
                 });
 
-        return new AuctionHouseSnapshotRegionStatistic()
+        return new AuctionHouseSnapshotRegionStatistics()
                 .medianQuantityPerServer((long) quantityStatistics.getPercentile(50))
                 .averageQuantityPerServer((long) quantityStatistics.getMean())
                 .totalQuantity((long) quantityStatistics.getSum())

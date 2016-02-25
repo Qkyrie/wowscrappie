@@ -3,7 +3,7 @@ package com.deswaef.wowscrappie.auctionhouse.domain;
 import com.deswaef.wowscrappie.item.domain.Item;
 import com.deswaef.wowscrappie.realm.domain.Locality;
 
-public class AuctionHouseSnapshotRegionStatistic {
+public class AuctionHouseSnapshotRegionStatistics {
     private Item item;
     private Locality locality;
     private long totalQuantity;
@@ -18,7 +18,7 @@ public class AuctionHouseSnapshotRegionStatistic {
         return item;
     }
 
-    public AuctionHouseSnapshotRegionStatistic item(Item item) {
+    public AuctionHouseSnapshotRegionStatistics item(Item item) {
         this.item = item;
         return this;
     }
@@ -27,7 +27,7 @@ public class AuctionHouseSnapshotRegionStatistic {
         return totalQuantity;
     }
 
-    public AuctionHouseSnapshotRegionStatistic totalQuantity(long totalQuantity) {
+    public AuctionHouseSnapshotRegionStatistics totalQuantity(long totalQuantity) {
         this.totalQuantity = totalQuantity;
         return this;
     }
@@ -36,7 +36,7 @@ public class AuctionHouseSnapshotRegionStatistic {
         return averageQuantityPerServer;
     }
 
-    public AuctionHouseSnapshotRegionStatistic averageQuantityPerServer(long averageQuantityPerServer) {
+    public AuctionHouseSnapshotRegionStatistics averageQuantityPerServer(long averageQuantityPerServer) {
         this.averageQuantityPerServer = averageQuantityPerServer;
         return this;
     }
@@ -45,7 +45,7 @@ public class AuctionHouseSnapshotRegionStatistic {
         return medianQuantityPerServer;
     }
 
-    public AuctionHouseSnapshotRegionStatistic medianQuantityPerServer(long meanQuantityPerServer) {
+    public AuctionHouseSnapshotRegionStatistics medianQuantityPerServer(long meanQuantityPerServer) {
         this.medianQuantityPerServer = meanQuantityPerServer;
         return this;
     }
@@ -54,7 +54,7 @@ public class AuctionHouseSnapshotRegionStatistic {
         return medianBid;
     }
 
-    public AuctionHouseSnapshotRegionStatistic medianBid(double medianBid) {
+    public AuctionHouseSnapshotRegionStatistics medianBid(double medianBid) {
         this.medianBid = medianBid;
         return this;
     }
@@ -63,7 +63,7 @@ public class AuctionHouseSnapshotRegionStatistic {
         return medianBuyout;
     }
 
-    public AuctionHouseSnapshotRegionStatistic medianBuyout(double medianBuyout) {
+    public AuctionHouseSnapshotRegionStatistics medianBuyout(double medianBuyout) {
         this.medianBuyout = medianBuyout;
         return this;
     }
@@ -72,7 +72,7 @@ public class AuctionHouseSnapshotRegionStatistic {
         return averageBid;
     }
 
-    public AuctionHouseSnapshotRegionStatistic averageBid(double averageBid) {
+    public AuctionHouseSnapshotRegionStatistics averageBid(double averageBid) {
         this.averageBid = averageBid;
         return this;
     }
@@ -81,7 +81,7 @@ public class AuctionHouseSnapshotRegionStatistic {
         return averageBuyout;
     }
 
-    public AuctionHouseSnapshotRegionStatistic averageBuyout(double averageBuyout) {
+    public AuctionHouseSnapshotRegionStatistics averageBuyout(double averageBuyout) {
         this.averageBuyout = averageBuyout;
         return this;
     }
@@ -90,7 +90,7 @@ public class AuctionHouseSnapshotRegionStatistic {
         return locality;
     }
 
-    public AuctionHouseSnapshotRegionStatistic locality(Locality locality) {
+    public AuctionHouseSnapshotRegionStatistics locality(Locality locality) {
         this.locality = locality;
         return this;
     }
