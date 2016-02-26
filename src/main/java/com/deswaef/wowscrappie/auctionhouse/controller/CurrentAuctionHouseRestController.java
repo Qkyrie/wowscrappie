@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.DeferredResult;
 
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+
 @RestController
 @RequestMapping("/rest/auctionhouse/latest")
 public class CurrentAuctionHouseRestController {
@@ -20,7 +22,7 @@ public class CurrentAuctionHouseRestController {
     @Autowired
     private AuctionHouseSnapshotRegionStatisticsService auctionHouseSnapshotRegionStatisticsService;
 
-    @RequestMapping("/latest/item/{item}/realm/{realm}")
+    @RequestMapping(value = "/item/{item}/realm/{realm}", method = GET)
     public DeferredResult<AuctionHouseSnapshotDto> byItemAndRealm(@PathVariable("item") long item, @PathVariable("realm") long realm) {
         DeferredResult<AuctionHouseSnapshotDto> returnValue = new DeferredResult<>();
         auctionHouseSnapshotService.findByItemIdAndRealm(item, realm)
@@ -31,7 +33,7 @@ public class CurrentAuctionHouseRestController {
         return returnValue;
     }
 
-    @RequestMapping("/latest/item/{item}/locality/{locality}")
+    @RequestMapping(value = "/item/{item}/locality/{locality}", method = GET)
     public AuctionHouseRegionStatisticDto byItemAndRegion(@PathVariable("item") long item, @PathVariable("locality") Locality locality) {
         return AuctionHouseRegionStatisticDto.from(auctionHouseSnapshotRegionStatisticsService.getStatisticsForRegion(item, locality));
     }

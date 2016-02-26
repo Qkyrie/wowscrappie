@@ -12,12 +12,6 @@ import { Realm } from '../../realms/entity/Realm';
     providers: [AuctionHouseItemSearchService, RealmService],
     template: `
                 <div class="row">
-                    <div class="col-md-12">
-                        <h1>Search for multiple items on {{myRealm?.locality}}-{{myRealm?.name}}.</h1>
-                    </div>
-                </div>
-
-                <div class="row">
                     <div class="col-md-8 col-md-offset-2">
                         <div class="col-md-8 col-md-offset-2">
                             <div class="form-group label-floating">
@@ -184,6 +178,17 @@ export class MultiItemSearch {
                     type: 'category',
                     categories: ['Average Bid', 'Median Bid',
                         'Average Buyout', 'Median Buyout']
+                },
+                y: {
+                    tick: {
+                        format: function (value) {
+                            var actualCoppers = Math.floor(+value % 100);
+                            var silverAndCoppers = Math.floor(+value / 100);
+                            var silvers = Math.floor(silverAndCoppers % 100);
+                            var gold = Math.floor(silverAndCoppers / 100);
+                            return gold + 'g ' + silvers + 's ' + actualCoppers + 'c';
+                        }
+                    }
                 }
             },
             tooltip: {

@@ -6,18 +6,13 @@ import { AuctionHouseItemSearchService } from '../services/AuctionhouseItemSearc
 import { RealmService } from '../../realms/services/RealmService';
 import { Realm } from '../../realms/entity/Realm';
 import {AuctionHouseSnapshot} from "../entity/auctionhousesnapshot";
+import {DailyAuctionHouseSnapshot} from "../entity/dailyauctionhousesnapshots";
 import {AuctionHouseRegionSnapshotStatistic} from "../entity/auctionhouseregionstatistic";
 
 @Component({
     selector: 'single-search',
     providers: [AuctionHouseItemSearchService, RealmService],
     template: `
-                <div *ngIf="itemName != null" class="row">
-                    <div class="col-md-12">
-                        <h1>Search information about {{itemName}} on {{myRealm?.locality}}-{{myRealm?.name}}.</h1>
-                    </div>
-                </div>
-
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2">
                         <div class="col-md-8 col-md-offset-2">
@@ -101,6 +96,23 @@ import {AuctionHouseRegionSnapshotStatistic} from "../entity/auctionhouseregions
                     </div>
                     <div class="col-md-1"></div>
                 </div>
+                <div class="row">
+                    <hr />
+                    <div *ngIf="dailyChartElements != null" class="col-md-10 col-md-offset-1">
+                        <h3>Monthly Price Fluctuations</h3>
+                    </div>
+                    <div class="col-md-10 col-md-offset-1">
+                        <div id="resultChartDaily"></div>
+                    </div>
+                </div>
+                <div class="row">
+                     <div *ngIf="dailyChartElements != null" class="col-md-10 col-md-offset-1">
+                        <h3>Monthly Quantity Fluctuations</h3>
+                    </div>
+                       <div class="col-md-10 col-md-offset-1">
+                        <div id="resultChartDailyQuantity"></div>
+                    </div>
+                </div>
     `
 })
 export class SingleItemSearch {
@@ -120,6 +132,7 @@ export class SingleItemSearch {
 
     lastSearchTerm:AuctionHouseSnapshot;
     lastRegionSearchTerm:AuctionHouseRegionSnapshotStatistic;
+    dailyChartElements:DailyAuctionHouseSnapshot[];
 
     initTypeAhead() {
         this.items = new Bloodhound({
@@ -195,17 +208,111 @@ export class SingleItemSearch {
                 x: {
                     type: 'category',
                     categories: ['Average Bid', 'Median Bid', 'Average Buyout', 'Median Buyout']
+                },
+                y: {
+                    tick: {
+                        format: function (value) {
+                            var actualCoppers = Math.floor(+value % 100);
+                            var silverAndCoppers = Math.floor(+value / 100);
+                            var silvers = Math.floor(silverAndCoppers % 100);
+                            var gold = Math.floor(silverAndCoppers / 100);
+                            return gold + 'g ' + silvers + 's ' + actualCoppers + 'c';
+                        }
+                    }
                 }
             }
         });
     }
 
-    transformPretty(amount  ) {
+    transformPretty(amount) {
         var actualCoppers = Math.floor(+amount % 100);
         var silverAndCoppers = Math.floor(+amount / 100);
         var silvers = Math.floor(silverAndCoppers % 100);
         var gold = Math.floor(silverAndCoppers / 100);
         return gold + 'g ' + silvers + 's ' + actualCoppers + 'c';
+    }
+
+    generateDailyChart(dailySnapshots:DailyAuctionHouseSnapshot[]):void {
+        var averageBuyouts = [];
+        var medianBuyouts = [];
+        var dailyQuantities = [];
+        averageBuyouts.push("Average");
+        medianBuyouts.push("Median");
+        dailyQuantities.push("Quantity");
+        var xAxis = [];
+        xAxis.push("x");
+
+        dailySnapshots
+            .forEach((element) => {
+                xAxis.push(element.actualExportTime);
+                averageBuyouts.push(element.averageBuyoutCoppers);
+                medianBuyouts.push(element.medianBuyoutCoppers);
+                dailyQuantities.push(element.quantity);
+            });
+
+        var actualData = [xAxis, averageBuyouts, medianBuyouts];
+        var dailyQuantityData = [xAxis, dailyQuantities];
+
+        setTimeout(function (){
+            c3.generate({
+                bindto: '#resultChartDaily',
+                data: {
+                    x: 'x',
+                    columns: actualData
+                },
+                axis: {
+                    x: {
+                        type: 'timeseries',
+                        tick: {
+                            count: 30,
+                            format: '%d/%m/%Y'
+                        }
+                    },
+                    y: {
+                        tick: {
+                            format: function (value) {
+                                var actualCoppers = Math.floor(+value % 100);
+                                var silverAndCoppers = Math.floor(+value / 100);
+                                var silvers = Math.floor(silverAndCoppers % 100);
+                                var gold = Math.floor(silverAndCoppers / 100);
+                                return gold + 'g ' + silvers + 's ' + actualCoppers + 'c';
+                            }
+                        }
+                    }
+                },
+                tooltip: {
+                    format: {
+                        value: function (value, ratio, id) {
+                            var actualCoppers = Math.floor(+value % 100);
+                            var silverAndCoppers = Math.floor(+value / 100);
+                            var silvers = Math.floor(silverAndCoppers % 100);
+                            var gold = Math.floor(silverAndCoppers / 100);
+                            return gold + 'g ' + silvers + 's ' + actualCoppers + 'c';
+                        }
+                    }
+                }
+            });
+        }, 50);
+
+        setTimeout(function(){
+            c3.generate({
+                bindto: '#resultChartDailyQuantity',
+                data: {
+                    x: 'x',
+                    columns: dailyQuantityData
+                },
+                axis: {
+                    x: {
+                        type: 'timeseries',
+                        tick: {
+                            count: 30,
+                            format: '%d/%m/%Y'
+                        }
+                    }
+                }
+            });
+        });
+
     }
 
     public ngAfterViewChecked():void {
@@ -214,7 +321,7 @@ export class SingleItemSearch {
         }
     }
 
-    doSearch() {
+    doCurrentSnapshotSearch() {
         this.noInfoFoundWarning = false;
         this.ahSearchService.searchForItemAndRealm(this.itemId, this.myRealm.id)
             .subscribe(searchResult => {
@@ -247,7 +354,29 @@ export class SingleItemSearch {
                 (err)=> {
                     this.noInfoFoundWarning = true;
                 },
-                ()=>console.log("Done")
+                ()=> {
+                }
             );
+    }
+
+    doHistoricDataSearch() {
+        this.ahSearchService.searchDailyForItemAndRealm(this.itemId, this.myRealm.id)
+            .subscribe(elements => {
+                    this.dailyChartElements = elements;
+                    console.log(elements);
+                    this.generateDailyChart(elements);
+                },
+                (err)=> {
+                    console.log(err);
+                },
+                ()=> {
+                }
+            );
+    }
+
+
+    doSearch() {
+        this.doCurrentSnapshotSearch();
+        this.doHistoricDataSearch();
     }
 }

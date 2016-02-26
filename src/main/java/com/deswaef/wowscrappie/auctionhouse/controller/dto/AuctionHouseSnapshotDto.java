@@ -14,7 +14,7 @@ public class AuctionHouseSnapshotDto implements Serializable {
 
     private static final PrettyTime PRETTY_TIME = new PrettyTime(Locale.ENGLISH);
     private static final DateFormat dateTimeFormat = new SimpleDateFormat("dd/MM/yyyy hh:ss");
-    private static final DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+    private static final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 
     private double minimumBidCoppers;
@@ -79,6 +79,15 @@ public class AuctionHouseSnapshotDto implements Serializable {
                 .setExportTime(auctionHouseSnapshot.getExportTime())
                 .setExportTimePretty(PRETTY_TIME.format(auctionHouseSnapshot.getExportTime()))
                 .setActualExportTime(dateTimeFormat.format(auctionHouseSnapshot.getExportTime()));
+    }
+
+    public static AuctionHouseSnapshotDto empty(long itemId, long realmId, Date exportTime) {
+        return new AuctionHouseSnapshotDto()
+                .setExportTimePretty(dateFormat.format(exportTime))
+                .setActualExportTime(dateFormat.format(exportTime))
+                .setItemId(itemId)
+                .setRealmId(realmId)
+                .setExportTime(exportTime);
     }
 
     public double getMinimumBidCoppers() {

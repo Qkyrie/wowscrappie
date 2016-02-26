@@ -96,6 +96,17 @@ System.register(['angular2/core', '../services/AuctionhouseItemSearchService', '
                             x: {
                                 type: 'category',
                                 categories: ['Average Bid', 'Median Bid', 'Average Buyout', 'Median Buyout']
+                            },
+                            y: {
+                                tick: {
+                                    format: function (value) {
+                                        var actualCoppers = Math.floor(+value % 100);
+                                        var silverAndCoppers = Math.floor(+value / 100);
+                                        var silvers = Math.floor(silverAndCoppers % 100);
+                                        var gold = Math.floor(silverAndCoppers / 100);
+                                        return gold + 'g ' + silvers + 's ' + actualCoppers + 'c';
+                                    }
+                                }
                             }
                         }
                     });
@@ -107,12 +118,89 @@ System.register(['angular2/core', '../services/AuctionhouseItemSearchService', '
                     var gold = Math.floor(silverAndCoppers / 100);
                     return gold + 'g ' + silvers + 's ' + actualCoppers + 'c';
                 };
+                SingleItemSearch.prototype.generateDailyChart = function (dailySnapshots) {
+                    var averageBuyouts = [];
+                    var medianBuyouts = [];
+                    var dailyQuantities = [];
+                    averageBuyouts.push("Average");
+                    medianBuyouts.push("Median");
+                    dailyQuantities.push("Quantity");
+                    var xAxis = [];
+                    xAxis.push("x");
+                    dailySnapshots
+                        .forEach(function (element) {
+                        xAxis.push(element.actualExportTime);
+                        averageBuyouts.push(element.averageBuyoutCoppers);
+                        medianBuyouts.push(element.medianBuyoutCoppers);
+                        dailyQuantities.push(element.quantity);
+                    });
+                    var actualData = [xAxis, averageBuyouts, medianBuyouts];
+                    var dailyQuantityData = [xAxis, dailyQuantities];
+                    setTimeout(function () {
+                        c3.generate({
+                            bindto: '#resultChartDaily',
+                            data: {
+                                x: 'x',
+                                columns: actualData
+                            },
+                            axis: {
+                                x: {
+                                    type: 'timeseries',
+                                    tick: {
+                                        count: 30,
+                                        format: '%d/%m/%Y'
+                                    }
+                                },
+                                y: {
+                                    tick: {
+                                        format: function (value) {
+                                            var actualCoppers = Math.floor(+value % 100);
+                                            var silverAndCoppers = Math.floor(+value / 100);
+                                            var silvers = Math.floor(silverAndCoppers % 100);
+                                            var gold = Math.floor(silverAndCoppers / 100);
+                                            return gold + 'g ' + silvers + 's ' + actualCoppers + 'c';
+                                        }
+                                    }
+                                }
+                            },
+                            tooltip: {
+                                format: {
+                                    value: function (value, ratio, id) {
+                                        var actualCoppers = Math.floor(+value % 100);
+                                        var silverAndCoppers = Math.floor(+value / 100);
+                                        var silvers = Math.floor(silverAndCoppers % 100);
+                                        var gold = Math.floor(silverAndCoppers / 100);
+                                        return gold + 'g ' + silvers + 's ' + actualCoppers + 'c';
+                                    }
+                                }
+                            }
+                        });
+                    }, 50);
+                    setTimeout(function () {
+                        c3.generate({
+                            bindto: '#resultChartDailyQuantity',
+                            data: {
+                                x: 'x',
+                                columns: dailyQuantityData
+                            },
+                            axis: {
+                                x: {
+                                    type: 'timeseries',
+                                    tick: {
+                                        count: 30,
+                                        format: '%d/%m/%Y'
+                                    }
+                                }
+                            }
+                        });
+                    });
+                };
                 SingleItemSearch.prototype.ngAfterViewChecked = function () {
                     if (!this.typeaheadBound) {
                         this.typeaheadBound = this.initTypeAhead();
                     }
                 };
-                SingleItemSearch.prototype.doSearch = function () {
+                SingleItemSearch.prototype.doCurrentSnapshotSearch = function () {
                     var _this = this;
                     this.noInfoFoundWarning = false;
                     this.ahSearchService.searchForItemAndRealm(this.itemId, this.myRealm.id)
@@ -141,13 +229,30 @@ System.register(['angular2/core', '../services/AuctionhouseItemSearchService', '
                         });
                     }, function (err) {
                         _this.noInfoFoundWarning = true;
-                    }, function () { return console.log("Done"); });
+                    }, function () {
+                    });
+                };
+                SingleItemSearch.prototype.doHistoricDataSearch = function () {
+                    var _this = this;
+                    this.ahSearchService.searchDailyForItemAndRealm(this.itemId, this.myRealm.id)
+                        .subscribe(function (elements) {
+                        _this.dailyChartElements = elements;
+                        console.log(elements);
+                        _this.generateDailyChart(elements);
+                    }, function (err) {
+                        console.log(err);
+                    }, function () {
+                    });
+                };
+                SingleItemSearch.prototype.doSearch = function () {
+                    this.doCurrentSnapshotSearch();
+                    this.doHistoricDataSearch();
                 };
                 SingleItemSearch = __decorate([
                     core_1.Component({
                         selector: 'single-search',
                         providers: [AuctionhouseItemSearchService_1.AuctionHouseItemSearchService, RealmService_1.RealmService],
-                        template: "\n                <div *ngIf=\"itemName != null\" class=\"row\">\n                    <div class=\"col-md-12\">\n                        <h1>Search information about {{itemName}} on {{myRealm?.locality}}-{{myRealm?.name}}.</h1>\n                    </div>\n                </div>\n\n                <div class=\"row\">\n                    <div class=\"col-md-8 col-md-offset-2\">\n                        <div class=\"col-md-8 col-md-offset-2\">\n                            <div class=\"form-group label-floating\">\n                                <label class=\"control-label\" for=\"itemSelectSingle\">Item</label>\n                                <div id=\"itemSingle\">\n                                    <input id=\"itemSelectSingle\" class=\"form-control input-lg typeahead\" type=\"text\"/>\n                                </div>\n                            </div>\n                        </div>\n                        <div *ngIf=\"itemName != null\" class=\"col-md-1\">\n                        <span (click)=\"doSearch()\" class=\"btn btn-primary btn-lg\" id=\"searchButtonSingle\">\n                            <i class=\"material-icons\">search</i>\n                        </span>\n                        </div>\n                    </div>\n                </div>\n\n                <div *ngIf=\"noInfoFoundWarning\" class=\"alert alert-warning\">\n                    No Info was found for {{itemName}}\n                </div>\n\n\n                <div class=\"row\">\n                    <div class=\"col-md-10 col-md-offset-1\">\n                        <div id=\"resultChartSingle\"></div>\n                    </div>\n                </div>\n                <div class=\"row\">\n                    <div class=\"col-md-5 col-md-offset-1\">\n                        <h3 *ngIf=\"lastSearchTerm != null\">{{lastSearchTerm?.itemName}} @ {{lastSearchTerm?.realmName}}</h3>\n                    </div>\n                    <div class=\"col-md-5\">\n                        <h3 *ngIf=\"lastRegionSearchTerm != null\">{{lastRegionSearchTerm?.item?.name}} @ {{lastRegionSearchTerm?.locality}} servers</h3>\n                    </div>\n                </div>\n                <div class=\"row\">\n                    <div *ngIf=\"lastSearchTerm != null\" class=\"col-md-5 col-md-offset-1\">\n                        <table class=\"table table-striped table-hover \">\n                          <tbody>\n                              <tr>\n                                <td>Last Seen</td>\n                                <td>{{lastSearchTerm?.exportTimePretty}}</td>\n                              </tr>\n                               <tr>\n                                <td>Quantity</td>\n                                <td>{{lastSearchTerm?.quantity}}</td>\n                              </tr>\n                                  <tr>\n                                <td>Median Price</td>\n                                <td>{{transformPretty(lastSearchTerm?.medianBuyoutCoppers)}}</td>\n                              </tr>\n                              <tr>\n                                <td>Mean Price</td>\n                                <td>{{transformPretty(lastSearchTerm?.averageBuyoutCoppers)}}</td>\n                              </tr>\n                              <tr>\n                                <td>Standard Deviation</td>\n                                <td>{{transformPretty(lastSearchTerm?.stdevBuyoutCoppers)}}</td>\n                              </tr>\n                          </tbody>\n                        </table>\n                    </div>\n                    <div *ngIf=\"lastRegionSearchTerm != null\" class=\"col-md-5\">\n                      <table class=\"table table-striped table-hover \">\n                        <tbody>\n                            <tr>\n                              <td>EU Quantity</td>\n                              <td>{{lastRegionSearchTerm?.totalQuantity}}</td>\n                            </tr>\n                            <tr>\n                              <td>EU Median Price</td>\n                              <td>{{transformPretty(lastRegionSearchTerm?.medianBuyout)}}</td>\n                            </tr>\n                            <tr>\n                              <td>EU Mean Price</td>\n                              <td>{{transformPretty(lastRegionSearchTerm?.averageBuyout)}}</td>\n                            </tr>\n                        </tbody>\n                      </table>\n                    </div>\n                    <div class=\"col-md-1\"></div>\n                </div>\n    "
+                        template: "\n                <div class=\"row\">\n                    <div class=\"col-md-8 col-md-offset-2\">\n                        <div class=\"col-md-8 col-md-offset-2\">\n                            <div class=\"form-group label-floating\">\n                                <label class=\"control-label\" for=\"itemSelectSingle\">Item</label>\n                                <div id=\"itemSingle\">\n                                    <input id=\"itemSelectSingle\" class=\"form-control input-lg typeahead\" type=\"text\"/>\n                                </div>\n                            </div>\n                        </div>\n                        <div *ngIf=\"itemName != null\" class=\"col-md-1\">\n                        <span (click)=\"doSearch()\" class=\"btn btn-primary btn-lg\" id=\"searchButtonSingle\">\n                            <i class=\"material-icons\">search</i>\n                        </span>\n                        </div>\n                    </div>\n                </div>\n\n                <div *ngIf=\"noInfoFoundWarning\" class=\"alert alert-warning\">\n                    No Info was found for {{itemName}}\n                </div>\n\n\n                <div class=\"row\">\n                    <div class=\"col-md-10 col-md-offset-1\">\n                        <div id=\"resultChartSingle\"></div>\n                    </div>\n                </div>\n                <div class=\"row\">\n                    <div class=\"col-md-5 col-md-offset-1\">\n                        <h3 *ngIf=\"lastSearchTerm != null\">{{lastSearchTerm?.itemName}} @ {{lastSearchTerm?.realmName}}</h3>\n                    </div>\n                    <div class=\"col-md-5\">\n                        <h3 *ngIf=\"lastRegionSearchTerm != null\">{{lastRegionSearchTerm?.item?.name}} @ {{lastRegionSearchTerm?.locality}} servers</h3>\n                    </div>\n                </div>\n                <div class=\"row\">\n                    <div *ngIf=\"lastSearchTerm != null\" class=\"col-md-5 col-md-offset-1\">\n                        <table class=\"table table-striped table-hover \">\n                          <tbody>\n                              <tr>\n                                <td>Last Seen</td>\n                                <td>{{lastSearchTerm?.exportTimePretty}}</td>\n                              </tr>\n                               <tr>\n                                <td>Quantity</td>\n                                <td>{{lastSearchTerm?.quantity}}</td>\n                              </tr>\n                                  <tr>\n                                <td>Median Price</td>\n                                <td>{{transformPretty(lastSearchTerm?.medianBuyoutCoppers)}}</td>\n                              </tr>\n                              <tr>\n                                <td>Mean Price</td>\n                                <td>{{transformPretty(lastSearchTerm?.averageBuyoutCoppers)}}</td>\n                              </tr>\n                              <tr>\n                                <td>Standard Deviation</td>\n                                <td>{{transformPretty(lastSearchTerm?.stdevBuyoutCoppers)}}</td>\n                              </tr>\n                          </tbody>\n                        </table>\n                    </div>\n                    <div *ngIf=\"lastRegionSearchTerm != null\" class=\"col-md-5\">\n                      <table class=\"table table-striped table-hover \">\n                        <tbody>\n                            <tr>\n                              <td>EU Quantity</td>\n                              <td>{{lastRegionSearchTerm?.totalQuantity}}</td>\n                            </tr>\n                            <tr>\n                              <td>EU Median Price</td>\n                              <td>{{transformPretty(lastRegionSearchTerm?.medianBuyout)}}</td>\n                            </tr>\n                            <tr>\n                              <td>EU Mean Price</td>\n                              <td>{{transformPretty(lastRegionSearchTerm?.averageBuyout)}}</td>\n                            </tr>\n                        </tbody>\n                      </table>\n                    </div>\n                    <div class=\"col-md-1\"></div>\n                </div>\n                <div class=\"row\">\n                    <hr />\n                    <div *ngIf=\"dailyChartElements != null\" class=\"col-md-10 col-md-offset-1\">\n                        <h3>Monthly Price Fluctuations</h3>\n                    </div>\n                    <div class=\"col-md-10 col-md-offset-1\">\n                        <div id=\"resultChartDaily\"></div>\n                    </div>\n                </div>\n                <div class=\"row\">\n                     <div *ngIf=\"dailyChartElements != null\" class=\"col-md-10 col-md-offset-1\">\n                        <h3>Monthly Quantity Fluctuations</h3>\n                    </div>\n                       <div class=\"col-md-10 col-md-offset-1\">\n                        <div id=\"resultChartDailyQuantity\"></div>\n                    </div>\n                </div>\n    "
                     }), 
                     __metadata('design:paramtypes', [AuctionhouseItemSearchService_1.AuctionHouseItemSearchService, RealmService_1.RealmService])
                 ], SingleItemSearch);
