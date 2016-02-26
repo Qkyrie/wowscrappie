@@ -33,7 +33,7 @@ public class HistoricAuctionHouseRestController {
         DeferredResult<List<AuctionHouseSnapshotDto>> returnValue = new DeferredResult<>();
         returnValue.setResult(
                 dailyAuctionHouseSnapshotService
-                        .lastDays(realm, item, 6)
+                        .lastDays(realm, item, 29)
                         .map(AuctionHouseSnapshotDto::from)
                         .collect(Collectors.toList())
         );
