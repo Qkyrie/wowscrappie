@@ -9,10 +9,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "auctionhouse_subcategory")
+@Table(name = "auctionhouse_sub_category")
 public class AuctionHouseSubCategory {
 
     @Id
@@ -21,6 +25,9 @@ public class AuctionHouseSubCategory {
     private String name;
     @Column(name = "slug")
     private String slug;
+    @Column(name = "added_on")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date addedOn;
 
     @ManyToMany
     @JoinTable(
@@ -28,7 +35,7 @@ public class AuctionHouseSubCategory {
             joinColumns = @JoinColumn(name = "subcategory_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "item_id", referencedColumnName = "id")
     )
-    private List<Item> items;
+    private List<Item> items = new ArrayList<>();
 
     public Long id() {
         return id;
@@ -63,6 +70,15 @@ public class AuctionHouseSubCategory {
 
     public AuctionHouseSubCategory slug(String slug) {
         this.slug = slug;
+        return this;
+    }
+
+    public Date addedOn() {
+        return addedOn;
+    }
+
+    public AuctionHouseSubCategory addedOn(Date addedOn) {
+        this.addedOn = addedOn;
         return this;
     }
 }

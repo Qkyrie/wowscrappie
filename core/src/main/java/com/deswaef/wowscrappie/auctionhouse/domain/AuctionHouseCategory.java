@@ -7,7 +7,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Table(name = "auctionhouse_category")
@@ -21,6 +24,9 @@ public class AuctionHouseCategory {
     private String slug;
     @Column(name = "name")
     private String name;
+    @Column(name = "added_on")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date addedOn;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id")
@@ -59,6 +65,15 @@ public class AuctionHouseCategory {
 
     public AuctionHouseCategory subCategories(List<AuctionHouseSubCategory> subCategories) {
         this.subCategories = subCategories;
+        return this;
+    }
+
+    public Date addedOn() {
+        return addedOn;
+    }
+
+    public AuctionHouseCategory addedOn(Date addedOn) {
+        this.addedOn = addedOn;
         return this;
     }
 }
