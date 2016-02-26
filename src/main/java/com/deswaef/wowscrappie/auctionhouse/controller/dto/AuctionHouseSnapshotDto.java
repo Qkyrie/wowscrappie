@@ -1,6 +1,7 @@
 package com.deswaef.wowscrappie.auctionhouse.controller.dto;
 
 import com.deswaef.wowscrappie.auctionhouse.domain.AuctionHouseSnapshot;
+import com.deswaef.wowscrappie.auctionhouse.domain.DailyAuctionSnapshot;
 import com.deswaef.wowscrappie.auctionhouse.domain.HistoricAuctionHouseSnapshot;
 import org.ocpsoft.prettytime.PrettyTime;
 
@@ -13,7 +14,8 @@ import java.util.Locale;
 public class AuctionHouseSnapshotDto implements Serializable {
 
     private static final PrettyTime PRETTY_TIME = new PrettyTime(Locale.ENGLISH);
-    private static final DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:ss");
+    private static final DateFormat dateTimeFormat = new SimpleDateFormat("dd/MM/yyyy hh:ss");
+    private static final DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
 
     private double minimumBidCoppers;
@@ -38,6 +40,26 @@ public class AuctionHouseSnapshotDto implements Serializable {
     public AuctionHouseSnapshotDto() {
     }
 
+    public static AuctionHouseSnapshotDto from(DailyAuctionSnapshot auctionHouseSnapshot) {
+        return new AuctionHouseSnapshotDto()
+                .setMinimumBidCoppers(auctionHouseSnapshot.getMinimumBid())
+                .setMaximumBidCoppers((auctionHouseSnapshot.getMaximumBid()))
+                .setMinimumBuyoutCoppers(auctionHouseSnapshot.getMinimumBuyout())
+                .setMaximumBuyoutCoppers((auctionHouseSnapshot.getMaximumBuyout()))
+                .setAverageBidCoppers((auctionHouseSnapshot.getAverageBid()))
+                .setAverageBuyoutCoppers((auctionHouseSnapshot.getAverageBuyout()))
+                .setMedianBuyoutCoppers(auctionHouseSnapshot.getMedianBuyout())
+                .setMedianBidCoppers(auctionHouseSnapshot.getMedianBid())
+                .setStdevBidCoppers(auctionHouseSnapshot.getStdevBid())
+                .setStdevBuyoutCoppers(auctionHouseSnapshot.getStdevBuyout())
+                .setQuantity(auctionHouseSnapshot.getQuantity())
+                .setItemId(auctionHouseSnapshot.getItemId())
+                .setRealmId(auctionHouseSnapshot.getRealmId())
+                .setExportTime(auctionHouseSnapshot.getExportTime())
+                .setExportTimePretty(dateFormat.format(auctionHouseSnapshot.getExportTime()))
+                .setActualExportTime(dateFormat.format(auctionHouseSnapshot.getExportTime()));
+    }
+
     public static AuctionHouseSnapshotDto from(HistoricAuctionHouseSnapshot auctionHouseSnapshot) {
         return new AuctionHouseSnapshotDto()
                 .setMinimumBidCoppers(auctionHouseSnapshot.getMinimumBid())
@@ -57,7 +79,7 @@ public class AuctionHouseSnapshotDto implements Serializable {
                 .setRealmId(auctionHouseSnapshot.getRealmId())
                 .setExportTime(auctionHouseSnapshot.getExportTime())
                 .setExportTimePretty(PRETTY_TIME.format(auctionHouseSnapshot.getExportTime()))
-                .setActualExportTime(dateFormat.format(auctionHouseSnapshot.getExportTime()));
+                .setActualExportTime(dateTimeFormat.format(auctionHouseSnapshot.getExportTime()));
     }
 
     public static AuctionHouseSnapshotDto from(AuctionHouseSnapshot auctionHouseSnapshot) {
@@ -79,7 +101,7 @@ public class AuctionHouseSnapshotDto implements Serializable {
                 .setRealmId(auctionHouseSnapshot.getRealm().getId())
                 .setExportTime(auctionHouseSnapshot.getExportTime())
                 .setExportTimePretty(PRETTY_TIME.format(auctionHouseSnapshot.getExportTime()))
-                .setActualExportTime(dateFormat.format(auctionHouseSnapshot.getExportTime()));
+                .setActualExportTime(dateTimeFormat.format(auctionHouseSnapshot.getExportTime()));
     }
 
     public double getMinimumBidCoppers() {

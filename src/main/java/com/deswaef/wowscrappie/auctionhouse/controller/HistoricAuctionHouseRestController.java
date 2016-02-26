@@ -1,15 +1,9 @@
 package com.deswaef.wowscrappie.auctionhouse.controller;
 
-import com.deswaef.wowscrappie.auctionhouse.controller.dto.AuctionHouseRegionStatisticDto;
 import com.deswaef.wowscrappie.auctionhouse.controller.dto.AuctionHouseSnapshotDto;
-import com.deswaef.wowscrappie.auctionhouse.domain.AuctionItem;
-import com.deswaef.wowscrappie.auctionhouse.domain.HistoricAuctionHouseSnapshot;
-import com.deswaef.wowscrappie.auctionhouse.service.AuctionHouseSnapshotRegionStatisticsService;
-import com.deswaef.wowscrappie.auctionhouse.service.AuctionHouseSnapshotService;
-import com.deswaef.wowscrappie.auctionhouse.service.AuctionItemService;
+import com.deswaef.wowscrappie.auctionhouse.service.DailyAuctionHouseSnapshotService;
 import com.deswaef.wowscrappie.auctionhouse.service.HistoricAuctionHouseDataService;
 import com.deswaef.wowscrappie.infrastructure.exception.WowscrappieException;
-import com.deswaef.wowscrappie.realm.domain.Locality;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -19,31 +13,29 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.DeferredResult;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
-import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/rest/auctionhouse")
+@RequestMapping("/rest/auctionhouse/historic")
 public class HistoricAuctionHouseRestController {
 
     @Autowired
     private HistoricAuctionHouseDataService historicAuctionHouseDataService;
     @Autowired
-    private AuctionHouseSnapshotService auctionHouseSnapshotService;
-    @Autowired
-    private AuctionHouseSnapshotRegionStatisticsService auctionHouseSnapshotRegionStatisticsService;
+    private DailyAuctionHouseSnapshotService dailyAuctionHouseSnapshotService;
 
     @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "Not Found")
     @ExceptionHandler(WowscrappieException.class)
     public void notFound() {
     }
 
-    @RequestMapping("/historic/item/{item}/realm/{realm}")
+    //temporarily shut down, there's no limit at this point
+    //@RequestMapping("/item/{item}/realm/{realm}")
     public DeferredResult<List<AuctionHouseSnapshotDto>> historicByItemAndRealm(@PathVariable("item") long item, @PathVariable("realm") long realm) {
         DeferredResult<List<AuctionHouseSnapshotDto>> returnValue = new DeferredResult<>();
         historicAuctionHouseDataService.findByItemIdAndRealm(item, realm)
@@ -54,21 +46,17 @@ public class HistoricAuctionHouseRestController {
         return returnValue;
     }
 
-    @RequestMapping("/latest/item/{item}/realm/{realm}")
-    public DeferredResult<AuctionHouseSnapshotDto> byItemAndRealm(@PathVariable("item") long item, @PathVariable("realm") long realm) {
-        DeferredResult<AuctionHouseSnapshotDto> returnValue = new DeferredResult<>();
-        auctionHouseSnapshotService.findByItemIdAndRealm(item, realm)
-                .map(AuctionHouseSnapshotDto::from)
-                .first()
-                .subscribe(returnValue::setResult,
-                        returnValue::setErrorResult);
+    @RequestMapping("/item/{item}/realm/{realm}/daily")
+    public DeferredResult<List<AuctionHouseSnapshotDto>> dailyByItemAndRealm(@PathVariable("item") long item,
+                                                                             @PathVariable("realm") long realm) {
+        DeferredResult<List<AuctionHouseSnapshotDto>> returnValue = new DeferredResult<>();
+        returnValue.setResult(
+                dailyAuctionHouseSnapshotService
+                        .lastDays(realm, item, 6)
+                        .map(AuctionHouseSnapshotDto::from)
+                        .collect(Collectors.toList())
+        );
         return returnValue;
     }
-
-    @RequestMapping("/latest/item/{item}/locality/{locality}")
-    public AuctionHouseRegionStatisticDto byItemAndRegion(@PathVariable("item") long item, @PathVariable("locality") Locality locality) {
-        return AuctionHouseRegionStatisticDto.from(auctionHouseSnapshotRegionStatisticsService.getStatisticsForRegion(item, locality));
-    }
-
 }
 

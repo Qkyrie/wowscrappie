@@ -1,5 +1,6 @@
 package com.deswaef.wowscrappie.auctionhouse.repository;
 
+import com.deswaef.wowscrappie.auctionhouse.domain.DailyAuctionSnapshot;
 import com.deswaef.wowscrappie.auctionhouse.domain.HistoricAuctionHouseSnapshot;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 import org.springframework.data.repository.query.Param;
