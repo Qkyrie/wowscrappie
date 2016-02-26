@@ -18,7 +18,7 @@ public class HistoricAuctionsExporterScheduler {
     public void schedule() {
         repository.findAll()
                 .stream()
-                .forEach(x -> auctionsExporter.exportFor(x.getRealm()));
+                .forEach(x -> auctionsExporter.deleteOldSnapshotsFor(x.getRealm()));
     }
 
 }

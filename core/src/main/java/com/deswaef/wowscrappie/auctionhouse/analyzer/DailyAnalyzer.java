@@ -125,7 +125,6 @@ public class DailyAnalyzer {
                                 .setItemId(item)
                                 .setRealmId(realm)
                 );
-
     }
 
     public static <T> Predicate<T> distinctByKey(Function<? super T,Object> keyExtractor) {

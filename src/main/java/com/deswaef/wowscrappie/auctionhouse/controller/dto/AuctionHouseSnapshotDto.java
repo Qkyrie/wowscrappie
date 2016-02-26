@@ -2,7 +2,6 @@ package com.deswaef.wowscrappie.auctionhouse.controller.dto;
 
 import com.deswaef.wowscrappie.auctionhouse.domain.AuctionHouseSnapshot;
 import com.deswaef.wowscrappie.auctionhouse.domain.DailyAuctionSnapshot;
-import com.deswaef.wowscrappie.auctionhouse.domain.HistoricAuctionHouseSnapshot;
 import org.ocpsoft.prettytime.PrettyTime;
 
 import java.io.Serializable;
@@ -58,28 +57,6 @@ public class AuctionHouseSnapshotDto implements Serializable {
                 .setExportTime(auctionHouseSnapshot.getExportTime())
                 .setExportTimePretty(dateFormat.format(auctionHouseSnapshot.getExportTime()))
                 .setActualExportTime(dateFormat.format(auctionHouseSnapshot.getExportTime()));
-    }
-
-    public static AuctionHouseSnapshotDto from(HistoricAuctionHouseSnapshot auctionHouseSnapshot) {
-        return new AuctionHouseSnapshotDto()
-                .setMinimumBidCoppers(auctionHouseSnapshot.getMinimumBid())
-                .setMaximumBidCoppers((auctionHouseSnapshot.getMaximumBid()))
-                .setMinimumBuyoutCoppers(auctionHouseSnapshot.getMinimumBuyout())
-                .setMaximumBuyoutCoppers((auctionHouseSnapshot.getMaximumBuyout()))
-                .setAverageBidCoppers((auctionHouseSnapshot.getAverageBid()))
-                .setAverageBuyoutCoppers((auctionHouseSnapshot.getAverageBuyout()))
-                .setMedianBuyoutCoppers(auctionHouseSnapshot.getMedianBuyout())
-                .setMedianBidCoppers(auctionHouseSnapshot.getMedianBid())
-                .setStdevBidCoppers(auctionHouseSnapshot.getStdevBid())
-                .setStdevBuyoutCoppers(auctionHouseSnapshot.getStdevBuyout())
-                .setQuantity(auctionHouseSnapshot.getQuantity())
-                .setItemId(auctionHouseSnapshot.getItemId())
-                .setItemName(auctionHouseSnapshot.getItemName())
-                .setRealmName(auctionHouseSnapshot.getRealmName())
-                .setRealmId(auctionHouseSnapshot.getRealmId())
-                .setExportTime(auctionHouseSnapshot.getExportTime())
-                .setExportTimePretty(PRETTY_TIME.format(auctionHouseSnapshot.getExportTime()))
-                .setActualExportTime(dateTimeFormat.format(auctionHouseSnapshot.getExportTime()));
     }
 
     public static AuctionHouseSnapshotDto from(AuctionHouseSnapshot auctionHouseSnapshot) {

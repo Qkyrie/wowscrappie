@@ -17,10 +17,10 @@ import java.util.Date;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(MockitoJUnitRunner.class)
-public class HistoricAuctionsToElasticSearchExporterTest {
+public class AuctionHouseSnapshotDeleterTest {
 
     @InjectMocks
-    private HistoricAuctionsToElasticSearchExporter historicAuctionsToElasticSearchExporter;
+    private AuctionHouseSnapshotDeleter auctionHouseSnapshotDeleter;
     @Mock
     private AuctionHouseSnapshotRepository auctionHouseSnapshotRepository;
 
@@ -30,7 +30,7 @@ public class HistoricAuctionsToElasticSearchExporterTest {
         LocalDateTime yesterday = now.minus(1, ChronoUnit.DAYS);
         LocalDateTime tomorrow = now.plus(1, ChronoUnit.DAYS);
 
-        Date firstDate = historicAuctionsToElasticSearchExporter.getFirstDate(Arrays.asList(now, tomorrow, yesterday)
+        Date firstDate = auctionHouseSnapshotDeleter.getFirstDate(Arrays.asList(now, tomorrow, yesterday)
                 .stream()
                 .map(x -> Date.from(x.atZone(ZoneId.systemDefault()).toInstant())));
 

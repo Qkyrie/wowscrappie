@@ -18,10 +18,17 @@ public class AnalyzePreviousDayScheduler {
     @Autowired
     private ApplicationEventService applicationEventService;
 
-    @Scheduled(cron = "0 8 17 * * ?")
+    @Scheduled(cron = "0 0 1 * * ?")
     public void analyzeForPreviousDay() {
         applicationEventService.create(ApplicationEventTypeEnum.JOB_STARTED, "starting to analyze the previous day");
         analyzer.analyzeForDay(LocalDate.now().minusDays(1));
+        applicationEventService.create(ApplicationEventTypeEnum.JOB_ENDED, "done analyzing the previous day");
+    }
+
+    @Scheduled(cron = "0 0 2 * * ?")
+    public void deleteOldDailyData() {
+        applicationEventService.create(ApplicationEventTypeEnum.JOB_STARTED, "starting to analyze the previous day");
+
         applicationEventService.create(ApplicationEventTypeEnum.JOB_ENDED, "done analyzing the previous day");
     }
 

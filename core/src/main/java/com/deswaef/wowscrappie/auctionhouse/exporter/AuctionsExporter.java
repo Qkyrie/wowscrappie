@@ -4,6 +4,6 @@ import com.deswaef.wowscrappie.realm.domain.Realm;
 
 public interface AuctionsExporter {
 
-    void exportFor(Realm realm);
+    void deleteOldSnapshotsFor(Realm realm);
 
 }
