@@ -34,34 +34,26 @@ public class DailyAnalyzer {
     @Autowired
     private DailyAuctionSnapshotRepository dailyAuctionSnapshotRepository;
 
-    public void analyzeForDay(LocalDate day) {
+    public void analyzeForDay(LocalDate day, long realm) {
         long epocMilliDay = day.atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli();
         long epocMilliDayAfter = day.plusDays(1).atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli();
 
-        Stream<AuctionItem> allByExportTimeBetween = auctionItemService.findAllByExportTimeBetween(epocMilliDay, epocMilliDayAfter);
+        Stream<AuctionItem> allByExportTimeBetween = auctionItemService.findAllByRealmIdAndExportTimeBetween(realm, epocMilliDay, epocMilliDayAfter);
 
-        Map<Long, Map<Long, List<AuctionItem>>> collect = allByExportTimeBetween
+        Map<Long, List<AuctionItem>> collect = allByExportTimeBetween
                 .collect(Collectors.groupingBy(
-                        AuctionItem::getRealmId,
-                        Collectors.groupingBy(AuctionItem::getItem)));
+                        AuctionItem::getItem,
+                        Collectors.toList()));
 
         dailyAuctionSnapshotRepository.save(
                 collect
                         .entrySet()
                         .parallelStream()
-                        .map(entry -> calculateStatisticsForRealm(day, entry.getKey(), entry.getValue()))
-                        .flatMap(x -> x)
+                        .map(entry -> calculateStatisticsForItem(day, realm, entry.getKey(), entry.getValue()))
+                        .filter(Optional::isPresent)
+                        .map(Optional::get)
                         .collect(Collectors.toList())
         );
-    }
-
-    private Stream<DailyAuctionSnapshot> calculateStatisticsForRealm(LocalDate date, long realm, Map<Long, List<AuctionItem>> itemsPerItemId) {
-        return itemsPerItemId
-                .entrySet()
-                .parallelStream()
-                .map(entry -> calculateStatisticsForItem(date, realm, entry.getKey(), entry.getValue()))
-                .filter(Optional::isPresent)
-                .map(Optional::get);
     }
 
     public Optional<DailyAuctionSnapshot> calculateStatisticsForItem(LocalDate date, long realm, long item, List<AuctionItem> auctions) {
@@ -127,8 +119,8 @@ public class DailyAnalyzer {
                 );
     }
 
-    public static <T> Predicate<T> distinctByKey(Function<? super T,Object> keyExtractor) {
-        Map<Object,Boolean> seen = new ConcurrentHashMap<>();
+    public static <T> Predicate<T> distinctByKey(Function<? super T, Object> keyExtractor) {
+        Map<Object, Boolean> seen = new ConcurrentHashMap<>();
         return t -> seen.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
     }
 

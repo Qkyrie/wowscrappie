@@ -26,8 +26,8 @@ public class AuctionItemServiceImpl implements AuctionItemService {
 
     @Override
     @Transactional(readOnly = true)
-    public Observable<AuctionItem> findAllBetweenDates(Date startDate, Date endDate) {
-        return Observable.from(auctionItemRepository.findAllByExportTimeBetween(startDate.getTime(), endDate.getTime())::iterator);
+    public Observable<AuctionItem> findAllBetweenDates(long realmId, Date startDate, Date endDate) {
+        return Observable.from(auctionItemRepository.findAllByRealmIdAndExportTimeBetween(realmId, startDate.getTime(), endDate.getTime())::iterator);
     }
 
 }

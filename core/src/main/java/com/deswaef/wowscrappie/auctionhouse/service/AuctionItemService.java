@@ -10,5 +10,5 @@ import java.util.Date;
 public interface AuctionItemService {
     Observable<AuctionItem> findAllByItemAndRealm(Item item, Realm realm);
 
-    Observable<AuctionItem> findAllBetweenDates(Date startDate, Date endDate);
+    Observable<AuctionItem> findAllBetweenDates(long realmId, Date startDate, Date endDate);
 }
