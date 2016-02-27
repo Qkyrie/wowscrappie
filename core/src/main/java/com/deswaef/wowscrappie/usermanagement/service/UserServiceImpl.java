@@ -129,12 +129,13 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("A user with that email address already exists");
         } else {
             try {
+                String activationCode = encode(String.valueOf(System.currentTimeMillis()) + getRandomlyGeneratedUUID()).substring(0, 39);
                 return userRepository.save(new ScrappieUser()
                         .setEmail(createInvitationDto.getEmail())
                         .setEnabled(true)
-                        .setActivationCode(encode(String.valueOf(System.currentTimeMillis()) + getRandomlyGeneratedUUID()).substring(0, 39))
+                        .setActivationCode(activationCode)
                         .setAuthorities(getDefaultAuthorities())
-                        .setUsername(String.format("tbd%s", encode(String.valueOf(System.currentTimeMillis()))))
+                        .setUsername(String.format("tbd%s", activationCode))
                         .setGeneratedUsername(true)
                 );
             } catch (Exception ex) {
