@@ -25,6 +25,8 @@ public class ApplicationEventRestController {
         DeferredResult<ResponseEntity> result = new DeferredResult<>();
         applicationEventService
                 .findLast10()
+                .map(ApplicationEventDto::from)
+                .toList()
                 .subscribe(x -> result.setResult(ResponseEntity.ok(x)),
                         x -> result.setErrorResult(ResponseEntity.ok(new ArrayList<>())));
         return result;
