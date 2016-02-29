@@ -7,6 +7,6 @@
         <logger name="com.deswaef" level="INFO"/>
     </springProfile>
     <springProfile name="local">
-        <logger name="com.deswaef" level="DEBUG"/>
+        <logger name="com.deswaef" level="INFO"/>
     </springProfile>
 </configuration>
