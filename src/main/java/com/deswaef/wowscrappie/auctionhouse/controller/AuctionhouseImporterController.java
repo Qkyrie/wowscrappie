@@ -2,6 +2,9 @@ package com.deswaef.wowscrappie.auctionhouse.controller;
 
 import com.deswaef.heureka.battlenet.wow.continuous.BattlenetAuctionsImporter;
 import com.deswaef.heureka.infrastructure.exception.HeurekaException;
+import com.deswaef.wowscrappie.auctionhouse.analyzer.DailyAnalyzer;
+import com.deswaef.wowscrappie.auctionhouse.continuous.AnalyzePreviousDayScheduler;
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,6 +23,23 @@ public class AuctionhouseImporterController {
     @Autowired
     private BattlenetAuctionsImporter importer;
 
+    @Autowired
+    private AnalyzePreviousDayScheduler dailyAnalyzer;
+
+    @RequestMapping("/dailyanalyzer")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<String> analyzePreviousDay() {
+        dailyAnalyzer.analyzeForAPreviousDay(1);
+        return ResponseEntity.ok("done");
+    }
+
+
+    @RequestMapping("/dailyanalyzer/{amount}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<String> analyzeAPreviousDay(@PathVariable("amount") int amount) {
+        dailyAnalyzer.analyzeForAPreviousDay(amount);
+        return ResponseEntity.ok("done");
+    }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(method = GET, value = "/{realmId}")

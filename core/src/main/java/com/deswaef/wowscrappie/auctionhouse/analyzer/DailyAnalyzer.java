@@ -1,7 +1,10 @@
 package com.deswaef.wowscrappie.auctionhouse.analyzer;
 
-import com.deswaef.wowscrappie.auctionhouse.domain.AuctionItem;
+import com.deswaef.wowscrappie.applicationevent.ApplicationEventTypeEnum;
+import com.deswaef.wowscrappie.applicationevent.service.ApplicationEventService;
 import com.deswaef.wowscrappie.auctionhouse.domain.DailyAuctionSnapshot;
+import com.deswaef.wowscrappie.auctionhouse.domain.ReadableAuctionItem;
+import com.deswaef.wowscrappie.auctionhouse.repository.AuctionItemNativeRepository;
 import com.deswaef.wowscrappie.auctionhouse.repository.AuctionItemRepository;
 import com.deswaef.wowscrappie.auctionhouse.repository.DailyAuctionSnapshotRepository;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
@@ -20,7 +23,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static java.lang.Double.NaN;
 
@@ -33,38 +35,54 @@ public class DailyAnalyzer {
     private AuctionItemRepository auctionItemService;
     @Autowired
     private DailyAuctionSnapshotRepository dailyAuctionSnapshotRepository;
+    @Autowired
+    private ApplicationEventService applicationEventService;
+    @Autowired
+    private AuctionItemNativeRepository auctionItemNativeRepository;
 
     public void analyzeForDay(LocalDate day, long realm) {
+        applicationEventService.create(
+                ApplicationEventTypeEnum.JOB_STEP_STARTED,
+                "Started daily analyzer for day " + day + " and realm " + realm
+        );
         long epocMilliDay = day.atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli();
         long epocMilliDayAfter = day.plusDays(1).atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli();
 
-        Stream<AuctionItem> allByExportTimeBetween = auctionItemService.findAllByRealmIdAndExportTimeBetween(realm, epocMilliDay, epocMilliDayAfter);
+        //List<AuctionItem> allAuctions = auctionItemService.findAllByRealmIdAndExportTimeBetween(realm, epocMilliDay, epocMilliDayAfter);
+        List<ReadableAuctionItem> allAuctions = auctionItemNativeRepository.findByRealmAndDate(realm, epocMilliDay, epocMilliDayAfter);
+        Map<Long, List<ReadableAuctionItem>> collect =
+                allAuctions
+                        .stream()
+                        .collect(Collectors.groupingBy(
+                                ReadableAuctionItem::getItem,
+                                Collectors.toList()));
 
-        Map<Long, List<AuctionItem>> collect = allByExportTimeBetween
-                .collect(Collectors.groupingBy(
-                        AuctionItem::getItem,
-                        Collectors.toList()));
+        List<DailyAuctionSnapshot> collectedValues = collect
+                .entrySet()
+                .parallelStream()
+                .map(x -> calculateStatisticsForItem(day, realm, x.getKey(), x.getValue()))
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .collect(Collectors.toList());
 
-        dailyAuctionSnapshotRepository.save(
-                collect
-                        .entrySet()
-                        .parallelStream()
-                        .map(entry -> calculateStatisticsForItem(day, realm, entry.getKey(), entry.getValue()))
-                        .filter(Optional::isPresent)
-                        .map(Optional::get)
-                        .collect(Collectors.toList())
+        if (!collectedValues.isEmpty()) {
+            dailyAuctionSnapshotRepository.save(collectedValues);
+        }
+        applicationEventService.create(
+                ApplicationEventTypeEnum.JOB_STEP_ENDED,
+                "Done daily analyzer for day " + day + " and realm " + realm
         );
     }
 
-    public Optional<DailyAuctionSnapshot> calculateStatisticsForItem(LocalDate date, long realm, long item, List<AuctionItem> auctions) {
-        List<AuctionItem> distinctAuctions = auctions
+    public Optional<DailyAuctionSnapshot> calculateStatisticsForItem(LocalDate date, long realm, long item, List<ReadableAuctionItem> auctions) {
+        List<ReadableAuctionItem> distinctAuctions = auctions
                 .stream()
-                .filter(distinctByKey(AuctionItem::getAuctionId))
+                .filter(distinctByKey(ReadableAuctionItem::getAuctionId))
                 .collect(Collectors.toList());
 
         long totalQuantity = distinctAuctions
                 .parallelStream()
-                .mapToLong(AuctionItem::getQuantity)
+                .mapToLong(ReadableAuctionItem::getQuantity)
                 .sum();
 
         DescriptiveStatistics bidStatistics = new DescriptiveStatistics();

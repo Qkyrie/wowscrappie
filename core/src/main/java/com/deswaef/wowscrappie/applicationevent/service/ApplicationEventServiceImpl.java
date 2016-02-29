@@ -28,7 +28,7 @@ public class ApplicationEventServiceImpl implements ApplicationEventService {
     @Transactional
     public void create(ApplicationEventTypeEnum type, String message) {
         applicationEventRepository
-                .save(
+                .saveAndFlush(
                         new ApplicationEvent()
                                 .setEventTime(Date.from(LocalDateTime.now().toInstant(ZoneOffset.UTC)))
                                 .setEventType(type)

@@ -11,7 +11,7 @@ public interface AuctionItemRepository extends ElasticsearchRepository<AuctionIt
 
     List<AuctionItem> findAllByItemAndRealmId(@Param("item") long item, @Param("realmId") long realm);
 
-    Stream<AuctionItem> findAllByRealmIdAndExportTimeBetween(@Param("realmId") long realmId,
+    List<AuctionItem> findAllByRealmIdAndExportTimeBetween(@Param("realmId") long realmId,
                                                              @Param("from") long startDate,
                                                              @Param("to") long endDate);
 
