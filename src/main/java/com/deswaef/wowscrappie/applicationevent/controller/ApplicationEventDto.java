@@ -13,7 +13,6 @@ import java.util.Locale;
 
 public class ApplicationEventDto {
 
-    private static PrettyTime prettyTime = new PrettyTime(Date.from(LocalDateTime.now().toInstant(ZoneOffset.UTC)), Locale.ENGLISH);
     private static DateFormat format = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
 
     private long id;
@@ -24,6 +23,7 @@ public class ApplicationEventDto {
 
 
     public static ApplicationEventDto from(ApplicationEvent event) {
+        PrettyTime prettyTime = new PrettyTime(Date.from(LocalDateTime.now().toInstant(ZoneOffset.UTC)), Locale.ENGLISH);
         return new ApplicationEventDto()
                 .setEventTime(format.format(event.getEventTime()))
                 .setEventTimePretty(prettyTime.format(event.getEventTime()))
