@@ -6,6 +6,7 @@ import org.elasticsearch.index.query.BoolFilterBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
+import org.springframework.data.elasticsearch.core.query.DeleteQuery;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.stereotype.Repository;
@@ -14,6 +15,7 @@ import java.util.List;
 
 import static org.elasticsearch.index.query.FilterBuilders.rangeFilter;
 import static org.elasticsearch.index.query.FilterBuilders.termFilter;
+import static org.elasticsearch.index.query.QueryBuilders.rangeQuery;
 
 @Repository
 public class AuctionItemNativeRepository {
@@ -45,5 +47,13 @@ public class AuctionItemNativeRepository {
         return this.client.queryForList(query, ReadableAuctionItem.class);
     }
 
-
+    public void deleteBeforeDate(long date) {
+        DeleteQuery deleteQuery = new DeleteQuery();
+        deleteQuery.setQuery(
+                rangeQuery("exportTime")
+                        .from(0)
+                        .to(date)
+        );
+        this.client.delete(deleteQuery, AuctionItem.class);
+    }
 }
