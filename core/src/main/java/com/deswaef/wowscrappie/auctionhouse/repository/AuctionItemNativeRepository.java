@@ -43,15 +43,17 @@ public class AuctionItemNativeRepository {
         BoolFilterBuilder boolFilter = new BoolFilterBuilder();
         boolFilter.must(
                 termFilter("realmId", realm)
+                        .cache(false)
         );
         boolFilter.must(
                 rangeFilter("exportTime")
-                        .from(from)
-                        .to(to)
+                        .gt(from)
+                        .lt(to)
+                        .cache(true)
         );
 
         SearchQuery query = new NativeSearchQueryBuilder()
-                .withPageable(new PageRequest(0, 20000))
+                .withPageable(new PageRequest(0, 50000))
                 .withIndices("auction_item")
                 .withTypes("auction_item")
                 .withFilter(boolFilter)
