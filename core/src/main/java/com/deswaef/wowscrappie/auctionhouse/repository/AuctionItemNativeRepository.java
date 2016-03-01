@@ -47,7 +47,7 @@ public class AuctionItemNativeRepository {
         );
         boolFilter.must(
                 rangeFilter("exportTime")
-                        .gt(from)
+                        .gte(from)
                         .lt(to)
                         .cache(true)
         );
