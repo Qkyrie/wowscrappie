@@ -1,5 +1,7 @@
 package com.deswaef.wowscrappie.auctionhouse.repository;
 
+import com.deswaef.wowscrappie.applicationevent.ApplicationEventTypeEnum;
+import com.deswaef.wowscrappie.applicationevent.service.ApplicationEventService;
 import com.deswaef.wowscrappie.auctionhouse.domain.AuctionItem;
 import com.deswaef.wowscrappie.auctionhouse.domain.ReadableAuctionItem;
 import org.elasticsearch.index.query.BoolFilterBuilder;
@@ -23,26 +25,35 @@ import static org.elasticsearch.index.query.QueryBuilders.rangeQuery;
 public class AuctionItemNativeRepository {
 
     private ElasticsearchTemplate client;
+    private ApplicationEventService applicationEventService;
 
     @Autowired
-    public AuctionItemNativeRepository(ElasticsearchTemplate client) {
+    public AuctionItemNativeRepository(ElasticsearchTemplate client,
+                                       ApplicationEventService applicationEventService) {
         this.client = client;
+        this.applicationEventService = applicationEventService;
     }
 
     public List<ReadableAuctionItem> findByRealmAndDate(long realm, long from, long to) {
+        applicationEventService.create(
+                ApplicationEventTypeEnum.JOB_STEP_STARTED,
+                "starting to read ES daily_auction"
+        );
 
         BoolFilterBuilder boolFilter = new BoolFilterBuilder();
         boolFilter.must(
                 termFilter("realmId", realm)
+                        .cache(false)
         );
         boolFilter.must(
                 rangeFilter("exportTime")
-                        .from(from)
-                        .to(to)
+                        .gte(from)
+                        .lt(to)
+                        .cache(true)
         );
 
         SearchQuery query = new NativeSearchQueryBuilder()
-                .withPageable(new PageRequest(0, 20000))
+                .withPageable(new PageRequest(0, 50000))
                 .withIndices("auction_item")
                 .withTypes("auction_item")
                 .withFilter(boolFilter)
@@ -52,16 +63,23 @@ public class AuctionItemNativeRepository {
         List<ReadableAuctionItem> items = new ArrayList<>();
         boolean hasRecords = true;
         while (hasRecords) {
+            applicationEventService.create(ApplicationEventTypeEnum.ES_PAGE_START_READ,
+                    "start reading page from elasticsearch");
+
             Page<ReadableAuctionItem> page = this.client.scroll(scrollId, 500000, ReadableAuctionItem.class);
             if (page.hasContent()) {
                 items.addAll(page.getContent());
+                applicationEventService.create(ApplicationEventTypeEnum.ES_PAGE_STOP_READ,
+                        "done reading page from elasticsearch");
             } else {
                 hasRecords = false;
             }
         }
+        applicationEventService.create(
+                ApplicationEventTypeEnum.JOB_STEP_ENDED,
+                "done reading ES daily_auction"
+        );
         return items;
-
-        //return this.client.queryForList(query, ReadableAuctionItem.class);
     }
 
     public void deleteBeforeDate(long date) {

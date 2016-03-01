@@ -5,6 +5,7 @@ import com.deswaef.wowscrappie.applicationevent.ApplicationEventTypeEnum;
 import com.deswaef.wowscrappie.applicationevent.repository.ApplicationEventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import rx.Observable;
 
@@ -25,7 +26,7 @@ public class ApplicationEventServiceImpl implements ApplicationEventService {
     }
 
     @Override
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void create(ApplicationEventTypeEnum type, String message) {
         applicationEventRepository
                 .saveAndFlush(

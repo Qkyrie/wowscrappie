@@ -45,33 +45,42 @@ public class DailyAnalyzer {
                 ApplicationEventTypeEnum.JOB_STEP_STARTED,
                 "Started daily analyzer for day " + day + " and realm " + realm
         );
-        long epocMilliDay = day.atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli();
-        long epocMilliDayAfter = day.plusDays(1).atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli();
 
-        //List<AuctionItem> allAuctions = auctionItemService.findAllByRealmIdAndExportTimeBetween(realm, epocMilliDay, epocMilliDayAfter);
-        List<ReadableAuctionItem> allAuctions = auctionItemNativeRepository.findByRealmAndDate(realm, epocMilliDay, epocMilliDayAfter);
-        Map<Long, List<ReadableAuctionItem>> collect =
-                allAuctions
-                        .stream()
-                        .collect(Collectors.groupingBy(
-                                ReadableAuctionItem::getItem,
-                                Collectors.toList()));
+        try {
+            long epocMilliDay = day.atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli();
+            long epocMilliDayAfter = day.plusDays(1).atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli();
 
-        List<DailyAuctionSnapshot> collectedValues = collect
-                .entrySet()
-                .parallelStream()
-                .map(x -> calculateStatisticsForItem(day, realm, x.getKey(), x.getValue()))
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .collect(Collectors.toList());
+            //List<AuctionItem> allAuctions = auctionItemService.findAllByRealmIdAndExportTimeBetween(realm, epocMilliDay, epocMilliDayAfter);
+            List<ReadableAuctionItem> allAuctions = auctionItemNativeRepository.findByRealmAndDate(realm, epocMilliDay, epocMilliDayAfter);
+            Map<Long, List<ReadableAuctionItem>> collect =
+                    allAuctions
+                            .stream()
+                            .collect(Collectors.groupingBy(
+                                    ReadableAuctionItem::getItem,
+                                    Collectors.toList()));
 
-        if (!collectedValues.isEmpty()) {
-            dailyAuctionSnapshotRepository.save(collectedValues);
+            List<DailyAuctionSnapshot> collectedValues = collect
+                    .entrySet()
+                    .parallelStream()
+                    .map(x -> calculateStatisticsForItem(day, realm, x.getKey(), x.getValue()))
+                    .filter(Optional::isPresent)
+                    .map(Optional::get)
+                    .collect(Collectors.toList());
+
+            if (!collectedValues.isEmpty()) {
+                dailyAuctionSnapshotRepository.save(collectedValues);
+            }
+        } catch (Exception ex) {
+            applicationEventService.create(
+                    ApplicationEventTypeEnum.JOB_STEP_FAILED,
+                    "Failed daily analyzer for day " + day + " and realm " + realm
+            );
+        } finally {
+            applicationEventService.create(
+                    ApplicationEventTypeEnum.JOB_STEP_ENDED,
+                    "Done daily analyzer for day " + day + " and realm " + realm
+            );
         }
-        applicationEventService.create(
-                ApplicationEventTypeEnum.JOB_STEP_ENDED,
-                "Done daily analyzer for day " + day + " and realm " + realm
-        );
     }
 
     public Optional<DailyAuctionSnapshot> calculateStatisticsForItem(LocalDate date, long realm, long item, List<ReadableAuctionItem> auctions) {
