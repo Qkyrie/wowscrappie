@@ -11,51 +11,51 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Document(indexName = "auction_item", type = "auction_item", shards = 1, replicas = 0)
+@Document(indexName = "auction_item", type = "auction_item")
 public class AuctionItem {
 
     @Id
     private String id;
-    @Field(type = FieldType.Long, index = FieldIndex.not_analyzed, store = true)
+    @Field(type = FieldType.Long, index = FieldIndex.not_analyzed )
     private long auctionId;
-    @Field(type = FieldType.Long, index = FieldIndex.not_analyzed, store = true)
+    @Field(type = FieldType.Long, index = FieldIndex.not_analyzed )
     private long item;
-    @Field(type = FieldType.String, index = FieldIndex.not_analyzed, store = true)
+    @Field(type = FieldType.String, index = FieldIndex.not_analyzed )
     private String owner;
-    @Field(type = FieldType.Long, index = FieldIndex.not_analyzed, store = true)
+    @Field(type = FieldType.Long, index = FieldIndex.not_analyzed )
     private long bid;
-    @Field(type = FieldType.Long, index = FieldIndex.not_analyzed, store = true)
+    @Field(type = FieldType.Long, index = FieldIndex.not_analyzed )
     private long buyout;
-    @Field(type = FieldType.Integer, index = FieldIndex.not_analyzed, store = true)
+    @Field(type = FieldType.Integer, index = FieldIndex.not_analyzed )
     private int quantity;
-    @Field(type = FieldType.Date, format = DateFormat.basic_date_time, store = true)
+    @Field(type = FieldType.Date, format = DateFormat.basic_date_time )
     private Date exportTime;
-    @Field(type = FieldType.String, index = FieldIndex.not_analyzed, store = true)
+    @Field(type = FieldType.String, index = FieldIndex.not_analyzed )
     private String timeLeft;
-    @Field(type = FieldType.String, index = FieldIndex.not_analyzed, store = true)
+    @Field(type = FieldType.String, index = FieldIndex.not_analyzed )
     private String ownerRealm;
-    @Field(type = FieldType.String, index = FieldIndex.not_analyzed, store = true)
+    @Field(type = FieldType.String, index = FieldIndex.not_analyzed )
     private String locality;
-    @Field(type = FieldType.Long, index = FieldIndex.not_analyzed, store = true)
+    @Field(type = FieldType.Long, index = FieldIndex.not_analyzed )
     private long context;
     @Field(type = FieldType.Nested)
     private List<AuctionItemModifier> modifiers = new ArrayList<>();
     @Field(type = FieldType.Nested)
     private List<AuctionItemBonusList> bonusLists = new ArrayList<>();
-    @Field(type = FieldType.String, index = FieldIndex.not_analyzed, store = true)
+    @Field(type = FieldType.String, index = FieldIndex.not_analyzed )
     private String realmSlug;
-    @Field(type = FieldType.String, index = FieldIndex.not_analyzed, store = true)
+    @Field(type = FieldType.String, index = FieldIndex.not_analyzed )
     private String realmName;
-    @Field(type = FieldType.Long, index = FieldIndex.not_analyzed, store = true)
+    @Field(type = FieldType.Long, index = FieldIndex.not_analyzed )
     private long realmId;
 
-    @Field(type = FieldType.Long, index = FieldIndex.not_analyzed, store = true)
+    @Field(type = FieldType.Long, index = FieldIndex.not_analyzed )
     private long petSpeciesId;
-    @Field(type = FieldType.Long, index = FieldIndex.not_analyzed, store = true)
+    @Field(type = FieldType.Long, index = FieldIndex.not_analyzed )
     private long petBreedId;
-    @Field(type = FieldType.Integer, index = FieldIndex.not_analyzed, store = true)
+    @Field(type = FieldType.Integer, index = FieldIndex.not_analyzed )
     private int petLevel;
-    @Field(type = FieldType.Integer, index = FieldIndex.not_analyzed, store = true)
+    @Field(type = FieldType.Integer, index = FieldIndex.not_analyzed )
     private int petQualityId;
 
     public String getId() {

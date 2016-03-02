@@ -4,9 +4,9 @@ import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
 public class AuctionItemModifier {
-    @Field(type = FieldType.Integer, store = true)
+    @Field(type = FieldType.Integer)
     private int type;
-    @Field(type = FieldType.Integer, store = true)
+    @Field(type = FieldType.Integer)
     private int value;
 
     public int getType() {

@@ -5,7 +5,7 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 
 public class AuctionItemBonusList {
 
-    @Field(type = FieldType.Integer, store = true)
+    @Field(type = FieldType.Integer)
     private int bonusListId;
 
     public int getBonusListId() {
