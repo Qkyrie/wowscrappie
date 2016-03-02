@@ -4,6 +4,7 @@ import com.deswaef.heureka.battlenet.wow.continuous.BattlenetAuctionsImporter;
 import com.deswaef.heureka.infrastructure.exception.HeurekaException;
 import com.deswaef.wowscrappie.auctionhouse.analyzer.DailyAnalyzer;
 import com.deswaef.wowscrappie.auctionhouse.continuous.AnalyzePreviousDayScheduler;
+import com.deswaef.wowscrappie.auctionhouse.repository.AuctionItemNativeRepository;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,16 @@ public class AuctionhouseImporterController {
 
     @Autowired
     private AnalyzePreviousDayScheduler dailyAnalyzer;
+    @Autowired
+    private AuctionItemNativeRepository reindexRepository;
+
+
+    @RequestMapping("/reindex")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<String> reindex() {
+        reindexRepository.reindexFromAuctionitemToAuctionitemEntry();
+        return ResponseEntity.ok("done");
+    }
 
     @RequestMapping("/dailyanalyzer")
     @PreAuthorize("hasRole('ROLE_ADMIN')")

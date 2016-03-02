@@ -10,7 +10,7 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.util.Date;
 
-@Document(indexName = "daily_auction_snapshot", type = "daily_auction_snapshot")
+@Document(indexName = "daily_auction_snapshot", type = "daily_auction_snapshot", replicas = 0, shards = 1)
 public class DailyAuctionSnapshot {
 
     @Id

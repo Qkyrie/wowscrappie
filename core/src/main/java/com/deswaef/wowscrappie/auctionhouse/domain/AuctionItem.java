@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Document(indexName = "auction_item", type = "auction_item")
+@Document(indexName = "auction_item_entry", type = "auction_item_entry", shards = 1, replicas = 0)
 public class AuctionItem {
 
     @Id
