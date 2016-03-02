@@ -10,38 +10,38 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.util.Date;
 
-@Document(indexName = "daily_auction_snapshot", type = "daily_auction_snapshot", shards = 1, replicas = 0)
+@Document(indexName = "daily_auction_snapshot", type = "daily_auction_snapshot", replicas = 0, shards = 1)
 public class DailyAuctionSnapshot {
 
     @Id
     private String id;
-    @Field(type = FieldType.Long, index = FieldIndex.not_analyzed, store = true)
+    @Field(type = FieldType.Long, index = FieldIndex.not_analyzed )
     private Long itemId;
-    @Field(type = FieldType.Long, index = FieldIndex.not_analyzed, store = true)
+    @Field(type = FieldType.Long, index = FieldIndex.not_analyzed )
     private Long realmId;
-    @Field(type = FieldType.Double, index = FieldIndex.not_analyzed, store = true)
+    @Field(type = FieldType.Double, index = FieldIndex.not_analyzed )
     private Double minimumBid;
-    @Field(type = FieldType.Double, index = FieldIndex.not_analyzed, store = true)
+    @Field(type = FieldType.Double, index = FieldIndex.not_analyzed )
     private Double minimumBuyout;
-    @Field(type = FieldType.Double, index = FieldIndex.not_analyzed, store = true)
+    @Field(type = FieldType.Double, index = FieldIndex.not_analyzed )
     private Double maximumBid;
-    @Field(type = FieldType.Double, index = FieldIndex.not_analyzed, store = true)
+    @Field(type = FieldType.Double, index = FieldIndex.not_analyzed )
     private Double maximumBuyout;
-    @Field(type = FieldType.Long, index = FieldIndex.not_analyzed, store = true)
+    @Field(type = FieldType.Long, index = FieldIndex.not_analyzed )
     private Long quantity;
-    @Field(type = FieldType.Double, index = FieldIndex.not_analyzed, store = true)
+    @Field(type = FieldType.Double, index = FieldIndex.not_analyzed )
     private Double averageBid;
-    @Field(type = FieldType.Double, index = FieldIndex.not_analyzed, store = true)
+    @Field(type = FieldType.Double, index = FieldIndex.not_analyzed )
     private Double averageBuyout;
-    @Field(type = FieldType.Double, index = FieldIndex.not_analyzed, store = true)
+    @Field(type = FieldType.Double, index = FieldIndex.not_analyzed )
     private Double stdevBid;
-    @Field(type = FieldType.Double, index = FieldIndex.not_analyzed, store = true)
+    @Field(type = FieldType.Double, index = FieldIndex.not_analyzed )
     private Double stdevBuyout;
-    @Field(type = FieldType.Double, index = FieldIndex.not_analyzed, store = true)
+    @Field(type = FieldType.Double, index = FieldIndex.not_analyzed )
     private Double medianBid;
-    @Field(type = FieldType.Double, index = FieldIndex.not_analyzed, store = true)
+    @Field(type = FieldType.Double, index = FieldIndex.not_analyzed )
     private Double medianBuyout;
-    @Field(type = FieldType.Date, format = DateFormat.basic_date, index = FieldIndex.not_analyzed, store = true)
+    @Field(type = FieldType.Date, format = DateFormat.basic_date, index = FieldIndex.not_analyzed )
     private Date exportTime;
 
     public String getId() {

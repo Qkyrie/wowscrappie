@@ -15,6 +15,7 @@ import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static org.elasticsearch.index.query.FilterBuilders.rangeFilter;
@@ -28,10 +29,52 @@ public class AuctionItemNativeRepository {
     private ApplicationEventService applicationEventService;
 
     @Autowired
+    private AuctionItemRepository auctionItemRepository;
+
+    @Autowired
     public AuctionItemNativeRepository(ElasticsearchTemplate client,
                                        ApplicationEventService applicationEventService) {
         this.client = client;
         this.applicationEventService = applicationEventService;
+    }
+
+
+    public void reindexFromAuctionitemToAuctionitemEntry() {
+        applicationEventService.create(
+                ApplicationEventTypeEnum.JOB_STARTED,
+                "Started Reindexing"
+        );
+        BoolFilterBuilder builder = new BoolFilterBuilder();
+        builder.must(
+                rangeFilter("exportTime")
+                        .lte(new Date().getTime())
+        );
+
+        SearchQuery query = new NativeSearchQueryBuilder()
+                .withPageable(new PageRequest(0, 50000))
+                .withIndices("auction_item")
+                .withTypes("auction_item")
+                .withFilter(builder)
+                .build();
+
+        String scrollId = this.client.scan(query, 100000, false);
+        boolean hasRecords = true;
+        while (hasRecords) {
+            Page<AuctionItem> page = this.client.scroll(scrollId, 500000, AuctionItem.class);
+            if (page.hasContent()) {
+                auctionItemRepository
+                        .save(
+                                page.getContent()
+                        );
+            } else {
+                hasRecords = false;
+            }
+        }
+
+        applicationEventService.create(
+                ApplicationEventTypeEnum.JOB_ENDED,
+                "Done Reindexing"
+        );
     }
 
     public List<ReadableAuctionItem> findByRealmAndDate(long realm, long from, long to) {
@@ -54,8 +97,9 @@ public class AuctionItemNativeRepository {
 
         SearchQuery query = new NativeSearchQueryBuilder()
                 .withPageable(new PageRequest(0, 50000))
-                .withIndices("auction_item")
-                .withTypes("auction_item")
+                .withIndices("auction_item_entry")
+                .withTypes("auction_item_entry")
+                .withFields("buyout", "bid", "quantity", "item", "auctionId")
                 .withFilter(boolFilter)
                 .build();
 

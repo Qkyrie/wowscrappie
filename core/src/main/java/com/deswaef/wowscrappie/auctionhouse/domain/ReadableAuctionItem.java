@@ -6,7 +6,7 @@ import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldIndex;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
-@Document(indexName = "auction_item", type = "auction_item", shards = 1, replicas = 0)
+@Document(indexName = "auction_item_entry", type = "auction_item_entry", shards = 1, replicas = 0)
 public class ReadableAuctionItem {
     @Id
     private long bid;

@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 import java.util.stream.Stream;
 
-public interface AuctionItemRepository extends ElasticsearchRepository<AuctionItem, Long> {
+public interface AuctionItemRepository extends ElasticsearchRepository<AuctionItem, String> {
 
     List<AuctionItem> findAllByItemAndRealmId(@Param("item") long item, @Param("realmId") long realm);
 
