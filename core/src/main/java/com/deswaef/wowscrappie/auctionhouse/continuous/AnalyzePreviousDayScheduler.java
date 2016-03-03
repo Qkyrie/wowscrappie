@@ -6,6 +6,7 @@ import com.deswaef.wowscrappie.auctionhouse.analyzer.DailyAnalyzer;
 import com.deswaef.wowscrappie.auctionhouse.repository.AuctionItemNativeRepository;
 import com.deswaef.wowscrappie.auctionhouse.service.AuctionHouseSnapshotConfigurationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -16,6 +17,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Component
+@ConditionalOnProperty(value = "com.deswaef.wowscrappie.jobs.previousdayanalyzer.enabled", havingValue = "true")
 public class AnalyzePreviousDayScheduler {
 
     @Autowired

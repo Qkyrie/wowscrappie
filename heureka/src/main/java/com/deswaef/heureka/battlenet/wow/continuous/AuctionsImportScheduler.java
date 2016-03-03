@@ -3,6 +3,7 @@ package com.deswaef.heureka.battlenet.wow.continuous;
 import com.deswaef.wowscrappie.auctionhouse.domain.AuctionHouseSnapshotConfiguration;
 import com.deswaef.wowscrappie.auctionhouse.service.AuctionHouseSnapshotConfigurationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Profile;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -11,6 +12,7 @@ import rx.Observable;
 
 @Component
 @Profile("!integrationtest")
+@ConditionalOnProperty(value = "com.deswaef.wowscrappie.jobs.importer.enabled", havingValue = "true")
 public class AuctionsImportScheduler {
 
     @Autowired

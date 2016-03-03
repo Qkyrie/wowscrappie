@@ -99,7 +99,6 @@ public class AuctionItemNativeRepository {
                 .withPageable(new PageRequest(0, 50000))
                 .withIndices("auction_item_entry")
                 .withTypes("auction_item_entry")
-                .withFields("buyout", "bid", "quantity", "item", "auctionId")
                 .withFilter(boolFilter)
                 .build();
 
