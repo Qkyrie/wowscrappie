@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <include resource="org/springframework/boot/logging/logback/base.xml"/>
-    <logger name="org.springframework.web" level="INFO"/>
+
+    <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+
 
     <springProfile name="development, production">
-        <logger name="com.deswaef" level="INFO"/>
+        <include resource="org/springframework/boot/logging/logback/file-appender.xml" />
+        <root level="INFO">
+            <appender-ref ref="FILE" />
+        </root>
     </springProfile>
     <springProfile name="local">
+        <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
+        <root level="INFO">
+            <appender-ref ref="CONSOLE" />
+        </root>
         <logger name="com.deswaef" level="DEBUG"/>
     </springProfile>
 </configuration>
