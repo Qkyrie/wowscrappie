@@ -30,13 +30,6 @@ public class AuctionhouseImporterController {
     private AuctionItemNativeRepository reindexRepository;
 
 
-    @RequestMapping("/reindex")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<String> reindex() {
-        reindexRepository.reindexFromAuctionitemToAuctionitemEntry();
-        return ResponseEntity.ok("done");
-    }
-
     @RequestMapping("/dailyanalyzer")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<String> analyzePreviousDay() {
