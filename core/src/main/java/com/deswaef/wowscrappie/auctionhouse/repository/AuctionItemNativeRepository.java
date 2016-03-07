@@ -29,52 +29,10 @@ public class AuctionItemNativeRepository {
     private ApplicationEventService applicationEventService;
 
     @Autowired
-    private AuctionItemRepository auctionItemRepository;
-
-    @Autowired
     public AuctionItemNativeRepository(ElasticsearchTemplate client,
                                        ApplicationEventService applicationEventService) {
         this.client = client;
         this.applicationEventService = applicationEventService;
-    }
-
-
-    public void reindexFromAuctionitemToAuctionitemEntry() {
-        applicationEventService.create(
-                ApplicationEventTypeEnum.JOB_STARTED,
-                "Started Reindexing"
-        );
-        BoolFilterBuilder builder = new BoolFilterBuilder();
-        builder.must(
-                rangeFilter("exportTime")
-                        .lte(new Date().getTime())
-        );
-
-        SearchQuery query = new NativeSearchQueryBuilder()
-                .withPageable(new PageRequest(0, 50000))
-                .withIndices("auction_item")
-                .withTypes("auction_item")
-                .withFilter(builder)
-                .build();
-
-        String scrollId = this.client.scan(query, 100000, false);
-        boolean hasRecords = true;
-        while (hasRecords) {
-            Page<AuctionItem> page = this.client.scroll(scrollId, 500000, AuctionItem.class);
-            if (page.hasContent()) {
-                auctionItemRepository
-                        .save(
-                                page.getContent()
-                        );
-            } else {
-                hasRecords = false;
-            }
-        }
-
-        applicationEventService.create(
-                ApplicationEventTypeEnum.JOB_ENDED,
-                "Done Reindexing"
-        );
     }
 
     public List<ReadableAuctionItem> findByRealmAndDate(long realm, long from, long to) {
@@ -132,6 +90,8 @@ public class AuctionItemNativeRepository {
                         .from(0)
                         .to(date)
         );
+        deleteQuery.setIndex("auction_item_entry");
+        deleteQuery.setType("auction_item_entry");
         this.client.delete(deleteQuery, AuctionItem.class);
     }
 }

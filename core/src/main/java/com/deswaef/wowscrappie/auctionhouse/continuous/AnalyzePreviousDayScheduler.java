@@ -49,13 +49,7 @@ public class AnalyzePreviousDayScheduler {
         applicationEventService.create(ApplicationEventTypeEnum.JOB_ENDED, "done analyzing the previous day");
     }
 
-    @Scheduled(cron = "0 0 2 * * ?")
-    public void deleteOldDailyData() {
-        applicationEventService.create(ApplicationEventTypeEnum.JOB_STARTED, "starting deletion of old auction data");
-        LocalDate localDate = LocalDate.now().minusDays(31);
-        auctionItemNativeRepository
-                .deleteBeforeDate(localDate.toEpochDay());
-        applicationEventService.create(ApplicationEventTypeEnum.JOB_ENDED, "done deletion of old auction data");
-    }
+
+
 
 }
