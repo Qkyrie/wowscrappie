@@ -48,7 +48,7 @@ public class OldDataDeleterScheduler {
     @Scheduled(cron = "0 0 2 * * ?")
     public void deleteOldSnapshotData() {
         applicationEventService.create(ApplicationEventTypeEnum.JOB_STARTED, "starting deletion of old auction data");
-        LocalDate localDate = LocalDate.now().minusDays(31);
+        LocalDate localDate = LocalDate.now().minusDays(5);
         auctionItemNativeRepository
                 .deleteBeforeDate(localDate.toEpochDay());
         applicationEventService.create(ApplicationEventTypeEnum.JOB_ENDED, "done deletion of old auction data");
