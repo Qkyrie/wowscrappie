@@ -57,7 +57,7 @@ group = 'com.de-swaef.scrappie'
 
 jar {
     baseName = 'Scrappie'
-    version = '2.3.1'
+    version = '2.4.0-SNAPSHOT'
 }
 
 repositories {
