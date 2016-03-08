@@ -19,8 +19,6 @@ import java.util.Optional;
 public class PersistentNotificationServiceImpl implements PersistentNotificationService {
 
     @Autowired
-    private NotificationService notificationService;
-    @Autowired
     private PersistentNotificationRepository persistentNotificationRepository;
     @Autowired
     private AdministratorsCache administratorsCache;
@@ -47,7 +45,6 @@ public class PersistentNotificationServiceImpl implements PersistentNotification
                         .setReadStatus(false)
                         .setDateOfPosting(now())
         );
-        notificationService.broadcastTo(scrappieUser, Notification.create(persistentNotificationDto.getTitle()));
     }
 
     @Override

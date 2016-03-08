@@ -40,8 +40,6 @@ public class PersistentNotificationServiceImplTest {
     private AdministratorsCache administratorsCache;
     @Mock
     private SecurityUtility securityUtility;
-    @Mock
-    private NotificationService notificationService;
 
     @Mock
     private ScrappieUser admin;
@@ -69,7 +67,6 @@ public class PersistentNotificationServiceImplTest {
         persistentNotificationService.notifyAdmins(persistentNotificationDto);
 
         verify(persistentNotificationRepository).save(persistentNotificationArgumentCaptor.capture());
-        verify(notificationService).broadcastTo(eq(admin), notificationArgumentCaptor.capture());
 
         PersistentNotification capturedPersistentNotification = persistentNotificationArgumentCaptor.getValue();
         assertThat(capturedPersistentNotification.getTitle()).isEqualTo(TITLE);

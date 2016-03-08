@@ -316,8 +316,6 @@
     });
 </script>
 
-<script src="//cdn.jsdelivr.net/sockjs/1.0.3/sockjs.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
 <script th:src="@{/assets/js/websockets.js}"></script>
 
 
@@ -326,17 +324,6 @@
     <source th:src="@{/shared/sound/notification}"/>
 </audio>
 
-
-<div sec:authorize="isAuthenticated()">
-    <script type="application/javascript">
-        (function () {
-            var socket = new SockJS('/messages');
-            var stompClient = Stomp.over(socket);
-            var appModel = new ApplicationModel(stompClient);
-            appModel.connect();
-        })();
-    </script>
-</div>
 
 <div layout:fragment="footer-content"></div>
 
