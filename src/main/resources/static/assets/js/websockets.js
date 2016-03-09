@@ -36,6 +36,24 @@ function ApplicationModel(stompClient) {
         playNotificationSound();
     }
 
-
+    self.connect = function() {
+        stompClient.connect({}, function(frame) {
+            stompClient.subscribe('/user/topic/notifications', function(message) {
+                var notification = JSON.parse(message.body);
+                $.snackbar({content: notification.message});
+                addOneToNotificationCount();
+            });
+            stompClient.subscribe('/user/queue/notifications', function(message) {
+                var notification = JSON.parse(message.body);
+                $.snackbar({content: notification.message});
+                addOneToNotificationCount();
+            });
+            stompClient.subscribe('/app/notifications/amount', function(message) {
+                self.setNotificationCount(message.body)
+            });
+        }, function(error){
+            console.log("STOMP protocol error " + error);
+        });
+    };
 
 }

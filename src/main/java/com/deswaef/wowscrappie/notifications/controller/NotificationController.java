@@ -6,6 +6,7 @@ import com.deswaef.wowscrappie.notifications.service.PersistentNotificationServi
 import com.deswaef.wowscrappie.security.CurrentUser;
 import com.deswaef.wowscrappie.usermanagement.domain.ScrappieUser;
 import org.ocpsoft.prettytime.PrettyTime;
+import org.omg.CORBA.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
@@ -49,6 +51,13 @@ public class NotificationController {
         return "notifications/dropdownPanel :: dropdownPanel";
     }
 
+    @RequestMapping(value = "/count", method = GET)
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @ResponseBody
+    public int getNotificationCount() {
+        return unreadNotifications().size();
+    }
+
     @RequestMapping("/redirect/{id}")
     @PreAuthorize("hasRole('ROLE_USER')")
     public String redirectFromNotification(@PathVariable("id") long id) {
@@ -62,7 +71,7 @@ public class NotificationController {
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")
-    @RequestMapping("/delete/{id}")
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
     public @ResponseBody
     ResponseEntity deleteNotification(@PathVariable("id") long id) {
         persistentNotificationService.delete(id);

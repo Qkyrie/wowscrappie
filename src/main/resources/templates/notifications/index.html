@@ -50,6 +50,7 @@
                 var notificationId = self.data('notification_id');
                 $.get('/notifications/delete/' + notificationId, function(data) {
                     self.closest('.tr').remove();
+                    console.log("removed closest");
                     if($(".notificationRow").length == 0) {
                         window.location.reload();
                     }

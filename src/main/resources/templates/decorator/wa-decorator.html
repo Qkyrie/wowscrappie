@@ -8,6 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
     <meta name="_disqusname" th:content="${@environment.getProperty('com.deswaef.scrappie.disqusname')}"/>
+    <meta name="_websocketurl" th:content="${@environment.getProperty('com.deswaef.scrappie.websocketurl')}"/>
+
 
     <!-- BOOTSTRAP STYLES-->
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700"/>
@@ -30,9 +32,9 @@
 
     <link th:href="@{/assets/material_design/css/roboto.min.css}" rel="stylesheet"/>
 
-    <link th:href="@{//cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.8/css/bootstrap-material-design.min.css}"
+    <link th:href="@{//cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.9/css/bootstrap-material-design.min.css}"
           rel="stylesheet"/>
-    <link th:href="@{//cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.8/css/ripples.min.css}"
+    <link th:href="@{//cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.9/css/ripples.min.css}"
           rel="stylesheet"/>
     <link th:href="@{/assets/snackbar/snackbar.min.css}" rel="stylesheet"/>
     <link th:href="@{/assets/snackbar/snackbar-material.min.css}" rel="stylesheet"/>
@@ -307,8 +309,8 @@
 <script th:src="@{/assets/js/analytics.js}"></script>
 
 
-<script th:src="@{//cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.8/js/ripples.min.js}"></script>
-<script th:src="@{//cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.8/js/material.min.js}"></script>
+<script th:src="@{//cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.9/js/ripples.min.js}"></script>
+<script th:src="@{//cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.9/js/material.min.js}"></script>
 <script th:src="@{/assets/snackbar/snackbar.min.js}"></script>
 <script>
     $(document).ready(function () {
@@ -316,9 +318,22 @@
     });
 </script>
 
+<script src="//cdn.jsdelivr.net/sockjs/1.0.3/sockjs.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
 <script th:src="@{/assets/js/websockets.js}"></script>
 
-
+<div sec:authorize="isAuthenticated()">
+    <script type="application/javascript">
+        (function () {
+            var websocketurl_meta = $("meta[name=_websocketurl]");
+            var websocketurl = websocketurl_meta.attr("content");
+            var socket = new SockJS(websocketurl);
+            var stompClient = Stomp.over(socket);
+            var appModel = new ApplicationModel(stompClient);
+            appModel.connect();
+        })();
+    </script>
+</div>
 <audio sec:authorize="isAuthenticated()" id="Mp3Me" style="visibility: hidden;" autobuffer="autobuffer"
        preload="preload">
     <source th:src="@{/shared/sound/notification}"/>

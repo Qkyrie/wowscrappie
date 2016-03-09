@@ -2,6 +2,7 @@ package com.deswaef.wowscrappie.usermanagement.service;
 
 import com.deswaef.wowscrappie.infrastructure.service.MailService;
 import com.deswaef.wowscrappie.notifications.domain.Notification;
+import com.deswaef.wowscrappie.notifications.service.NotificationService;
 import com.deswaef.wowscrappie.usermanagement.domain.InvitationRequest;
 import com.deswaef.wowscrappie.usermanagement.domain.ScrappieUser;
 import com.deswaef.wowscrappie.usermanagement.repository.InvitationRequestRepository;
@@ -29,11 +30,14 @@ public class InvitationRequestServiceImpl implements InvitationRequestService {
 
     @Autowired
     private InvitationRequestRepository invitationRequestRepository;
+    @Autowired
+    private NotificationService notificationService;
 
     @Override
     public List<InvitationRequest> findAll() {
         return invitationRequestRepository.findAll();
     }
+
     @Autowired
     private UserService userService;
     @Autowired
@@ -71,6 +75,7 @@ public class InvitationRequestServiceImpl implements InvitationRequestService {
                 ScrappieUser invitation = userService.createInvitation(new CreateInvitationDto()
                         .setEmail(registrationDto.getEmail()));
                 mailInvitationcode(invitation);
+                notificationService.putOnAdminQueue(Notification.create(String.format("%s has registered!", registrationDto.getEmail())));
                 return registrationDto;
             } catch (Exception ex) {
                 return registrationDto
