@@ -1,6 +1,6 @@
 package com.deswaef.wowscrappie.item.controller;
 
-import com.deswaef.heureka.wowuction.client.WowuctionUrlBuilder;
+import com.deswaef.wowscrappie.importingservice.wowuction.client.WowuctionUrlBuilder;
 import com.deswaef.wowscrappie.infrastructure.exception.WowscrappieException;
 import com.deswaef.wowscrappie.item.domain.Item;
 import com.deswaef.wowscrappie.item.service.ItemService;
