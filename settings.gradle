@@ -2,5 +2,5 @@ rootProject.name = theName
 
 include 'wowscrappie-web'
 include 'eureka-server'
-include 'heureka'
+include 'importing-service'
 include 'core'

@@ -71,6 +71,6 @@ allprojects {
 }
 
 dependencies {
-    compile project(":heureka")
+    compile project(":importing-service")
     compile project(":core")
 }

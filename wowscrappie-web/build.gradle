@@ -12,7 +12,7 @@ dependencyManagement {
 dependencies {
 
     //own projects
-    compile project(":heureka")
+    compile project(":importing-service")
     compile project(":core")
 
     //web
