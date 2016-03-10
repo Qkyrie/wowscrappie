@@ -1,0 +1,53 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="decorator/wa-decorator">
+
+<div layout:fragment="header">
+    <meta name="description" content="Choose Realm- Scrappie"/>
+    <meta name="keywords" content="choose realm, realms, auction house"/>
+
+    <title>Auctionhouse - Overview</title>
+    <link type="text/css" th:href="@{/assets/node_modules/c3/c3.min.css}"/>
+    <style type="text/css">
+        .twitter-typeahead, .tt-hint, .tt-input, .tt-menu {
+            width: 100%;
+        }
+    </style>
+</div>
+
+<div layout:fragment="main-content">
+    <choose-realm></choose-realm>
+
+    <!-- /. PAGE INNER  -->
+</div>
+<!-- /. layout fragment -->
+<div layout:fragment="footer-content">
+
+    <!-- IE required polyfills, in this exact order -->
+    <script th:src="@{/assets/node_modules/es6-shim/es6-shim.min.js}"></script>
+    <script th:src="@{/assets/node_modules/systemjs/dist/system-polyfills.js}"></script>
+    <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script th:src="@{/assets/node_modules/angular2/bundles/angular2-polyfills.js}"></script>
+    <script th:src="@{/assets/node_modules/systemjs/dist/system.src.js}"></script>
+    <script th:src="@{/assets/node_modules/rxjs/bundles/Rx.js}"></script>
+    <script th:src="@{/assets/node_modules/angular2/bundles/angular2.dev.js}"></script>
+    <script th:src="@{/assets/node_modules/angular2/bundles/http.dev.js}"></script>
+
+    <script>
+        System.config({
+            packages: {
+                '/assets/components': {
+                    format: 'register',
+                    defaultExtension: 'js'
+                }
+            }
+        });
+
+        System.import('/assets/components/realms/pages/choose-realm-app')
+                .then(null, console.error.bind(console));
+    </script>
+
+</div>
+
+</html>

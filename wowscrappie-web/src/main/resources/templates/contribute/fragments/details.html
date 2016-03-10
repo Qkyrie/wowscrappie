@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+
+<head>
+
+</head>
+<body>
+<div th:fragment="bossfight">
+    <div id="raidbossSubsection">
+        <h3>Let's get into detail!</h3>
+        <div class="form-group">
+            <label>Choose Raid</label>
+            <select id="selectRaid" class="form-control">
+                <option th:each="raid : ${raids}" th:value="${raid.id}" th:text="${raid.name}">RaidName</option>
+            </select>
+
+            <label>Choose Boss</label>
+            <select data-bind="foreach : raidBosses" id="selectRaidBoss" class="form-control">
+                <option data-bind="text: name, value: id">RaidBosss</option>
+            </select>
+        </div>
+    </div>
+    <script type="application/javascript">
+        var classSpecVM = function () {
+            var self = this;
+            self.raidBosses = ko.observableArray();
+        };
+
+        var model = new classSpecVM();
+        ko.applyBindings(model, $("#raidbossSubsection")[0]);
+
+        $("#selectRaid").change(function () {
+            getBosses($(this).val());
+        });
+
+        var getBosses = function (raidId) {
+            $.get('/rest/raids/' + raidId + '/bosses', function (data) {
+                model.raidBosses(data)
+            });
+        };
+        getBosses($("#selectRaid").val());
+    </script>
+</div>
+
+<div th:fragment="classpec">
+    <div id="classpecSubsection">
+        <h3>Let's get into detail!</h3>
+
+        <div class="form-group">
+            <label>Choose Class</label>
+            <select id="selectWowClass" class="form-control">
+                <option th:each="wowclass : ${wowclasses}" th:value="${wowclass.slug}" th:text="${wowclass.name}">One
+                    Vale
+                </option>
+            </select>
+
+            <label>Choose Spec</label>
+            <select data-bind="foreach : specs" id="selectWowSpec" class="form-control">
+                <option data-bind="text: name, value: slug">Spec</option>
+            </select>
+        </div>
+    </div>
+
+    <script type="application/javascript">
+        var classSpecVM = function () {
+            var self = this;
+            self.specs = ko.observableArray();
+        };
+
+        var model = new classSpecVM();
+        ko.applyBindings(model, $("#classpecSubsection")[0]);
+
+        $("#selectWowClass").change(function () {
+            getSpecs($(this).val());
+        });
+
+        var getSpecs = function (wowclass) {
+            $.get('/contribute/details/ClassSpec/' + wowclass + '/specs', function (data) {
+                model.specs(data)
+            });
+        };
+        getSpecs($("#selectWowClass").val());
+    </script>
+</div>
+
+<div th:fragment="404">
+    <h4>Details for this setup could not be loaded :(</h4>
+</div>
+</body>
+</html>

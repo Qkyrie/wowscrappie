@@ -1,0 +1,54 @@
+﻿<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="decorator/wa-decorator">
+
+<div layout:fragment="header">
+    <link th:href="@{/assets/js/dataTables/dataTables.bootstrap.css}" rel="stylesheet"/>
+    <title>Active Users - Scrappie</title>
+</div>
+
+<div layout:fragment="main-content">
+    <div id="page-inner">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <h3>Create Auction House Configuration</h3>
+
+                    <form method="post" th:object="${command}" th:action="@{/auctionhouse/configuration/create}">
+                        <select th:field="*{id}" id="selectRealm" class="form-control">
+                            <option
+                                    th:each="realm : ${realms}"
+                                    th:value="${realm.id}"
+                                    th:text="${realm.name} + '-' + ${realm.locality}">
+                                realmname
+                            </option>
+                        </select>
+                        <button type="submit" value="Submit" id="createNew"
+                                class="btn btn-primary">Create
+                        </button>
+                    </form>
+
+
+                </div>
+            </div>
+            <hr/>
+
+        </div>
+    </div>
+    <!-- /. PAGE INNER  -->
+</div>
+<!-- /. layout fragment -->
+
+<div layout:fragment="footer-content">
+    <script th:src="@{/assets/js/dataTables/jquery.dataTables.js}"></script>
+    <script th:src="@{/assets/js/dataTables/dataTables.bootstrap.js}"></script>
+    <script th:src="@{/assets/js/history.js}"></script>
+    <script type="application/javascript">
+        /*<![CDATA[*/
+
+        /*]]>*/
+    </script>
+</div>
+
+</html>

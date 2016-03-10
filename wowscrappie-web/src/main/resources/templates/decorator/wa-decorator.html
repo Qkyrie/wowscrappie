@@ -1,0 +1,350 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <meta name="_disqusname" th:content="${@environment.getProperty('com.deswaef.scrappie.disqusname')}"/>
+    <meta name="_websocketurl" th:content="${@environment.getProperty('com.deswaef.scrappie.websocketurl')}"/>
+
+
+    <!-- BOOTSTRAP STYLES-->
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700"/>
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons"/>
+
+    <link rel="stylesheet" th:href="@{//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css}"
+          integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"/>
+    <!-- FONTAWESOME STYLES-->
+    <link th:href="@{/assets/css/font-awesome.css}" rel="stylesheet"/>
+    <!-- MORRIS CHART STYLES-->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css"/>
+    <!-- CUSTOM STYLES-->
+    <link th:href="@{/assets/css/custom.css}" rel="stylesheet"/>
+
+    <link th:href="@{/assets/classicons/classicons.css}" rel="stylesheet"/>
+    <!-- GOOGLE FONTS-->
+    <link th:href="@{//fonts.googleapis.com/css?family=Open+Sans}" rel='stylesheet' type='text/css'/>
+
+    <link rel="stylesheet" th:href="@{/assets/fancybox/jquery.fancybox.css?v=2.1.5}" type="text/css" media="screen"/>
+
+    <link th:href="@{/assets/material_design/css/roboto.min.css}" rel="stylesheet"/>
+
+    <link th:href="@{//cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.9/css/bootstrap-material-design.min.css}"
+          rel="stylesheet"/>
+    <link th:href="@{//cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.9/css/ripples.min.css}"
+          rel="stylesheet"/>
+    <link th:href="@{/assets/snackbar/snackbar.min.css}" rel="stylesheet"/>
+    <link th:href="@{/assets/snackbar/snackbar-material.min.css}" rel="stylesheet"/>
+    <div layout:fragment="header"></div>
+    <link th:href="@{/assets/css/notifications.css}" rel="stylesheet"/>
+
+</head>
+
+
+<body>
+<div id="wrapper">
+    <nav role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+
+        <div class="pull-right" style="margin-right: 15px;">
+            <div class="nav notify-row" id="top_menu">
+                <!--  notification start -->
+                <ul class="nav top-menu">
+                    <li>
+                        <div style="color: white;
+        padding: 0px 15px 5px 50px;
+        font-size: 16px;" class="pull-right">  &nbsp;
+                            <a style="display: none;" th:href="@{/realm/choose}" id="realmSelectButton" class="btn btn-success btn-raised">No
+                                Realm Selected</a>
+                        </div>
+
+                    </li>
+                    <li>
+                        <div id="logoutBinder" sec:authorize="!isAuthenticated()" style="color: white;
+        padding: 0px 15px 5px 50px;
+        font-size: 16px;" class="pull-right">  &nbsp;
+                            <a th:href="@{/login}" class="btn btn-success">Login</a>
+                        </div>
+                    </li>
+                    <!-- settings start -->
+                    <li class="dropdown" sec:authorize="isAuthenticated()">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
+                            <i class="material-icons">notifications</i>
+                            <span class="badge bg-theme" id="notificationCount"></span>
+                        </a>
+                        <ul id="dropdown-menu-frag" class="dropdown-menu extended tasks-bar">
+
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- /. NAV TOP  -->
+    <div class="navbar-default navbar-side" role="navigation">
+        <div class="sidebar-collapse">
+            <ul class="nav" id="main-menu">
+                <li class="text-center">
+                    <img th:src="@{/assets/img/scrappie.jpg}" class="user-image img-responsive"/>
+                </li>
+
+
+                <li>
+                    <a class="active-menu" th:href="@{/}"><i class="material-icons">whatshot</i> News</a>
+                </li>
+
+                <li sec:authorize="hasRole('ROLE_ADMIN')">
+                    <a href="#"><i class="material-icons">perm_data_setting</i> Administration<span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+
+                        <li>
+                            <a th:href="@{/admin/users}"> User Management</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/admin/server}"> Server Information</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/interface/reports}"> Reports</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/admin/pending-uploads}"> Pending Uploads</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/admin/registration/invitation}"> Create Invitation </a>
+                        </li>
+                        <li>
+                            <a th:href="@{/admin/requested-invitations}"> Requested Invitations</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#"> <i class="material-icons">gavel</i> Auction House<span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li sec:authorize="hasRole('ROLE_ADMIN')">
+                            <a th:href="@{/auctionhouse/configuration}"><i class="material-icons">perm_data_settings</i>Configuration</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/auctionhouse/overview}"><i
+                                    class="material-icons">attach_money</i>Overview</a>
+                        </li>
+                    </ul>
+                </li>
+                <li sec:authorize="hasRole('ROLE_ADMIN')">
+                    <a href="#"><i class="fa fa-question-circle fa-2x"></i> Questions<span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a th:href="@{/questions}"><i class="material-icons">list</i>Questions</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/questions/new}"><i class="material-icons">add</i> New Question</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li sec:authorize="hasRole('ROLE_USER')">
+                    <a href="#"><i class="material-icons">face</i> Personal<span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a th:href="@{/personal/uploads}"> Your uploads </a>
+                        </li>
+                        <li>
+                            <a th:href="@{/personal/inbox}"> Your inbox </a>
+                        </li>
+                        <li>
+                            <a th:href="@{/profiles/edit}"> Edit your profile </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#"><i class="fa fa-fighter-jet fa-2x"></i> Raids<span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a th:href="@{/raids/1}"> Highmaul </a>
+                        </li>
+                        <li>
+                            <a th:href="@{/raids/2}"> Blackrock Foundry
+                            </a>
+                        </li>
+                        <li>
+                            <a th:href="@{/raids/3}"> Hellfire Citadel
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#"><i class="material-icons">games</i> Classes<span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+
+                        <li>
+                            <a th:href="@{/classes/general}"> <span
+                                    class="sprite_menu_titles sprite_menu_titles_gameplay"></span> General </a>
+                        </li>
+
+                        <li>
+                            <a th:href="@{/classes/death_knight}"> <span
+                                    class="sprite_menu_titles sprite_menu_titles_death_knight"></span> Death
+                                Knight</a>
+                        </li>
+
+                        <li>
+                            <a th:href="@{/classes/druid}"> <span
+                                    class="sprite_menu_titles sprite_menu_titles_druid"></span> Druid </a>
+                        </li>
+
+                        <li>
+                            <a th:href="@{/classes/hunter}"> <span
+                                    class="sprite_menu_titles sprite_menu_titles_hunter"></span> Hunter </a>
+
+                        </li>
+
+                        <li>
+                            <a th:href="@{/classes/mage}"> <span
+                                    class="sprite_menu_titles sprite_menu_titles_mage"></span> Mage </a>
+                        </li>
+
+                        <li>
+                            <a th:href="@{/classes/monk}"> <span
+                                    class="sprite_menu_titles sprite_menu_titles_monk"></span> Monk </a>
+                        </li>
+
+                        <li>
+                            <a th:href="@{/classes/paladin}"> <span
+                                    class="sprite_menu_titles sprite_menu_titles_paladin"></span>
+                                Paladin </a>
+                        </li>
+
+                        <li>
+                            <a th:href="@{/classes/priest}"> <span
+                                    class="sprite_menu_titles sprite_menu_titles_priest"></span> Priest </a>
+
+                        </li>
+
+
+                        <li>
+                            <a th:href="@{/classes/rogue}"> <span
+                                    class="sprite_menu_titles sprite_menu_titles_rogue"></span> Rogue </a>
+                        </li>
+
+                        <li>
+                            <a th:href="@{/classes/shaman}"> <span
+                                    class="sprite_menu_titles sprite_menu_titles_shaman"></span> Shaman </a>
+                        </li>
+
+                        <li>
+                            <a th:href="@{/classes/warlock}"> <span
+                                    class="sprite_menu_titles sprite_menu_titles_warlock"></span>
+                                Warlock </a>
+                        </li>
+
+                        <li>
+                            <a th:href="@{/classes/warrior}"> <span
+                                    class="sprite_menu_titles sprite_menu_titles_warrior"></span>
+                                Warrior </a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-cog fa-2x"></i> Tools<span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a th:href="@{/warcraftlogs/character}"> Character Rankings</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/tools/tierdistribution/t18}"> Tier 18 Dps Gains</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a th:href="@{/contribute}"><i class="fa fa-laptop fa-2x"></i> Contribute!</a>
+                </li>
+                <li sec:authorize="isAuthenticated()">
+                    <a th:href="@{/logout}"> <i class="material-icons">exit_to_app</i> Logout!</a>
+                </li>
+            </ul>
+
+        </div>
+
+    </div>
+    <!-- /. NAV SIDE  -->
+    <div id="page-wrapper">
+        <div id="page-outer" style="margin-top: 33px;">
+            <div layout:fragment="main-content"></div>
+        </div>
+    </div>
+</div>
+<!-- /. WRAPPER  -->
+<!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
+<!-- JQUERY SCRIPTS -->
+<!-- BOOTSTRAP SCRIPTS -->
+<script th:src="@{/assets/js/jquery-1.11.3.min.js}"></script>
+<script th:src="@{//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js}"
+        integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+        crossorigin="anonymous"></script>
+<!-- METISMENU SCRIPTS -->
+<script th:src="@{/assets/js/jquery.metisMenu.js}"></script>
+<!-- CUSTOM SCRIPTS -->
+<script th:src="@{/assets/js/custom.js}"></script>
+<script th:src="@{/assets/js/knockout.js}"></script>
+<script th:src="@{/assets/components/decorator/decorator.js}"></script>
+<script th:src="@{/assets/js/analytics.js}"></script>
+
+
+<script th:src="@{//cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.9/js/ripples.min.js}"></script>
+<script th:src="@{//cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.9/js/material.min.js}"></script>
+<script th:src="@{/assets/snackbar/snackbar.min.js}"></script>
+<script>
+    $(document).ready(function () {
+        $.material.init();
+    });
+</script>
+
+<script src="//cdn.jsdelivr.net/sockjs/1.0.3/sockjs.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
+<script th:src="@{/assets/js/websockets.js}"></script>
+
+<div sec:authorize="isAuthenticated()">
+    <script type="application/javascript">
+        (function () {
+            var websocketurl_meta = $("meta[name=_websocketurl]");
+            var websocketurl = websocketurl_meta.attr("content");
+            var socket = new SockJS(websocketurl);
+            var stompClient = Stomp.over(socket);
+            var appModel = new ApplicationModel(stompClient);
+            appModel.connect();
+        })();
+    </script>
+</div>
+<audio sec:authorize="isAuthenticated()" id="Mp3Me" style="visibility: hidden;" autobuffer="autobuffer"
+       preload="preload">
+    <source th:src="@{/shared/sound/notification}"/>
+</audio>
+
+
+<div layout:fragment="footer-content"></div>
+
+</body>
+</html>
+
+
+
+

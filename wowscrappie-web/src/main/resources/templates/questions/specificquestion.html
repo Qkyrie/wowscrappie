@@ -1,0 +1,76 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      layout:decorator="decorator/wa-decorator">
+
+<div layout:fragment="header">
+    <title th:text="${question.title + ' - WowScrappie'}">Specific Question - WowScrappie</title>
+</div>
+
+<div layout:fragment="main-content">
+    <div id="page-inner">
+        <div class="row">
+
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <h1 th:text="${question.title}"></h1>
+                            </div>
+                            <div class="col-md-2">
+                                <a th:if="${canEdit}" th:href="@{'/questions/' + ${question.id} + '/edit'}"
+                                   class="btn btn-default btn-raised pull-right">Edit</a>
+                            </div>
+                        </div>
+                    </div>
+                    <input id="questionId" th:value="${question.id}" type="hidden"/>
+
+                    <div class="panel-body">
+                        <p>
+                            <span id="contentText" th:text="${question.content}"></span>
+                        </p>
+                        <br/><br/>
+                        <a sec:authorize="isAuthenticated()"  title="comment">
+                            <i data-bind="click: commentOnQuestion" class="fa fa-2x fa-comment"></i></a>
+                        <small class="pull-right">Posted <span th:text="${question.postDate}"></span> by <span
+                                th:text="${question.posterName}"></span></small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="responsesHolder">
+        </div>
+
+        <!--post comment -->
+        <div class="row" style="display: none;" id="commentSection" sec:authorize="hasRole('ROLE_USER')">
+            <div class="col-md-12">
+                <hr/>
+                <br/><br/>
+
+                <h3>Place a comment</h3>
+
+                <div class="form-group">
+                    <textarea id="placeComment" data-bind="value: userComment" class="form-control floating-label"
+                              placeholder="Your thoughts on this?" rows="5"></textarea>
+                </div>
+                <span class="btn btn-primary" data-bind="click: makeComment"> <i class="mdi-navigation-check"></i> Post Comment!</span>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div layout:fragment="footer-content">
+    <script type="text/javascript" th:src="@{/assets/js/md-v1.2.0.js}"/>
+    <script th:src="@{/assets/js/custom/questions/specificquestion.js}"
+            type="application/javascript">
+    </script>
+</div>
+
+</html>

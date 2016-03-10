@@ -1,0 +1,84 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      layout:decorator="decorator/wa-decorator">
+
+<div layout:fragment="header">
+    <title>General Server Information - Scrappie</title>
+</div>
+
+<div layout:fragment="main-content">
+    <div id="page-inner">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>General Server Information</h1>
+            </div>
+        </div>
+        <div class="row">
+
+
+            <div class="col-md-3 col-sm-8 col-xs-8">
+                <div class="panel panel-back noti-box">
+                <span class="icon-box set-icon">
+                    <i class="fa fa-envelope-o"></i>
+                </span>
+
+                    <div class="text-box">
+                        <p class="main-text" data-bind="text: overallHealth">Meh</p>
+
+                        <p class="text-muted">Server Health</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-6">
+                <div class="panel panel-back noti-box">
+                <span class="icon-box set-icon">
+                    <i class="fa fa-bars"></i>
+                </span>
+
+                    <div class="text-box">
+                        <p class="main-text" data-bind="text: redisHealth().status">30</p>
+
+                        <p class="text-muted"><span>Cache Health</span> (redis version: <span
+                                data-bind="text: redisHealth().version"></span>) </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-6">
+                <div class="panel panel-back noti-box">
+                <span class="icon-box set-icon">
+                    <i class="fa fa-bell-o"></i>
+                </span>
+
+                    <div class="text-box">
+                        <p class="main-text" data-bind="text: dbHealth().status">240</p>
+
+                        <p class="text-muted">Database Health</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-6">
+                <div class="panel panel-back noti-box">
+                <span class="icon-box  set-icon">
+                    <i class="fa fa-hdd-o"></i>
+                </span>
+
+                    <div class="text-box">
+                        <p class="main-text" data-bind="text: diskspaceHealth().status">240</p>
+
+                        <p class="text-muted">Diskspace</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- /. PAGE INNER  -->
+</div>
+<!-- /. layout fragment -->
+
+<div layout:fragment="footer-content">
+    <script th:src="@{/assets/js/custom/admin/manage-server.js}"/>
+</div>
+</html>

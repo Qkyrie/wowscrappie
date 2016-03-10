@@ -1,0 +1,57 @@
+﻿<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      layout:decorator="decorator/wa-decorator">
+
+<div layout:fragment="header">
+    <title>Create Account - Invitation - Scrappie</title>
+</div>
+
+<div layout:fragment="main-content">
+    <div id="page-inner">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5">
+                    <h3>Oh, so you got an invitation?</h3>
+
+                    <p>
+                        If you received an invitation from Scrappie, please enter it in the form below so we can continue with
+                        the registration process.
+                    </p>
+
+                    <div class="form-group" id="newUsernameFormGroup">
+                        <label>Invitation Code</label>
+                        <input id="invitationcode" placeholder="invitation code"
+                               class="form-control" data-bind="value: invitationcode"/>
+                    </div>
+                    <a href="#" class="btn btn-primary" data-bind="click: ihaz">let's do this!</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /. PAGE INNER  -->
+</div>
+<!-- /. layout fragment -->
+
+<div layout:fragment="footer-content">
+
+    <script type="application/javascript">
+        /*<![CDATA[*/
+        var InvitationCodeModel = function () {
+            var self = this;
+            self.invitationcode = ko.observable("");
+            self.ihaz = function() {
+                if(self.invitationcode() !== "") {
+                    window.location = "/registration/invitation/" + self.invitationcode();
+                }
+            };
+        }
+        var invitationCodeModel = new InvitationCodeModel;
+        ko.applyBindings(invitationCodeModel);
+        /*]]>*/
+    </script>
+
+</div>
+
+</html>

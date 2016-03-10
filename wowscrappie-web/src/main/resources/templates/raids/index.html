@@ -1,0 +1,77 @@
+﻿<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="decorator/wa-decorator">
+<div layout:fragment="header">
+    <meta name="description" content="Tier 17 - Weakauras, TellMeWhens, Macros" />
+    <meta name="keywords" content="weakauras, weakaura, weakaura strings, class, tellmewhen, macro, macros" />
+    <title>Tier 17 - Raids - Scrappie</title>
+</div>
+
+<div layout:fragment="main-content">
+    <div id="page-inner">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Raids and Bosses</h1>
+                <hr/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Tier 17</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 col-md-offset-3">
+                <a th:href="@{/raids/1}">
+                    <img th:src="@{/assets/img/T17/highmaul/highmaul.png}"/>
+                </a>
+            </div>
+            <div class="col-md-3">
+                <a th:href="@{/raids/2}">
+                    <img th:src="@{/assets/img/T17/blackrock_foundry/blackrock_foundry.png}"/>
+                </a>
+            </div>
+            <div class="col-md-3">
+            </div>
+        </div>
+
+        <br/><br/>
+
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="jumbotron">
+                    <h4>Tier 17 was merely a setback!</h4>
+                    <p>
+                        In the future, we'll open up the future tiers with more weakauras, tellmewhens and macros!
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div id="disqus_thread"></div>
+                <script type="text/javascript">
+                    /* * * CONFIGURATION VARIABLES * * */
+                    var disqus_shortname = 'wowscrappie';
+                    var disqus_identifier  = 'raids';
+
+                    /* * * DON'T EDIT BELOW THIS LINE * * */
+                    (function () {
+                        var dsq = document.createElement('script');
+                        dsq.type = 'text/javascript';
+                        dsq.async = true;
+                        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();
+                </script>
+            </div>
+        </div>
+
+    </div>
+    <!-- /. PAGE INNER  -->
+</div>
+<!-- /. layout fragment -->
+
+</html>

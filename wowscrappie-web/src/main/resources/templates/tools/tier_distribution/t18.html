@@ -1,0 +1,123 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:data-bind="http://www.w3.org/1999/xhtml"
+      layout:decorator="decorator/wa-decorator">
+
+<div layout:fragment="header">
+    <meta name="description" content="Warcraft Logs - Character Ranking - Scrappie"/>
+    <meta name="keywords" content="weakauras, weakaura, weakaura strings, class, tellmewhen, macro, macros,
+                                   Scrappie, WowScrappie, T18, delegation, tier, tier 18, tier distribution, tier delegation, dps gain, dps"/>
+    <title>Tier 18 - Hellfire Citadel - Tier Distribution</title>
+    <link th:href="@{/assets/dynatable/jquery.dynatable.css}" rel="stylesheet"/>
+    <link th:href="@{/assets/js/c3/c3.min.css}" rel="stylesheet"/>
+</div>
+
+<div layout:fragment="main-content">
+    <div id="page-inner">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Tier 18 DPS Set Piece gain per spec.</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <p>This small spreadsheet will help you in deciding who should get which setpiece by looking at the
+                    average dps-gain per spec.</p>
+
+                <p>Please note that these are simulated values (using simcraft) and will probably differ in
+                    an actual encounter.<br/>
+                    Neither do these calculation take into account the possibility of still wearing a t17 2set.</p>
+
+                <p>
+                    Special Kudos go out to ckernan2 on reddit for providing the <a
+                        href="https://docs.google.com/spreadsheets/d/1i1gDYSo6vcxcgRgcyGu-LrtzJh3wTWqc7h8I6Qyzk-c/edit">
+                    initial spreadsheet.</a></p>
+                <hr />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Filter on tokens</label>
+                    <select id="tokenSelection" class="form-control"
+                            data-bind="options: availableTokens, selectedOptions: chosenTokens, event:{ change: tokenSelected}"
+                            size="5" multiple="true"></select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-bordered" id="myTable">
+                    <thead>
+                    <tr>
+                        <th data-dynatable-column="className">class</th>
+                        <th>spec</th>
+                        <th>token</th>
+                        <th data-dynatable-column="normalDps">0P</th>
+                        <th data-dynatable-column="fourP17">4P T17</th>
+                        <th data-dynatable-column="twoP17twop18">2P+2P</th>
+                        <th data-dynatable-column="fourP18">4P T18</th>
+                        <th data-dynatable-column="twoP18">2P T18</th>
+                        <th data-dynatable-column="normalTotwoP18Gain">T18 2P Gain (%)</th>
+                        <th data-dynatable-column="twoP17twoP18Gain">2P+2P Gain (%)</th>
+                        <th data-dynatable-column="combiTo4P18Gain">2P+2P - 4P T18 Gain (%)</th>
+                        <th data-dynatable-column="normalTo4P18Gain">0P-4P T18 Gain (%)</th>
+                        <th data-dynatable-column="fourP17ToCombiGain">4P T17 - 2P-2P Gain (%)</th>
+                        <th data-dynatable-column="fourP17ToFourP18Gain">4P T17 - 4P T18 Gain (%)</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Simulated dps for 0- 2- and 4-set (and combinations)</h3>
+
+                <br/><br/>
+
+                <div id="gainChart"></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h3>An overview of the dps-gain (%) for 2- and 4set (and combinations)</h3>
+
+                <br/><br/>
+
+                <div id="dpsChart"></div>
+            </div>
+        </div>
+
+
+    </div>
+    <!-- /. PAGE INNER  -->
+</div>
+<!-- /. layout fragment -->
+<div layout:fragment="footer-content">
+    <script th:src="@{/assets/dynatable/jquery.dynatable.js}"></script>
+    <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script th:src="@{/assets/js/c3/c3.min.js}"></script>
+    <script th:src="@{/assets/js/custom/tools/tierdistribution/t18.js}"></script>
+</div>
+
+</html>

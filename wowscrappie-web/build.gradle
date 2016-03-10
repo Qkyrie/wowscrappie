@@ -1,0 +1,82 @@
+apply plugin: 'spring-boot'
+apply plugin: 'lesscss'
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-netflix:${theSpringCloudNetflixVersion}"
+        mavenBom "io.spring.platform:platform-bom:${theSpringPlatformBomVersion}"
+    }
+}
+
+
+dependencies {
+
+    //own projects
+    compile project(":heureka")
+    compile project(":core")
+
+    //web
+    compile("org.springframework.boot:spring-boot-starter")
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.springframework.boot:spring-boot-starter-thymeleaf")
+    compile("org.springframework.boot:spring-boot-starter-websocket")
+    compile('net.sourceforge.htmlunit:htmlunit:2.16')
+
+
+    //data
+    compile("org.springframework.boot:spring-boot-starter-batch")
+    compile('org.springframework.data:spring-data-redis')
+    compile("org.flywaydb:flyway-core")
+    testCompile("com.h2database:h2")
+
+
+
+    //social
+    compile("org.springframework.social:spring-social-core:1.1.0.RELEASE")
+    compile("org.springframework.social:spring-social-config:1.1.0.RELEASE")
+
+    //security
+    compile("org.springframework.security:spring-security-data")
+    compile("org.springframework.security:spring-security-web")
+    compile("org.springframework.security:spring-security-config")
+    compile("org.springframework.security:spring-security-messaging")
+    compile 'org.thymeleaf.extras:thymeleaf-extras-springsecurity4:2.1.2.RELEASE'
+    testCompile("org.springframework.security:spring-security-test")
+
+
+
+    //configuration
+    compile("org.springframework.boot:spring-boot-starter-actuator")
+    compile("org.springframework.session:spring-session")
+
+
+    //spring cloud
+    compile 'org.springframework.cloud:spring-cloud-starter-eureka'
+    compile("org.springframework.boot:spring-boot-starter-cloud-connectors")
+
+
+    //utils
+    compile('commons-validator:commons-validator:1.4.0')
+
+    //testing
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+    testCompile('org.easytesting:fest-assert:1.4')
+}
+
+
+jar {
+    baseName = 'Scrappie'
+    version = '2.4.0-SNAPSHOT'
+}
+
+lesscss {
+    source = fileTree('src/main/resources/static/assets/less') {
+        include 'sb-admin-2.less'
+    }
+    dest = 'src/main/resources/static/assets/css'
+    compress = true
+}
+
+bootRun {
+    systemProperties System.properties
+}

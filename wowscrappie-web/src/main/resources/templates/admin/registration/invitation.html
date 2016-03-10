@@ -1,0 +1,95 @@
+﻿<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      layout:decorator="decorator/wa-decorator">
+
+<div layout:fragment="header">
+    <title>Generate Invitation - Scrappie</title>
+</div>
+
+<div layout:fragment="main-content">
+    <div id="page-inner">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5">
+
+                    <h3>Generate an invitation</h3>
+
+                    <p>
+                        Invite another user to use this application without any external authentication.
+                        This will only require an email address. An account will be created using that email address and
+                        an activationcode will be produced.
+                    </p>
+
+                    <div class="form-group">
+                        <div id="generalfailure" style="display:none;" class="alert alert-danger">Something went wrong,
+                            please try again later!
+                        </div>
+                        <label>email</label>
+                        <input id="newUsernameInput" placeholder="enter email address"
+                               data-bind="value: email"
+                               class="form-control"/>
+                    </div>
+                    <a href="#" class="btn btn-primary" data-bind="click: save">Create Invitation Code!</a>
+                    <br />
+                    <div class="form-group">
+                        <div id="generalsuccess" style="display:none;" class="alert alert-success">
+                            Invitation success! Invitation code is <b><span id="invitationcode"></span></b>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /. PAGE INNER  -->
+</div>
+<!-- /. layout fragment -->
+
+<div layout:fragment="footer-content">
+
+    <script type="application/javascript">
+        /*<![CDATA[*/
+
+        var InvitationModel = function () {
+            var self = this;
+
+            this.email = ko.observable("");
+            this.save = function () {
+                $.postJSON("/admin/registration/invitation", {email: self.email()}, function(data) {
+                    if(data.hasError === false) {
+                        $("#invitationcode").html(data.invitationcode);
+                        $("#generalsuccess").show();
+                        $("#generalfailure").hide();
+                        this.email('');
+                    } else {
+                        $("#generalfailure").html(data.errorMessage);
+                        $("#generalfailure").show();
+                    }
+                });
+            };
+        };
+
+        var invitationModel = new InvitationModel;
+        ko.applyBindings(invitationModel);
+
+
+        $.postJSON = function (url, data, callback) {
+            return jQuery.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                'type': 'POST',
+                'url': url,
+                'data': JSON.stringify(data),
+                'dataType': 'json',
+                'success': callback
+            });
+        };
+        /*]]>*/
+    </script>
+
+</div>
+
+</html>

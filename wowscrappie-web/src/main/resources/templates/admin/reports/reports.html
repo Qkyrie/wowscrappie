@@ -1,0 +1,123 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      layout:decorator="decorator/wa-decorator">
+
+<div layout:fragment="header">
+    <link th:href="@{/assets/js/dataTables/dataTables.bootstrap.css}" rel="stylesheet"/>
+    <title>General Reports - Scrappie</title>
+</div>
+
+<div layout:fragment="main-content">
+    <div id="page-inner">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <h3>Reports by Browsers</h3>
+
+                    <div id="deleteFail" class="alert alert-danger alert-dismissible collapse" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <strong>Warning!</strong> Failed to delete the report!
+                    </div>
+
+                    <div id="handleFail" class="alert alert-danger alert-dismissible collapse" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <strong>Warning!</strong> Failed to set the report to handled!
+                    </div>
+
+                    <table class="table table-striped table-bordered table-hover" id="myTable">
+                        <thead>
+                        <tr>
+                            <th>handled</th>
+                            <th>date</th>
+                            <th>what for?</th>
+                            <th>reporter</th>
+                            <th>actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="report, iterStat : ${reports}"
+                            th:class="${iterStat.odd}? 'gradeA' : 'gradeC'">
+                            <td><input type="checkbox" th:checked="${report.handled}"/></td>
+                            <td th:text="${report.postDate}">Name</td>
+                            <td th:text="${report.whatfor}">1123154</td>
+                            <td th:text="${report.reporter}"></td>
+                            <td>
+                                <span th:attr="data-report_id=${report.id}"
+                                      class="viewButton btn btn-primary btn-xs">
+                                    <i class="material-icons">search</i>
+                                </span>
+                                <span th:attr="data-report_id=${report.id}" th:if="${report.handled == false}"
+                                      class="handleButton btn btn-primary btn-xs">
+                                    <i class="material-icons">done</i>
+                                </span>
+                                <span th:attr="data-report_id=${report.id}"
+                                      class="deleteButton btn btn-primary btn-xs">
+                                    <i class="material-icons">delete</i>
+                                </span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <br /><br />
+
+                    <blockquote id="report_quote"></blockquote>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /. PAGE INNER  -->
+</div>
+<!-- /. layout fragment -->
+
+<div layout:fragment="footer-content">
+    <script th:src="@{/assets/js/dataTables/jquery.dataTables.js}"></script>
+    <script th:src="@{/assets/js/dataTables/dataTables.bootstrap.js}"></script>
+    <script type="application/javascript">
+        /*<![CDATA[*/
+        $('#myTable').dataTable();
+
+        $(".handleButton").click(function() {
+            $.get('/interface/reports/' + $(this).data('report_id') + '/handle', function (data) {
+                if(data === false) {
+                    $("#handleFail").show();
+                } else {
+                    window.location = "/interface/reports";
+                }
+            });
+        });
+
+        $(".deleteButton").click(function() {
+            $.get('/interface/reports/' + $(this).data('report_id') + '/delete', function (data) {
+                if(data === false) {
+                    $("#deleteFail").show();
+                } else {
+                    window.location = "/interface/reports";
+                }
+            });
+        });
+
+        $(".viewButton").click(function() {
+            $.get('/interface/reports/' + $(this).data('report_id'), function (data) {
+                $("#report_quote").html(data.comments);
+            });
+        });
+        /*]]>*/
+    </script>
+</div>
+
+
+<div th:fragment="detail">
+    <h3>Details of <span th:text="${user.username}"></span></h3>
+
+    <div class="alert alert-info">I dont even if it's useful to show anything here atm :P</div>
+</div>
+
+<div th:fragment="notfound">
+    <h3>Specied user was not found</h3>
+</div>
+
+</html>

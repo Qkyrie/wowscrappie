@@ -1,0 +1,77 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="decorator/wa-decorator">
+<div layout:fragment="header">
+    <link th:href="@{/assets/css/dropzone/dropzone.css}" rel="stylesheet"/>
+    <title>Contribute your configuration! - Scrappie</title>
+</div>
+<div layout:fragment="main-content">
+    <div id="page-inner">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Ask a question, request a configuration</h2>
+                <p>Whether it's about weakauras, macros, tellmewhen, script or the wow api,
+                this is your place to ask questions. We at wowscrappie will try to use our knowledge in the field to answer you
+                in a timely fashion, unless a community member is quicker of course ;).</p>
+            </div>
+        </div>
+        <!-- /. ROW  -->
+        <hr />
+
+        <div class="row" data-bind="visible: hasErrors">
+            <div class="col-md-12">
+                <div id="titleAlert" class="alert alert-danger alert-dismissible collapse" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <strong>Warning!</strong> <span>Please add a title</span>
+                </div>
+                <div id="questionAlert" class="alert alert-danger alert-dismissible collapse" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <strong>Warning!</strong> <span>Please fill in your actual question</span>
+                </div>
+                <div id="generalAlert" class="alert alert-danger alert-dismissible collapse" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <strong>Warning!</strong> <span data-bind="text: errorMessage"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="ask_title">Title</label>
+                    <input id="ask_title" data-bind="value: title" maxlength="300" class="form-control floating-label"
+                           placeholder="Title"
+                           data-hint="Make it a good one"/>
+                </div>
+            </div>
+        </div>
+        <br /><br />
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="ask_question">Actual Question</label>
+                     <textarea id="ask_question" data-bind="value: question" class="form-control floating-label"
+                               placeholder="Be as precise as possible" rows="12"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <span class="btn btn-primary" data-bind="click: askit"> <i class="mdi-navigation-check"></i> ask it</span>
+            </div>
+        </div>
+
+    </div>
+    <!-- /. PAGE INNER  -->
+</div>
+<!-- /. layout fragment -->
+
+<div layout:fragment="footer-content">
+    <script th:src="@{/assets/js/custom/questions/newquestion.js}" type="application/javascript"></script>
+</div>
+
+</html>

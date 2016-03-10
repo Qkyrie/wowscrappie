@@ -1,0 +1,203 @@
+﻿<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      layout:decorator="decorator/wa-decorator">
+
+<div layout:fragment="header">
+    <link th:href="@{/assets/js/dataTables/dataTables.bootstrap.css}" rel="stylesheet"/>
+
+</div>
+
+<div layout:fragment="main-content">
+    <div id="page-inner">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-sm-8 col-xs-8">
+                    <div class="panel panel-back noti-box">
+                <span class="icon-box bg-color-red set-icon">
+                    <i class="fa fa-user"></i>
+                </span>
+
+                        <div class="text-box">
+                            <p class="main-text">Uploaded by</p>
+
+                            <p class="text-muted" th:text="${config.uploader}">Pikachu</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 col-xs-6">
+                    <div class="panel panel-back noti-box">
+                <span class="icon-box bg-color-green set-icon">
+                    <i class="fa fa-laptop"></i>
+                </span>
+
+                        <div class="text-box">
+                            <p class="main-text">Type</p>
+
+                            <p class="text-muted" th:text="${config.type}">TMW-Configs</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 col-xs-6">
+                    <div class="panel panel-back noti-box">
+                <span class="icon-box bg-color-blue set-icon">
+                    <i class="fa fa-thumbs-o-up"></i>
+                </span>
+
+                        <div class="text-box">
+                            <p class="main-text">Over 9000</p>
+
+                            <p class="text-muted">ScrapScore</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <h3>Edit Configuration</h3>
+
+                    <div id="genericWinAlert" class="alert alert-success alert-dismissible collapse" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <strong>Success!</strong> The configuration has been successfully edited!
+                    </div>
+
+                    <div id="genericAlert" class="alert alert-danger alert-dismissible collapse" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <strong>Warning!</strong> <span id="genericAlertText">Please add a caption before submitting the form
+                    </span></div>
+
+                    <div id="alertAddCaption" class="alert alert-danger alert-dismissible collapse" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <strong>Warning!</strong> Please add a caption before submitting the form
+                    </div>
+
+                    <div id="alertAddString" class="alert alert-danger alert-dismissible collapse" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <strong>Warning!</strong> Please add the actual string before submitting the form.
+                    </div>
+
+                    <div id="alertAddComments" class="alert alert-warning alert-dismissible collapse" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <strong>Warning!</strong> We advise you to add some comments. It'll have greater success in
+                        getting
+                        added with some more information.
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <label>Caption</label>
+                        <input th:value="${config.caption}" id="caption" class="form-control floating-label"
+                               placeholder="Caption"
+                               data-hint="A good caption will help people to find back your configuration"/>
+
+                    </div>
+                    <br/>
+                    <br/>
+
+                    <input id="configType" type="hidden" th:value="${config.type}"/>
+                    <input id="configId" type="hidden" th:value="${config.id}"/>
+
+                    <div class="form-group">
+                        <label>Actual String</label>
+                        <textarea th:text="${config.actualValue}" th:value="${config.actualValue}" id="actual_value" class="form-control floating-label"
+                                        placeholder="Paste your actual string" rows="8"></textarea>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label>Comments</label>
+                        <textarea th:value="${config.comments}" th:text="${config.comments}" id="comments" class="form-control floating-label" placeholder="Comments"
+                                  rows="5"></textarea>
+                    </div>
+
+                    <hr/>
+
+                    <span class="btn btn-primary" data-bind="click: submitContribution"> <i
+                            class="mdi-navigation-check"></i> Submit</span>
+                </div>
+            </div>
+            <hr/>
+
+        </div>
+    </div>
+    <!-- /. PAGE INNER  -->
+</div>
+<!-- /. layout fragment -->
+
+<div layout:fragment="footer-content">
+    <script type="application/javascript">
+        var EditViewModel = function () {
+            var self = this;
+
+            self.submitContribution = function () {
+                $('#alertAddCaption').hide();
+                $("#genericAlert").hide();
+                $("#genericWinAlert").hide();
+                $("#alertAddString").hide();
+                $("#alertAddComments").hide();
+
+                var doPost = true;
+                var id = $("#configId").val();
+                var type = $("#configType").val();
+                var command = {};
+
+                if ($("#caption").val() === '') {
+                    $('#alertAddCaption').show();
+                    doPost = false;
+                }
+
+                if ($("#actual_value").val() === '') {
+                    $("#alertAddString").show();
+                    doPost = false;
+                }
+
+                if ($("#tmw_comments").val() === '') {
+                    $("#alertAddComments").show();
+                }
+
+                command['caption'] = $("#caption").val();
+                command['actualValue'] = $('#actual_value').val();
+                command['comments'] = $("#comments").val();
+                command['type'] = type;
+                command['id'] = id;
+
+                if (doPost) {
+                    var stringyfiedCommand = JSON.stringify(command);
+
+                    var configtype =
+                            $.ajax({
+                                url: '/personal/edit/' + type + "/" + id,
+                                type: "POST",
+                                contentType: "application/json; charset=utf-8",
+                                data: stringyfiedCommand, //Stringified Json Object
+                                cache: false,    //This will force requested pages not to be cached by the browser
+                                processData: false, //To avoid making query String instead of JSON
+                                success: function (resposeJsonObject) {
+                                    console.log(resposeJsonObject);
+                                    if(resposeJsonObject.hasErrors) {
+                                        $("#genericAlertText").html(resposeJsonObject.errorMessage);
+                                        $("#genericAlert").show();
+                                    } else {
+                                        $("#genericWinAlert").show();
+                                    }
+                                }
+                            });
+                }
+            };
+
+
+        }
+
+        var model = new EditViewModel();
+        ko.applyBindings(model);
+    </script>
+</div>
+
+</html>

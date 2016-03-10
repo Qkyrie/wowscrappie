@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+</head>
+<body>
+<div th:fragment="tmw">
+    <div id="tmw-wrapper">
+        <div class="row">
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered table-hover" id="myTable">
+                    <thead>
+                    <tr>
+                        <th>Caption</th>
+                        <th>Type</th>
+                        <th>What For?</th>
+                        <th>ScrapScore</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="uielement, iterStat : ${uielements}"
+                        th:class="${iterStat.odd}? 'gradeA' : 'gradeC'">
+                        <td th:text="${uielement.name}">Name</td>
+                        <td th:text="${uielement.type}">Type</td>
+                        <td th:text="${uielement.whatFor}">whatFor</td>
+                        <td th:text="${uielement.rating}"></td>
+                        <td>
+                            <span data-bind="click: view" th:attr="data-tmw_id=${uielement.id}"
+                                  class="btn btn-success btn-xs">
+                                  <i class="material-icons">search</i>
+                            </span>
+                            <span th:attr="data-tmw_id=${uielement.id}, data-share-url=${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/shared/tmw/} + ${uielement.id}"
+                                  class="shareButton btn btn-success btn-xs">
+                                  <i class="material-icons">share</i>
+                            </span>
+                             <span th:attr="data-edit-url=${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/personal/edit/tmw/} + ${uielement.id}"
+                                   class="editButton btn btn-default btn-raised btn-xs"
+                                   sec:authorize="hasRole('ROLE_USER')">
+                                   <i class="material-icons">edit</i>
+                             </span>
+                            <span th:attr="data-tmw_id=${uielement.id}" th:if="${uielement.approved == false}"
+                                  class="approveButton btn btn-info btn-xs"
+                                  sec:authorize="hasRole('ROLE_ADMIN')">
+                                  <i class="material-icons">done</i>
+                            </span>
+                            <span th:attr="data-tmw_id=${uielement.id}"
+                                  th:if="${uielement.approved == true}"
+                                  class="disableButton btn btn-warning btn-xs"
+                                  sec:authorize="hasRole('ROLE_ADMIN')">
+                                  <i class="material-icons">lock</i>
+                            </span>
+                            <span th:attr="data-tmw_id=${uielement.id}" class="deleteButton btn btn-danger btn-xs"
+                                  sec:authorize="hasRole('ROLE_ADMIN')">
+                                  <i class="material-icons">delete</i>
+                            </span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row" data-bind="visible: showDetails">
+            <div id="details">
+                <h3 data-bind="text: activeName"></h3>
+
+                <div class="form-group">
+                    <label>Comments</label>
+                    <blockquote id="commentBox" data-bind="text: activeComment"></blockquote>
+                </div>
+
+                <label>TellMeWhen-String</label>
+                <textarea data-bind="value: activeString" class="form-control" rows="5"></textarea>
+
+                <hr/>
+
+                <div id="images" data-bind="foreach: imageRefs">
+                    <a class="fancybox" rel="group" data-bind="attr: { href: '/shared/image/' + $data }">
+                        <img data-bind="attr: { src: '/shared/image/thumbnail-' + $data }" alt=""/>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="row" data-bind="visible: showDetails">
+            <button data-bind="click: redirectShare" class="btn btn-info">Leave a comment!</button>
+        </div>
+    </div>
+    <script type="text/javascript" th:src="@{/assets/js/md-v1.2.0.js}"/>
+    <script type="application/javascript">
+
+        $('.shareButton').each(function () {
+            $(this).click(function () {
+                window.open($(this).data('share-url'), '_blank');
+            });
+        });
+
+        $(".editButton").each(function () {
+            $(this).click(function () {
+                window.open($(this).data('edit-url'), '_blank');
+            });
+        });
+
+        var tmwVM = function () {
+            var self = this;
+
+            self.activeTMW = ko.observable();
+            self.activeString = ko.observable();
+            self.activeComment = ko.observable();
+            self.showDetails = ko.observable(false);
+            self.imageRefs = ko.observableArray([]);
+            self.activeName = ko.observable();
+            self.activeTMWId = ko.observable();
+
+            self.view = function (data, event) {
+                var clickedElement = $(event.currentTarget);
+                var tmw_id = clickedElement.data("tmw_id");
+                $.get("/interface/tellmewhen/" + tmw_id, function (resultValue) {
+                    if (resultValue !== null) {
+                        self.activeTMW(resultValue);
+                        self.activeString(resultValue.actualValue);
+                        self.activeComment(resultValue.comment);
+                        self.activeTMWId(tmw_id);
+                        self.imageRefs(resultValue.imageRefs);
+                        self.activeName(resultValue.name);
+                        Mdjs().on($("#commentBox"));
+                        self.showDetails(true);
+                        $("html, body").animate({ scrollTop: $(document).height() }, 1000);
+                        $(".fancybox").fancybox();
+                    }
+                });
+            };
+
+            self.redirectShare = function () {
+                window.open('/shared/tmw/' + self.activeTMWId(), '_blank');
+            };
+        };
+
+        var tmwModel = new tmwVM();
+        ko.applyBindings(tmwModel, $("#tmw-wrapper")[0]);
+    </script>
+</div>
+
+
+<div th:fragment="wa">
+    <div id="wa-wrapper">
+        <div class="row">
+            <table class="table table-striped table-bordered table-hover" id="myTable">
+                <thead>
+                <tr>
+                    <th>Caption</th>
+                    <th>Type</th>
+                    <th>What For?</th>
+                    <th>ScrapScore</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="uielement, iterStat : ${uielements}"
+                    th:class="${iterStat.odd}? 'gradeA' : 'gradeC'">
+                    <td th:text="${uielement.name}">Name</td>
+                    <td th:text="${uielement.type}">Type</td>
+                    <td th:text="${uielement.whatFor}">whatFor</td>
+                    <td th:text="${uielement.rating}"></td>
+                    <td>
+                    <span data-bind="click: view" th:attr="data-wa_id=${uielement.id}"
+                          class="btn btn-success btn-xs">
+                          <i class="material-icons">search</i>
+                    </span>
+                        <span th:attr="data-wa_id=${uielement.id}, data-share-url=${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/shared/wa/} + ${uielement.id}"
+                              class="shareButton btn btn-success btn-xs">
+                              <i class="material-icons">share</i>
+                        </span>
+                         <span th:attr="data-edit-url=${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/personal/edit/wa/} + ${uielement.id}"
+                               class="editButton btn btn-default btn-raised btn-xs"
+                               sec:authorize="hasRole('ROLE_USER')">
+                               <i class="material-icons">edit</i>
+                         </span>
+                        <span th:attr="data-wa_id=${uielement.id}"
+                              th:if="${uielement.approved == false}"
+                              class="approveButton btn btn-info btn-xs"
+                              sec:authorize="hasRole('ROLE_ADMIN')">
+                              <i class="material-icons">done</i>
+                        </span>
+                        <span th:if="${uielement.approved == true}"
+                              th:attr="data-wa_id=${uielement.id}"
+                              class="disableButton btn btn-warning btn-xs"
+                              sec:authorize="hasRole('ROLE_ADMIN')">
+                              <i class="material-icons">lock</i>
+                        </span>
+                        <span th:attr="data-wa_id=${uielement.id}" class="deleteButton btn btn-danger btn-xs"
+                              sec:authorize="hasRole('ROLE_ADMIN')">
+                              <i class="material-icons">delete</i>
+                        </span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class="row" data-bind="visible: showDetails">
+            <div id="details">
+                <h3 data-bind="text: activeName"></h3>
+
+                <div class="form-group">
+                    <label>Comments</label>
+                    <blockquote id="commentBox" data-bind="text: activeComment"></blockquote>
+                </div>
+
+                <label>WeakAura-String</label>
+                <textarea data-bind="value: activeString" class="form-control" rows="5"></textarea>
+                <hr/>
+
+                <div id="images" data-bind="foreach: imageRefs">
+                    <a class="fancybox" rel="group" data-bind="attr: { href: '/shared/image/' + $data }">
+                        <img data-bind="attr: { src: '/shared/image/thumbnail-' + $data }" alt=""/>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+        <div class="row" data-bind="visible: showDetails">
+            <button data-bind="click: redirectShare" class="btn btn-info">Leave a comment!</button>
+        </div>
+    </div>
+    <script type="text/javascript" th:src="@{/assets/js/md-v1.2.0.js}"/>
+    <script type="application/javascript">
+        $('.shareButton').each(function () {
+            $(this).click(function () {
+                window.open($(this).data('share-url'), '_blank');
+            });
+        });
+
+        $(".editButton").each(function () {
+            $(this).click(function () {
+                window.open($(this).data('edit-url'), '_blank');
+            });
+        });
+
+        var WaModel = function () {
+            var self = this;
+
+            self.activeWA = ko.observable();
+            self.activeString = ko.observable();
+            self.activeComment = ko.observable();
+            self.showDetails = ko.observable(false);
+            self.imageRefs = ko.observableArray([]);
+            self.activeName = ko.observable();
+            self.activeWAId = ko.observable();
+
+            self.view = function (data, event) {
+                var clickedElement = $(event.currentTarget);
+                var tmw_id = clickedElement.data("wa_id");
+                $.get("/interface/weakaura/" + tmw_id, function (resultValue) {
+                    if (resultValue !== null) {
+                        self.activeWA(resultValue);
+                        self.activeString(resultValue.actualValue);
+                        self.activeComment(resultValue.comment);
+                        self.imageRefs(resultValue.imageRefs);
+                        self.activeWAId(tmw_id);
+                        self.activeName(resultValue.name);
+                        Mdjs().on($("#commentBox"));
+                        self.showDetails(true);
+                        $("html, body").animate({ scrollTop: $(document).height() }, 1000);
+                        $(".fancybox").fancybox();
+                    }
+                });
+            };
+
+            self.redirectShare = function () {
+                window.open('/shared/wa/' + self.activeWAId(), '_blank');
+            };
+        };
+
+        var waModel = new WaModel();
+        ko.applyBindings(waModel, $("#wa-wrapper")[0]);
+    </script>
+</div>
+<div th:fragment="macro">
+    <div id="macro-stuff">
+        <div class="row">
+            <table class="table table-striped table-bordered table-hover" id="myTable">
+                <thead>
+                <tr>
+                    <th>Caption</th>
+                    <th>Type</th>
+                    <th>What For?</th>
+                    <th>ScrapScore</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="uielement, iterStat : ${uielements}"
+                    th:class="${iterStat.odd}? 'gradeA' : 'gradeC'">
+                    <td th:text="${uielement.name}">Name</td>
+                    <td th:text="${uielement.type}">Type</td>
+                    <td th:text="${uielement.whatFor}">whatFor</td>
+                    <td th:text="${uielement.rating}"></td>
+                    <td>
+                        <span data-bind="click: view" th:attr="data-macro_id=${uielement.id}"
+                              class="btn btn-success btn-xs">
+                              <i class="material-icons">search</i>
+                        </span>
+                        <span th:attr="data-macro_id=${uielement.id}, data-share-url=${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/shared/macro/} + ${uielement.id}"
+                              class="shareButton btn btn-success btn-xs">
+                              <i class="material-icons">share</i>
+                        </span>
+                         <span th:attr="data-edit-url=${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/personal/edit/macro/} + ${uielement.id}"
+                               class="editButton btn btn-default btn-raised btn-xs"
+                               sec:authorize="hasRole('ROLE_USER')">
+                               <i class="material-icons">edit</i>
+                         </span>
+                        <span th:attr="data-macro_id=${uielement.id}" th:if="${uielement.approved == false}"
+                              class="approveButton btn btn-info btn-xs"
+                              sec:authorize="hasRole('ROLE_ADMIN')">
+                              <i class="material-icons">done</i>
+                        </span>
+                        <span th:if="${uielement.approved == true}"
+                              class="disableButton btn btn-warning btn-xs"
+                              th:attr="data-macro_id=${uielement.id}"
+                              sec:authorize="hasRole('ROLE_ADMIN')">
+                              <i class="material-icons">lock</i>
+                        </span>
+                         <span th:attr="data-macro_id=${uielement.id}" class="deleteButton btn btn-danger btn-xs"
+                               sec:authorize="hasRole('ROLE_ADMIN')">
+                               <i class="material-icons">delete</i>
+                         </span>
+
+                    </td>
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row" data-bind="visible: showDetails">
+            <div id="details">
+                <h3 data-bind="text: activeName"></h3>
+
+                <div class="form-group">
+                    <label>Comments</label>
+                    <blockquote id="commentBox" data-bind="text: activeComment"></blockquote>
+                </div>
+
+                <label>Macro-String</label>
+                <textarea data-bind="value: activeString" class="form-control" rows="3"></textarea>
+            </div>
+
+        </div>
+        <div class="row" data-bind="visible: showDetails">
+            <button data-bind="click: redirectShare" class="btn btn-info">Leave a comment!</button>
+        </div>
+    </div>
+    <script type="text/javascript" th:src="@{/assets/js/md-v1.2.0.js}"/>
+    <script type="application/javascript">
+
+        $('.shareButton').each(function () {
+            $(this).click(function () {
+                window.open($(this).data('share-url'), '_blank');
+            });
+        });
+
+        $(".editButton").each(function () {
+            $(this).click(function () {
+                window.open($(this).data('edit-url'), '_blank');
+            });
+        });
+
+        var MacroModel = function () {
+            var self = this;
+            self.activeName = ko.observable();
+            self.activeMacro = ko.observable();
+            self.activeString = ko.observable();
+            self.activeComment = ko.observable();
+            self.showDetails = ko.observable(false);
+            self.activeMacroId = ko.observable();
+
+            self.view = function (data, event) {
+                var clickedElement = $(event.currentTarget);
+                var tmw_id = clickedElement.data("macro_id");
+                $.get("/interface/macro/" + tmw_id, function (resultValue) {
+                    if (resultValue !== null) {
+                        self.activeMacro(resultValue);
+                        self.activeString(resultValue.actualValue);
+                        self.activeName(resultValue.name);
+                        self.activeMacroId(tmw_id);
+                        self.activeComment(resultValue.comment);
+                        Mdjs().on($("#commentBox"));
+                        self.showDetails(true);
+                        $("html, body").animate({ scrollTop: $(document).height() }, 1000);
+                    }
+                });
+            };
+
+            self.redirectShare = function () {
+                window.open('/shared/macro/' + self.activeMacroId(), '_blank');
+            };
+        };
+
+        var macroModel = new MacroModel();
+        ko.applyBindings(macroModel, $("#macro-stuff")[0]);
+
+    </script>
+</div>
+<div th:fragments="error">
+    <h4>No Results found</h4>
+</div>
+</body>
+</html>
