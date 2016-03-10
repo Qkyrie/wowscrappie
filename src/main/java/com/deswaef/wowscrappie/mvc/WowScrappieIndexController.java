@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping(value = "/")
-public class IndexController {
+public class WowScrappieIndexController {
 
     @Autowired
     private WeakAuraService weakAuraService;
