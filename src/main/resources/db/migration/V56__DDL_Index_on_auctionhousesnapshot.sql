@@ -1,1 +1,0 @@
-create index idx_auctionhousesnapshot_item_realm on auctionhousesnapshot(item_id, realm_id)

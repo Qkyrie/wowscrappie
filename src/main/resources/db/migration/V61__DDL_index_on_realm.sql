@@ -1,1 +1,0 @@
-create index idx_realm_name ON realm(name);

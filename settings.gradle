@@ -1,5 +1,6 @@
 rootProject.name = theName
 
+include 'wowscrappie-web'
+include 'eureka-server'
 include 'heureka'
 include 'core'
-include 'eureka-server'
