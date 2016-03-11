@@ -12,6 +12,9 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.util.Date;
 
 @Component
 @ConditionalOnProperty(value = "com.deswaef.wowscrappie.jobs.oldsnapshotdeleter.enabled", havingValue = "true")
@@ -45,12 +48,12 @@ public class OldDataDeleterScheduler {
      *
      * @Scheduled Every day at 2 oclock
      */
-    @Scheduled(cron = "0 0 2 * * ?")
+    @Scheduled(cron = "0 0 12 * * ?")
     public void deleteOldSnapshotData() {
         applicationEventService.create(ApplicationEventTypeEnum.JOB_STARTED, "starting deletion of old auction data");
-        LocalDate localDate = LocalDate.now().minusDays(3);
+        LocalDateTime localDate = LocalDate.now().atStartOfDay().minusDays(1);
         auctionItemNativeRepository
-                .deleteBeforeDate(localDate.toEpochDay());
+                .deleteBeforeDate(Date.from(localDate.toInstant(ZoneOffset.UTC)).getTime());
         applicationEventService.create(ApplicationEventTypeEnum.JOB_ENDED, "done deletion of old auction data");
     }
 
