@@ -2,93 +2,85 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
-      layout:decorator="decorator/wa-decorator">
+      layout:decorator="decorator/theproject-decorator">
 
 <div layout:fragment="header">
     <title th:text="${config.name} + ' (' + ${configType} + ')'  + ' - Scrappie'"></title>
     <meta name="disqus_identifier" th:content="${configType} + '/' + ${config.id}"/>
 </div>
 <div layout:fragment="main-content">
-    <div id="page-inner">
-        <div class="row">
-            <div class="col-md-12">
-                <h2><span th:text="${config.name}"></span> <small th:if="${patch != null}">{ Last updated in Patch <span th:text="${patch.name}"></span> }</small></h2>
-                <input type="hidden" th:value="${config.id}" id="configId"/>
-            </div>
-        </div>
 
-        <div class="row">
-            <div class="col-md-4 col-sm-4 col-xs-4">
-                <div class="panel panel-back noti-box">
-                <span class="icon-box bg-color-red set-icon">
-                    <i class="fa fa-user"></i>
-                </span>
-
-                    <div class="text-box">
-                        <p class="main-text">Contributor</p>
-
-                        <p class="text-muted">
-                            <a th:href="@{'/users/' + ${config.uploader.id}}">
-                                <span th:text="${config.uploader.username}"></span>
-                            </a>
-                        </p>
+    <section class="main-container">
+        <div class="container">
+            <div id="page-inner">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2><span th:text="${config.name}"></span>
+                            <small th:if="${patch != null}">{ Last updated in Patch <span
+                                    th:text="${patch.name}"></span> }
+                            </small>
+                        </h2>
+                        <input type="hidden" th:value="${config.id}" id="configId"/>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4 col-sm-4 col-xs-4">
-                <div class="panel panel-back noti-box">
-                <span class="icon-box bg-color-green set-icon">
-                    <i class="fa fa-laptop"></i>
-                </span>
 
-                    <div class="text-box">
-                        <p class="main-text">Type</p>
-
-                        <p class="text-muted" th:text="${configType}">TMW-Configs</p>
-                        <input id="configTypeHolder" type="hidden" th:value="${configType}"/>
-                        <input id="configIdHolder" type="hidden" th:value="${configId}"/>
+                <div class="row">
+                    <div class="col-md-4 col-sm-4 col-xs-4 text-center">
+                        <div class="feature-box shadow-narrow bordered pv-20 light-gray-bg object-non-visible animated zoomInDown"
+                             data-animation-effect="fadeIn" data-effect-delay="300">
+                            <span class="icon without-bg text-center"><i class="text-default fa fa-user"></i></span>
+                            <h3>Contributor</h3>
+                            <span>
+                                   <a th:href="@{'/users/' + ${config.uploader.id}}">
+                                       <span th:text="${config.uploader.username}"></span>
+                                   </a>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-4 text-center">
+                        <div class="feature-box shadow-narrow bordered pv-20 light-gray-bg object-non-visible animated zoomInDown"
+                             data-animation-effect="fadeIn" data-effect-delay="300">
+                            <span class="icon without-bg text-center"><i class="text-default fa fa-diamond"></i></span>
+                            <h3>Configuration Type</h3>
+                            <span th:text="${configType}">TMW-Configs</span>
+                            <input id="configTypeHolder" type="hidden" th:value="${configType}"/>
+                            <input id="configIdHolder" type="hidden" th:value="${configId}"/>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-4 text-center">
+                        <div class="feature-box shadow-narrow bordered pv-20 light-gray-bg object-non-visible animated zoomInDown"
+                             data-animation-effect="fadeIn" data-effect-delay="300">
+                            <span class="icon without-bg text-center"><i class="text-default fa fa-diamond"></i></span>
+                            <h3>Scrap Score</h3>
+                            <span th:text="${rating}">0</span>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4 col-sm-4 col-xs-4">
-                <div class="panel panel-back noti-box">
-                <span class="icon-box bg-color-blue set-icon">
-                    <i class="fa fa-star"></i>
-                </span>
 
-                    <div class="text-box">
-                        <p class="main-text">ScrapScore</p>
+                <div class="row">
+                    <br/><br/>
 
-                        <p class="text-muted" th:text="${rating}">TMW-Configs</p>
+                    <div class="row object-non-visible animated fadeIn" data-animation-effect="fadeIn" data-effect-delay="300">
+                        <div class="col-md-10 col-md-offset-1">
+                            <div class="form-group">
+                                <label>Comments</label>
+                                <blockquote id="commentBox" th:text="${config.comment}"></blockquote>
+                            </div>
+                            <hr/>
+                            <br/>
+
+                            <div class="form-group">
+                                <label>Value</label>
+                                <textarea th:text="${config.actualValue}" class="form-control" rows="8"></textarea>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <br/><br/>
-
-            <div class="row">
-                <div class="col-md-10 col-md-offset-1">
-                    <div class="form-group">
-                        <label>Comments</label>
-                        <blockquote id="commentBox"  th:text="${config.comment}"></blockquote>
-                    </div>
-                    <hr/>
-                    <br/>
-
-                    <div class="form-group">
-                        <label>Value</label>
-                        <textarea th:text="${config.actualValue}" class="form-control" rows="8"></textarea>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-10 col-md-offset-1">
-                    <button id="copy-button" th:attr="data-clipboard-text=${config.actualValue}"
-                            class="btn btn-primary btn-sm">
-                        <i class="mdi-action-assignment"></i> Copy to clipboard
-                    </button>
+                    <div class="row object-non-visible animated fadeIn" data-animation-effect="fadeIn" data-effect-delay="300">
+                        <div class="col-md-10 col-md-offset-1">
+                            <button id="copy-button" th:attr="data-clipboard-text=${config.actualValue}"
+                                    class="btn btn-primary btn-sm">
+                                <i class="mdi-action-assignment"></i> Copy to clipboard
+                            </button>
 
                     <span th:if="${!isOwn}" id="canVote">
                              <button id="votePositive"
@@ -105,68 +97,70 @@
                             </button>
                     </span>
 
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-10 col-md-offset-1">
-
-                    <div class="form-group">
-                        <label>Images</label>
-                        <br/>
-
-                        <div th:if="${screenshots.size() == 0}" class="alert alert-success">No images or
-                            screenshots were provided.
-                        </div>
-
-                        <div th:if="${screenshots.size() > 0}" id="images">
-                            <a th:each="screenshot: ${screenshots}" class="fancybox" rel="group"
-                               th:href="'/shared/image/' + ${screenshot.reference}">
-                                <img th:src="'/shared/image/thumbnail-' + ${screenshot.reference}" alt=""/>
-                            </a>
                         </div>
                     </div>
+                    <div class="row object-non-visible animated fadeIn" data-animation-effect="fadeIn" data-effect-delay="300">
+                        <div class="col-md-10 col-md-offset-1">
+
+                            <div class="form-group">
+                                <label>Images</label>
+                                <br/>
+
+                                <div th:if="${screenshots.size() == 0}" class="alert alert-success">No images or
+                                    screenshots were provided.
+                                </div>
+
+                                <div th:if="${screenshots.size() > 0}" id="images">
+                                    <a th:each="screenshot: ${screenshots}" class="fancybox" rel="group"
+                                       th:href="'/shared/image/' + ${screenshot.reference}">
+                                        <img th:src="'/shared/image/thumbnail-' + ${screenshot.reference}" alt=""/>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
                 </div>
-            </div>
-            <br/>
-        </div>
 
-        <div class="row">
-            <hr/>
-            <div id="commentPane" class="col-md-10 col-md-offset-1">
+                <div class="row object-non-visible animated fadeIn" data-animation-effect="fadeIn" data-effect-delay="300">
+                    <hr/>
+                    <div id="commentPane" class="col-md-10 col-md-offset-1">
 
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-offset-4 col-sm-offset-4 col-xs-offset-4 col-md-4 col-sm-4 col-xs-4">
-                <div class="panel panel-back noti-box">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-offset-4 col-sm-offset-4 col-xs-offset-4 col-md-4 col-sm-4 col-xs-4">
+                        <div class="panel panel-back noti-box">
                 <span class="icon-box bg-color-brown set-icon">
                     <i class="fa fa-twitter"></i>
                 </span>
 
-                    <div class="text-box">
-                        <p class="main-text"><a href="https://twitter.com/share" class="twitter-share-button"
-                                                data-via="ScrappieWoW"
-                                                data-size="large" data-count="none">Tweet</a>
-                            <script>!function (d, s, id) {
-                                var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
-                                if (!d.getElementById(id)) {
-                                    js = d.createElement(s);
-                                    js.id = id;
-                                    js.src = p + '://platform.twitter.com/widgets.js';
-                                    fjs.parentNode.insertBefore(js, fjs);
-                                }
-                            }(document, 'script', 'twitter-wjs');</script>
-                        </p>
+                            <div class="text-box">
+                                <p class="main-text"><a href="https://twitter.com/share" class="twitter-share-button"
+                                                        data-via="ScrappieWoW"
+                                                        data-size="large" data-count="none">Tweet</a>
+                                    <script>!function (d, s, id) {
+                                        var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
+                                        if (!d.getElementById(id)) {
+                                            js = d.createElement(s);
+                                            js.id = id;
+                                            js.src = p + '://platform.twitter.com/widgets.js';
+                                            fjs.parentNode.insertBefore(js, fjs);
+                                        }
+                                    }(document, 'script', 'twitter-wjs');</script>
+                                </p>
 
-                        <p class="text-muted">
-                            Share this page
-                        </p>
+                                <p class="text-muted">
+                                    Share this page
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+
         </div>
-    </div>
-    <!-- /. PAGE INNER  -->
+    </section>
 </div>
 <!-- /. layout fragment -->
 <div layout:fragment="footer-content">
@@ -205,13 +199,13 @@
 
         var votePost = function (negorpos, success, fail) {
             $.ajax({
-                url: $("#configId").val() + '/' + negorpos,
-                type: "POST",
-                contentType: "application/json; charset=utf-8",
-                data: JSON.stringify([]), //Stringified Json Object
-                cache: false,    //This will force requested pages not to be cached by the browser
-                processData: false //To avoid making query String instead of JSON
-            })
+                        url: $("#configId").val() + '/' + negorpos,
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify([]), //Stringified Json Object
+                        cache: false,    //This will force requested pages not to be cached by the browser
+                        processData: false //To avoid making query String instead of JSON
+                    })
                     .done(function () {
                         success();
                     })
