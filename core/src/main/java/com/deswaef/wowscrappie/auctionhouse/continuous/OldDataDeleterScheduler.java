@@ -51,14 +51,14 @@ public class OldDataDeleterScheduler {
     @Scheduled(cron = "0 0 12 * * ?")
     public void deleteOldSnapshotData() {
         applicationEventService.create(ApplicationEventTypeEnum.JOB_STARTED, "starting deletion of old auction data");
-        LocalDateTime localDate = LocalDate.now().atStartOfDay().minusDays(1);
+        LocalDateTime localDate = LocalDate.now().atStartOfDay();
         auctionItemNativeRepository
                 .deleteBeforeDate(Date.from(localDate.toInstant(ZoneOffset.UTC)).getTime());
         applicationEventService.create(ApplicationEventTypeEnum.JOB_ENDED, "done deletion of old auction data");
     }
 
     /**
-     * Delete daily data more than 60 days old.
+     * Delete daily data more than 31 days old.
      *
      * @Scheduled Every day at 8 oclock
      */
