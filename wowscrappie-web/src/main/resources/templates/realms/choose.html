@@ -1,7 +1,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorator="decorator/wa-decorator">
+      layout:decorator="decorator/theproject-decorator">
 
 <div layout:fragment="header">
     <meta name="description" content="Choose Realm- Scrappie"/>
@@ -17,7 +17,14 @@
 </div>
 
 <div layout:fragment="main-content">
-    <choose-realm></choose-realm>
+
+    <section class="main-container">
+        <div class="container">
+            <choose-realm></choose-realm>
+        </div>
+    </section>
+
+
 
     <!-- /. PAGE INNER  -->
 </div>
