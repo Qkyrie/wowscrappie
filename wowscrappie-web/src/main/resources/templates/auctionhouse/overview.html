@@ -1,7 +1,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorator="decorator/wa-decorator">
+      layout:decorator="decorator/theproject-decorator">
 
 <div layout:fragment="header">
     <meta name="description" content="Auction House Statistics - Scrappie"/>
@@ -29,7 +29,13 @@
 </div>
 
 <div layout:fragment="main-content">
-    <auctionhouse-search></auctionhouse-search>
+
+    <section class="main-container">
+        <div class="container">
+            <auctionhouse-search></auctionhouse-search>
+        </div>
+    </section>
+
     <!-- /. PAGE INNER  -->
 </div>
 <!-- /. layout fragment -->
