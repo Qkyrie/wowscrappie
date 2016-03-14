@@ -43,6 +43,12 @@ public class WowScrappieIndexController {
         return "index";
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/beta")
+    public String beta(HttpServletRequest request, ModelMap map, @CurrentUser ScrappieUser scrappieUser) {
+        putDefaultValuesOnModelMap(map, request);
+        return "beta";
+    }
+
     private String getRedirectFrom(HttpServletRequest request) {
         if (request.getParameter("thankyou") != null) {
             return "thankyou";

@@ -142,19 +142,6 @@
                         </li>
                     </ul>
                 </li>
-                <li sec:authorize="hasRole('ROLE_ADMIN')">
-                    <a href="#"><i class="fa fa-question-circle fa-2x"></i> Questions<span
-                            class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li>
-                            <a th:href="@{/questions}"><i class="material-icons">list</i>Questions</a>
-                        </li>
-                        <li>
-                            <a th:href="@{/questions/new}"><i class="material-icons">add</i> New Question</a>
-                        </li>
-                    </ul>
-                </li>
-
                 <li sec:authorize="hasRole('ROLE_USER')">
                     <a href="#"><i class="material-icons">face</i> Personal<span
                             class="fa arrow"></span></a>

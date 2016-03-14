@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<!--[if IE 9]>
+<html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8"/>
+    <title>The Project | Home Corporate 1</title>
+    <meta name="description" content="The Project a Bootstrap-based, Responsive HTML5 Template"/>
+    <meta name="author" content="htmlcoder.me"/>
+
+    <!-- Mobile Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="images/favicon.ico"/>
+
+    <!-- Web Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,500,500italic,700,700italic'
+          rel='stylesheet' type='text/css'/>
+    <link href='//fonts.googleapis.com/css?family=Raleway:700,400,300' rel='stylesheet' type='text/css'/>
+    <link href='//fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'/>
+    <link href='//fonts.googleapis.com/css?family=PT+Serif' rel='stylesheet' type='text/css'/>
+
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{/theproject/bootstrap/css/bootstrap.css}" rel="stylesheet"/>
+
+    <!-- Font Awesome CSS -->
+    <link th:href="@{/theproject/fonts/font-awesome/css/font-awesome.css}" rel="stylesheet"/>
+
+    <!-- Fontello CSS -->
+    <link th:href="@{/theproject/fonts/fontello/css/fontello.css}" rel="stylesheet"/>
+
+    <!-- Plugins -->
+    <link th:href="@{/theproject/plugins/magnific-popup/magnific-popup.css}" rel="stylesheet"/>
+    <link th:href="@{/theproject/plugins/rs-plugin/css/settings.css}" rel="stylesheet"/>
+    <link th:href="@{/theproject/css/animations.css}" rel="stylesheet"/>
+    <link th:href="@{/theproject/plugins/owl-carousel/owl.carousel.css}" rel="stylesheet"/>
+    <link th:href="@{/theproject/plugins/owl-carousel/owl.transitions.css}" rel="stylesheet"/>
+    <link th:href="@{/theproject/plugins/hover/hover-min.css}" rel="stylesheet"/>
+    <link th:href="@{/theproject/plugins/morphext/morphext.css}" rel="stylesheet"/>
+
+    <!-- the project core CSS file -->
+    <link th:href="@{/theproject/css/style.css}" rel="stylesheet"/>
+
+    <!-- Color Scheme (In order to change the color scheme, replace the blue.css with the color scheme that you prefer)-->
+    <link th:href="@{/theproject/css/skins/light_blue.css}" rel="stylesheet"/>
+
+    <link th:href="@{/assets/classicons/classicons.css}" rel="stylesheet"/>
+
+    <!-- Custom css -->
+    <link th:href="@{/theproject/css/custom.css}" rel="stylesheet"/>
+
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons"/>
+
+
+    <div layout:fragment="header"></div>
+
+</head>
+
+<!-- body classes:  -->
+<!-- "boxed": boxed layout mode e.g. <body class="boxed"> -->
+<!-- "pattern-1 ... pattern-9": background patterns for boxed layout mode e.g. <body class="boxed pattern-1"> -->
+<!-- "transparent-header": makes the header transparent and pulls the banner to top -->
+<!-- "page-loader-1 ... page-loader-6": add a page loader to the page (more info @components-page-loaders.html) -->
+<body class="no-trans front-page  ">
+
+<!-- scrollToTop -->
+<!-- ================ -->
+<div class="scrollToTop circle"><i class="icon-up-open-big"></i></div>
+
+<!-- page wrapper start -->
+<!-- ================ -->
+<div class="page-wrapper">
+
+    <!-- header-container start -->
+    <div class="header-container">
+
+        <!-- header start -->
+        <!-- classes:  -->
+        <!-- "fixed": enables fixed navigation mode (sticky menu) e.g. class="header fixed clearfix" -->
+        <!-- "dark": dark version of header e.g. class="header dark clearfix" -->
+        <!-- "full-width": mandatory class for the full-width menu layout -->
+        <!-- "centered": mandatory class for the centered logo layout -->
+        <!-- ================ -->
+        <header class="header  fixed   clearfix">
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3">
+                        <!-- header-left start -->
+                        <!-- ================ -->
+                        <div class="header-left clearfix">
+
+                            <!-- logo -->
+                            <div id="logo" class="logo">
+                                <a href="index.html">
+                                    <!--  <img id="logo_img" th:src="@{/theproject/images/logo_light_blue.png}"
+                                           alt="The Project"/>-->
+                                    wowscrappie
+                                </a>
+                            </div>
+
+                            <!-- name-and-slogan -->
+                            <div class="site-slogan">
+                                Your World of Warcraft Consultant
+                            </div>
+
+                        </div>
+                        <!-- header-left end -->
+
+                    </div>
+                    <div class="col-md-9">
+
+                        <!-- header-right start -->
+                        <!-- ================ -->
+                        <div class="header-right clearfix">
+
+                            <!-- main-navigation start -->
+                            <!-- classes: -->
+                            <!-- "onclick": Makes the dropdowns open on click, this the default bootstrap behavior e.g. class="main-navigation onclick" -->
+                            <!-- "animated": Enables animations on dropdowns opening e.g. class="main-navigation animated" -->
+                            <!-- "with-dropdown-buttons": Mandatory class that adds extra space, to the main navigation, for the search and cart dropdowns -->
+                            <!-- ================ -->
+                            <div class="main-navigation  animated with-dropdown-buttons">
+
+                                <!-- navbar start -->
+                                <!-- ================ -->
+                                <nav class="navbar navbar-default" role="navigation">
+                                    <div class="container-fluid">
+
+                                        <!-- Toggle get grouped for better mobile display -->
+                                        <div class="navbar-header">
+                                            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                                                    data-target="#navbar-collapse-1">
+                                                <span class="sr-only">Toggle navigation</span>
+                                                <span class="icon-bar"></span>
+                                                <span class="icon-bar"></span>
+                                                <span class="icon-bar"></span>
+                                            </button>
+
+                                        </div>
+
+                                        <!-- Collect the nav links, forms, and other content for toggling -->
+                                        <div class="collapse navbar-collapse" id="navbar-collapse-1">
+                                            <!-- main-menu -->
+                                            <ul class="nav navbar-nav ">
+
+                                                <li>
+                                                    <a th:href="@{/}" class="dropdown-toggle" data-toggle="dropdown">Home</a>
+                                                </li>
+                                                <li class="dropdown ">
+                                                    <a class="dropdown-toggle" data-toggle="dropdown"
+                                                       href="#">Auction House</a>
+                                                    <ul class="dropdown-menu">
+                                                        <li sec:authorize="hasRole('ROLE_ADMIN')">
+                                                            <a th:href="@{/auctionhouse/configuration}"><i
+                                                                    class="material-icons">perm_data_settings</i>Configuration</a>
+                                                        </li>
+                                                        <li>
+                                                            <a th:href="@{/auctionhouse/overview}"><i
+                                                                    class="material-icons">attach_money</i>Overview</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <!-- mega-menu start -->
+                                                <li class="dropdown  mega-menu narrow">
+                                                    <a href="#" class="dropdown-toggle"
+                                                       data-toggle="dropdown">Classes</a>
+                                                    <ul class="dropdown-menu">
+                                                        <li>
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <h4 class="title"><i class="fa fa-magic pr-10"></i>
+                                                                        World of Warcraft Classes</h4>
+                                                                    <div class="row">
+                                                                        <div class="col-sm-6">
+                                                                            <div class="divider"></div>
+                                                                            <ul class="menu">
+                                                                                <li>
+                                                                                    <a th:href="@{/classes/general}"> <span
+                                                                                            class="sprite_menu_titles sprite_menu_titles_gameplay"></span>
+                                                                                        General </a>
+                                                                                </li>
+
+                                                                                <li>
+                                                                                    <a th:href="@{/classes/death_knight}"> <span
+                                                                                            class="sprite_menu_titles sprite_menu_titles_death_knight"></span>
+                                                                                        Death
+                                                                                        Knight</a>
+                                                                                </li>
+
+                                                                                <li>
+                                                                                    <a th:href="@{/classes/druid}"> <span
+                                                                                            class="sprite_menu_titles sprite_menu_titles_druid"></span>
+                                                                                        Druid </a>
+                                                                                </li>
+
+                                                                                <li>
+                                                                                    <a th:href="@{/classes/hunter}"> <span
+                                                                                            class="sprite_menu_titles sprite_menu_titles_hunter"></span>
+                                                                                        Hunter </a>
+
+                                                                                </li>
+
+                                                                                <li>
+                                                                                    <a th:href="@{/classes/mage}"> <span
+                                                                                            class="sprite_menu_titles sprite_menu_titles_mage"></span>
+                                                                                        Mage </a>
+                                                                                </li>
+
+                                                                                <li>
+                                                                                    <a th:href="@{/classes/monk}"> <span
+                                                                                            class="sprite_menu_titles sprite_menu_titles_monk"></span>
+                                                                                        Monk </a>
+                                                                                </li>
+
+
+                                                                            </ul>
+                                                                        </div>
+                                                                        <div class="col-sm-6">
+                                                                            <div class="divider"></div>
+                                                                            <ul class="menu">
+                                                                                <li>
+                                                                                    <a th:href="@{/classes/paladin}"> <span
+                                                                                            class="sprite_menu_titles sprite_menu_titles_paladin"></span>
+                                                                                        Paladin </a>
+                                                                                </li>
+
+                                                                                <li>
+                                                                                    <a th:href="@{/classes/priest}"> <span
+                                                                                            class="sprite_menu_titles sprite_menu_titles_priest"></span>
+                                                                                        Priest </a>
+
+                                                                                </li>
+
+
+                                                                                <li>
+                                                                                    <a th:href="@{/classes/rogue}"> <span
+                                                                                            class="sprite_menu_titles sprite_menu_titles_rogue"></span>
+                                                                                        Rogue </a>
+                                                                                </li>
+
+                                                                                <li>
+                                                                                    <a th:href="@{/classes/shaman}"> <span
+                                                                                            class="sprite_menu_titles sprite_menu_titles_shaman"></span>
+                                                                                        Shaman </a>
+                                                                                </li>
+
+                                                                                <li>
+                                                                                    <a th:href="@{/classes/warlock}"> <span
+                                                                                            class="sprite_menu_titles sprite_menu_titles_warlock"></span>
+                                                                                        Warlock </a>
+                                                                                </li>
+
+                                                                                <li>
+                                                                                    <a th:href="@{/classes/warrior}"> <span
+                                                                                            class="sprite_menu_titles sprite_menu_titles_warrior"></span>
+                                                                                        Warrior </a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <!-- mega-menu end -->
+
+                                                <li class="dropdown ">
+                                                    <a href="portfolio-grid-2-3-col.html" class="dropdown-toggle"
+                                                       data-toggle="dropdown">Raids</a>
+                                                    <ul class="dropdown-menu">
+                                                        <li class="dropdown ">
+                                                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Warlords
+                                                                of Draenor</a>
+                                                            <ul class="dropdown-menu">
+                                                                <li>
+                                                                    <a th:href="@{/raids/1}"> Highmaul </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a th:href="@{/raids/2}"> Blackrock Foundry
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a th:href="@{/raids/3}"> Hellfire Citadel
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                        <!--<li><a href="portfolio-item.html">Single Item 1</a></li>-->
+                                                    </ul>
+                                                </li>
+
+
+                                                <!-- mega-menu start -->
+                                                <li class="dropdown  mega-menu narrow">
+                                                    <a href="#" class="dropdown-toggle"
+                                                       data-toggle="dropdown">Tools</a>
+                                                    <ul class="dropdown-menu">
+                                                        <li>
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <h4 class="title"><i class="fa fa-magic pr-10"></i>
+                                                                        Our Tools</h4>
+                                                                    <div class="row">
+                                                                        <div class="col-sm-6">
+                                                                            <div class="divider"></div>
+                                                                            <ul class="menu">
+                                                                                <li>
+                                                                                    <a th:href="@{/warcraftlogs/character}">
+                                                                                        Character Rankings</a>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <a th:href="@{/tools/tierdistribution/t18}">
+                                                                                        Tier 18 Dps Gains</a>
+                                                                                </li>
+
+                                                                            </ul>
+                                                                        </div>
+                                                                        <div class="col-sm-6">
+                                                                            <div class="divider"></div>
+                                                                            <ul class="menu">
+
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <!-- mega-menu end -->
+
+                                                <li>
+                                                    <a th:href="@{https://blog.wowscrappie.com}">Blog</a>
+                                                </li>
+
+                                            </ul>
+                                            <!-- main-menu end -->
+
+                                            <!-- header buttons -->
+                                            <div class="header-dropdown-buttons">
+
+                                                <div id="logoutBinder" sec:authorize="!isAuthenticated()"
+                                                     class="pull-right">  &nbsp;
+                                                    <a th:href="@{/login}"
+                                                       class="btn btn-default radius-50 hidden-xs btn-sm">Login</a>
+                                                </div>
+                                            </div>
+                                            <!-- header buttons end-->
+
+                                        </div>
+
+                                    </div>
+                                </nav>
+                                <!-- navbar end -->
+
+                            </div>
+                            <!-- main-navigation end -->
+                        </div>
+                        <!-- header-right end -->
+
+                    </div>
+                </div>
+            </div>
+
+        </header>
+        <!-- header end -->
+    </div>
+    <!-- header-container end -->
+
+    <!-- banner start -->
+    <!-- ================ -->
+    <div class="banner clearfix">
+
+    </div>
+    <!-- banner end -->
+
+    <div id="page-start"></div>
+
+    <div layout:fragment="main-content"></div>
+
+    <!-- footer top end -->
+    <!-- footer start (Add "dark" class to #footer in order to enable dark footer) -->
+    <!-- ================ -->
+    <footer id="footer" class="clearfix dark">
+
+        <!-- .footer start -->
+        <!-- ================ -->
+        <div class="footer">
+            <div class="container">
+                <div class="footer-inner">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="footer-content">
+                                <div class="logo-footer"><img id="logo-footer"
+                                                              th:src="@{/theproject/images/logo_light_blue.png}"
+                                                              alt=""/></div>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Necessitatibus illo vel
+                                    dolorum soluta consectetur doloribus sit. Delectus non tenetur odit dicta vitae
+                                    debitis suscipit doloribus. Ipsa, aut voluptas quaerat... <a href="page-about.html">Learn
+                                        More<i class="fa fa-long-arrow-right pl-5"></i></a></p>
+                                <div class="separator-2"></div>
+                                <nav>
+                                    <ul class="nav nav-pills nav-stacked">
+                                        <li><a target="_blank" href="http://htmlcoder.me/support">Support</a></li>
+                                        <li><a href="#">Privacy</a></li>
+                                        <li><a href="#">Terms</a></li>
+                                        <li><a href="page-about.html">About</a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="footer-content">
+                                <h2 class="title">Latest From Blog</h2>
+                                <div class="separator-2"></div>
+                                <div class="media margin-clear">
+                                    <div class="media-left">
+                                        <div class="overlay-container">
+                                            <img class="media-object" th:src="@{/theproject/images/blog-thumb-1.jpg}"
+                                                 alt="blog-thumb"/>
+                                            <a href="blog-post.html" class="overlay-link small"><i
+                                                    class="fa fa-link"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="media-body">
+                                        <h6 class="media-heading"><a href="blog-post.html">Lorem ipsum dolor sit
+                                            amet...</a></h6>
+                                        <p class="small margin-clear"><i class="fa fa-calendar pr-10"></i>Mar 23, 2015
+                                        </p>
+                                    </div>
+                                    <hr/>
+                                </div>
+                                <div class="media margin-clear">
+                                    <div class="media-left">
+                                        <div class="overlay-container">
+                                            <img class="media-object" th:src="@{/theproject/images/blog-thumb-2.jpg}"
+                                                 alt="blog-thumb"/>
+                                            <a href="blog-post.html" class="overlay-link small"><i
+                                                    class="fa fa-link"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="media-body">
+                                        <h6 class="media-heading"><a href="blog-post.html">Lorem ipsum dolor sit
+                                            amet...</a></h6>
+                                        <p class="small margin-clear"><i class="fa fa-calendar pr-10"></i>Mar 22, 2015
+                                        </p>
+                                    </div>
+                                    <hr/>
+                                </div>
+                                <div class="media margin-clear">
+                                    <div class="media-left">
+                                        <div class="overlay-container">
+                                            <img class="media-object" th:src="@{/theproject/images/blog-thumb-3.jpg}"
+                                                 alt="blog-thumb"/>
+                                            <a href="blog-post.html" class="overlay-link small"><i
+                                                    class="fa fa-link"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="media-body">
+                                        <h6 class="media-heading"><a href="blog-post.html">Lorem ipsum dolor sit
+                                            amet...</a></h6>
+                                        <p class="small margin-clear"><i class="fa fa-calendar pr-10"></i>Mar 21, 2015
+                                        </p>
+                                    </div>
+                                    <hr/>
+                                </div>
+                                <div class="media margin-clear">
+                                    <div class="media-left">
+                                        <div class="overlay-container">
+                                            <img class="media-object" th:src="@{/theproject/images/blog-thumb-4.jpg}"
+                                                 alt="blog-thumb"/>
+                                            <a href="blog-post.html" class="overlay-link small"><i
+                                                    class="fa fa-link"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="media-body">
+                                        <h6 class="media-heading"><a href="blog-post.html">Lorem ipsum dolor sit
+                                            amet...</a></h6>
+                                        <p class="small margin-clear"><i class="fa fa-calendar pr-10"></i>Mar 21, 2015
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="text-right space-top">
+                                    <a href="blog-large-image-right-sidebar.html" class="link-dark"><i
+                                            class="fa fa-plus-circle pl-5 pr-5"></i>More</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="footer-content">
+                                <h2 class="title">Portfolio Gallery</h2>
+                                <div class="separator-2"></div>
+                                <div class="row grid-space-10">
+                                    <div class="col-xs-4 col-md-6">
+                                        <div class="overlay-container mb-10">
+                                            <img th:src="@{/theproject/images/gallery-1.jpg}" alt=""/>
+                                            <a href="portfolio-item.html" class="overlay-link small">
+                                                <i class="fa fa-link"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-md-6">
+                                        <div class="overlay-container mb-10">
+                                            <img th:src="@{/theproject/images/gallery-2.jpg}" alt=""/>
+                                            <a href="portfolio-item.html" class="overlay-link small">
+                                                <i class="fa fa-link"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-md-6">
+                                        <div class="overlay-container mb-10">
+                                            <img th:src="@{/theproject/images/gallery-3.jpg}" alt=""/>
+                                            <a href="portfolio-item.html" class="overlay-link small">
+                                                <i class="fa fa-link"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-md-6">
+                                        <div class="overlay-container mb-10">
+                                            <img th:src="@{/theproject/images/gallery-4.jpg}" alt=""/>
+                                            <a href="portfolio-item.html" class="overlay-link small">
+                                                <i class="fa fa-link"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-md-6">
+                                        <div class="overlay-container mb-10">
+                                            <img th:src="@{/theproject/images/gallery-5.jpg}" alt=""/>
+                                            <a href="portfolio-item.html" class="overlay-link small">
+                                                <i class="fa fa-link"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-md-6">
+                                        <div class="overlay-container mb-10">
+                                            <img th:src="@{/theproject/images/gallery-6.jpg}" alt=""/>
+                                            <a href="portfolio-item.html" class="overlay-link small">
+                                                <i class="fa fa-link"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-right space-top">
+                                    <a href="portfolio-grid-2-3-col.html" class="link-dark"><i
+                                            class="fa fa-plus-circle pl-5 pr-5"></i>More</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="footer-content">
+                                <h2 class="title">Find Us</h2>
+                                <div class="separator-2"></div>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium odio voluptatem
+                                    necessitatibus illo vel dolorum soluta.</p>
+                                <ul class="social-links circle animated-effect-1">
+                                    <li class="facebook"><a target="_blank" href="http://www.facebook.com"><i
+                                            class="fa fa-facebook"></i></a></li>
+                                    <li class="twitter"><a target="_blank" href="http://www.twitter.com"><i
+                                            class="fa fa-twitter"></i></a></li>
+                                    <li class="googleplus"><a target="_blank" href="http://plus.google.com"><i
+                                            class="fa fa-google-plus"></i></a></li>
+                                    <li class="linkedin"><a target="_blank" href="http://www.linkedin.com"><i
+                                            class="fa fa-linkedin"></i></a></li>
+                                    <li class="xing"><a target="_blank" href="http://www.xing.com"><i
+                                            class="fa fa-xing"></i></a></li>
+                                </ul>
+                                <div class="separator-2"></div>
+                                <ul class="list-icons">
+                                    <li><i class="fa fa-map-marker pr-10 text-default"></i> One infinity loop, 54100
+                                    </li>
+                                    <li><i class="fa fa-phone pr-10 text-default"></i> +00 1234567890</li>
+                                    <li><a href="mailto:info@theproject.com"><i class="fa fa-envelope-o pr-10"></i>info@theproject.com</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- .footer end -->
+
+        <!-- .subfooter start -->
+        <!-- ================ -->
+        <div class="subfooter">
+            <div class="container">
+                <div class="subfooter-inner">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="text-center">Copyright © 2016 wowscrappie by <a target="_blank"
+                                                                                      href="https://de-swaef.eu">Quinten De Swaef</a>.
+                                All Rights Reserved</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- .subfooter end -->
+
+    </footer>
+    <!-- footer end -->
+
+</div>
+<!-- page-wrapper end -->
+
+<!-- JavaScript files placed at the end of the document so the pages load faster -->
+<!-- ================================================== -->
+<!-- Jquery and Bootstap core js files -->
+<script type="text/javascript" th:src="@{/theproject/plugins/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/theproject/bootstrap/js/bootstrap.min.js}"></script>
+
+<!-- Modernizr javascript -->
+<script type="text/javascript" th:src="@{/theproject/plugins/modernizr.js}"></script>
+
+<!-- jQuery Revolution Slider  -->
+<script type="text/javascript" th:src="@{/theproject/plugins/rs-plugin/js/jquery.themepunch.tools.min.js}"></script>
+<script type="text/javascript"
+        th:src="@{/theproject/plugins/rs-plugin/js/jquery.themepunch.revolution.min.js}"></script>
+
+<!-- Isotope javascript -->
+<script type="text/javascript" th:src="@{/theproject/plugins/isotope/isotope.pkgd.min.js}"></script>
+
+<!-- Magnific Popup javascript -->
+<script type="text/javascript" th:src="@{/theproject/plugins/magnific-popup/jquery.magnific-popup.min.js}"></script>
+
+<!-- Appear javascript -->
+<script type="text/javascript" th:src="@{/theproject/plugins/waypoints/jquery.waypoints.min.js}"></script>
+
+<!-- Count To javascript -->
+<script type="text/javascript" th:src="@{/theproject/plugins/jquery.countTo.js}"></script>
+
+<!-- Parallax javascript -->
+<script th:src="@{/theproject/plugins/jquery.parallax-1.1.3.js}"></script>
+
+<!-- Contact form -->
+<script th:src="@{/theproject/plugins/jquery.validate.js}"></script>
+
+<!-- Morphext -->
+<script type="text/javascript" th:src="@{/theproject/plugins/morphext/morphext.min.js}"></script>
+
+<!-- Background Video -->
+<script th:src="@{/theproject/plugins/vide/jquery.vide.js}"></script>
+
+<!-- Owl carousel javascript -->
+<script type="text/javascript" th:src="@{/theproject/plugins/owl-carousel/owl.carousel.js}"></script>
+
+<!-- SmoothScroll javascript -->
+<script type="text/javascript" th:src="@{/theproject/plugins/jquery.browser.js}"></script>
+<script type="text/javascript" th:src="@{/theproject/plugins/SmoothScroll.js}"></script>
+
+<!-- Initialization of Plugins -->
+<script type="text/javascript" th:src="@{/theproject/js/template.js}"></script>
+
+<!-- Custom Scripts -->
+<script type="text/javascript" th:src="@{/theproject/js/custom.js}"></script>
+
+
+<div layout:fragment="footer-content"></div>
+
+
+</body>
+</html>
