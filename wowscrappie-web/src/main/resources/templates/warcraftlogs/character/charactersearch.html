@@ -1,7 +1,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:data-bind="http://www.w3.org/1999/xhtml"
-      layout:decorator="decorator/wa-decorator">
+      layout:decorator="decorator/theproject-decorator">
 
 <div layout:fragment="header">
     <meta name="description" content="Warcraft Logs - Character Ranking - Scrappie" />
@@ -12,60 +12,63 @@
 </div>
 
 <div layout:fragment="main-content">
-    <div id="page-inner">
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <h2>Warcraftlogs Character Rankings</h2>
-                <p>At this moment, only dps rankings are possible, but we're working on implementing other rankings too.</p>
-                <div class="form-group label-floating">
 
-                    <label class="control-label" for="characterName">Choose Character</label>
-                    <input data-bind="value: charname" id="characterName" class="form-control input-lg"/>
+    <section class="main-container">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <h2>Warcraftlogs Character Rankings</h2>
+                    <p>At this moment, only dps rankings are possible, but we're working on implementing other rankings too.</p>
+                    <div class="form-group label-floating">
 
+                        <label class="control-label" for="characterName">Choose Character</label>
+                        <input data-bind="value: charname" id="characterName" class="form-control input-lg"/>
+
+                    </div>
+                    <div class="form-group label-floating">
+                        <label class="control-label" for="serverName">Realm</label>
+                        <input id="serverName" type="text" class="form-control input-lg"/>
+                    </div>
                 </div>
-                <div class="form-group label-floating">
-                    <label class="control-label" for="serverName">Realm</label>
-                    <input id="serverName" type="text" class="form-control input-lg"/>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <h3 data-bind="visible: explainIsVisible()" style="display: none;">Searching DPS-Rankings for <span data-bind="text: charname"></span> on
+                        <span data-bind="text: realmname"></span></h3>
+                </div>
+                <div class="col-md-2">
+                    <button id="searchButton" class="btn btn-raised btn-success"
+                            data-bind="visible: explainIsVisible(), click: doSearch" style="display: none;">Search!
+                    </button>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <h3 data-bind="visible: explainIsVisible()" style="display: none;">Searching DPS-Rankings for <span data-bind="text: charname"></span> on
-                    <span data-bind="text: realmname"></span></h3>
-            </div>
-            <div class="col-md-2">
-                <button id="searchButton" class="btn btn-raised btn-success"
-                        data-bind="visible: explainIsVisible(), click: doSearch" style="display: none;">Search!
-                </button>
-            </div>
-        </div>
 
-        <div id="searching" style="display: none;">
-            <div class="col-md-2 col-md-offset-5">
-                <img th:src="@{/assets/img/searching.gif}" />
+            <div id="searching" style="display: none;">
+                <div class="col-md-2 col-md-offset-5">
+                    <img th:src="@{/assets/img/searching.gif}" />
+                </div>
             </div>
-        </div>
-        <div id="nothingfound" style="display: none;">
-            <div class="col-md-10 col-md-offset-1">
-                <div class="alert alert-info">Unfortunately, nothing was found for your character.</div>
+            <div id="nothingfound" style="display: none;">
+                <div class="col-md-10 col-md-offset-1">
+                    <div class="alert alert-info">Unfortunately, nothing was found for your character.</div>
+                </div>
             </div>
-        </div>
-
-        <div id="resultRow" style="display: none;" class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <table id="resultTable" class="table table-striped table-bordered table-hover">
-                    <thead>
-                    <tr>
-                        <th>bossfight</th>
-                        <th>when</th>
-                        <th>rank</th>
-                        <th>spec</th>
-                        <th>ilvl</th>
-                        <th>actions</th>
-                    </tr>
-                    </thead>
-                    <tbody data-bind="foreach: ranks">
+            <div id="resultRow" style="display: none;" class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <table id="resultTable" class="table table-striped table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>bossfight</th>
+                            <th>when</th>
+                            <th>rank</th>
+                            <th>spec</th>
+                            <th>ilvl</th>
+                            <th>actions</th>
+                        </tr>
+                        </thead>
+                        <tbody data-bind="foreach: ranks">
                         <tr>
                             <td data-bind="text: encounterName"></td>
                             <td data-bind="text: startTimePretty"></td>
@@ -77,11 +80,14 @@
                                 <i class="material-icons">search</i>
                             </button> </td>
                         </tr>
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
             </div>
+
         </div>
-    </div>
+    </section>
+
     <!-- /. PAGE INNER  -->
 </div>
 <!-- /. layout fragment -->
