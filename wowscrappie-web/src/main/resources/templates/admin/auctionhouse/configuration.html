@@ -1,7 +1,7 @@
 ﻿<html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorator="decorator/wa-decorator">
+      layout:decorator="decorator/theproject-decorator">
 
 <div layout:fragment="header">
     <link th:href="@{/assets/js/dataTables/dataTables.bootstrap.css}" rel="stylesheet"/>
@@ -9,48 +9,52 @@
 </div>
 
 <div layout:fragment="main-content">
-    <div id="page-inner">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-10 col-md-offset-1">
-                    <h3>Auctionhouse Configuration Management</h3>
 
-                    <table class="table table-striped table-bordered table-hover" id="myTable">
-                        <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>realm</th>
-                            <th>needs update?</th>
-                            <th>last update date</th>
-                            <th>Actions</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="configuration, iterStat : ${configurations}"
-                            th:class="${iterStat.odd}? 'gradeA' : 'gradeC'">
-                            <td th:text="${configuration.id}">1</td>
-                            <td th:text="${configuration.realm.name} + '-' + ${configuration.realm.locality}">Name</td>
-                            <td th:text="${configuration.needsUpdate}">false</td>
-                            <td th:text="${configuration.lastUpdate}">now</td>
-                            <td>
+    <section class="main-container">
+        <div id="container">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1">
+                        <h3>Auctionhouse Configuration Management</h3>
+
+                        <table class="table table-striped table-bordered table-hover" id="myTable">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>realm</th>
+                                <th>needs update?</th>
+                                <th>last update date</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="configuration, iterStat : ${configurations}"
+                                th:class="${iterStat.odd}? 'gradeA' : 'gradeC'">
+                                <td th:text="${configuration.id}">1</td>
+                                <td th:text="${configuration.realm.name} + '-' + ${configuration.realm.locality}">Name</td>
+                                <td th:text="${configuration.needsUpdate}">false</td>
+                                <td th:text="${configuration.lastUpdate}">now</td>
+                                <td>
                                  <span th:attr="data-configuration_id=${configuration.id}"
                                        class="requestUpdate btn btn-primary">update</span>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
-            <hr/>
-            <div class="row">
-                <div class="col-md-10 col-md-offset-1" id="details">
-                <a id="createNew"
-                        class="btn btn-primary" th:href="@{/auctionhouse/configuration/create}">Create New Configuration</a>
+                <hr/>
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1" id="details">
+                        <a id="createNew"
+                           class="btn btn-primary" th:href="@{/auctionhouse/configuration/create}">Create New Configuration</a>
 
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
+
     <!-- /. PAGE INNER  -->
 </div>
 <!-- /. layout fragment -->
@@ -58,24 +62,8 @@
 <div layout:fragment="footer-content">
     <script th:src="@{/assets/js/dataTables/jquery.dataTables.js}"></script>
     <script th:src="@{/assets/js/dataTables/dataTables.bootstrap.js}"></script>
-    <script th:src="@{/assets/js/history.js}"></script>
     <script type="application/javascript">
         /*<![CDATA[*/
-
-        $.urlParam = function (name) {
-            var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
-            if (results == null) {
-                return null;
-            }
-            else {
-                return results[1] || 0;
-            }
-        };
-
-        (function (window, undefined) {
-
-
-        })(window);
 
         var requestAnUpdate = function () {
             var self = $(this);
