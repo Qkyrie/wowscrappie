@@ -1,6 +1,6 @@
 ##wowscrappie - now open source
 
-[![Build Status](https://development.de-swaef.eu/jenkins/buildStatus/icon?job=WoWScrappie-Dev)](https://development.de-swaef.eu/jenkins/buildStatus/icon?job=WoWScrappie-Dev)
+[![Build Status](https://api.travis-ci.org/Qkyrie/wowscrappie.svg)](https://api.travis-ci.org/Qkyrie/wowscrappie.svg)
 ###History
 
 From the start on, when I wrote the first code and laid out the first bricks of wowscrappie, it has always been the goal to create it to be fully open source.
