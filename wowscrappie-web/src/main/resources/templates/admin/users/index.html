@@ -2,7 +2,7 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
-      layout:decorator="decorator/wa-decorator">
+      layout:decorator="decorator/theproject-decorator">
 
 <div layout:fragment="header">
     <link th:href="@{/assets/js/dataTables/dataTables.bootstrap.css}" rel="stylesheet"/>
@@ -11,59 +11,58 @@
 </div>
 
 <div layout:fragment="main-content">
-    <div id="page-inner">
+    <section class="main-container">
         <div class="container">
-            <div class="row">
-                <div class="col-md-10 col-md-offset-1">
-                    <app-title>User Management</app-title>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <app-title>User Management</app-title>
 
-                    <table class="table table-striped table-bordered table-hover" id="myTable">
-                        <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Username</th>
-                            <th>activationCode</th>
-                            <th>Email</th>
-                            <th>Actions</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="user, iterStat : ${users}"
-                            th:class="${iterStat.odd}? 'gradeA' : 'gradeC'">
-                            <td th:text="${user.id}">1</td>
-                            <td th:text="${user.username}">Name</td>
-                            <td th:text="${user.activationCode}">1123154</td>
-                            <td th:text="${user.email}">Pikachu</td>
-                            <td>
+                        <table class="table table-striped table-bordered table-hover" id="myTable">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Username</th>
+                                <th>activationCode</th>
+                                <th>Email</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="user, iterStat : ${users}"
+                                th:class="${iterStat.odd}? 'gradeA' : 'gradeC'">
+                                <td th:text="${user.id}">1</td>
+                                <td th:text="${user.username}">Name</td>
+                                <td th:text="${user.activationCode}">1123154</td>
+                                <td th:text="${user.email}">Pikachu</td>
+                                <td>
                                 <span th:attr="data-user_id=${user.id}"
-                                      class="view-user btn btn-primary btn-xs">
-                                    <i class="material-icons">search</i>
+                                      class="view-user btn btn-primary btn-sm">view
+                                   <i class="fa fa-search"></i>
                                 </span>
                                 <span th:if="${user.enabled}" th:attr="data-user_id=${user.id}"
-                                      class="disable-user btn btn-warning btn-xs">
-                                    <i class="material-icons">lock</i>
+                                      class="disable-user btn btn-warning btn-sm">lock
+                                    <i class="fa fa-lock"></i>
                                 </span>
                                 <span th:if="${user.enabled == false}" th:attr="data-user_id=${user.id}"
-                                        class="enable-user btn btn-success btn-xs">
-                                    <i class="material-icons">done</i>
+                                      class="enable-user btn btn-success btn-sm">enable
+                                    <i class="fa fa-check"></i>
                                 </span>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
-            <hr/>
-            <div class="row">
-                <div class="col-md-10 col-md-offset-1" id="details">
+                <hr/>
+                <div class="row">
+                    <div class="col-md-12" id="details">
 
-
-
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- /. PAGE INNER  -->
+    </section>
 </div>
 <!-- /. layout fragment -->
 
