@@ -18,4 +18,4 @@ var ManageServerVM  = function() {
 };
 
 var manageServerVM = new ManageServerVM();
-ko.applyBindings(manageServerVM, $("#page-inner")[0]);
+ko.applyBindings(manageServerVM);
