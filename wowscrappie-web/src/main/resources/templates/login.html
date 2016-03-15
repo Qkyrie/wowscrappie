@@ -2,7 +2,7 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
-      layout:decorator="decorator/wa-decorator">
+      layout:decorator="decorator/theproject-decorator">
 
 
 <div layout:fragment="header">
@@ -12,40 +12,42 @@
 </div>
 
 <div layout:fragment="main-content">
-    <div id="page-inner">
-
-        <div class="container" >
-            <div class="row">
-                <div class="col-md-4 col-md-offset-4">
-                    <div class="login-panel panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Please Sign In</h3>
-                        </div>
-                        <div class="panel-body">
-                            <p th:if="${param.logout}" class="alert alert-success">You have been logged out</p>
-                            <p th:if="${param.error}" class="alert alert-danger">There was an error, please try again</p>
-                            <form role="form" th:action="@{/login-do}" action="/login" method="POST">
-                                <p>Want to contribute and don't have an account yet? Register for free!</p>
-                                <a th:href="@{/registration}" class="btn btn-success btn-raised btn-block">Register!</a>
-                                <fieldset>
-
-                                    <div class="form-group">
-                                        <input class="form-control" placeholder="username" name="j_username" autofocus="autofocus" />
-                                    </div>
-                                    <div class="form-group">
-                                        <input class="form-control" placeholder="password" name="j_password" type="password" value="" />
-                                    </div>
-                                    <!-- Change this to a button or input when using this as a form -->
-                                    <input type="submit" id="login" value="Login" class="btn btn-lg btn-success btn-block" />
-                                </fieldset>
-                            </form>
-                        </div>
+        <section class="main-container dark-transflucent-bg">
+            <div class="container">
+                <div class="main object-non-visible animated object-visible fadeInUpSmall" data-animation-effect="fadeInUpSmall" data-effect-delay="100">
+                    <div class="form-block center-block p-30 light-gray-bg border-clear">
+                        <h2 class="title">Login</h2>
+                        <p th:if="${param.logout}" class="alert alert-success">You have been logged out</p>
+                        <p th:if="${param.error}" class="alert alert-danger">There was an error, please try again</p>
+                        <form class="form-horizontal" th:action="@{/login-do}" action="/login" method="POST">
+                            <div class="form-group has-feedback">
+                                <label for="inputUserName" class="col-sm-3 control-label">User Name</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" name="j_username" id="inputUserName" placeholder="User Name" required="" />
+                                    <i class="fa fa-user form-control-feedback"></i>
+                                </div>
+                            </div>
+                            <div class="form-group has-feedback">
+                                <label for="inputPassword" class="col-sm-3 control-label">Password</label>
+                                <div class="col-sm-8">
+                                    <input type="password" name="j_password" class="form-control" id="inputPassword" placeholder="Password" required="" />
+                                    <i class="fa fa-lock form-control-feedback"></i>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-8">
+                                    <button type="submit" class="btn btn-group btn-default btn-animated">Log In <i class="fa fa-user"></i></button>
+                                    <ul class="space-top">
+                                        <li><a href="#">Forgot your password?</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </form>
                     </div>
+                    <p class="text-center space-top">Don't have an account yet? <a th:href="@{/registration}" href="#">Sign up</a> now.</p>
                 </div>
             </div>
-        </div>
-    </div>
-    <!-- /. PAGE INNER  -->
+        </section>
 </div>
 <!-- /. layout fragment -->
 
