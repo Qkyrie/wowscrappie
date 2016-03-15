@@ -2,3 +2,19 @@ language: java
 
 jdk:
   - oraclejdk8
+
+env:
+  global:
+   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
+   #   via the "travis encrypt" command using the project repo's public key
+   - secure: "eP5p6/ci7DpcFE9Yh33zC9cWFAhBOs1OihMPdtHGIqw3Zlb3aJOr1AA2ptlDi07j/wxdpanddly52GltcSZkez4UDuDRbCVVjTK6R43BlTOrU5RRSa1neqUCUfhpnRuF+039oiBkrCwXuoenCqnOl1qitLFP8Bh10nFp6ZzPU425daOGpQWqDquDhU2HzXyDaCXQWZ3e30oEkXudImJtV01J/PnG9VbTtZRhPR4GoHk5WS4XrCMm4yh2aOTganambEAtwJY83nMb9LWorTRAy9iAMcajnWXdBJP75yJTdqe5v6LtWlyK/ZnUrBw080dumzgdl+zt+3cmvFV0IjEpF1FaJBDeE7Hesj1gTe5mmrY295S0XAb4UN40znrCQX55sRL5PuhOtaotwAr3zwjgGxvOSq9V51L9DX8PaYRzZaPeqXP0gYohRnPNPBFKEf5s7/ctHFAYR/S1wo2WpTfJco8gcTGRLpO11hj6Onw2DEpU5Jux500u2riURBBgnP09nB0pxEo/GlTts2g7ufrB8bX4tb11ZSw03upY//exmXAbHrgg7MdDzrwyMqF4ys7g1hqXQ1cv5PLQ7S+H3ba6XKV92wWoEbxYnZPiE2k5x32/W1uF4X/K2hBZi3fKfpvpWu2xFXvINQFSxMUb6tNhSBSEqgWDOIKhVHduAhWHrag="
+
+addons:
+  coverity_scan:
+    project:
+      name: "Qkyrie/wowscrappie"
+      description: "Build submitted via Travis CI"
+    notification_email: quintendeswaef@gmail.com
+    build_command_prepend: "gradle clean assemble"
+    build_command:   "gradle clean cleanTest check"
+    branch_pattern: coverity_scan
