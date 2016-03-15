@@ -2,7 +2,7 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
-      layout:decorator="decorator/wa-decorator">
+      layout:decorator="decorator/theproject-decorator">
 
 <div layout:fragment="header">
     <link th:href="@{/assets/js/dataTables/dataTables.bootstrap.css}" rel="stylesheet"/>
@@ -10,66 +10,69 @@
 </div>
 
 <div layout:fragment="main-content">
-    <div id="page-inner">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-10 col-md-offset-1">
-                    <h3>Reports by Browsers</h3>
+    
+    <section class="main-container">
+        <div id="page-inner" class="container">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1">
+                        <h3>Reports by Browsers</h3>
 
-                    <div id="deleteFail" class="alert alert-danger alert-dismissible collapse" role="alert">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                                aria-hidden="true">&times;</span></button>
-                        <strong>Warning!</strong> Failed to delete the report!
-                    </div>
+                        <div id="deleteFail" class="alert alert-danger alert-dismissible collapse" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                            <strong>Warning!</strong> Failed to delete the report!
+                        </div>
 
-                    <div id="handleFail" class="alert alert-danger alert-dismissible collapse" role="alert">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                                aria-hidden="true">&times;</span></button>
-                        <strong>Warning!</strong> Failed to set the report to handled!
-                    </div>
+                        <div id="handleFail" class="alert alert-danger alert-dismissible collapse" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                            <strong>Warning!</strong> Failed to set the report to handled!
+                        </div>
 
-                    <table class="table table-striped table-bordered table-hover" id="myTable">
-                        <thead>
-                        <tr>
-                            <th>handled</th>
-                            <th>date</th>
-                            <th>what for?</th>
-                            <th>reporter</th>
-                            <th>actions</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="report, iterStat : ${reports}"
-                            th:class="${iterStat.odd}? 'gradeA' : 'gradeC'">
-                            <td><input type="checkbox" th:checked="${report.handled}"/></td>
-                            <td th:text="${report.postDate}">Name</td>
-                            <td th:text="${report.whatfor}">1123154</td>
-                            <td th:text="${report.reporter}"></td>
-                            <td>
+                        <table class="table table-striped table-bordered table-hover" id="myTable">
+                            <thead>
+                            <tr>
+                                <th>handled</th>
+                                <th>date</th>
+                                <th>what for?</th>
+                                <th>reporter</th>
+                                <th>actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="report, iterStat : ${reports}"
+                                th:class="${iterStat.odd}? 'gradeA' : 'gradeC'">
+                                <td><input type="checkbox" th:checked="${report.handled}"/></td>
+                                <td th:text="${report.postDate}">Name</td>
+                                <td th:text="${report.whatfor}">1123154</td>
+                                <td th:text="${report.reporter}"></td>
+                                <td>
                                 <span th:attr="data-report_id=${report.id}"
-                                      class="viewButton btn btn-primary btn-xs">
-                                    <i class="material-icons">search</i>
+                                      class="viewButton btn btn-default btn-sm">view
+                                    <i class="fa fa-search"></i>
                                 </span>
                                 <span th:attr="data-report_id=${report.id}" th:if="${report.handled == false}"
-                                      class="handleButton btn btn-primary btn-xs">
-                                    <i class="material-icons">done</i>
+                                      class="handleButton btn btn-default btn-sm">done
+                                    <i class="fa fa-check"></i>
                                 </span>
                                 <span th:attr="data-report_id=${report.id}"
-                                      class="deleteButton btn btn-primary btn-xs">
-                                    <i class="material-icons">delete</i>
+                                      class="deleteButton btn btn-default btn-sm">delete
+                                    <i class="fa fa-remove"></i>
                                 </span>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <br /><br />
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <br /><br />
 
-                    <blockquote id="report_quote"></blockquote>
+                        <blockquote id="report_quote"></blockquote>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- /. PAGE INNER  -->
+
+    </section>
 </div>
 <!-- /. layout fragment -->
 
