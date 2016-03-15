@@ -1,25 +1,30 @@
 language: java
-
 jdk:
-  - oraclejdk8
-
+- oraclejdk8
 cache:
   directories:
-  - .autoconf
-  - $HOME/.m2
-
+  - ".autoconf"
+  - "$HOME/.m2"
 env:
   global:
-   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
-   #   via the "travis encrypt" command using the project repo's public key
-   - secure: "eP5p6/ci7DpcFE9Yh33zC9cWFAhBOs1OihMPdtHGIqw3Zlb3aJOr1AA2ptlDi07j/wxdpanddly52GltcSZkez4UDuDRbCVVjTK6R43BlTOrU5RRSa1neqUCUfhpnRuF+039oiBkrCwXuoenCqnOl1qitLFP8Bh10nFp6ZzPU425daOGpQWqDquDhU2HzXyDaCXQWZ3e30oEkXudImJtV01J/PnG9VbTtZRhPR4GoHk5WS4XrCMm4yh2aOTganambEAtwJY83nMb9LWorTRAy9iAMcajnWXdBJP75yJTdqe5v6LtWlyK/ZnUrBw080dumzgdl+zt+3cmvFV0IjEpF1FaJBDeE7Hesj1gTe5mmrY295S0XAb4UN40znrCQX55sRL5PuhOtaotwAr3zwjgGxvOSq9V51L9DX8PaYRzZaPeqXP0gYohRnPNPBFKEf5s7/ctHFAYR/S1wo2WpTfJco8gcTGRLpO11hj6Onw2DEpU5Jux500u2riURBBgnP09nB0pxEo/GlTts2g7ufrB8bX4tb11ZSw03upY//exmXAbHrgg7MdDzrwyMqF4ys7g1hqXQ1cv5PLQ7S+H3ba6XKV92wWoEbxYnZPiE2k5x32/W1uF4X/K2hBZi3fKfpvpWu2xFXvINQFSxMUb6tNhSBSEqgWDOIKhVHduAhWHrag="
-
+  - secure: eP5p6/ci7DpcFE9Yh33zC9cWFAhBOs1OihMPdtHGIqw3Zlb3aJOr1AA2ptlDi07j/wxdpanddly52GltcSZkez4UDuDRbCVVjTK6R43BlTOrU5RRSa1neqUCUfhpnRuF+039oiBkrCwXuoenCqnOl1qitLFP8Bh10nFp6ZzPU425daOGpQWqDquDhU2HzXyDaCXQWZ3e30oEkXudImJtV01J/PnG9VbTtZRhPR4GoHk5WS4XrCMm4yh2aOTganambEAtwJY83nMb9LWorTRAy9iAMcajnWXdBJP75yJTdqe5v6LtWlyK/ZnUrBw080dumzgdl+zt+3cmvFV0IjEpF1FaJBDeE7Hesj1gTe5mmrY295S0XAb4UN40znrCQX55sRL5PuhOtaotwAr3zwjgGxvOSq9V51L9DX8PaYRzZaPeqXP0gYohRnPNPBFKEf5s7/ctHFAYR/S1wo2WpTfJco8gcTGRLpO11hj6Onw2DEpU5Jux500u2riURBBgnP09nB0pxEo/GlTts2g7ufrB8bX4tb11ZSw03upY//exmXAbHrgg7MdDzrwyMqF4ys7g1hqXQ1cv5PLQ7S+H3ba6XKV92wWoEbxYnZPiE2k5x32/W1uF4X/K2hBZi3fKfpvpWu2xFXvINQFSxMUb6tNhSBSEqgWDOIKhVHduAhWHrag=
 addons:
   coverity_scan:
     project:
-      name: "Qkyrie/wowscrappie"
-      description: "Build submitted via Travis CI"
+      name: Qkyrie/wowscrappie
+      description: Build submitted via Travis CI
     notification_email: quintendeswaef@gmail.com
-    build_command_prepend: "gradle clean assemble"
-    build_command:   "gradle clean cleanTest check"
-    branch_pattern: master
+    build_command_prepend: gradle clean assemble
+    build_command: gradle clean cleanTest check
+    branch_pattern: code_quality
+deploy:
+  provider: releases
+  api_key:
+    secure: mzWTZ9pYIoDf6r9s/iSghNqGFEVvIS+WiXFmqOig7qMbrdjKXaBQ8mkVePK2KPwS6EQjJeq2/10t/SNig1D0z7WNY9crsn5bbscj+XL2p5qh/hfWK0Xqtas27nzQCevWaHYsnwlw53etoC7v6rUcWgtNwJpoaTl+rlkSwrZ0VamQiHCM2oL4pzo+qYE2iBQLdpwY6Gw0DZkTxSwB4ZRLxENPzLQ36yMCywXnuA4C0gZU76//4vaJM+a/VJDIjYu14onjXLj3vlqDva4tUpj07hjEFp22J8jB1ZPeJqM69Hb4wywppdKqBdaDOQRSqPKtcCbVUPFRiQksfv38DWddkKeGQ1+O8F0ytVOR5zG7jZ0Ti53a1YvV6sRA702is7OXcBS7uoeD8+rKpGyjyHLHMhJK6ymwUYA2omT49J0PV24f67jkRtBB3nJ2xXA5dLl2bttw6Gi7Le4BmY0TJrmws2sDTl3NIOb+98i5O4HlakCVs4W/YNIM1sR36oof1TrPHsH6JjGoy8GZDj1PUFKEYF7DPtmzUehr6KISot5WMXJW6izaMK1yYfUxUt+3r893YGKVdyB0bADPeb+0YGrc3yk0y1t+xhcNRi3TWhHDjBQAw4ZA2ZbkChWJ7wnqiq2lO8KLvHHFvo9Khst/AkrQ8dNtRlCkKaEaBlJICHDyLRg=
+  file:
+    - "eureka-server/build/libs/Scrappie-eureka-server*.jar"
+    - "wowscrappie-web/build/libs/Scrappie*.jar"
+  on:
+    repo: Qkyrie/wowscrappie
+    tags: true
+    branch: master
