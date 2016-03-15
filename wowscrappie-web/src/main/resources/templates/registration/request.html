@@ -2,20 +2,23 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
-      layout:decorator="decorator/wa-decorator">
+      layout:decorator="decorator/theproject-decorator">
 
 <div layout:fragment="header">
-    <title>Request Invitation - Scrappie</title>
+    <title>Register - Scrappie</title>
 </div>
 
 <div layout:fragment="main-content">
-    <div id="page-inner">
+
+    <section class="main-container dark-transflucent-bg">
         <div class="container">
-            <div class="row">
-                <div class="col-md-offset-3 col-md-6">
+            <div class="main object-non-visible animated object-visible fadeInUpSmall"
+                 data-animation-effect="fadeInUpSmall" data-effect-delay="100">
+                <div class="form-block center-block p-30 light-gray-bg border-clear">
                     <h2>Register</h2>
                     <p>
-                        Oh, so you're showing interest in Scrappie? You're in luck! We opened up the public registration page, just for you!
+                        Oh, so you're showing interest in Scrappie? You're in luck! We opened up the public registration
+                        page, just for you!
                     </p>
 
                     <div class="form-group">
@@ -25,21 +28,24 @@
                         <input id="newUsernameInput" placeholder="enter email address"
                                data-bind="value: email"
                                class="form-control"/>
-                        <br />
+                        <br/>
                     </div>
-                    <a href="#" class="btn btn-primary btn-raised" data-bind="click: save">Register!</a>
-                    <br />
+                    <div class="form-group">
+                        <span class="btn btn-animated btn-default" data-bind="click: save">Register <i class="fa fa-user"></i></span>
+                    </div>
                     <div class="form-group">
                         <div id="generalsuccess" style="display:none;" class="alert alert-success">
                             Request successful, you'll be receiving an email with your activation code.
                             If you didn't, please contact info@wowscrappie.com or tweet us!
-                            <b>It is possible that the email went to your spam/junk folder, </b> so please check that too :-).
+                            <b>It is possible that the email went to your spam/junk folder, </b> so please check that
+                            too :-).
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
+
     <!-- /. PAGE INNER  -->
 </div>
 <!-- /. layout fragment -->
@@ -55,8 +61,8 @@
             this.email = ko.observable("");
 
             this.save = function () {
-                $.postJSON("/registration", {email: self.email()}, function(data) {
-                    if(data.hasErrors === false) {
+                $.postJSON("/registration", {email: self.email()}, function (data) {
+                    if (data.hasErrors === false) {
                         $("#generalsuccess").show();
                         $("#generalfailure").hide();
                         this.email('');
