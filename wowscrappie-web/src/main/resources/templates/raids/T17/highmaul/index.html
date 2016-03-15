@@ -1,7 +1,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorator="decorator/wa-decorator">
+      layout:decorator="decorator/theproject-decorator">
 
 <div layout:fragment="header">
     <meta name="description" content="Tier 17 - Highmaul - Weakauras, TellMeWhens, Macros"/>
@@ -11,287 +11,275 @@
 </div>
 
 <div layout:fragment="main-content">
-    <div id="page-inner">
-        <div class="row">
-            <div class="col-md-12">
-                <h2>Highmaul</h2>
-                <h5>Tier 17</h5>
-            </div>
-        </div>
-        <!-- /. ROW  -->
-        <input id="raidId" type="hidden" th:value="${raidId}"/>
-
-        <div id="top-wrapper">
+    <section class="main-container">
+        <div class="container">
             <div class="row">
-                <div class="col-md-4 col-sm-6 col-xs-6">
-                    <div class="panel panel-back noti-box">
-                <span class="icon-box set-icon">
-                    <img th:src="@{/assets/img/T17/highmaul/portraits/kargath_bladefist.jpg}"/>
-                </span>
+                <div class="col-md-12">
+                    <h2>Highmaul</h2>
+                    <h5>Tier 17</h5>
+                </div>
+            </div>
+            <!-- /. ROW  -->
+            <input id="raidId" type="hidden" th:value="${raidId}"/>
 
-                        <div class="text-box">
-                            <p class="main-text"> Kargath Bladefist</p>
-                            <br/>
-                            <span class="row">
+            <div id="top-wrapper">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="pv-20 ph-20 feature-box-2 boxed shadow object-non-visible animated object-visible fadeInDownSmall"
+                             data-animation-effect="fadeInDownSmall" data-effect-delay="100">
+                            <span class="icon">
+                                <img th:src="@{/assets/img/T17/highmaul/portraits/kargath_bladefist.jpg}"/>
+                            </span>
+
+                            <div class="body">
+                                <h4> Kargath Bladefist</h4>
                                 <span data-boss-id="1"
-                                      class="btn btn-macro btn-raised btn-primary btn-xs">Macros <span class="badge"
-                                                                                                       th:text="${overview.get(1L).macroCount}">0</span>
+                                      class="btn btn-macro  btn-default btn-sm">Macros <span  class="cart-count default-bg"
+                                                                                              th:text="${overview.get(1L).macroCount}">0</span>
 
                                     <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/1?bossid=1&amp;configtype=macro}"
                                        style="display: none;"></a>
                                     <h2 style="display: none;">Kargath Bladefist Macros</h2>
                                 </span>
                                 <span data-boss-id="1"
-                                      class="btn btn-wa btn-raised btn-primary btn-xs">WeakAuras <span class="badge"
-                                                                                                       th:text="${overview.get(1L).waCount}">0</span>
+                                      class="btn btn-wa  btn-default btn-sm">WeakAuras <span  class="cart-count default-bg"
+                                                                                              th:text="${overview.get(1L).waCount}">0</span>
                                  <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/1?bossid=1&amp;configtype=weakaura}"
                                     style="display: none;"></a>
                                     <h2 style="display: none;">Kargath Bladefist Weakauras</h2>
                                 </span>
                                 <span data-boss-id="1"
-                                      class="btn btn-tmw btn-raised btn-primary btn-xs">TMW <span class="badge"
-                                                                                                  th:text="${overview.get(1L).tmwCount}">0</span>
+                                      class="btn btn-tmw  btn-default btn-sm">TMW <span  class="cart-count default-bg"
+                                                                                         th:text="${overview.get(1L).tmwCount}">0</span>
                                      <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/1?bossid=1&amp;configtype=tellmewhen}"
                                         style="display: none;"></a>
                                     <h2 style="display: none;">Kargath Bladefist TellMeWhen</h2>
                                 </span>
-                            </span>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="col-md-4 col-sm-6 col-xs-6">
-                    <div class="panel panel-back noti-box">
-                <span class="icon-box set-icon">
+                    <div class="col-md-4">
+                        <div class="pv-20 ph-20 feature-box-2 boxed shadow object-non-visible animated object-visible fadeInDownSmall"
+                             data-animation-effect="fadeInDownSmall" data-effect-delay="100">
+                <span class="icon">
                     <img th:src="@{/assets/img/T17/highmaul/portraits/the_butcher.jpg}"/>
                 </span>
 
-                        <div class="text-box">
-                            <p class="main-text"> The Butcher</p>
-                            <br/>
-                            <span class="row">
+                            <div class="body">
+                                <h4> The Butcher</h4>
                                 <span data-boss-id="2"
-                                      class="btn btn-macro btn-raised btn-primary btn-xs">Macros <span class="badge"
-                                                                                                       th:text="${overview.get(2L).macroCount}">0</span>
+                                      class="btn btn-macro  btn-default btn-sm">Macros <span  class="cart-count default-bg"
+                                                                                              th:text="${overview.get(2L).macroCount}">0</span>
                                      <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/1?bossid=2&amp;configtype=macro}"
                                         style="display: none;"></a>
                                     <h2 style="display: none;">The Butcher Macros</h2>
                                 </span>
                                 <span data-boss-id="2"
-                                      class="btn btn-wa btn-raised btn-primary btn-xs">WeakAuras <span class="badge"
-                                                                                                       th:text="${overview.get(2L).waCount}">0</span>
+                                      class="btn btn-wa  btn-default btn-sm">WeakAuras <span  class="cart-count default-bg"
+                                                                                              th:text="${overview.get(2L).waCount}">0</span>
                                      <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/1?bossid=2&amp;configtype=weakaura}"
                                         style="display: none;"></a>
                                     <h2 style="display: none;">The Butcher Weakauras</h2>
                                 </span>
                                 <span data-boss-id="2"
-                                      class="btn btn-tmw btn-raised btn-primary btn-xs">TMW <span class="badge"
-                                                                                                  th:text="${overview.get(2L).tmwCount}">0</span>
+                                      class="btn btn-tmw  btn-default btn-sm">TMW <span  class="cart-count default-bg"
+                                                                                         th:text="${overview.get(2L).tmwCount}">0</span>
                                      <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/1?bossid=2&amp;configtype=tellmewhen}"
                                         style="display: none;"></a>
                                     <h2 style="display: none;">The Butcher TellMeWhen</h2>
                                 </span>
-                            </span>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="col-md-4 col-sm-6 col-xs-6">
-                    <div class="panel panel-back noti-box">
-                <span class="icon-box set-icon">
+                    <div class="col-md-4">
+                        <div class="pv-20 ph-20 feature-box-2 boxed shadow object-non-visible animated object-visible fadeInDownSmall"
+                             data-animation-effect="fadeInDownSmall" data-effect-delay="100">
+                <span class="icon">
                     <img th:src="@{/assets/img/T17/highmaul/portraits/brackenspore.jpg}"/>
                 </span>
 
-                        <div class="text-box">
-                            <p class="main-text"> Brackenspore</p>
-                            <br />
-                            <span class="row">
+                            <div class="body">
+                                <h4> Brackenspore</h4>
                             <span data-boss-id="3"
-                                  class="btn btn-macro btn-raised btn-primary btn-xs">Macros <span class="badge"
-                                                                                                   th:text="${overview.get(3L).macroCount}">0</span>
+                                  class="btn btn-macro  btn-default btn-sm">Macros <span  class="cart-count default-bg"
+                                                                                          th:text="${overview.get(3L).macroCount}">0</span>
                                  <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/1?bossid=3&amp;configtype=macro}"
                                     style="display: none;"></a>
                                 <h2 style="display: none;">Brackenspore Macros</h2>
                             </span>
                                 <span data-boss-id="3"
-                                      class="btn btn-wa btn-raised btn-primary btn-xs">WeakAuras <span class="badge"
-                                                                                                       th:text="${overview.get(3L).waCount}">0</span>
+                                      class="btn btn-wa  btn-default btn-sm">WeakAuras <span  class="cart-count default-bg"
+                                                                                              th:text="${overview.get(3L).waCount}">0</span>
                                      <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/1?bossid=3&amp;configtype=weakaura}"
                                         style="display: none;"></a>
                                     <h2 style="display: none;">Brackenspore Weakauras</h2>
                                 </span>
                                 <span data-boss-id="3"
-                                      class="btn btn-tmw btn-raised btn-primary btn-xs">TMW <span class="badge"
-                                                                                                  th:text="${overview.get(3L).tmwCount}">0</span>
+                                      class="btn btn-tmw  btn-default btn-sm">TMW <span  class="cart-count default-bg"
+                                                                                         th:text="${overview.get(3L).tmwCount}">0</span>
                                      <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/1?bossid=3&amp;configtype=tellmewhen}"
                                         style="display: none;"></a>
                                     <h2 style="display: none;">Brackenspore TellMeWhen</h2>
                                 </span>
-                            </span>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="col-md-4 col-sm-6 col-xs-6">
-                    <div class="panel panel-back noti-box">
-                <span class="icon-box set-icon">
+                    <div class="col-md-4">
+                        <div class="pv-20 ph-20 feature-box-2 boxed shadow object-non-visible animated object-visible fadeInDownSmall"
+                             data-animation-effect="fadeInDownSmall" data-effect-delay="100">
+                <span class="icon">
                     <img th:src="@{/assets/img/T17/highmaul/portraits/tectus_the_living_mountain.jpg}"/>
                 </span>
 
-                        <div class="text-box">
-                            <p class="main-text"> Tectus</p>
-                            <br />
-                            <span class="row">
+                            <div class="body">
+                                <h4> Tectus</h4>
                              <span data-boss-id="4"
-                                   class="btn btn-macro btn-raised btn-primary btn-xs">Macros <span class="badge"
-                                                                                                    th:text="${overview.get(4L).macroCount}">0</span>
+                                   class="btn btn-macro  btn-default btn-sm">Macros <span  class="cart-count default-bg"
+                                                                                           th:text="${overview.get(4L).macroCount}">0</span>
                                   <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/1?bossid=4&amp;configtype=macro}"
                                      style="display: none;"></a>
                                  <h2 style="display: none;">Tectus Macros</h2>
                              </span>
                                 <span data-boss-id="4"
-                                      class="btn btn-wa btn-raised btn-primary btn-xs">WeakAuras <span class="badge"
-                                                                                                       th:text="${overview.get(4L).waCount}">0</span>
+                                      class="btn btn-wa  btn-default btn-sm">WeakAuras <span  class="cart-count default-bg"
+                                                                                              th:text="${overview.get(4L).waCount}">0</span>
                                      <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/1?bossid=4&amp;configtype=weakaura}"
                                         style="display: none;"></a>
                                     <h2 style="display: none;">Tectus Weakauras</h2>
                                 </span>
                                 <span data-boss-id="4"
-                                      class="btn btn-tmw btn-raised btn-primary btn-xs">TMW <span class="badge"
-                                                                                                  th:text="${overview.get(4L).tmwCount}">0</span>
+                                      class="btn btn-tmw  btn-default btn-sm">TMW <span  class="cart-count default-bg"
+                                                                                         th:text="${overview.get(4L).tmwCount}">0</span>
                                      <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/1?bossid=4&amp;configtype=tellmewhen}"
                                         style="display: none;"></a>
                                     <h2 style="display: none;">Tectus tellmewhen</h2>
                                 </span>
-                            </span>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="col-md-4 col-sm-6 col-xs-6">
-                    <div class="panel panel-back noti-box">
-                <span class="icon-box set-icon">
-                    <img th:src="@{/assets/img/T17/highmaul/portraits/twin_ogron.jpg}"/>
-                </span>
+                    <div class="col-md-4 col-sm-6 col-xs-6">
+                        <div class="pv-20 ph-20 feature-box-2 boxed shadow object-non-visible animated object-visible fadeInDownSmall"
+                             data-animation-effect="fadeInDownSmall" data-effect-delay="100">
 
-                        <div class="text-box">
-                            <p class="main-text"> Twin Ogron</p>
-                            <br />
-                            <span class="row">
+                            <span class="icon">
+                                <img th:src="@{/assets/img/T17/highmaul/portraits/twin_ogron.jpg}"/>
+                            </span>
+
+                            <div class="body">
+                                <h4> Twin Ogron</h4>
                            <span data-boss-id="5"
-                                 class="btn btn-macro btn-raised btn-primary btn-xs">Macros <span class="badge"
-                                                                                                  th:text="${overview.get(5L).macroCount}">0</span>
+                                 class="btn btn-macro  btn-default btn-sm">Macros <span  class="cart-count default-bg"
+                                                                                         th:text="${overview.get(5L).macroCount}">0</span>
                                 <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/1?bossid=5&amp;configtype=macro}"
                                    style="display: none;"></a>
                                <h2 style="display: none;">Twin Ogron macros</h2>
                            </span>
                                 <span data-boss-id="5"
-                                      class="btn btn-wa btn-raised btn-primary btn-xs">WeakAuras <span class="badge"
-                                                                                                       th:text="${overview.get(5L).waCount}">0</span>
+                                      class="btn btn-wa  btn-default btn-sm">WeakAuras <span  class="cart-count default-bg"
+                                                                                              th:text="${overview.get(5L).waCount}">0</span>
                                      <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/1?bossid=5&amp;configtype=weakaura}"
                                         style="display: none;"></a>
                                     <h2 style="display: none;">Twin Ogron weakauras</h2>
                                 </span>
                                 <span data-boss-id="5"
-                                      class="btn btn-tmw btn-raised btn-primary btn-xs">TMW <span class="badge"
-                                                                                                  th:text="${overview.get(5L).tmwCount}">0</span>
+                                      class="btn btn-tmw  btn-default btn-sm">TMW <span  class="cart-count default-bg"
+                                                                                         th:text="${overview.get(5L).tmwCount}">0</span>
                                      <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/1?bossid=5&amp;configtype=tellmewhen}"
                                         style="display: none;"></a>
                                     <h2 style="display: none;">Twin Ogron tellmewhen</h2>
                                 </span>
-                            </span>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="col-md-4 col-sm-6 col-xs-6">
-                    <div class="panel panel-back noti-box">
-                <span class="icon-box set-icon">
+                    <div class="col-md-4 col-sm-6 col-xs-6">
+                        <div class="pv-20 ph-20 feature-box-2 boxed shadow object-non-visible animated object-visible fadeInDownSmall"
+                             data-animation-effect="fadeInDownSmall" data-effect-delay="100">
+                <span class="icon">
                     <img th:src="@{/assets/img/T17/highmaul/portraits/koragh.jpg}"/>
                 </span>
 
-                        <div class="text-box">
-                            <p class="main-text"> Ko'ragh</p>
-                            <br />
-                            <span class="row">
+                            <div class="body">
+                                <p class="main-text"> Ko'ragh</p>
                          <span data-boss-id="6"
-                               class="btn btn-macro btn-raised btn-primary btn-xs">Macros  <span class="badge"
-                                                                                                 th:text="${overview.get(6L).macroCount}">0</span>
+                               class="btn btn-macro  btn-default btn-sm">Macros  <span  class="cart-count default-bg"
+                                                                                        th:text="${overview.get(6L).macroCount}">0</span>
                               <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/1?bossid=6&amp;configtype=macro}"
                                  style="display: none;"></a>
                              <h2 style="display: none;">Ko'ragh macros</h2>
                          </span>
                                 <span data-boss-id="6"
-                                      class="btn btn-wa btn-raised btn-primary btn-xs">WeakAuras <span class="badge"
-                                                                                                       th:text="${overview.get(6L).waCount}">0</span>
+                                      class="btn btn-wa  btn-default btn-sm">WeakAuras <span  class="cart-count default-bg"
+                                                                                              th:text="${overview.get(6L).waCount}">0</span>
                                      <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/1?bossid=6&amp;configtype=weakaura}"
                                         style="display: none;"></a>
                                     <h2 style="display: none;">Ko'ragh weakauras</h2>
                                 </span>
                                 <span data-boss-id="6"
-                                      class="btn btn-tmw btn-raised btn-primary btn-xs">TMW <span class="badge"
-                                                                                                  th:text="${overview.get(6L).tmwCount}">0</span>
+                                      class="btn btn-tmw  btn-default btn-sm">TMW <span  class="cart-count default-bg"
+                                                                                         th:text="${overview.get(6L).tmwCount}">0</span>
                                      <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/1?bossid=6&amp;configtype=tellmewhen}"
                                         style="display: none;"></a>
                                     <h2 style="display: none;">Ko'ragh tellmewhen</h2>
                                 </span>
-                            </span>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="col-md-offset-4 col-sm-offset-3 col-xs-offset-3 col-md-4 col-sm-6 col-xs-6">
-                    <div class="panel panel-back noti-box">
-                <span class="icon-box set-icon">
+                    <div class="col-md-offset-4 col-sm-offset-3 col-xs-offset-3 col-md-4 col-sm-6 col-xs-6">
+                        <div class="pv-20 ph-20 feature-box-2 boxed shadow object-non-visible animated object-visible fadeInDownSmall"
+                             data-animation-effect="fadeInDownSmall" data-effect-delay="100">
+                <span class="icon">
                     <img th:src="@{/assets/img/T17/highmaul/portraits/imperator_margok.jpg}"/>
                 </span>
 
-                        <div class="text-box">
-                            <p class="main-text">Imperator Mar'gok</p>
-                            <br />
-                            <span class="row">
+                            <div class="body">
+                                <h4>Imperator Mar'gok</h4>
                           <span data-boss-id="7"
-                                class="btn btn-macro btn-raised btn-primary btn-xs">Macros <span class="badge"
-                                                                                                 th:text="${overview.get(7L).macroCount}">0</span>
+                                class="btn btn-macro  btn-default btn-sm">Macros <span  class="cart-count default-bg"
+                                                                                        th:text="${overview.get(7L).macroCount}">0</span>
                                <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/1?bossid=7&amp;configtype=macro}"
                                   style="display: none;"></a>
                                <h2 style="display: none;">Imperator Mar'gok macros</h2>
                           </span>
                                 <span data-boss-id="7"
-                                      class="btn btn-wa btn-raised btn-primary btn-xs">WeakAuras <span class="badge"
-                                                                                                       th:text="${overview.get(7L).waCount}">0</span>
+                                      class="btn btn-wa  btn-default btn-sm">WeakAuras <span  class="cart-count default-bg"
+                                                                                              th:text="${overview.get(7L).waCount}">0</span>
                                      <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/1?bossid=7&amp;configtype=weakaura}"
                                         style="display: none;"></a>
                                     <h2 style="display: none;">Imperator Mar'gok weakauras</h2>
                                 </span>
                                 <span data-boss-id="7"
-                                      class="btn btn-macro btn-raised btn-primary btn-xs">TMW <span class="badge"
-                                                                                                    th:text="${overview.get(7L).tmwCount}">0</span>
+                                      class="btn btn-macro  btn-default btn-sm">TMW <span  class="cart-count default-bg"
+                                                                                           th:text="${overview.get(7L).tmwCount}">0</span>
                                      <a th:href="${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/raids/1?bossid=7&amp;configtype=tellmewhen}"
                                         style="display: none;"></a>
                                     <h2 style="display: none;">Imperator Mar'gok tellmewhen</h2>
                                 </span>
-                            </span>
+                            </div>
                         </div>
                     </div>
                 </div>
+
             </div>
 
-        </div>
-
-        <div id="expand-button" class="row">
-            <img id="arrowUpBtn" th:src="@{/assets/img/button_up.png}"/>
-            <img id="arrowDownBtn" th:src="@{/assets/img/button_down.png}" style="display: none"/>
-        </div>
-        <hr/>
-        <div class="row" style="margin-top: 5%;">
-            <div class="col-md-10 col-md-offset-1">
-                <div id="resultPane"></div>
+            <div id="expand-button" class="row">
+                <img id="arrowUpBtn" th:src="@{/assets/img/button_up.png}"/>
+                <img id="arrowDownBtn" th:src="@{/assets/img/button_down.png}" style="display: none"/>
             </div>
+            <hr/>
+            <div class="row" style="margin-top: 5%;">
+                <div class="col-md-12">
+                    <div id="resultPane"></div>
+                </div>
+            </div>
+            <!-- /. ROW  -->
         </div>
-        <!-- /. ROW  -->
-    </div>
-    <!-- /. PAGE INNER  -->
+    </section>
 </div>
 <!-- /. layout fragment -->
 

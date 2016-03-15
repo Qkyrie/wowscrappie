@@ -7,3 +7,13 @@ Created:December 2014
 License URI:http://support.wrapbootstrap.com/
 File Description: Place here your custom CSS styles
 */
+
+#expand-button > img {
+    width: 90px; /* you can use % */
+    margin: auto; /* Required */
+    position: absolute; /* Required */
+    left: 0;
+    right: 0; /* Aligns horizontal center */
+    max-height: 100%; /* images bigger than 175 px  */
+    max-width: 100%; /* will be shrinked to size */
+}
