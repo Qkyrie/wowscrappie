@@ -28,9 +28,13 @@
                         <td th:text="${uielement.rating}"></td>
                         <td>
                             <span data-bind="click: view" th:attr="data-tmw_id=${uielement.id}"
-                                  class="btn btn-success btn-sm"> <i class="mdi-maps-local-library"></i> view</span>
+                                  class="btn btn-animated btn-default btn-sm">view
+                                <i class="fa fa-search"></i>
+                            </span>
                             <span th:attr="data-tmw_id=${uielement.id}, data-share-url=${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/shared/tmw/} + ${uielement.id}"
-                                  class="shareButton btn btn-success btn-sm"><i class="mdi-social-share"></i> share link</span>
+                                  class="shareButton btn btn-animated btn-default btn-sm">share link
+                                <i class="fa fa-share"></i>
+                            </span>
                         </td>
                     </tr>
                     </tbody>
@@ -95,7 +99,7 @@
                         self.activeName(resultValue.name);
                         Mdjs().on($("#commentBox"));
                         self.showDetails(true);
-                        $("html, body").animate({ scrollTop: $(document).height() }, 1000);
+                        $("html, body").animate({scrollTop: $(document).height()}, 1000);
                         $(".fancybox").fancybox();
                     }
                 });
@@ -134,10 +138,13 @@
                     <td th:text="${uielement.rating}"></td>
                     <td>
                     <span data-bind="click: view" th:attr="data-wa_id=${uielement.id}"
-                          class="btn btn-success btn-sm"><i class="mdi-maps-local-library"></i> view</span>
+                          class="btn btn-animated btn-default btn-sm">view
+                                <i class="fa fa-search"></i>
+                        </span>
                         <span th:attr="data-wa_id=${uielement.id}, data-share-url=${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/shared/wa/} + ${uielement.id}"
-                              class="shareButton btn btn-success btn-sm"> <i
-                                class="mdi-social-share"></i>share link</span>
+                              class="shareButton btn-animated btn btn-default btn-sm">share
+                                <i class="fa fa-share"></i>
+                        </span>
                     </td>
                 </tr>
                 </tbody>
@@ -201,7 +208,7 @@
                         self.activeName(resultValue.name);
                         Mdjs().on($("#commentBox"));
                         self.showDetails(true);
-                        $("html, body").animate({ scrollTop: $(document).height() }, 1000);
+                        $("html, body").animate({scrollTop: $(document).height()}, 1000);
                         $(".fancybox").fancybox();
                     }
                 });
@@ -236,12 +243,14 @@
                     <td th:text="${uielement.rating}"></td>
                     <td>
                     <span data-bind="click: view" th:attr="data-macro_id=${uielement.id}"
-                          class="btn btn-success btn-sm"><i class="mdi-maps-local-library"></i>view</span>
+                          class="btn btn-animated btn-default btn-sm">view
+                                <i class="fa fa-search"></i>
+                        </span>
                         <span th:attr="data-macro_id=${uielement.id}, data-share-url=${@environment.getProperty('com.deswaef.scrappie.fullbaseurl')} + @{/shared/macro/} + ${uielement.id}"
-                              class="shareButton btn btn-success btn-sm"><i
-                                class="mdi-social-share"></i>share link</span>
+                              class="shareButton btn btn-animated btn-default btn-sm">share
+                                <i class="fa fa-share"></i>
+                        </span>
                     </td>
-
                 </tr>
                 </tbody>
             </table>
@@ -291,7 +300,7 @@
                         self.activeComment(resultValue.comment);
                         Mdjs().on($("#commentBox"));
                         self.showDetails(true);
-                        $("html, body").animate({ scrollTop: $(document).height() }, 1000);
+                        $("html, body").animate({scrollTop: $(document).height()}, 1000);
                     }
                 });
             };
