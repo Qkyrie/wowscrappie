@@ -15,19 +15,19 @@ import {AuctionHouseRegionSnapshotStatistic} from "../entity/auctionhouseregions
     template: `
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2">
-                        <div class="col-md-8 col-md-offset-2">
+                        <div class="col-md-8 col-md-offset-2 form-inline" >
                             <div class="form-group label-floating">
                                 <label class="control-label" for="itemSelectSingle">Item</label>
                                 <div id="itemSingle">
                                     <input id="itemSelectSingle" class="form-control input-lg typeahead" type="text"/>
+                                    <span *ngIf="itemName != null" (click)="doSearch()" class="btn btn-animated btn-default" id="searchButtonSingle">search
+                                        <i class="fa fa-search"></i>
+                                    </span>
                                 </div>
+
                             </div>
                         </div>
-                        <div *ngIf="itemName != null" class="col-md-1">
-                        <span (click)="doSearch()" class="btn btn-primary btn-lg" id="searchButtonSingle">
-                            <i class="material-icons">search</i>
-                        </span>
-                        </div>
+
                     </div>
                 </div>
 
@@ -253,7 +253,7 @@ export class SingleItemSearch {
         var actualData = [xAxis, averageBuyouts, medianBuyouts];
         var dailyQuantityData = [xAxis, dailyQuantities];
 
-        setTimeout(function (){
+        setTimeout(function () {
             c3.generate({
                 bindto: '#resultChartDaily',
                 data: {
@@ -294,7 +294,7 @@ export class SingleItemSearch {
             });
         }, 50);
 
-        setTimeout(function(){
+        setTimeout(function () {
             c3.generate({
                 bindto: '#resultChartDailyQuantity',
                 data: {

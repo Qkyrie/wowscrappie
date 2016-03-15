@@ -9,7 +9,7 @@ import { MultiItemSearch } from './multiItemSearch'
 
         <div class="row">
             <div class="col-md-12">
-                <ul class="nav nav-pills" role="tablist">
+                <ul class="nav nav-tabs style-1" role="tablist">
                     <li role="presentation" id="homeTab" class="active"><a href="#singleItemSearch" aria-controls="home"
                                                                            role="tab" data-toggle="tab">Single Item
                         Search</a></li>

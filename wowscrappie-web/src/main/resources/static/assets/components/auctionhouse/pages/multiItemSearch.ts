@@ -18,15 +18,14 @@ import { Realm } from '../../realms/entity/Realm';
                                 <label class="control-label" for="itemSelectMulti">Item</label>
                                 <div id="itemMulti">
                                     <input id="itemSelectMulti" class="form-control input-lg typeahead" type="text"/>
+                                      <span *ngIf="itemName != null" (click)="doSearch()" class="btn btn-animated btn-default" id="searchButtonMulti">search
+                                     <i class="fa fa-search"></i>
+                                    </span>
                                 </div>
                             </div>
                         </div>
 
-                        <div *ngIf="itemName != null" class="col-md-1">
-                        <span (click)="doSearch()" class="btn btn-primary btn-lg" id="searchButtonMulti">
-                            <i class="material-icons">search</i>
-                        </span>
-                        </div>
+
                     </div>
                 </div>
 
@@ -75,7 +74,7 @@ import { Realm } from '../../realms/entity/Realm';
     `
 })
 export class MultiItemSearch {
-    itemName:string = "item";
+    itemName:string = null;
     itemId:number;
 
     items = Bloodhound;
