@@ -54,6 +54,8 @@
     <link th:href="@{/theproject/css/skins/light_blue.css}" rel="stylesheet"/>
 
     <link th:href="@{/assets/classicons/classicons.css}" rel="stylesheet"/>
+    <link th:href="@{/assets/snackbar/snackbar.min.css}" rel="stylesheet"/>
+    <link th:href="@{/assets/snackbar/snackbar-material.min.css}" rel="stylesheet"/>
 
     <!-- Custom css -->
     <link th:href="@{/theproject/css/custom.css}" rel="stylesheet"/>
@@ -152,9 +154,6 @@
                                         <div class="collapse navbar-collapse" id="navbar-collapse-1">
                                             <!-- main-menu -->
                                             <ul class="nav navbar-nav ">
-                                                <li>
-                                                    <a th:href="@{/}" class="dropdown-toggle">Home</a>
-                                                </li>
                                                 <li class="dropdown ">
                                                     <a class="dropdown-toggle" data-toggle="dropdown"
                                                        href="#">Auction House</a>
@@ -169,6 +168,33 @@
                                                         </li>
                                                     </ul>
                                                 </li>
+
+                                                <li class="dropdown " sec:authorize="hasRole('ROLE_ADMIN')">
+                                                    <a class="dropdown-toggle" data-toggle="dropdown"
+                                                       href="#">Admin</a>
+                                                    <ul class="dropdown-menu">
+
+                                                        <li>
+                                                            <a th:href="@{/admin/users}"> User Management</a>
+                                                        </li>
+                                                        <li>
+                                                            <a th:href="@{/admin/server}"> Server Information</a>
+                                                        </li>
+                                                        <li>
+                                                            <a th:href="@{/interface/reports}"> Reports</a>
+                                                        </li>
+                                                        <li>
+                                                            <a th:href="@{/admin/pending-uploads}"> Pending Uploads</a>
+                                                        </li>
+                                                        <li>
+                                                            <a th:href="@{/admin/registration/invitation}"> Create Invitation </a>
+                                                        </li>
+                                                        <li>
+                                                            <a th:href="@{/admin/requested-invitations}"> Requested Invitations</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+
                                                 <!-- mega-menu start -->
                                                 <li class="dropdown  mega-menu narrow">
                                                     <a href="#" class="dropdown-toggle"
@@ -339,8 +365,20 @@
                                                 </li>
                                                 <!-- mega-menu end -->
 
-                                                <li>
-                                                    <a th:href="@{https://blog.wowscrappie.com}">Blog</a>
+                                                <li class="dropdown " sec:authorize="hasRole('ROLE_USER')">
+                                                    <a href="#" class="dropdown-toggle"
+                                                       data-toggle="dropdown">Personal</a>
+                                                    <ul class="dropdown-menu">
+                                                        <li>
+                                                            <a th:href="@{/personal/uploads}"> Your uploads </a>
+                                                        </li>
+                                                        <li>
+                                                            <a th:href="@{/personal/inbox}"> Your inbox </a>
+                                                        </li>
+                                                        <li>
+                                                            <a th:href="@{/profiles/edit}"> Edit your profile </a>
+                                                        </li>
+                                                    </ul>
                                                 </li>
 
                                             </ul>
@@ -352,6 +390,11 @@
                                                      class="pull-right">  &nbsp;
                                                     <a th:href="@{/login}"
                                                        class="btn btn-default radius-50 hidden-xs btn-sm">Login</a>
+                                                </div>
+                                                <div id="loginBinder" sec:authorize="isAuthenticated()"
+                                                     class="pull-right">  &nbsp;
+                                                    <a th:href="@{/logout}"
+                                                       class="btn btn-default radius-50 hidden-xs btn-sm">Logout</a>
                                                 </div>
                                                 <div class="pull-right">
                                                     <a style="display: none;" th:href="@{/realm/choose}" id="realmSelectButton" class="btn btn-default radius-50 btn-sm hidden-xs">No
