@@ -17,4 +17,4 @@ addons:
     notification_email: quintendeswaef@gmail.com
     build_command_prepend: "gradle clean assemble"
     build_command:   "gradle clean cleanTest check"
-    branch_pattern: coverity_scan
+    branch_pattern: master
