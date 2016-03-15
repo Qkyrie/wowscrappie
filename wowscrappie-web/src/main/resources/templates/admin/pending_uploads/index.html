@@ -1,7 +1,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorator="decorator/wa-decorator">
+      layout:decorator="decorator/theproject-decorator">
 
 <div layout:fragment="header">
     <link th:href="@{/assets/js/dataTables/dataTables.bootstrap.css}" rel="stylesheet"/>
@@ -9,57 +9,81 @@
 </div>
 
 <div layout:fragment="main-content">
-    <div id="page-inner">
-        <div class="row">
-            <div class="col-md-4 col-sm-8 col-xs-8">
-                <div id="waBox" class="panel panel-back noti-box">
-                <span class="icon-box bg-color-red set-icon">
-                    <i class="fa fa-envelope-o"></i>
-                </span>
 
-                    <div class="text-box">
-                        <p class="main-text" th:text="${waCount}">120</p>
+    <section class="main-container">
+        <div id="page-inner" class="container">
+            <div class="row">
 
-                        <p class="text-muted">WeakAuras</p>
+                <div class="col-sm-6 col-md-4 isotope-item app-development">
+                    <div class="image-box text-center">
+                        <div class="overlay-container">
+                            <h3><span th:text="${waCount}">120</span> Weakauras</h3>
+                            <br /><br /><br />
+                            <div class="overlay-top">
+                                <div class="text">
+                                </div>
+                            </div>
+                            <div class="overlay-bottom">
+                                <div class="links">
+                                    <span id="waBox" class="btn btn-gray-transparent btn-animated btn-sm">View Details <i class="pl-10 fa fa-arrow-right"></i></span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4 col-sm-6 col-xs-6">
-                <div id="tmwBox" class="panel panel-back noti-box">
-                <span class="icon-box bg-color-green set-icon">
-                    <i class="fa fa-bars"></i>
-                </span>
-
-                    <div class="text-box">
-                        <p class="main-text" th:text="${tmwCount}">30</p>
-
-                        <p class="text-muted">TMW-Configs</p>
+                <div class="col-sm-6 col-md-4 isotope-item app-development">
+                    <div class="image-box text-center">
+                        <div class="overlay-container">
+                            <h3><span th:text="${tmwCount}">120</span> TellMeWhens</h3>
+                            <br /><br /><br />
+                            <div class="overlay-top">
+                                <div class="text">
+                                </div>
+                            </div>
+                            <div class="overlay-bottom">
+                                <div class="links">
+                                    <span id="tmwBox" class="btn btn-gray-transparent btn-animated btn-sm">View Details <i class="pl-10 fa fa-arrow-right"></i></span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4 col-sm-6 col-xs-6">
-                <div id="macroBox" class="panel panel-back noti-box">
-                <span class="icon-box bg-color-blue set-icon">
-                    <i class="fa fa-bell-o"></i>
-                </span>
-
-                    <div class="text-box">
-                        <p class="main-text" th:text="${macroCount}">240</p>
-
-                        <p class="text-muted">Macros</p>
+                <div class="col-sm-6 col-md-4 isotope-item app-development">
+                    <div class="image-box text-center">
+                        <div class="overlay-container">
+                            <h3><span th:text="${macroCount}">120</span> Macros</h3>
+                            <br /><br /><br />
+                            <div class="overlay-top">
+                                <div class="text">
+                                </div>
+                            </div>
+                            <div class="overlay-bottom">
+                                <div class="links">
+                                    <span id="macroBox" class="btn btn-gray-transparent btn-animated btn-sm">View Details <i class="pl-10 fa fa-arrow-right"></i></span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
             </div>
+
+
+
+
         </div>
+    </section>
 
-        <hr/>
-
-        <div clas="row">
-            <div id="resultPane" class="col-md-offset-1 col-md-10">
+    <div class="section light-gray-bg">
+        <div class="container">
+            <div class="row">
+                <div id="resultPane" class="col-md-12">
+                </div>
             </div>
         </div>
 
     </div>
+
     <!-- /. PAGE INNER  -->
 </div>
 <!-- /. layout fragment -->

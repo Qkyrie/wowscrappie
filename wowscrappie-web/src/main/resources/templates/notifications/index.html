@@ -1,45 +1,47 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorator="decorator/wa-decorator">
+      layout:decorator="decorator/theproject-decorator">
 
 <div layout:fragment="header">
     <title>Your Notifications - Scrappie</title>
 </div>
 
 <div layout:fragment="main-content">
-    <div id="page-inner">
+    <section class="main-container">
+        <div id="page-inner" class="container">
 
-        <div class="row">
-            <div class="col-md-12">
-                <h3>Your Notifications</h3>
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>Your Notifications</h3>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12" th:if="${notifications.size() > 0}">
+                    <table id="todo" class="table table-hover custom-check">
+                        <tbody>
+                        <tr th:each="notification : ${notifications}">
+                            <td class="notificationRow">
+                                <span class="check"><input th:checked="${notification.readStatus}" type="checkbox" disabled="disabled" class="checked" /></span>
+                                <a th:href="@{/notifications/redirect} + '/' + ${notification.id}"
+                                   th:text="${notification.title}">
+                                    Send invoice
+                                </a>
+                                <button class="close deleteButton" th:attr="data-notification_id=${notification.id}" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-12" th:if="${notifications.size() == 0}">
+                    <div class="alert alert-success">You currently have no notifications! Please Enjoy this dancing dwarf instead.</div>
+                    <img align="middle" class="center" th:src="@{/assets/img/random/dancing_dwarf.gif}"/>
+                </div>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-12" th:if="${notifications.size() > 0}">
-                <table id="todo" class="table table-hover custom-check">
-                    <tbody>
-                    <tr th:each="notification : ${notifications}">
-                        <td class="notificationRow">
-                            <span class="check"><input th:checked="${notification.readStatus}" type="checkbox" disabled="disabled" class="checked" /></span>
-                            <a th:href="@{/notifications/redirect} + '/' + ${notification.id}"
-                               th:text="${notification.title}">
-                                Send invoice
-                            </a>
-                            <button class="close deleteButton" th:attr="data-notification_id=${notification.id}" aria-hidden="true" data-dismiss="alert" type="button">×</button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="col-md-12" th:if="${notifications.size() == 0}">
-                <div class="alert alert-success">You currently have no notifications! Please Enjoy this dancing dwarf instead.</div>
-                <img align="middle" class="center" th:src="@{/assets/img/random/dancing_dwarf.gif}"/>
-            </div>
-        </div>
-    </div>
-    <!-- /. PAGE INNER  -->
+    </section>
 </div>
 <!-- /. layout fragment -->
 <div layout:fragment="footer-content">
@@ -48,12 +50,8 @@
             $(".deleteButton").click(function() {
                 var self = $(this);
                 var notificationId = self.data('notification_id');
-                $.get('/notifications/delete/' + notificationId, function(data) {
-                    self.closest('.tr').remove();
-                    console.log("removed closest");
-                    if($(".notificationRow").length == 0) {
+                $.post('/notifications/delete/' + notificationId, function() {
                         window.location.reload();
-                    }
                 });
             });
         })();
