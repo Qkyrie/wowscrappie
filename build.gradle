@@ -28,7 +28,6 @@ repositories {
 
 subprojects {
     apply plugin: "io.spring.dependency-management"
-    apply plugin: 'checkstyle'
     apply plugin: 'java'
 
     sourceCompatibility = theSourceCompatibility
@@ -52,11 +51,6 @@ subprojects {
         jcenter()
         maven { url "http://repo.spring.io/release" }
         maven { url "http://clojars.org/repo" }
-    }
-
-    checkstyle {
-        ignoreFailures = true
-        configFile = configFile = rootProject.file('config/checkstyle/checkstyle.xml')
     }
 }
 
