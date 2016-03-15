@@ -2,7 +2,7 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
-      layout:decorator="decorator/wa-decorator">
+      layout:decorator="decorator/theproject-decorator">
 
 <div layout:fragment="header">
     <link th:href="@{/assets/js/dataTables/dataTables.bootstrap.css}" rel="stylesheet"/>
@@ -10,67 +10,71 @@
 </div>
 
 <div layout:fragment="main-content">
-    <div id="page-inner">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h2>Your Inbox</h2>
 
-                    <div class="alert alert-warning" th:if="${inbox.size() == 0}">
-                        Unfortunately, there are no messages in your inbox. We'll be implementing the feature to message
-                        other people later.
-                        In the meantime, if anything is up, admins might contact you. If you wish to do so, you can
-                        always contact an Admin on our
-                        <br/>
-                        <a th:href="@{/contact}" class="btn btn-raised btn-primary">Contact Page</a>
-                    </div>
+    <section class="main-container">
+        <div id="page-inner" class="container">
+            <div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2>Your Inbox</h2>
 
-                    <div sec:authorize="hasRole('ROLE_ADMIN')" class="alert alert-success" th:if="${inbox.size() == 0}">
-                        Oh hey there :). I didn't see you actually were an admin, you may always send someone a message!
-                        :3.
-                        But not now, still not finished implementing :P
-                    </div>
+                        <div class="alert alert-warning" th:if="${inbox.size() == 0}">
+                            Unfortunately, there are no messages in your inbox. We'll be implementing the feature to message
+                            other people later.
+                            In the meantime, if anything is up, admins might contact you. If you wish to do so, you can
+                            always contact an Admin on our
+                            <br/>
+                            <a th:href="@{/contact}" class="btn btn-raised btn-primary">Contact Page</a>
+                        </div>
 
-                    <div class="table-responsive" th:if="${inbox.size() > 0}">
-                        <table class="table table-striped table-bordered table-hover" id="myTable">
-                            <thead>
-                            <tr>
-                                <th>when?</th>
-                                <th>from</th>
-                                <th>title</th>
-                                <th>Actions</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr th:each="inboxElement, iterStat : ${inbox}"
-                                th:class="${iterStat.odd}? 'gradeA' : 'gradeC'">
-                                <td th:text="${inboxElement.when}">just now</td>
-                                <td th:text="${inboxElement.from}">Type</td>
-                                <td th:text="${inboxElement.title}">whatFor</td>
-                                <td>
+                        <div sec:authorize="hasRole('ROLE_ADMIN')" class="alert alert-success" th:if="${inbox.size() == 0}">
+                            Oh hey there :). I didn't see you actually were an admin, you may always send someone a message!
+                            :3.
+                            But not now, still not finished implementing :P
+                        </div>
+
+                        <div class="table-responsive" th:if="${inbox.size() > 0}">
+                            <table class="table table-striped table-bordered table-hover" id="myTable">
+                                <thead>
+                                <tr>
+                                    <th>when?</th>
+                                    <th>from</th>
+                                    <th>title</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="inboxElement, iterStat : ${inbox}"
+                                    th:class="${iterStat.odd}? 'gradeA' : 'gradeC'">
+                                    <td th:text="${inboxElement.when}">just now</td>
+                                    <td th:text="${inboxElement.from}">Type</td>
+                                    <td th:text="${inboxElement.title}">whatFor</td>
+                                    <td>
                             <span th:attr="data-root_message_id=${inboxElement.id}"
                                   class="viewButton btn btn-success btn-xs">
                                 <i class="material-icons">search</i>
                             </span>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div id="resultPane" class="col-md-12">
+
                     </div>
 
-
                 </div>
-            </div>
-            <div class="row">
-
-                <div id="resultPane" class="col-md-12">
-
-                </div>
-
             </div>
         </div>
-    </div>
-    <!-- /. PAGE INNER  -->
+
+    </section>
+
 </div>
 <!-- /. layout fragment -->
 
@@ -118,7 +122,7 @@
 
         <div class="panel-body">
             <ul class="chat-box">
-                <li th:each="singleMessage : ${allMessages}"
+                <div th:each="singleMessage : ${allMessages}"
                     th:class="${!singleMessage.inward}? 'left clearfix' : 'right clearfix'">
                      <span th:class="${singleMessage.inward}? 'pull-left chat-img' : 'pull-right chat-img'">
 
@@ -136,7 +140,7 @@
                     </div>
 
 
-                </li>
+                </div>
             </ul>
         </div>
 
@@ -181,7 +185,6 @@
                     });
                     request.fail(function (jqXHR, textStatus) {
                         $("#btn-input").val('');
-                        console.log("something went wrong yo");
                     });
                 }
             });
