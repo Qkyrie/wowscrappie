@@ -1,7 +1,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorator="decorator/wa-decorator"
+      layout:decorator="decorator/theproject-decorator"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 
 <div layout:fragment="header">
@@ -10,64 +10,73 @@
 </div>
 
 <div layout:fragment="main-content">
-    <div id="page-inner">
-        <div class="row">
-            <input id="thisUser" th:value="${profile.userId}" type="hidden"/>
-            <div class="col-md-6">
-                <h2 th:if="${canEdit}">Your Profile</h2>
 
-                <h2 th:if="${canEdit == false}" th:text="${profile.userName + '''s Profile'}"></h2>
+    <section class="dark-translucent-bg pv-30">
+        <div class="container">
+            <div class="row">
+                <input id="thisUser" th:value="${profile.userId}" type="hidden"/>
+                <div class="col-md-12 text-center">
+                    <h2 th:if="${canEdit}">Your Profile</h2>
 
-                <div class="alert alert-success" th:text="${profile.userName + ' has a total ScrapScore of ' + score}"></div>
+                    <h2 th:if="${canEdit == false}" th:text="${profile.userName + '''s Profile'}"></h2>
+
+                    <div class="alert alert-success"
+                         th:text="${profile.userName + ' has a total ScrapScore of ' + score}"></div>
+                </div>
+                <div class="col-md-4">
+                    <p th:if="${hasBattleNet}" class="alert alert-success">User has linked his battlenet account!</p>
+                </div>
+                <div class="col-md-2">
+                    <a th:if="${canEdit}" class="btn btn-default btn-raised pull-right" th:href="@{/profiles/edit}">Edit
+                        Profile</a>
+                </div>
             </div>
-            <div class="col-md-4">
-                <p th:if="${hasBattleNet}" class="alert alert-success">User has linked his battlenet account!</p>
-            </div>
-            <div class="col-md-2">
-                <a th:if="${canEdit}" class="btn btn-default btn-raised pull-right" th:href="@{/profiles/edit}">Edit
-                    Profile</a>
-            </div>
-            <hr />
         </div>
-        <br/><br/>
 
-        <div class="row">
-            <div class="col-md-6">
-                <h3>About Me!</h3>
-                <blockquote id="commentBox">
+    </section>
+
+    <section class="main-container">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>About Me!</h3>
+                    <blockquote id="personalCommentBox">
                     <span th:if="${profile.aboutMe != null AND profile.aboutMe != ''}"
                           th:text="${profile.aboutMe}"></span>
                     <span th:if="${profile.aboutMe == null || profile.aboutMe == ''}">
                         I don't have anything in particular to mention yet.
                     </span>
-                    <small th:text="${profile.userName + ' on wowscrappie.com'}"></small>
-                </blockquote>
-            </div>
-            <div class="col-md-6" th:if="${profile.was != 0 || profile.tmws != 0 || profile.macros != 0}">
-                <h3>Contributions by <span th:text="${profile.userName}"></span></h3>
-
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <div id="morris-donut-chart"></div>
-                    </div>
-
+                        <small th:text="${profile.userName + ' on wowscrappie.com'}"></small>
+                    </blockquote>
                 </div>
-                <a href="https://twitter.com/share" class="twitter-share-button" data-via="ScrappieWoW"
-                   data-size="large" data-count="none">Tweet</a>
-                <script>!function (d, s, id) {
-                    var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
-                    if (!d.getElementById(id)) {
-                        js = d.createElement(s);
-                        js.id = id;
-                        js.src = p + '://platform.twitter.com/widgets.js';
-                        fjs.parentNode.insertBefore(js, fjs);
-                    }
-                }(document, 'script', 'twitter-wjs');</script>
+                <div class="col-md-6" th:if="${profile.was != 0 || profile.tmws != 0 || profile.macros != 0}">
+                    <h3>Contributions by <span th:text="${profile.userName}"></span></h3>
+
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div id="morris-donut-chart"></div>
+                        </div>
+
+                    </div>
+                    <a href="https://twitter.com/share" class="twitter-share-button" data-via="ScrappieWoW"
+                       data-size="large" data-count="none">Tweet</a>
+                    <script>!function (d, s, id) {
+                        var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
+                        if (!d.getElementById(id)) {
+                            js = d.createElement(s);
+                            js.id = id;
+                            js.src = p + '://platform.twitter.com/widgets.js';
+                            fjs.parentNode.insertBefore(js, fjs);
+                        }
+                    }(document, 'script', 'twitter-wjs');</script>
+                </div>
             </div>
         </div>
+    </section>
 
-        <br/><br/>
-        <hr/>
+    <section class="full-width-section pv-40 light-gray-bg border-clear">
+
 
         <div class="row" th:if="${canEdit == false}" sec:authorize="hasRole('ROLE_USER')">
             <div class="col-md-10 col-md-offset-1">
@@ -82,7 +91,8 @@
                 <div id="genericWinAlert" class="alert alert-success alert-dismissible collapse" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
-                    <strong>success!</strong>Private message to <span th:text="${profile.userName}"></span> has been sent!.
+                    <strong>success!</strong>Private message to <span th:text="${profile.userName}"></span> has been
+                    sent!.
                     possible.
                 </div>
 
@@ -102,84 +112,102 @@
                 <button data-bind="click: sendIt" class="btn btn-raised btn-success">Send your message</button>
             </div>
         </div>
+    </section>
+    <section class="main-container">
 
-        <div class="row">
-            <div class="col-md-5 col-md-offset-1" th:if="${profile.twitterName != null AND profile.twitterName != ''}">
-                <h3>Twitter</h3>
-                <a class="twitter-timeline" href="https://twitter.com/ScrappieWoW"
-                   th:attr="data-screen-name=${profile.twitterName}" data-widget-id="582534150621687808">Tweets by
-                    @ScrappieWoW</a>
-                <script>!function (d, s, id) {
-                    var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
-                    if (!d.getElementById(id)) {
-                        js = d.createElement(s);
-                        js.id = id;
-                        js.src = p + "://platform.twitter.com/widgets.js";
-                        fjs.parentNode.insertBefore(js, fjs);
-                    }
-                }(document, "script", "twitter-wjs");</script>
-            </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5 col-md-offset-1"
+                     th:if="${profile.twitterName != null AND profile.twitterName != ''}">
+                    <h3>Twitter</h3>
+                    <a class="twitter-timeline" href="https://twitter.com/ScrappieWoW"
+                       th:attr="data-screen-name=${profile.twitterName}" data-widget-id="582534150621687808">Tweets by
+                        @ScrappieWoW</a>
+                    <script>!function (d, s, id) {
+                        var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
+                        if (!d.getElementById(id)) {
+                            js = d.createElement(s);
+                            js.id = id;
+                            js.src = p + "://platform.twitter.com/widgets.js";
+                            fjs.parentNode.insertBefore(js, fjs);
+                        }
+                    }(document, "script", "twitter-wjs");</script>
+                </div>
 
-            <div class="col-md-5 col-md-offset-1" th:if="${profile.twitchStream != null AND profile.twitchStream != ''}">
-                <a class="embedly-card" th:href="${ 'http://twitch.tv/' + profile.twitchStream}"
-                   th:text="${profile.twitchStream + ' - Twitch'}">StreamingForAnimals - Twitch</a>
-                <script async="async" src="//cdn.embedly.com/widgets/platform.js" charset="UTF-8"></script>
+                <div class="col-md-5 col-md-offset-1"
+                     th:if="${profile.twitchStream != null AND profile.twitchStream != ''}">
+                    <a class="embedly-card" th:href="${ 'http://twitch.tv/' + profile.twitchStream}"
+                       th:text="${profile.twitchStream + ' - Twitch'}">StreamingForAnimals - Twitch</a>
+                    <script async="async" src="//cdn.embedly.com/widgets/platform.js" charset="UTF-8"></script>
+                </div>
             </div>
         </div>
-        <br/>
-        <br/>
-        <hr/>
-        <div class="row">
+        <div class="container">
             <input id="waCount" type="hidden" th:value="${profile.was}"/>
             <input id="macroCount" type="hidden" th:value="${profile.macros}"/>
             <input id="tmwCount" type="hidden" th:value="${profile.tmws}"/>
 
-            <div class="col-md-4 col-sm-8 col-xs-8">
-                <div id="waBox" class="panel panel-back noti-box">
-                <span class="icon-box bg-color-red set-icon">
-                    <i class="fa fa-envelope-o"></i>
-                </span>
-
-                    <div class="text-box">
-                        <p class="main-text" th:text="${profile.was}">120</p>
-
-                        <p class="text-muted">WeakAuras</p>
+            <div class="col-sm-6 col-md-4 isotope-item app-development">
+                <div class="image-box text-center">
+                    <div class="overlay-container">
+                        <h3><span th:text="${profile.was}">120</span> Weakauras</h3>
+                        <br /><br /><br />
+                        <div class="overlay-top">
+                            <div class="text">
+                            </div>
+                        </div>
+                        <div class="overlay-bottom">
+                            <div class="links">
+                                <span id="waBox" class="btn btn-gray-transparent btn-animated btn-sm">View Details <i class="pl-10 fa fa-arrow-right"></i></span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 col-sm-6 col-xs-6">
-                <div id="tmwBox" class="panel panel-back noti-box">
-                <span class="icon-box bg-color-green set-icon">
-                    <i class="fa fa-bars"></i>
-                </span>
-
-                    <div class="text-box">
-                        <p class="main-text" th:text="${profile.tmws}">30</p>
-
-                        <p class="text-muted">TMW-Configs</p>
+            <div class="col-sm-6 col-md-4 isotope-item app-development">
+                <div class="image-box text-center">
+                    <div class="overlay-container">
+                        <h3><span th:text="${profile.tmws}">120</span> TellMeWhens</h3>
+                        <br /><br /><br />
+                        <div class="overlay-top">
+                            <div class="text">
+                            </div>
+                        </div>
+                        <div class="overlay-bottom">
+                            <div class="links">
+                                <span id="tmwBox" class="btn btn-gray-transparent btn-animated btn-sm">View Details <i class="pl-10 fa fa-arrow-right"></i></span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 col-sm-6 col-xs-6">
-                <div id="macroBox" class="panel panel-back noti-box">
-                <span class="icon-box bg-color-blue set-icon">
-                    <i class="fa fa-bell-o"></i>
-                </span>
-
-                    <div class="text-box">
-                        <p class="main-text" th:text="${profile.macros}">240</p>
-
-                        <p class="text-muted">Macros</p>
+            <div class="col-sm-6 col-md-4 isotope-item app-development">
+                <div class="image-box text-center">
+                    <div class="overlay-container">
+                        <h3><span th:text="${profile.macros}">120</span> Macros</h3>
+                        <br /><br /><br />
+                        <div class="overlay-top">
+                            <div class="text">
+                            </div>
+                        </div>
+                        <div class="overlay-bottom">
+                            <div class="links">
+                                <span id="macroBox" class="btn btn-gray-transparent btn-animated btn-sm">View Details <i class="pl-10 fa fa-arrow-right"></i></span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1" id="resultPane"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12" id="resultPane"></div>
+            </div>
         </div>
-    </div>
-    <!-- /. PAGE INNER  -->
+
+
+    </section>
 </div>
 <!-- /. layout fragment -->
 <div layout:fragment="footer-content">
@@ -225,8 +253,6 @@
         }
         var viewModel = new ViewModel();
         ko.applyBindings(viewModel);
-
-        Mdjs().on($("#commentBox"));
     </script>
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
@@ -238,25 +264,25 @@
             $.get('/users/' + $('#thisUser').val() + '/uploads/tmw', function (result) {
                 $("#resultPane").html(result);
                 $('#myTable').dataTable({
-                    "order": [[ 3, "desc" ]]
+                    "order": [[3, "desc"]]
                 });
             });
         });
 
         $("#waBox").click(function () {
-            $.get('/users/' + $('#thisUser').val() + '/uploads/weakaura', function(result) {
+            $.get('/users/' + $('#thisUser').val() + '/uploads/weakaura', function (result) {
                 $("#resultPane").html(result);
                 $('#myTable').dataTable({
-                    "order": [[ 3, "desc" ]]
+                    "order": [[3, "desc"]]
                 });
             });
         });
 
         $("#macroBox").click(function () {
-            $.get('/users/' + $('#thisUser').val() + '/uploads/macro', function(result) {
+            $.get('/users/' + $('#thisUser').val() + '/uploads/macro', function (result) {
                 $("#resultPane").html(result);
                 $('#myTable').dataTable({
-                    "order": [[ 3, "desc" ]]
+                    "order": [[3, "desc"]]
                 });
             });
         });
@@ -275,8 +301,7 @@
             }, {
                 label: "TellMeWhens",
                 value: $("#tmwCount").val()
-            }],
-            resize: true
+            }]
         });
 
     </script>
