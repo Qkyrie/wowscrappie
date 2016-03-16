@@ -13,3 +13,4 @@ application-local.properties
 application-production.properties
 application-integrationtest.properties
 scrappie-startup.sh
+wowscrappie-eureka.pid
