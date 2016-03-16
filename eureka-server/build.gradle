@@ -3,7 +3,7 @@ apply plugin: "io.spring.dependency-management"
 
 jar {
     baseName = 'Scrappie-eureka-server'
-    version = theVersion
+    version = null
 }
 
 dependencyManagement {
