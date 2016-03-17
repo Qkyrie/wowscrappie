@@ -77,6 +77,10 @@ lesscss {
     compress = true
 }
 
+springBoot {
+    executable = true
+}
+
 bootRun {
     systemProperties System.properties
 }
