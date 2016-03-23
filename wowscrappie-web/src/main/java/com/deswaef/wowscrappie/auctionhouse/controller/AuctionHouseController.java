@@ -9,16 +9,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.Optional;
 
 @Controller
-@RequestMapping(value = "/auctionhouse/overview")
-public class AuctionHouseRealmAndItemController {
+@RequestMapping(value = "/auctionhouse")
+public class AuctionHouseController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String index(@CurrentRealm Optional<Realm> currentRealm) {
         if (currentRealm.isPresent()) {
-            return "auctionhouse/overview";
+            return String.format("redirect:/auctionhouse/%s", currentRealm.get().getId());
         } else {
             return "redirect:/realm/choose";
         }
     }
-
 }

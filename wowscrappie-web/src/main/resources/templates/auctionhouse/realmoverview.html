@@ -32,11 +32,9 @@
 
     <section class="main-container">
         <div class="container">
-            <auctionhouse-search></auctionhouse-search>
+            <auctionhouse-realm th:attr="realm-id=${realmId}"></auctionhouse-realm>
         </div>
     </section>
-
-    <!-- /. PAGE INNER  -->
 </div>
 <!-- /. layout fragment -->
 <div layout:fragment="footer-content">
@@ -53,6 +51,7 @@
     <script th:src="@{/assets/node_modules/angular2/bundles/angular2.dev.js}"></script>
     <script th:src="@{/assets/node_modules/angular2/bundles/http.dev.js}"></script>
 
+
     <script>
         System.config({
             packages: {
@@ -63,7 +62,7 @@
             }
         });
 
-        System.import('/assets/components/auctionhouse/pages/overview')
+        System.import('/assets/components/auctionhouse/pages/auctionhouse')
                 .then(null, console.error.bind(console));
     </script>
 

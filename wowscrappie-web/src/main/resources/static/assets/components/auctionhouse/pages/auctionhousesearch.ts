@@ -3,7 +3,7 @@ import { SingleItemSearch } from './singleItemSearch'
 import { MultiItemSearch } from './multiItemSearch'
 
 @Component({
-    selector: 'auctionhouse-search',
+    selector: 'auctionhouse-item-search',
     template: `
                <div id="page-inner">
 

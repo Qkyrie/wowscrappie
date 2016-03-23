@@ -1,4 +1,6 @@
-System.register([], function(exports_1) {
+System.register([], function(exports_1, context_1) {
+    "use strict";
+    var __moduleName = context_1 && context_1.id;
     var DailyAuctionHouseSnapshot;
     return {
         setters:[],
@@ -22,7 +24,7 @@ System.register([], function(exports_1) {
                     this.realmId = realmId;
                 }
                 return DailyAuctionHouseSnapshot;
-            })();
+            }());
             exports_1("DailyAuctionHouseSnapshot", DailyAuctionHouseSnapshot);
         }
     }

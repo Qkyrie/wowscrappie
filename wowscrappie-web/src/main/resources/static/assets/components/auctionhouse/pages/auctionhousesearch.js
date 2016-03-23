@@ -1,4 +1,6 @@
-System.register(['angular2/core', './singleItemSearch', './multiItemSearch'], function(exports_1) {
+System.register(['angular2/core', './singleItemSearch', './multiItemSearch'], function(exports_1, context_1) {
+    "use strict";
+    var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -27,14 +29,14 @@ System.register(['angular2/core', './singleItemSearch', './multiItemSearch'], fu
                 }
                 AuctionHouseSearch = __decorate([
                     core_1.Component({
-                        selector: 'auctionhouse-search',
+                        selector: 'auctionhouse-item-search',
                         template: "\n               <div id=\"page-inner\">\n\n        <div class=\"row\">\n            <div class=\"col-md-12\">\n                <ul class=\"nav nav-tabs style-1\" role=\"tablist\">\n                    <li role=\"presentation\" id=\"homeTab\" class=\"active\"><a href=\"#singleItemSearch\" aria-controls=\"home\"\n                                                                           role=\"tab\" data-toggle=\"tab\">Single Item\n                        Search</a></li>\n                    <li role=\"presentation\" id=\"compareTab\"><a href=\"#compareItemSearch\" aria-controls=\"profile\"\n                                                               role=\"tab\"\n                                                               data-toggle=\"tab\">Item Compare</a></li>\n                </ul>\n            </div>\n        </div>\n\n        <div class=\"tab-content\">\n            <div role=\"tabpanel\" class=\"tab-pane fade in active\" id=\"singleItemSearch\">\n                <single-search></single-search>\n            </div>\n            <div role=\"tabpanel\" class=\"tab-pane fade in\" id=\"compareItemSearch\">\n                <multi-search></multi-search>\n            </div>\n        </div>\n\n    </div>\n    ",
                         directives: [singleItemSearch_1.SingleItemSearch, multiItemSearch_1.MultiItemSearch]
                     }), 
                     __metadata('design:paramtypes', [])
                 ], AuctionHouseSearch);
                 return AuctionHouseSearch;
-            })();
+            }());
             exports_1("AuctionHouseSearch", AuctionHouseSearch);
         }
     }

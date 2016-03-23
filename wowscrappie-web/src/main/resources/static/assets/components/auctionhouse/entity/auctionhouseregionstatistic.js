@@ -1,4 +1,6 @@
-System.register([], function(exports_1) {
+System.register([], function(exports_1, context_1) {
+    "use strict";
+    var __moduleName = context_1 && context_1.id;
     var AuctionHouseRegionSnapshotStatistic;
     return {
         setters:[],
@@ -16,7 +18,7 @@ System.register([], function(exports_1) {
                     this.averageBuyout = averageBuyout;
                 }
                 return AuctionHouseRegionSnapshotStatistic;
-            })();
+            }());
             exports_1("AuctionHouseRegionSnapshotStatistic", AuctionHouseRegionSnapshotStatistic);
         }
     }
