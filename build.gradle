@@ -1,5 +1,4 @@
 apply plugin: 'idea'
-apply plugin: 'java'
 apply plugin: "io.spring.dependency-management"
 
 buildscript {
@@ -55,16 +54,10 @@ subprojects {
 }
 
 allprojects {
-    apply plugin: "java"
     apply plugin: 'eclipse'
     apply plugin: 'idea'
 
     version = theVersion
 
     group = 'com.de-swaef.scrappie'
-}
-
-dependencies {
-    compile project(":importing-service")
-    compile project(":core")
 }
