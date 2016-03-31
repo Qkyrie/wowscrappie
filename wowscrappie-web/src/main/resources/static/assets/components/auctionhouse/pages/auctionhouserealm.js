@@ -1,4 +1,4 @@
-System.register(['angular2/core', './auctionhouserealmtopsellers'], function(exports_1, context_1) {
+System.register(['angular2/core', './auctionhouserealmtopsellers', './auctionhouserealmtopitems'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', './auctionhouserealmtopsellers'], function(exp
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, auctionhouserealmtopsellers_1;
+    var core_1, auctionhouserealmtopsellers_1, auctionhouserealmtopitems_1;
     var AuctionHouseRealm;
     return {
         setters:[
@@ -19,6 +19,9 @@ System.register(['angular2/core', './auctionhouserealmtopsellers'], function(exp
             },
             function (auctionhouserealmtopsellers_1_1) {
                 auctionhouserealmtopsellers_1 = auctionhouserealmtopsellers_1_1;
+            },
+            function (auctionhouserealmtopitems_1_1) {
+                auctionhouserealmtopitems_1 = auctionhouserealmtopitems_1_1;
             }],
         execute: function() {
             AuctionHouseRealm = (function () {
@@ -28,9 +31,8 @@ System.register(['angular2/core', './auctionhouserealmtopsellers'], function(exp
                 AuctionHouseRealm = __decorate([
                     core_1.Component({
                         selector: 'auctionhouse-realm',
-                        template: "\n            <div class=\"row\">\n                <div class=\"col-md-12\">\n                   <div class=\"col-md-6\">\n                        <auctionhouse-realm-top-sellers realmId=\"{{realmId}}\"></auctionhouse-realm-top-sellers>\n                    </div>\n                </div>\n            </div>\n    ",
-                        directives: [auctionhouserealmtopsellers_1.AuctionHouseRealmTopSellers],
-                        inputs: ["whatever"]
+                        template: "\n            <div class=\"row\">\n                <div class=\"col-md-6\">\n                   <h3 class=\"text-center\">Top Sellers</h3>\n                   <auctionhouse-realm-top-sellers realmId=\"{{realmId}}\"></auctionhouse-realm-top-sellers>\n                </div>\n                <div class=\"col-md-6\">\n                    <h3 class=\"text-center\">Most Popular Items</h3>\n                   <auctionhouse-realm-top-items realmId=\"{{realmId}}\"></auctionhouse-realm-top-items>\n                </div>\n            </div>\n    ",
+                        directives: [auctionhouserealmtopsellers_1.AuctionHouseRealmTopSellers, auctionhouserealmtopitems_1.AuctionHouseRealmTopItems]
                     }), 
                     __metadata('design:paramtypes', [core_1.ElementRef])
                 ], AuctionHouseRealm);

@@ -42,6 +42,19 @@ System.register(['rxjs/add/operator/map', 'angular2/core', 'angular2/http', '../
                         }
                     });
                 };
+                AuctionHouseRealmSearchService.prototype.searchForTopItems = function (realm) {
+                    return this.http.get('/rest/auctionhouse/realm/' + realm + '/mostavailable')
+                        .map(function (responseData) {
+                        return responseData.json();
+                    })
+                        .map(function (elements) {
+                        if (elements) {
+                            return elements.map(function (element) {
+                                return new auctionhousetopseller_1.AuctionHouseTopSeller("Draenic Intellect Flask", 1000, 10000000000);
+                            });
+                        }
+                    });
+                };
                 AuctionHouseRealmSearchService = __decorate([
                     core_1.Injectable(), 
                     __metadata('design:paramtypes', [http_1.Http])

@@ -13,4 +13,10 @@ public class AuctionHouseRealmRestController {
         return new String[]{"Eddy", "Macarena"};
     }
 
+    @RequestMapping(value = "/mostavailable")
+    public String[] mostAvailable(@PathVariable("realmId") Long realmId) {
+        return new String[]{"Eddy", "Macarena"};
+    }
+
+
 }

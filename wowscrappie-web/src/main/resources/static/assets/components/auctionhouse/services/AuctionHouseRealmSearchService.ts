@@ -27,4 +27,24 @@ export class AuctionHouseRealmSearchService {
                 }
             });
     }
+
+
+    searchForTopItems(realm:number) {
+        return this.http.get('/rest/auctionhouse/realm/'+ realm +'/mostavailable')
+            .map((responseData) => {
+                return responseData.json();
+            })
+            .map((elements:Object[]) => {
+                if (elements) {
+                    return elements.map(element => {
+                            return new AuctionHouseTopSeller(
+                                "Draenic Intellect Flask",
+                                1000,
+                                10000000000
+                            );
+                        }
+                    );
+                }
+            });
+    }
 }
