@@ -11,7 +11,7 @@ import { NumberValueAccessor } from './directives/number_value_accessor';
 import { RadioControlValueAccessor } from './directives/radio_control_value_accessor';
 import { NgControlStatus } from './directives/ng_control_status';
 import { SelectControlValueAccessor, NgSelectOption } from './directives/select_control_value_accessor';
-import { RequiredValidator, MinLengthValidator, MaxLengthValidator } from './directives/validators';
+import { RequiredValidator, MinLengthValidator, MaxLengthValidator, PatternValidator } from './directives/validators';
 export { NgControlName } from './directives/ng_control_name';
 export { NgFormControl } from './directives/ng_form_control';
 export { NgModel } from './directives/ng_model';
@@ -24,11 +24,11 @@ export { RadioControlValueAccessor, RadioButtonState } from './directives/radio_
 export { NumberValueAccessor } from './directives/number_value_accessor';
 export { NgControlStatus } from './directives/ng_control_status';
 export { SelectControlValueAccessor, NgSelectOption } from './directives/select_control_value_accessor';
-export { RequiredValidator, MinLengthValidator, MaxLengthValidator } from './directives/validators';
+export { RequiredValidator, MinLengthValidator, MaxLengthValidator, PatternValidator } from './directives/validators';
 export { NgControl } from './directives/ng_control';
 /**
  *
- * A list of all the form directives used as part of a `@View` annotation.
+ * A list of all the form directives used as part of a `@Component` annotation.
  *
  *  This is a shorthand for importing them each individually.
  *
@@ -58,5 +58,6 @@ export const FORM_DIRECTIVES = CONST_EXPR([
     NgControlStatus,
     RequiredValidator,
     MinLengthValidator,
-    MaxLengthValidator
+    MaxLengthValidator,
+    PatternValidator
 ]);

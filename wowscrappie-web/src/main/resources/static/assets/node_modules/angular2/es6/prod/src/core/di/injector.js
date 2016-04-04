@@ -691,7 +691,26 @@ export class Injector {
         var factory = resolvedFactory.factory;
         var deps = resolvedFactory.dependencies;
         var length = deps.length;
-        var d0, d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12, d13, d14, d15, d16, d17, d18, d19;
+        var d0;
+        var d1;
+        var d2;
+        var d3;
+        var d4;
+        var d5;
+        var d6;
+        var d7;
+        var d8;
+        var d9;
+        var d10;
+        var d11;
+        var d12;
+        var d13;
+        var d14;
+        var d15;
+        var d16;
+        var d17;
+        var d18;
+        var d19;
         try {
             d0 = length > 0 ? this._getByDependency(provider, deps[0], visibility) : null;
             d1 = length > 1 ? this._getByDependency(provider, deps[1], visibility) : null;
@@ -880,7 +899,7 @@ export class Injector {
         return this._throwOrNull(key, optional);
     }
     get displayName() {
-        return `Injector(providers: [${_mapProviders(this, b => ` "${b.key.displayName}" `).join(", ")}])`;
+        return `Injector(providers: [${_mapProviders(this, (b) => ` "${b.key.displayName}" `).join(", ")}])`;
     }
     toString() { return this.displayName; }
 }

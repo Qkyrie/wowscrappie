@@ -70,6 +70,19 @@ export class Validators {
         };
     }
     /**
+     * Validator that requires a control to match a regex to its value.
+     */
+    static pattern(pattern) {
+        return (control) => {
+            if (isPresent(Validators.required(control)))
+                return null;
+            let regex = new RegExp(`^${pattern}$`);
+            let v = control.value;
+            return regex.test(v) ? null :
+                { "pattern": { "requiredPattern": `^${pattern}$`, "actualValue": v } };
+        };
+    }
+    /**
      * No-op validator.
      */
     static nullValidator(c) { return null; }
@@ -94,7 +107,7 @@ export class Validators {
         if (presentValidators.length == 0)
             return null;
         return function (control) {
-            let promises = _executeValidators(control, presentValidators).map(_convertToPromise);
+            let promises = _executeAsyncValidators(control, presentValidators).map(_convertToPromise);
             return PromiseWrapper.all(promises).then(_mergeErrors);
         };
     }
@@ -103,6 +116,9 @@ function _convertToPromise(obj) {
     return PromiseWrapper.isPromise(obj) ? obj : ObservableWrapper.toPromise(obj);
 }
 function _executeValidators(control, validators) {
+    return validators.map(v => v(control));
+}
+function _executeAsyncValidators(control, validators) {
     return validators.map(v => v(control));
 }
 function _mergeErrors(arrayOfErrors) {

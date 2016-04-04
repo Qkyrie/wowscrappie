@@ -26,10 +26,12 @@ request('http://example.com')
 
 ### Options
 
-* **maxRetries** The maximum number of attempts (default: `5`)
-* **retryDelay** The milliseconds between each new attempt (default: `5000`)
-* **shouldRetry(request: Request): boolean** A custom function to approve retries (default: on `5xx` status or unavailable error)
-* **onRetry(request: Request): any** A function that runs on each retry with the new request instance (default `noop`)
+Accepts a function that returns a number of milliseconds to back off for, or `-1`. Defaults to `popsicleRetry.retries(5, retryAllowed)`.
+
+### Methods
+
+* **retryAllowed(request)** Check if a request should be attempted again. Defaults to `5xx` and unavailable errors.
+* **retries(count, isRetryAllowed)** An exponential backoff function, defaulting to 5 retries.
 
 ## License
 

@@ -1,5 +1,4 @@
-import { Promise } from 'angular2/src/facade/promise';
-export { PromiseWrapper, Promise, PromiseCompleter } from 'angular2/src/facade/promise';
+export { PromiseWrapper, PromiseCompleter } from 'angular2/src/facade/promise';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 export { Observable } from 'rxjs/Observable';

@@ -22,8 +22,6 @@ export declare class AbstractChangeDetector<T> implements ChangeDetector {
     pipes: Pipes;
     propertyBindingIndex: number;
     outputSubscriptions: any[];
-    subscriptions: any[];
-    streams: any[];
     dispatcher: ChangeDispatcher;
     constructor(id: string, numberOfPropertyProtoRecords: number, bindingTargets: BindingTarget[], directiveIndices: DirectiveIndex[], strategy: ChangeDetectionStrategy);
     addContentChild(cd: ChangeDetector): void;
@@ -50,12 +48,7 @@ export declare class AbstractChangeDetector<T> implements ChangeDetector {
     afterViewLifecycleCallbacksInternal(): void;
     markAsCheckOnce(): void;
     markPathToRootAsCheckOnce(): void;
-    private _unsubsribeFromObservables();
     private _unsubscribeFromOutputs();
-    observeValue(value: any, index: number): any;
-    observeDirective(value: any, index: number): any;
-    observeComponent(value: any): any;
-    private _createArrayToStoreObservables();
     getDirectiveFor(directives: any, index: number): any;
     getDetectorFor(directives: any, index: number): ChangeDetector;
     notifyDispatcher(value: any): void;

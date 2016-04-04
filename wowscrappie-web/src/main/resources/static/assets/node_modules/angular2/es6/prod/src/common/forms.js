@@ -28,7 +28,7 @@ export { CheckboxControlValueAccessor } from './forms/directives/checkbox_value_
 export { NgSelectOption, SelectControlValueAccessor } from './forms/directives/select_control_value_accessor';
 export { FORM_DIRECTIVES, RadioButtonState } from './forms/directives';
 export { NG_VALIDATORS, NG_ASYNC_VALIDATORS, Validators } from './forms/validators';
-export { RequiredValidator, MinLengthValidator, MaxLengthValidator } from './forms/directives/validators';
+export { RequiredValidator, MinLengthValidator, MaxLengthValidator, PatternValidator } from './forms/directives/validators';
 export { FormBuilder } from './forms/form_builder';
 import { FormBuilder } from './forms/form_builder';
 import { RadioControlRegistry } from './forms/directives/radio_control_value_accessor';
