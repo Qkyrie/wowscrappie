@@ -2,7 +2,7 @@
 Author:HtmlCoder
 Author URI:http://www.htmlcoder.me
 Author e-mail:htmlcoder.me@gmail.com
-Version:1.1.0
+Version:1.2.0
 Created:May 2015
 License URI:http://support.wrapbootstrap.com/
 File Description:Dark Red Skin
@@ -59,6 +59,10 @@ mark,
 }
 .default-bg {
   background-color: #992020;
+  color: #ffffff;
+}
+.default-bg-50 {
+  background-color: rgba(153, 32, 32, 0.5);
   color: #ffffff;
 }
 /*Transparent Header*/
@@ -762,4 +766,11 @@ header:not(.dark) .dropdown-menu > li.active > a i {
 .content-slider-with-large-controls .owl-buttons .owl-next:after,
 .content-slider-with-large-controls-autoplay .owl-buttons .owl-next:after {
   color: #992020;
+}
+/* 10 Full Page
+-------------------------------------------------
+-------------------------------------------------*/
+#fp-nav ul li a span,
+.fp-slidesNav ul li a span {
+  background: rgba(153, 32, 32, 0.8);
 }

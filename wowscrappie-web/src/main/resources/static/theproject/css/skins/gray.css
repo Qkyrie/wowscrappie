@@ -2,7 +2,7 @@
 Author:HtmlCoder
 Author URI:http://www.htmlcoder.me
 Author e-mail:htmlcoder.me@gmail.com
-Version:1.1.0
+Version:1.2.0
 Created:May 2015
 License URI:http://support.wrapbootstrap.com/
 File Description:Gray Skin
@@ -58,6 +58,10 @@ mark,
 }
 .default-bg {
   background-color: #809398;
+  color: #ffffff;
+}
+.default-bg-50 {
+  background-color: rgba(128, 147, 152, 0.5);
   color: #ffffff;
 }
 /*Transparent Header*/
@@ -761,4 +765,11 @@ header:not(.dark) .dropdown-menu > li.active > a i {
 .content-slider-with-large-controls .owl-buttons .owl-next:after,
 .content-slider-with-large-controls-autoplay .owl-buttons .owl-next:after {
   color: #809398;
+}
+/* 10 Full Page
+-------------------------------------------------
+-------------------------------------------------*/
+#fp-nav ul li a span,
+.fp-slidesNav ul li a span {
+  background: rgba(128, 147, 152, 0.8);
 }

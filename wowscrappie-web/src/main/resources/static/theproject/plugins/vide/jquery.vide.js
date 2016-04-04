@@ -1,25 +1,38 @@
 /*
- *  Vide - v0.3.2
+ *  Vide - v0.5.0
  *  Easy as hell jQuery plugin for video backgrounds.
  *  http://vodkabears.github.io/vide/
  *
  *  Made by Ilya Makarov
  *  Under MIT License
  */
-!(function($, window, document, navigator) {
+!(function(root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    define(['jquery'], factory);
+  } else if (typeof exports === 'object') {
+    factory(require('jquery'));
+  } else {
+    factory(root.jQuery);
+  }
+})(this, function($) {
+
   'use strict';
 
   /**
    * Name of the plugin
    * @private
+   * @const
+   * @type {String}
    */
-  var pluginName = 'vide';
+  var PLUGIN_NAME = 'vide';
 
   /**
    * Default settings
    * @private
+   * @const
+   * @type {Object}
    */
-  var defaults = {
+  var DEFAULTS = {
     volume: 1,
     playbackRate: 1,
     muted: true,
@@ -27,20 +40,18 @@
     autoplay: true,
     position: '50% 50%',
     posterType: 'detect',
-    resizing: true
+    resizing: true,
+    bgColor: 'transparent',
+    className: ''
   };
 
   /**
-   * Is iOs?
+   * Not implemented error message
    * @private
+   * @const
+   * @type {String}
    */
-  var isIOS = /iPad|iPhone|iPod/i.test(navigator.userAgent);
-
-  /**
-   * Is Android?
-   * @private
-   */
-  var isAndroid = /Android/i.test(navigator.userAgent);
+  var NOT_IMPLEMENTED_MSG = 'Not implemented';
 
   /**
    * Parse a string with options
@@ -200,10 +211,17 @@
       }
     }
 
-    this.settings = $.extend({}, defaults, options);
+    this.settings = $.extend({}, DEFAULTS, options);
     this.path = path;
 
-    this.init();
+    // https://github.com/VodkaBears/Vide/issues/110
+    try {
+      this.init();
+    } catch (e) {
+      if (e.message !== NOT_IMPLEMENTED_MSG) {
+        throw e;
+      }
+    }
   }
 
   /**
@@ -212,143 +230,157 @@
    */
   Vide.prototype.init = function() {
     var vide = this;
-    var position = parsePosition(vide.settings.position);
-    var sources;
-    var poster;
+    var path = vide.path;
+    var poster = path;
+    var sources = '';
+    var $element = vide.$element;
+    var settings = vide.settings;
+    var position = parsePosition(settings.position);
+    var posterType = settings.posterType;
+    var $video;
+    var $wrapper;
 
     // Set styles of a video wrapper
-    vide.$wrapper = $('<div>').css({
-      position: 'absolute',
-      'z-index': -1,
-      top: 0,
-      left: 0,
-      bottom: 0,
-      right: 0,
-      overflow: 'hidden',
-      '-webkit-background-size': 'cover',
-      '-moz-background-size': 'cover',
-      '-o-background-size': 'cover',
-      'background-size': 'cover',
-      'background-repeat': 'no-repeat',
-      'background-position': position.x + ' ' + position.y
-    });
+    $wrapper = vide.$wrapper = $('<div>')
+      .addClass(settings.className)
+      .css({
+        position: 'absolute',
+        'z-index': -1,
+        top: 0,
+        left: 0,
+        bottom: 0,
+        right: 0,
+        overflow: 'hidden',
+        '-webkit-background-size': 'cover',
+        '-moz-background-size': 'cover',
+        '-o-background-size': 'cover',
+        'background-size': 'cover',
+        'background-color': settings.bgColor,
+        'background-repeat': 'no-repeat',
+        'background-position': position.x + ' ' + position.y
+      });
 
     // Get a poster path
-    poster = vide.path;
-    if (typeof vide.path === 'object') {
-      if (vide.path.poster) {
-        poster = vide.path.poster;
+    if (typeof path === 'object') {
+      if (path.poster) {
+        poster = path.poster;
       } else {
-        if (vide.path.mp4) {
-          poster = vide.path.mp4;
-        } else if (vide.path.webm) {
-          poster = vide.path.webm;
-        } else if (vide.path.ogv) {
-          poster = vide.path.ogv;
+        if (path.mp4) {
+          poster = path.mp4;
+        } else if (path.webm) {
+          poster = path.webm;
+        } else if (path.ogv) {
+          poster = path.ogv;
         }
       }
     }
 
     // Set a video poster
-    if (vide.settings.posterType === 'detect') {
+    if (posterType === 'detect') {
       findPoster(poster, function(url) {
-        vide.$wrapper.css('background-image', 'url(' + url + ')');
+        $wrapper.css('background-image', 'url(' + url + ')');
       });
-    } else if (vide.settings.posterType !== 'none') {
-      vide.$wrapper
-        .css('background-image', 'url(' + poster + '.' + vide.settings.posterType + ')');
+    } else if (posterType !== 'none') {
+      $wrapper.css('background-image', 'url(' + poster + '.' + posterType + ')');
     }
 
     // If a parent element has a static position, make it relative
-    if (vide.$element.css('position') === 'static') {
-      vide.$element.css('position', 'relative');
+    if ($element.css('position') === 'static') {
+      $element.css('position', 'relative');
     }
 
-    vide.$element.prepend(vide.$wrapper);
+    $element.prepend($wrapper);
 
-    if (!isIOS && !isAndroid) {
-      sources = '';
-
-      if (typeof vide.path === 'object') {
-        if (vide.path.mp4) {
-          sources += '<source src="' + vide.path.mp4 + '.mp4" type="video/mp4">';
-        }
-
-        if (vide.path.webm) {
-          sources += '<source src="' + vide.path.webm + '.webm" type="video/webm">';
-        }
-
-        if (vide.path.ogv) {
-          sources += '<source src="' + vide.path.ogv + '.ogv" type="video/ogv">';
-        }
-
-        vide.$video = $('<video>' + sources + '</video>');
-      } else {
-        vide.$video = $('<video>' +
-          '<source src="' + vide.path + '.mp4" type="video/mp4">' +
-          '<source src="' + vide.path + '.webm" type="video/webm">' +
-          '<source src="' + vide.path + '.ogv" type="video/ogg">' +
-          '</video>');
+    if (typeof path === 'object') {
+      if (path.mp4) {
+        sources += '<source src="' + path.mp4 + '.mp4" type="video/mp4">';
       }
 
-      // Disable visibility, while loading
-      vide.$video.css('visibility', 'hidden');
+      if (path.webm) {
+        sources += '<source src="' + path.webm + '.webm" type="video/webm">';
+      }
 
-      // Set video properties
-      vide.$video.prop({
-        autoplay: vide.settings.autoplay,
-        loop: vide.settings.loop,
-        volume: vide.settings.volume,
-        muted: vide.settings.muted,
-        defaultMuted: vide.settings.muted,
-        playbackRate: vide.settings.playbackRate,
-        defaultPlaybackRate: vide.settings.playbackRate
-      });
+      if (path.ogv) {
+        sources += '<source src="' + path.ogv + '.ogv" type="video/ogg">';
+      }
 
-      // Append a video
-      vide.$wrapper.append(vide.$video);
-
-      // Video alignment
-      vide.$video.css({
-        margin: 'auto',
-        position: 'absolute',
-        'z-index': -1,
-        top: position.y,
-        left: position.x,
-        '-webkit-transform': 'translate(-' + position.x + ', -' + position.y + ')',
-        '-ms-transform': 'translate(-' + position.x + ', -' + position.y + ')',
-        '-moz-transform': 'translate(-' + position.x + ', -' + position.y + ')',
-        transform: 'translate(-' + position.x + ', -' + position.y + ')'
-      });
-
-      // Resize a video, when it's loaded
-      vide.$video.on('canplaythrough.' + pluginName, function() {
-        vide.$video.css('visibility', 'visible');
-
-        // Force to play, important for Safari
-        vide.$video.prop('autoplay') && vide.$video[0].play();
-
-        vide.resize();
-        vide.$wrapper.css('background-image', 'none');
-      });
-
-      // Resize event is available only for 'window'
-      // Use another code solutions to detect DOM elements resizing
-      vide.$element.on('resize.' + pluginName, function() {
-        if (vide.settings.resizing) {
-          vide.resize();
-        }
-      });
+      $video = vide.$video = $('<video>' + sources + '</video>');
+    } else {
+      $video = vide.$video = $('<video>' +
+        '<source src="' + path + '.mp4" type="video/mp4">' +
+        '<source src="' + path + '.webm" type="video/webm">' +
+        '<source src="' + path + '.ogv" type="video/ogg">' +
+        '</video>');
     }
+
+    // https://github.com/VodkaBears/Vide/issues/110
+    try {
+      $video
+
+        // Set video properties
+        .prop({
+          autoplay: settings.autoplay,
+          loop: settings.loop,
+          volume: settings.volume,
+          muted: settings.muted,
+          defaultMuted: settings.muted,
+          playbackRate: settings.playbackRate,
+          defaultPlaybackRate: settings.playbackRate
+        });
+    } catch (e) {
+      throw new Error(NOT_IMPLEMENTED_MSG);
+    }
+
+    // Video alignment
+    $video.css({
+      margin: 'auto',
+      position: 'absolute',
+      'z-index': -1,
+      top: position.y,
+      left: position.x,
+      '-webkit-transform': 'translate(-' + position.x + ', -' + position.y + ')',
+      '-ms-transform': 'translate(-' + position.x + ', -' + position.y + ')',
+      '-moz-transform': 'translate(-' + position.x + ', -' + position.y + ')',
+      transform: 'translate(-' + position.x + ', -' + position.y + ')',
+
+      // Disable visibility, while loading
+      visibility: 'hidden',
+      opacity: 0
+    })
+
+    // Resize a video, when it's loaded
+    .one('canplaythrough.' + PLUGIN_NAME, function() {
+      vide.resize();
+    })
+
+    // Make it visible, when it's already playing
+    .one('playing.' + PLUGIN_NAME, function() {
+      $video.css({
+        visibility: 'visible',
+        opacity: 1
+      });
+      $wrapper.css('background-image', 'none');
+    });
+
+    // Resize event is available only for 'window'
+    // Use another code solutions to detect DOM elements resizing
+    $element.on('resize.' + PLUGIN_NAME, function() {
+      if (settings.resizing) {
+        vide.resize();
+      }
+    });
+
+    // Append a video
+    $wrapper.append($video);
   };
 
   /**
    * Get a video element
    * @public
-   * @returns {HTMLVideoElement|null}
+   * @returns {HTMLVideoElement}
    */
   Vide.prototype.getVideoObject = function() {
-    return this.$video ? this.$video[0] : null;
+    return this.$video[0];
   };
 
   /**
@@ -360,23 +392,27 @@
       return;
     }
 
+    var $wrapper = this.$wrapper;
+    var $video = this.$video;
+    var video = $video[0];
+
     // Get a native video size
-    var videoHeight = this.$video[0].videoHeight;
-    var videoWidth = this.$video[0].videoWidth;
+    var videoHeight = video.videoHeight;
+    var videoWidth = video.videoWidth;
 
     // Get a wrapper size
-    var wrapperHeight = this.$wrapper.height();
-    var wrapperWidth = this.$wrapper.width();
+    var wrapperHeight = $wrapper.height();
+    var wrapperWidth = $wrapper.width();
 
     if (wrapperWidth / videoWidth > wrapperHeight / videoHeight) {
-      this.$video.css({
+      $video.css({
 
         // +2 pixels to prevent an empty space after transformation
         width: wrapperWidth + 2,
         height: 'auto'
       });
     } else {
-      this.$video.css({
+      $video.css({
         width: 'auto',
 
         // +2 pixels to prevent an empty space after transformation
@@ -390,14 +426,9 @@
    * @public
    */
   Vide.prototype.destroy = function() {
-    this.$element.off(pluginName);
-
-    if (this.$video) {
-      this.$video.off(pluginName);
-    }
-
-    delete $[pluginName].lookup[this.index];
-    this.$element.removeData(pluginName);
+    delete $[PLUGIN_NAME].lookup[this.index];
+    this.$video && this.$video.off(PLUGIN_NAME);
+    this.$element.off(PLUGIN_NAME).removeData(PLUGIN_NAME);
     this.$wrapper.remove();
   };
 
@@ -406,7 +437,7 @@
    * @public
    * @type {Object}
    */
-  $[pluginName] = {
+  $[PLUGIN_NAME] = {
     lookup: []
   };
 
@@ -417,33 +448,31 @@
    * @returns {JQuery}
    * @constructor
    */
-  $.fn[pluginName] = function(path, options) {
+  $.fn[PLUGIN_NAME] = function(path, options) {
     var instance;
 
     this.each(function() {
-      instance = $.data(this, pluginName);
+      instance = $.data(this, PLUGIN_NAME);
 
-      if (instance) {
-
-        // Destroy the plugin instance if exists
-        instance.destroy();
-      }
+      // Destroy the plugin instance if exists
+      instance && instance.destroy();
 
       // Create the plugin instance
       instance = new Vide(this, path, options);
-      instance.index = $[pluginName].lookup.push(instance) - 1;
-      $.data(this, pluginName, instance);
+      instance.index = $[PLUGIN_NAME].lookup.push(instance) - 1;
+      $.data(this, PLUGIN_NAME, instance);
     });
 
     return this;
   };
 
   $(document).ready(function() {
+    var $window = $(window);
 
     // Window resize event listener
-    $(window).on('resize.' + pluginName, function() {
-      for (var len = $[pluginName].lookup.length, i = 0, instance; i < len; i++) {
-        instance = $[pluginName].lookup[i];
+    $window.on('resize.' + PLUGIN_NAME, function() {
+      for (var len = $[PLUGIN_NAME].lookup.length, i = 0, instance; i < len; i++) {
+        instance = $[PLUGIN_NAME].lookup[i];
 
         if (instance && instance.settings.resizing) {
           instance.resize();
@@ -451,16 +480,22 @@
       }
     });
 
+    // https://github.com/VodkaBears/Vide/issues/68
+    $window.on('unload.' + PLUGIN_NAME, function() {
+      return false;
+    });
+
     // Auto initialization
     // Add 'data-vide-bg' attribute with a path to the video without extension
     // Also you can pass options throw the 'data-vide-options' attribute
     // 'data-vide-options' must be like 'muted: false, volume: 0.5'
-    $(document).find('[data-' + pluginName + '-bg]').each(function(i, element) {
+    $(document).find('[data-' + PLUGIN_NAME + '-bg]').each(function(i, element) {
       var $element = $(element);
-      var options = $element.data(pluginName + '-options');
-      var path = $element.data(pluginName + '-bg');
+      var options = $element.data(PLUGIN_NAME + '-options');
+      var path = $element.data(PLUGIN_NAME + '-bg');
 
-      $element[pluginName](path, options);
+      $element[PLUGIN_NAME](path, options);
     });
   });
-})(window.jQuery, window, document, navigator);
+
+});
