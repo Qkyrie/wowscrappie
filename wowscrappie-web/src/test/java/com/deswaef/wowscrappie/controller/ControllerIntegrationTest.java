@@ -1,6 +1,6 @@
 package com.deswaef.wowscrappie.controller;
 
-import com.deswaef.WoWScrappieInitializer;
+import com.deswaef.wowscrappie.WowScrappie;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,13 +22,13 @@ import org.springframework.web.context.WebApplicationContext;
  * @author Quinten De Swaef
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = WoWScrappieInitializer.class)
+@SpringApplicationConfiguration(classes = WowScrappie.class)
 @ActiveProfiles("integrationtest")
 @IntegrationTest("server.port:0")
 @WebAppConfiguration
 public class ControllerIntegrationTest {
 
-    protected MockMvc mockMvc;
+    private MockMvc mockMvc;
 
     @Autowired
     private WebApplicationContext wac;

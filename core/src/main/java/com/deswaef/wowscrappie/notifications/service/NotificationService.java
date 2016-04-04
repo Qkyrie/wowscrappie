@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 public class NotificationService {
 
@@ -14,30 +16,34 @@ public class NotificationService {
     private AdministratorsCache administratorsCache;
 
     @Autowired
-    private SimpMessageSendingOperations messagingTemplate;
+    private Optional<SimpMessageSendingOperations> messagingTemplate;
 
     public void putOnAdminQueue(Notification notification) {
         administratorsCache.getAdmins()
                 .stream()
                 .forEach(
-                        admin -> messagingTemplate.convertAndSendToUser(admin.getUsername(), "/queue/notifications", notification)
-                );
+                        admin -> messagingTemplate.ifPresent(template -> {
+                                    template.convertAndSendToUser(admin.getUsername(), "/queue/notifications", notification);
+                                }
+                        ));
     }
 
-    public void broadcastToAdmins(Notification notification) {
+    void broadcastToAdmins(Notification notification) {
         administratorsCache.getAdmins()
                 .stream()
                 .forEach(
-                        admin -> messagingTemplate.convertAndSendToUser(admin.getUsername(), "/topic/notifications", notification)
-                );
+                        admin -> messagingTemplate.ifPresent(template -> {
+                                    template.convertAndSendToUser(admin.getUsername(), "/topic/notifications", notification);
+                                }
+                        ));
     }
 
-    public void broadcastTo(ScrappieUser user, Notification notification) {
-        messagingTemplate.convertAndSendToUser(user.getUsername(), "/topic/notifications", notification);
+    void broadcastTo(ScrappieUser user, Notification notification) {
+        messagingTemplate.ifPresent(template -> template.convertAndSendToUser(user.getUsername(), "/topic/notifications", notification));
     }
 
     public void broadcast(Notification notification) {
-        messagingTemplate.convertAndSend("/topic/notifications", notification);
+        messagingTemplate.ifPresent(template -> template.convertAndSend("/topic/notifications", notification));
     }
 
 }

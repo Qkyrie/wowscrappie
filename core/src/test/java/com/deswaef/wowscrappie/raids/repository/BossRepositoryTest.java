@@ -10,12 +10,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
-import static org.fest.assertions.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class BossRepositoryTest extends RepositoryIntegrationTest {
 
-    public static final long RUKHMAR_ID = 1L;
-    public static final String RUKHMAR = "Rukhmar";
+    private static final long RUKHMAR_ID = 1L;
+    private static final String RUKHMAR = "Rukhmar";
     @Autowired
     private BossRepository bossRepository;
 
