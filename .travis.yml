@@ -28,3 +28,5 @@ deploy:
     repo: Qkyrie/wowscrappie
     tags: true
     branch: master
+after_success:
+   - python <(curl -s https://raw.githubusercontent.com/TouK/sputnik-ci/master/sputnik-ci.py)
