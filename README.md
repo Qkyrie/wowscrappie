@@ -1,4 +1,4 @@
-##wowscrappie - now open source [![Build Status](https://api.travis-ci.org/Qkyrie/wowscrappie.svg)](https://api.travis-ci.org/Qkyrie/wowscrappie.svg)[![Coverity Status](https://scan.coverity.com/projects/8248/badge.svg)](https://scan.coverity.com/projects/8248/badge.svg)
+##wowscrappie - now open source [![Build Status](https://api.travis-ci.org/Qkyrie/wowscrappie.svg)](https://api.travis-ci.org/Qkyrie/wowscrappie.svg)[![Coverity Status](https://scan.coverity.com/projects/8248/badge.svg)](https://scan.coverity.com/projects/8248/badge.svg) [![Sputnik](https://sputnik.ci/conf/badge)](https://sputnik.ci/app#/builds/Qkyrie/wowscrappie)
 
 ###History
 
