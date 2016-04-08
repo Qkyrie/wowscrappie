@@ -5,16 +5,25 @@ import {AuctionHouseCategories} from "./auctionhousecategories";
 @Component({
     selector: 'auctionhouse-realm',
     template: `
-            <div class="row">
-                <div class="col-md-6">
-                    <h3 class="text-center">Most Popular Items</h3>
-                   <auctionhouse-realm-top-items realmId="{{realmId}}"></auctionhouse-realm-top-items>
+      <section class="main-container">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 class="text-center">Most Popular Items</h3>
+                       <auctionhouse-realm-top-items realmId="{{realmId}}"></auctionhouse-realm-top-items>
+                    </div>
                 </div>
-                 <div class="col-md-6">
-                    <h3 class="text-center">Categories</h3>
+             </div>
+       </section>
+            
+            <section class="dark-translucent-bg pv-30">
+                <div class="container">
+                  <div class="row">
                     <auctionhouse-categories></auctionhouse-categories>
+                  </div>
                 </div>
-            </div>
+          
+            </section>
     `,
     directives: [AuctionHouseRealmTopItems, AuctionHouseCategories]
 })

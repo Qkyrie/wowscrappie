@@ -15,7 +15,8 @@
         }
 
         .tt-menu {
-            background-color:white; padding: 5px;
+            background-color: white;
+            padding: 5px;
             -webkit-box-shadow: 0px 1px 1px 1px #7A7A7A;
             box-shadow: 1px 1px 1px 1px #7A7A7A;
             -webkit-border-radius: 2px 2px 2px 2px;
@@ -29,12 +30,7 @@
 </div>
 
 <div layout:fragment="main-content">
-
-    <section class="main-container">
-        <div class="container">
-            <auctionhouse-realm th:attr="realm-id=${realmId}"></auctionhouse-realm>
-        </div>
-    </section>
+    <auctionhouse-realm th:attr="realm-id=${realmId}"></auctionhouse-realm>
 </div>
 <!-- /. layout fragment -->
 <div layout:fragment="footer-content">

@@ -5,14 +5,13 @@ import {AuctionHouseTopItem} from "../entity/auctionhousetopitem";
 @Component({
     selector: 'auctionhouse-realm-top-items',
     template: `
-                <div class="col-md-12">
+                <div class="col-md-12 text-center">
                     <h4>by count</h4>
                     
-                    <ul>
-                        <li *ngFor="#topItem of topItemsCount; var index=index">
+                        <span *ngFor="#topItem of topItemsCount; var index=index">
                          {{topItem.name}}
-                        </li>
-                    </ul>
+                         <br />
+                        </span>
                 </div>
     `,
     providers: [AuctionHouseRealmSearchService]

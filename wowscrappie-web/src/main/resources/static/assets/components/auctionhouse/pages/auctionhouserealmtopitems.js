@@ -40,7 +40,7 @@ System.register(['angular2/core', "../services/AuctionHouseRealmSearchService"],
                 AuctionHouseRealmTopItems = __decorate([
                     core_1.Component({
                         selector: 'auctionhouse-realm-top-items',
-                        template: "\n                <div class=\"col-md-12\">\n                    <h4>by count</h4>\n                    \n                    <ul>\n                        <li *ngFor=\"#topItem of topItemsCount; var index=index\">\n                         {{topItem.name}}\n                        </li>\n                    </ul>\n                </div>\n    ",
+                        template: "\n                <div class=\"col-md-12 text-center\">\n                    <h4>by count</h4>\n                    \n                        <span *ngFor=\"#topItem of topItemsCount; var index=index\">\n                         {{topItem.name}}\n                         <br />\n                        </span>\n                </div>\n    ",
                         providers: [AuctionHouseRealmSearchService_1.AuctionHouseRealmSearchService]
                     }), 
                     __metadata('design:paramtypes', [AuctionHouseRealmSearchService_1.AuctionHouseRealmSearchService])
