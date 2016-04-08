@@ -15,7 +15,7 @@ import java.util.List;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @Controller
-@RequestMapping("/auctionhouse")
+@RequestMapping("/rest/auctionhouse")
 public class AuctionHouseCategoryController {
 
     @Autowired
