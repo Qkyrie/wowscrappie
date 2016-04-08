@@ -29,7 +29,6 @@ System.register(['angular2/core', "../services/AuctionHouseRealmSearchService"],
                     var _this = this;
                     this.ahRealmSearchService.searchForTopItems(this.realmId)
                         .subscribe(function (topSeller) {
-                        _this.topItemsAmount = topSeller;
                         _this.topItemsCount = topSeller;
                     }, function (error) {
                     });
@@ -41,7 +40,7 @@ System.register(['angular2/core', "../services/AuctionHouseRealmSearchService"],
                 AuctionHouseRealmTopItems = __decorate([
                     core_1.Component({
                         selector: 'auctionhouse-realm-top-items',
-                        template: "\n                <div class=\"col-md-6\">\n                    <h4>by count</h4>\n                    \n                    <ul>\n                        <li *ngFor=\"#topItem of topItemsCount; var index=index\">\n                         {{topItem.name}}\n                        </li>\n                    </ul>\n                </div>\n                <div class=\"col-md-6\">\n                    <h4>by value</h4>\n                    \n                    <ul>\n                        <li *ngFor=\"#topItem of topItemsAmount; var index=index\">\n                         {{topItem.name}}\n                        </li>\n                    </ul>\n                </div>\n    ",
+                        template: "\n                <div class=\"col-md-12\">\n                    <h4>by count</h4>\n                    \n                    <ul>\n                        <li *ngFor=\"#topItem of topItemsCount; var index=index\">\n                         {{topItem.name}}\n                        </li>\n                    </ul>\n                </div>\n    ",
                         providers: [AuctionHouseRealmSearchService_1.AuctionHouseRealmSearchService]
                     }), 
                     __metadata('design:paramtypes', [AuctionHouseRealmSearchService_1.AuctionHouseRealmSearchService])

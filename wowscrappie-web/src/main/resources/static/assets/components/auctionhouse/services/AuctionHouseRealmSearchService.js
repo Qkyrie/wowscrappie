@@ -1,4 +1,4 @@
-System.register(['rxjs/add/operator/map', 'angular2/core', 'angular2/http', '../entity/auctionhousetopseller'], function(exports_1, context_1) {
+System.register(["rxjs/add/operator/map", "angular2/core", "angular2/http", "../entity/auctionhousetopitem"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['rxjs/add/operator/map', 'angular2/core', 'angular2/http', '../
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, http_1, auctionhousetopseller_1;
+    var core_1, http_1, auctionhousetopitem_1;
     var AuctionHouseRealmSearchService;
     return {
         setters:[
@@ -21,27 +21,14 @@ System.register(['rxjs/add/operator/map', 'angular2/core', 'angular2/http', '../
             function (http_1_1) {
                 http_1 = http_1_1;
             },
-            function (auctionhousetopseller_1_1) {
-                auctionhousetopseller_1 = auctionhousetopseller_1_1;
+            function (auctionhousetopitem_1_1) {
+                auctionhousetopitem_1 = auctionhousetopitem_1_1;
             }],
         execute: function() {
             AuctionHouseRealmSearchService = (function () {
                 function AuctionHouseRealmSearchService(http) {
                     this.http = http;
                 }
-                AuctionHouseRealmSearchService.prototype.searchForTopSellers = function (realm) {
-                    return this.http.get('/rest/auctionhouse/realm/' + realm + '/topsellers/')
-                        .map(function (responseData) {
-                        return responseData.json();
-                    })
-                        .map(function (elements) {
-                        if (elements) {
-                            return elements.map(function (element) {
-                                return new auctionhousetopseller_1.AuctionHouseTopSeller("Pikachü", 1000, 10000000000);
-                            });
-                        }
-                    });
-                };
                 AuctionHouseRealmSearchService.prototype.searchForTopItems = function (realm) {
                     return this.http.get('/rest/auctionhouse/realm/' + realm + '/mostavailable')
                         .map(function (responseData) {
@@ -50,7 +37,7 @@ System.register(['rxjs/add/operator/map', 'angular2/core', 'angular2/http', '../
                         .map(function (elements) {
                         if (elements) {
                             return elements.map(function (element) {
-                                return new auctionhousetopseller_1.AuctionHouseTopSeller("Draenic Intellect Flask", 1000, 10000000000);
+                                return new auctionhousetopitem_1.AuctionHouseTopItem(element.name, element.totalQuantity);
                             });
                         }
                     });

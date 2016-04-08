@@ -19,6 +19,9 @@ public interface AuctionHouseSnapshotRepository extends JpaRepository<AuctionHou
     @Query("select distinct (aucss.exportTime) from AuctionHouseSnapshot aucss where realm = :realm")
     List<Date> findDistinctExportTimeByRealm(@Param("realm") Realm realm);
 
+    List<AuctionHouseSnapshot> findTop5ByRealmOrderByExportTimeDescQuantityDesc(@Param("realm") Realm realm);
+
+
     Optional<AuctionHouseSnapshot> findFirstByItemAndRealm(@Param("item")Item item, @Param("realm") Realm realm);
 
     List<AuctionHouseSnapshot> findByItemAndRealmLocality(@Param("item") Item item, @Param("locality") Locality locality);

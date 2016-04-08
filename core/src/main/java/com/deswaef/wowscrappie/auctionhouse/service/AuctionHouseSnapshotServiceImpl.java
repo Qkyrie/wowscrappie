@@ -13,7 +13,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import rx.Observable;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.function.BiFunction;
+import java.util.stream.Collectors;
 
 @Service
 public class AuctionHouseSnapshotServiceImpl implements AuctionHouseSnapshotService {
@@ -56,5 +59,14 @@ public class AuctionHouseSnapshotServiceImpl implements AuctionHouseSnapshotServ
         } else {
             return Observable.error(new WowscrappieException("That item is not yet indexed or does not exist"));
         }
+    }
+
+    @Override
+    public <T> List<T> findTopItemsByRealm(Realm realm, BiFunction<String, Long, T> mapper) {
+        return auctionHouseSnapshotRepository
+                .findTop5ByRealmOrderByExportTimeDescQuantityDesc(realm)
+                .stream()
+                .map(accs -> mapper.apply(accs.getItem().getName(), accs.getQuantity()))
+                .collect(Collectors.toList());
     }
 }

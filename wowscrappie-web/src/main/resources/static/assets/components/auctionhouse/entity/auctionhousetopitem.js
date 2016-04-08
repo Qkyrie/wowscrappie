@@ -6,10 +6,9 @@ System.register([], function(exports_1, context_1) {
         setters:[],
         execute: function() {
             AuctionHouseTopItem = (function () {
-                function AuctionHouseTopItem(name, totalCount, totalAmount) {
+                function AuctionHouseTopItem(name, totalCount) {
                     this.name = name;
                     this.totalCount = totalCount;
-                    this.totalAmount = totalAmount;
                 }
                 return AuctionHouseTopItem;
             }());
