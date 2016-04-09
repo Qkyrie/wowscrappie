@@ -17,8 +17,8 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 @Transactional
 public class SpecRepositoryIntegrationTest extends RepositoryIntegrationTest {
 
-    public static final WowClass DK = WowClassFixture.dk();
-    public static final Spec FROST_DK = SpecFixture.frost_dk();
+    private static final WowClass DK = WowClassFixture.dk();
+    private static final Spec FROST_DK = SpecFixture.frost_dk();
     @Autowired
     private WowClassRepository wowClassRepository;
     @Autowired

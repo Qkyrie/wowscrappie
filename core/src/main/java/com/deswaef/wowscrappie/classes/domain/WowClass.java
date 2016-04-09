@@ -1,5 +1,6 @@
 package com.deswaef.wowscrappie.classes.domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -23,7 +24,7 @@ public class WowClass {
     @Column(name = "slug")
     private String slug;
 
-    @OneToMany(mappedBy = "wowClass")
+    @OneToMany(mappedBy = "wowClass", cascade = CascadeType.REMOVE)
     private Set<Spec> specs;
 
     public Long getId() {
