@@ -7,7 +7,8 @@ public class SpecFixture {
                 .setName("Frost")
                 .setSlug("frost")
                 .setId(1L)
-                .setWowClass(WowClassFixture.dk());
+                .setWowClass(WowClassFixture.dk())
+                .setWarcraftlogsId(1L);
     }
 
 }
