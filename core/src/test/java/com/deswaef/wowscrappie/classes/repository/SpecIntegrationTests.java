@@ -4,7 +4,7 @@ import com.deswaef.wowscrappie.classes.domain.Spec;
 import com.deswaef.wowscrappie.classes.domain.SpecFixture;
 import com.deswaef.wowscrappie.classes.domain.WowClass;
 import com.deswaef.wowscrappie.classes.domain.WowClassFixture;
-import com.deswaef.wowscrappie.repository.RepositoryIntegrationTest;
+import com.deswaef.wowscrappie.repository.IntegrationTests;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import java.util.Optional;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 @Transactional
-public class SpecRepositoryIntegrationTest extends RepositoryIntegrationTest {
+public class SpecIntegrationTests extends IntegrationTests {
 
     private static final WowClass DK = WowClassFixture.dk();
     private static final Spec FROST_DK = SpecFixture.frost_dk();

@@ -17,8 +17,8 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class ClassServiceImplTest {
 
-    public static final String DEATH_KNIGHT = "death_knight";
-    public static final String UNKNOWN = "unknown";
+    private static final String DEATH_KNIGHT = "death_knight";
+    private static final String UNKNOWN = "unknown";
     @InjectMocks
     private ClassServiceImpl classService;
     @Mock

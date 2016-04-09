@@ -1,13 +1,13 @@
 package com.deswaef.wowscrappie.notifications.repository;
 
-import com.deswaef.wowscrappie.repository.RepositoryIntegrationTest;
+import com.deswaef.wowscrappie.repository.IntegrationTests;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-public class PersistentNotificationRepositoryTest extends RepositoryIntegrationTest {
+public class PersistentNotificationTests extends IntegrationTests {
 
     @Autowired
     private PersistentNotificationRepository persistentNotificationRepository;

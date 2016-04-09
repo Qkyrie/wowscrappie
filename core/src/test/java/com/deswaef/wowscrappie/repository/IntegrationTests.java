@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @ActiveProfiles("integrationtest")
 @IntegrationTest("server.port:0")
 @Transactional(readOnly = true)
-public class RepositoryIntegrationTest {
+public class IntegrationTests {
 
     @Test
     public void emptyTest() {

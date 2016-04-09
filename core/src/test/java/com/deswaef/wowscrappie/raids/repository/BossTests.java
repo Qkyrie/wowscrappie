@@ -2,7 +2,7 @@ package com.deswaef.wowscrappie.raids.repository;
 
 import com.deswaef.wowscrappie.raids.domain.Boss;
 import com.deswaef.wowscrappie.raids.domain.WorldBoss;
-import com.deswaef.wowscrappie.repository.RepositoryIntegrationTest;
+import com.deswaef.wowscrappie.repository.IntegrationTests;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class BossRepositoryTest extends RepositoryIntegrationTest {
+public class BossTests extends IntegrationTests {
 
     private static final long RUKHMAR_ID = 1L;
     private static final String RUKHMAR = "Rukhmar";

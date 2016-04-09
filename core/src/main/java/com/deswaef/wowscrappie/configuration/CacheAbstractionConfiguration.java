@@ -17,8 +17,8 @@ import static java.lang.String.*;
 @Configuration
 public class CacheAbstractionConfiguration {
 
-    public static final String BRACKETSCACHE = "bracketscache";
-    public static final String AMOUNTS_CACHE = "amountscache";
+    private static final String BRACKETSCACHE = "bracketscache";
+    private static final String AMOUNTS_CACHE = "amountscache";
     public static final String REFERENCE_DATA = "scrappiereferencedata";
     private final RedisSerializer serializer = new StringRedisSerializer();
 
