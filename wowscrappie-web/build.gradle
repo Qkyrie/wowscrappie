@@ -85,3 +85,5 @@ springBoot {
 bootRun {
     systemProperties System.properties
 }
+
+build.dependsOn(npmInstall)
