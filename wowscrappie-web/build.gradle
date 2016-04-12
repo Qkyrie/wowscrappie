@@ -87,3 +87,8 @@ bootRun {
 }
 
 build.dependsOn(npmInstall)
+
+node {
+    // Set the work directory where node_modules should be located
+    nodeModulesDir = file("${project.projectDir}/src/main/resources/static/assets")
+}
