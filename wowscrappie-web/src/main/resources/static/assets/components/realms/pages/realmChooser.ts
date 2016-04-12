@@ -66,6 +66,7 @@ export class RealmChooser {
         this.realmService.chooseCurrent(realm.id)
             .subscribe((newRealm) => {
                 this.currentRealm = newRealm;
+                
             },
                 (err)=>console.log(err),
                 ()=>console.log("Done")
