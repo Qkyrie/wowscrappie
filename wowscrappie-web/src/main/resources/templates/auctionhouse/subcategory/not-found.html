@@ -1,0 +1,26 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      layout:decorator="decorator/theproject-decorator">
+
+<div layout:fragment="header">
+    <title>Subcategory Not Found! - Scrappie</title>
+</div>
+<div layout:fragment="main-content">
+    <section class="main-container">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>We so sorry!</h1>
+                    <div class="alert alert-danger">The subcategory you are searching for could not be found :(.</div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <!-- /. PAGE INNER  -->
+</div>
+<!-- /. layout fragment -->
+</html>
