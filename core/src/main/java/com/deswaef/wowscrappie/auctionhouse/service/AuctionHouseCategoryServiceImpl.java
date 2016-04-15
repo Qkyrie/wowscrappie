@@ -34,11 +34,16 @@ public class AuctionHouseCategoryServiceImpl implements AuctionHouseCategoryServ
         Optional<AuctionHouseSubCategory> subCategory = auctionHouseSubCategoryRepository.findOne(auctionhouseSubCategory);
         if (subCategory.isPresent()) {
             return Observable.from(
-                    subCategory.get().items()
+                    subCategory.get().getItems()
             );
         } else {
             return Observable.empty();
         }
+    }
+
+    @Override
+    public Optional<AuctionHouseSubCategory> subCategoryById(Long subCategoryId) {
+        return auctionHouseSubCategoryRepository.findOne(subCategoryId);
     }
 
 }
