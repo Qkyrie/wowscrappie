@@ -1,0 +1,45 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="decorator/theproject-decorator">
+
+<div layout:fragment="header">
+    <meta name="description" content="Auction House Statistics - Scrappie"/>
+    <meta name="keywords" content="Scrappie, WowScrappie, auction house statistics, prices, bid, buyout, average"/>
+
+    <title>Auctionhouse - <span th:text="${subcategory.name}">Alchemy</span></title>
+</div>
+
+<div layout:fragment="main-content">
+    <subcategory th:attr="subcategory-id=${subcategory.id}"></subcategory>
+</div>
+<!-- /. layout fragment -->
+<div layout:fragment="footer-content">
+
+    <!-- IE required polyfills, in this exact order -->
+    <script th:src="@{/assets/node_modules/es6-shim/es6-shim.min.js}"></script>
+    <script th:src="@{/assets/node_modules/systemjs/dist/system-polyfills.js}"></script>
+    <script th:src="@{/assets/node_modules/angular2/bundles/angular2-polyfills.js}"></script>
+    <script th:src="@{/assets/node_modules/systemjs/dist/system.src.js}"></script>
+    <script th:src="@{/assets/node_modules/rxjs/bundles/Rx.js}"></script>
+    <script th:src="@{/assets/node_modules/angular2/bundles/angular2.dev.js}"></script>
+    <script th:src="@{/assets/node_modules/angular2/bundles/http.dev.js}"></script>
+
+
+    <script>
+        System.config({
+            packages: {
+                '/assets/components': {
+                    format: 'register',
+                    defaultExtension: 'js'
+                }
+            }
+        });
+
+        System.import('/assets/components/auctionhouse/pages/subcategory/subcategorypage')
+                .then(null, console.error.bind(console));
+    </script>
+
+</div>
+
+</html>
