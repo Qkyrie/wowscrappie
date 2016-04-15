@@ -14,4 +14,3 @@ application-production.properties
 application-integrationtest.properties
 scrappie-startup.sh
 wowscrappie-eureka.pid
-wowscrappie-web/src/main/resources/static/assets/node_modules
