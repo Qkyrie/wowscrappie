@@ -9,9 +9,9 @@ public class AuctionHouseSubCategoryDto {
 
     public static AuctionHouseSubCategoryDto from(AuctionHouseSubCategory cat) {
         return new AuctionHouseSubCategoryDto()
-                .setId(cat.id())
-                .setName(cat.name())
-                .setSlug(cat.slug());
+                .setId(cat.getId())
+                .setName(cat.getName())
+                .setSlug(cat.getSlug());
     }
 
     public Long getId() {

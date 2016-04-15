@@ -37,48 +37,48 @@ public class AuctionHouseSubCategory {
     )
     private List<Item> items = new ArrayList<>();
 
-    public Long id() {
+    public Long getId() {
         return id;
     }
 
-    public AuctionHouseSubCategory id(Long id) {
+    public AuctionHouseSubCategory setId(Long id) {
         this.id = id;
         return this;
     }
 
-    public String name() {
+    public String getName() {
         return name;
     }
 
-    public AuctionHouseSubCategory name(String name) {
+    public AuctionHouseSubCategory setName(String name) {
         this.name = name;
         return this;
     }
 
-    public List<Item> items() {
-        return items;
-    }
-
-    public AuctionHouseSubCategory items(List<Item> items) {
-        this.items = items;
-        return this;
-    }
-
-    public String slug() {
+    public String getSlug() {
         return slug;
     }
 
-    public AuctionHouseSubCategory slug(String slug) {
+    public AuctionHouseSubCategory setSlug(String slug) {
         this.slug = slug;
         return this;
     }
 
-    public Date addedOn() {
+    public Date getAddedOn() {
         return addedOn;
     }
 
-    public AuctionHouseSubCategory addedOn(Date addedOn) {
+    public AuctionHouseSubCategory setAddedOn(Date addedOn) {
         this.addedOn = addedOn;
+        return this;
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public AuctionHouseSubCategory setItems(List<Item> items) {
+        this.items = items;
         return this;
     }
 }
