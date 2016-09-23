@@ -153,25 +153,6 @@
                                         <div class="collapse navbar-collapse" id="navbar-collapse-1">
                                             <!-- main-menu -->
                                             <ul class="nav navbar-nav ">
-                                                <li class="dropdown ">
-                                                    <a class="dropdown-toggle" data-toggle="dropdown"
-                                                       href="#">Auction House</a>
-                                                    <ul class="dropdown-menu">
-                                                        <li sec:authorize="hasRole('ROLE_ADMIN')">
-                                                            <a th:href="@{/auctionhouse/configuration}"><i
-                                                                    class="material-icons">perm_data_settings</i>Configuration</a>
-                                                        </li>
-                                                        <li>
-                                                            <a th:href="@{/auctionhouse}"><i
-                                                                    class="material-icons">perm_data_settings</i>Realm Overview</a>
-                                                        </li>
-                                                        <li>
-                                                            <a th:href="@{/auctionhouse/item/search}"><i
-                                                                    class="material-icons">attach_money</i>Item Search</a>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-
                                                 <li class="dropdown " sec:authorize="hasRole('ROLE_ADMIN')">
                                                     <a class="dropdown-toggle" data-toggle="dropdown"
                                                        href="#">Admin</a>
@@ -248,6 +229,12 @@
                                                                                     <a th:href="@{/classes/monk}"> <span
                                                                                             class="sprite_menu_titles sprite_menu_titles_monk"></span>
                                                                                         Monk </a>
+                                                                                </li>
+
+                                                                                <li>
+                                                                                    <a th:href="@{/classes/demon_hunter}"> <span
+                                                                                            class="sprite_menu_titles sprite_menu_titles_monk"></span>
+                                                                                        Demon Hunter </a>
                                                                                 </li>
 
 
@@ -402,10 +389,6 @@
                                                     <a th:href="@{/logout}"
                                                        class="btn btn-default radius-50 hidden-xs btn-sm">Logout</a>
                                                 </div>
-                                                <div class="pull-right">
-                                                    <a style="display: none;" th:href="@{/realm/choose}" id="realmSelectButton" class="btn btn-default radius-50 btn-sm hidden-xs">No
-                                                        Realm Selected</a>
-                                                </div>
                                             </div>
                                             <!-- header buttons end-->
 
@@ -520,7 +503,6 @@
 <script type="text/javascript" th:src="@{/theproject/js/custom.js}"></script>
 
 <script th:src="@{/assets/js/knockout.js}"></script>
-<script th:src="@{/assets/components/decorator/decorator.js}"></script>
 <script th:src="@{/assets/js/analytics.js}"></script>
 
 <script th:src="@{/assets/snackbar/snackbar.min.js}"></script>
