@@ -22,7 +22,6 @@ deploy:
   api_key:
     secure: mzWTZ9pYIoDf6r9s/iSghNqGFEVvIS+WiXFmqOig7qMbrdjKXaBQ8mkVePK2KPwS6EQjJeq2/10t/SNig1D0z7WNY9crsn5bbscj+XL2p5qh/hfWK0Xqtas27nzQCevWaHYsnwlw53etoC7v6rUcWgtNwJpoaTl+rlkSwrZ0VamQiHCM2oL4pzo+qYE2iBQLdpwY6Gw0DZkTxSwB4ZRLxENPzLQ36yMCywXnuA4C0gZU76//4vaJM+a/VJDIjYu14onjXLj3vlqDva4tUpj07hjEFp22J8jB1ZPeJqM69Hb4wywppdKqBdaDOQRSqPKtcCbVUPFRiQksfv38DWddkKeGQ1+O8F0ytVOR5zG7jZ0Ti53a1YvV6sRA702is7OXcBS7uoeD8+rKpGyjyHLHMhJK6ymwUYA2omT49J0PV24f67jkRtBB3nJ2xXA5dLl2bttw6Gi7Le4BmY0TJrmws2sDTl3NIOb+98i5O4HlakCVs4W/YNIM1sR36oof1TrPHsH6JjGoy8GZDj1PUFKEYF7DPtmzUehr6KISot5WMXJW6izaMK1yYfUxUt+3r893YGKVdyB0bADPeb+0YGrc3yk0y1t+xhcNRi3TWhHDjBQAw4ZA2ZbkChWJ7wnqiq2lO8KLvHHFvo9Khst/AkrQ8dNtRlCkKaEaBlJICHDyLRg=
   file:
-    - "eureka-server/build/libs/Scrappie-eureka-server.jar"
     - "wowscrappie-web/build/libs/Scrappie.jar"
   on:
     repo: Qkyrie/wowscrappie
