@@ -152,7 +152,46 @@
                                 </div>
                             </div>
                         </div>
+                        <div th:case="'2'">
+                            <div th:each="spec : ${specs}">
+                                <div class="col-md-6 col-sm-6 col-xs-6">
+                                    <div class="pv-20 ph-20 feature-box-2 boxed shadow object-non-visible animated object-visible fadeInDownSmall"
+                                         data-animation-effect="fadeInDownSmall" data-effect-delay="100">
+                                <span class="icon">
+                                    <img th:src="@{'/assets/img/classes/' + ${wowclass.slug} + '/' + ${spec.slug} + '.jpg'}"/>
+                                </span>
+                                        <div class="body">
+                                            <h4 class="main-text" th:text="${spec.name}">Spec1</h4>
+                                            <span data-bind="click: specChosen"
+                                                  th:attr="data-spec_slug=${spec.slug}, data-wowclass_slug=${wowclass.slug}, data-string_type=macro"
+                                                  class="btn btn-default  btn-sm">Macros
 
+                                                <span class="cart-count default-bg"
+                                                      th:text="${spec.macroAmount}">8</span>
+                                                <h2 style="display: none;"
+                                                    th:text="${spec.name} + ' ' + ${wowclass.name} + ' macros'"></h2>
+                                            </span>
+                                            <span data-bind="click: specChosen"
+                                                  th:attr="data-spec_slug=${spec.slug}, data-wowclass_slug=${wowclass.slug}, data-string_type=weakaura"
+                                                  class="btn btn-default  btn-sm">WeakAuras
+                                                <span class="cart-count default-bg" th:text="${spec.waAmount}">8</span>
+                                                <h2 style="display: none;"
+                                                    th:text="${spec.name} + ' ' + ${wowclass.name} + ' weakauras'"></h2>
+                                            </span>
+                                            <span data-bind="click: specChosen"
+                                                  th:attr="data-spec_slug=${spec.slug}, data-wowclass_slug=${wowclass.slug}, data-string_type=tellmewhen"
+                                                  class="btn btn-default  btn-sm">TellMeWhen
+                                             <span class="cart-count default-bg" th:text="${spec.tmwAmount}">8</span>
+                                                  <h2 style="display: none;"
+                                                      th:text="${spec.name} + ' ' + ${wowclass.name} + ' tellmewhen'"></h2>
+                                            </span>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
 
